@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson01.md</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__left">
+    <div class="stackedit__toc">
+      
+<ul>
+<li><a href="#cse-382-lesson-1---erlang">CSE 382 Lesson 1 - Erlang</a>
+<ul>
+<li><a href="#part-1---course-syllabus">Part 1 - Course Syllabus</a></li>
+<li><a href="#problem-set-1">Problem Set 1</a></li>
+<li><a href="#part-2---erlang-primer">Part 2 - Erlang Primer</a></li>
+<li><a href="#problem-set-2">Problem Set 2</a></li>
+<li><a href="#part-3---lists-in-erlang">Part 3 - Lists in Erlang</a></li>
+<li><a href="#problem-set-3">Problem Set 3</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  <div class="stackedit__right">
+    <div class="stackedit__html">
+      <h1 id="cse-382-lesson-1---erlang">CSE 382 Lesson 1 - Erlang</h1>
+<p>Welcome to CSE 382 - Design Patterns &amp; Data Structures with Functional Programming!</p>
+<p>You can find the template for the problem sets in this lesson here: <a href="https://macbeth-byui.github.io/cse382-course/proves/prove01.erl">prove01.erl</a></p>
+<h2 id="part-1---course-syllabus">Part 1 - Course Syllabus</h2>
+<p>In previous classes, you may have looked at design patterns and data structures that are commonly used in programming.  When using functional programming, there are unique design patterns and different approaches to data structures that we need to consider.  Here is the schedule for the course:</p>
+<ul>
+<li>Week 1 : Erlang Basics</li>
+<li>Week 2 : Persistence</li>
+<li>Weeks 3-7 : Design Patterns
+<ul>
+<li>Functors - Map, Filter, Fold, Unfold</li>
+<li>Chaining</li>
+<li>Currying</li>
+<li>Partial Applications</li>
+<li>Monoids</li>
+<li>Monads</li>
+<li>Streams (Lazy)</li>
+</ul>
+</li>
+<li>Weeks 8-12  : Data Structures
+<ul>
+<li>Binary Search Trees</li>
+<li>Min Heaps</li>
+<li>Random Access Lists</li>
+<li>Tries</li>
+<li>Queues &amp; Deques</li>
+</ul>
+</li>
+</ul>
+<p>This is a 3 credit class and there is a reading for each day (e.g Part 1 before class on Monday, Part 2 before class on Wednesday, and Part 3 before class on Friday).  Each reading includes a problem set to complete.    You should work on each problem set after you do each reading.  During class we will cover the material in the reading with examples.  The material can be complicated and fast paced so you should do the reading and attempt some of the problems before class.</p>
+<p>We will be using Erlang in this class.  If you already know Clojure, you will find that Erlang is easier to use and learn (with much fewer parentheses!).  During the first week we will learn the basics of Erlang.  You will learn more about Erlang as you implement the material during the course.</p>
+<p>You will be given starting code for each problem set which you must use.  You should submit all the problem sets weekly on Saturday evening to stay on track.</p>
+<p>You can resubmit any of your work for a higher grade as many times as you want during the semester.  Late work will not be penalized so you can take more time if needed to learn the material.  However, submitting late work too frequently may result in getting behind which will have a negative impact on your learning and subsequent grade.  During Week 13 and 14 you will have an opportunity to catch up on any missed work.</p>
+<p>At the beginning of Week 10, you will be given an open book, open note, take-home final exam which will be due on the last day of the semester.  The final exam will assess your understanding of principles taught during the course.</p>
+<p>Your grade will be composed of 80% for the weekly problem sets and 20% for the final exam.</p>
+<p>Attendance to class is highly encouraged.  If you miss no more than 3 days during the semester (excluding during Week 14), you will receive a 5% bonus on your final grade.</p>
+<p>Office hours and contact information for this semester will be put in an I-Learn announcement.  You will also find a detailed schedule for the semester in I-Learn which takes into account all university holidays for this semester.</p>
+<h2 id="problem-set-1">Problem Set 1</h2>
+<ol>
+<li>Review the syllabus (found above), review the schedule (found in I-Learn Week 1), install Visual Studio Code (you may use any IDE or just a text editor if you want), install <a href="https://www.erlang.org/downloads">Erlang</a> (follow the hyperlink), and bookmark the following useful Erlang reference sites:</li>
+</ol>
+<ul>
+<li>
+<p>Erlang Book: <a href="https://learning.oreilly.com/library/view/programming-erlang-2nd/9781941222454/">https://learning.oreilly.com/library/view/programming-erlang-2nd/9781941222454/</a></p>
+</li>
+<li>
+<p>CSE 121e (Erlang): <a href="https://byui-cse.github.io/cse121e-course/">https://byui-cse.github.io/cse121e-course/</a></p>
+</li>
+<li>
+<p>Erlang Reference: <a href="https://erlangbyexample.org/">https://erlangbyexample.org/</a></p>
+</li>
+</ul>
+<p>NOTE: There is no code for this first problem set.</p>
+<h2 id="part-2---erlang-primer">Part 2 - Erlang Primer</h2>
+<p>This tutorial is not meant to provide complete coverage of the Erlang language.  You are encouraged to use the Erlang references you bookmarked as needed throughout the semester.</p>
+<p>When writing code in Erlang, you will put your code into a <code>.erl</code> file.  Each Erlang file will include a <code>-module</code> and an <code>-export</code> tag.  If I create a file called <code>learn_erlang.erl</code>, then I would create the following file:</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token operator">-</span><span class="token function">module</span><span class="token punctuation">(</span><span class="token atom">learn_erlang</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+<span class="token operator">-</span><span class="token function">export</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+
+<span class="token comment">% Put my functions here</span>
+</code></pre>
+<p>The <code>-export</code> tag is used to list all functions that can be run externally.  Functions are written in the format of <code>name(Parameters) -&gt; expressions.</code>  Note that parameters and variables always start with an uppercase letter.  Functions and atoms (which are labels without values) are always lowercase.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token operator">-</span><span class="token function">module</span><span class="token punctuation">(</span><span class="token atom">learn_erlang</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+<span class="token operator">-</span><span class="token function">export</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token atom">hello</span><span class="token operator">/</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token atom">average</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+
+<span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token atom">io</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"Hello World!~n"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+
+<span class="token function">average</span><span class="token punctuation">(</span><span class="token variable">Number1</span><span class="token punctuation">,</span> <span class="token variable">Number2</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token variable">Number1</span><span class="token operator">+</span><span class="token variable">Number2</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">.</span>
+</code></pre>
+<p>The <code>-export</code> tag shows the number of parameters (or the arity) of the function.  Notice that each function ends with a period.  To run the functions, execute the <code>erl</code> shell command from a terminal.</p>
+<pre class=" language-shell"><code class="prism  language-shell">Eshell V12.0  (abort with ^G)
+1&gt; c(learn_erlang).
+{ok,learn_erlang}
+2&gt; learn_erlang:average(10,20).
+15
+</code></pre>
+<p>The <code>c</code> command will compile a module.  To run a function, type <code>module_name:function_name(parameters).</code>  Notice the need to put the period just like in your code file.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">slope</span><span class="token punctuation">(</span><span class="token variable">X1</span><span class="token punctuation">,</span> <span class="token variable">Y1</span><span class="token punctuation">,</span> <span class="token variable">X2</span><span class="token punctuation">,</span> <span class="token variable">Y2</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+   <span class="token variable">Delta_X</span> <span class="token operator">=</span> <span class="token variable">X2</span> <span class="token operator">-</span> <span class="token variable">X1</span><span class="token punctuation">,</span>
+   <span class="token variable">Delta_Y</span> <span class="token operator">=</span> <span class="token variable">Y2</span> <span class="token operator">-</span> <span class="token variable">Y1</span><span class="token punctuation">,</span>
+   <span class="token variable">Delta_Y</span> <span class="token operator">/</span> <span class="token variable">Delta_X</span><span class="token punctuation">.</span>
+</code></pre>
+<p>In the <code>slope</code> function, multiple expressions are used for a slightly more complicated function.  Commas are used to separate expressions in the function with a final period at the end.  The last expression represents the result of the function.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">add</span><span class="token punctuation">(</span><span class="token variable">N1</span><span class="token punctuation">,</span> <span class="token variable">N2</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token variable">N1</span> <span class="token operator">+</span> <span class="token variable">N2</span><span class="token punctuation">.</span>
+<span class="token function">add</span><span class="token punctuation">(</span><span class="token variable">N1</span><span class="token punctuation">,</span> <span class="token variable">N2</span><span class="token punctuation">,</span> <span class="token variable">N3</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token variable">N1</span> <span class="token operator">+</span> <span class="token variable">N2</span> <span class="token operator">+</span> <span class="token variable">N3</span><span class="token punctuation">.</span>
+<span class="token function">add</span><span class="token punctuation">(</span><span class="token variable">N1</span><span class="token punctuation">,</span> <span class="token variable">N2</span><span class="token punctuation">,</span> <span class="token variable">N3</span><span class="token punctuation">,</span> <span class="token variable">N4</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token variable">N1</span> <span class="token operator">+</span> <span class="token variable">N2</span> <span class="token operator">+</span> <span class="token variable">N3</span> <span class="token operator">+</span> <span class="token variable">N4</span><span class="token punctuation">.</span>
+</code></pre>
+<p>The function <code>add</code> exists with different arities which is why we write each one as a separate function separated by periods.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">divide</span><span class="token punctuation">(</span><span class="token variable">_N1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token function">divide</span><span class="token punctuation">(</span><span class="token variable">N1</span><span class="token punctuation">,</span> <span class="token variable">N2</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token variable">N1</span> <span class="token operator">/</span> <span class="token variable">N2</span><span class="token punctuation">.</span>
+</code></pre>
+<p>In the function <code>divide</code>, we have only arity 2 but we have two different scenarios or clauses.  Each clause is separated by semicolons and is evaluated in order until a match is found.  If we divide by 0, then the first clause will run.  If we divide by non-zero, then the second clause will run.</p>
+<p>In the <code>divide</code> function, also note that the first clause did not need to use <code>N1</code> in the expression.  Unused parameters in Erlang are prefixed with an underscore.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">letter_grade</span><span class="token punctuation">(</span><span class="token variable">Grade</span><span class="token punctuation">)</span> <span class="token atom">where</span> <span class="token variable">Grade</span> <span class="token operator">&gt;</span> <span class="token number">90</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token string">"A"</span><span class="token punctuation">;</span>
+<span class="token function">letter_grade</span><span class="token punctuation">(</span><span class="token variable">Grade</span><span class="token punctuation">)</span> <span class="token atom">where</span> <span class="token variable">Grade</span> <span class="token operator">&gt;</span> <span class="token number">80</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token string">"B"</span><span class="token punctuation">;</span>
+<span class="token function">letter_grade</span><span class="token punctuation">(</span><span class="token variable">Grade</span><span class="token punctuation">)</span> <span class="token atom">where</span> <span class="token variable">Grade</span> <span class="token operator">&gt;</span> <span class="token number">70</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token string">"C"</span><span class="token punctuation">;</span>
+<span class="token function">letter_grade</span><span class="token punctuation">(</span><span class="token variable">Grade</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token string">"F"</span><span class="token punctuation">.</span>
+</code></pre>
+<p>The <code>when</code> keyword is called a guard and can be used with clauses.  Basic Boolean logic can be done with a guard.  For more complicated logic, a <code>case</code> statement can be used which will be seen later.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">factorial</span><span class="token punctuation">(</span><span class="token variable">N</span><span class="token punctuation">)</span> <span class="token keyword">when</span> <span class="token variable">N</span> <span class="token operator">=</span><span class="token operator">&lt;</span> <span class="token number">1</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token function">factorial</span><span class="token punctuation">(</span><span class="token variable">N</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token variable">N</span> <span class="token operator">*</span> <span class="token function">factorial</span><span class="token punctuation">(</span><span class="token variable">N</span><span class="token number">-1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+</code></pre>
+<p>With the understanding of clauses, we can implement recursive solutions.  In this example, the base case for <code>factorial</code> is represented by the first clause (notice the <code>=&lt;</code> syntax) and recursion is used in the second clause.  The first clauses could have been rewritten without a guard if we didn’t worry about negative number as: <code>factorial(0) -&gt; 1;</code></p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">encrypt</span><span class="token punctuation">(</span><span class="token variable">Value</span><span class="token punctuation">,</span> <span class="token variable">Cipher_Function</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token variable">Cipher_Function</span><span class="token punctuation">(</span><span class="token variable">Value</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+
+<span class="token function">test_encrypt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+   <span class="token variable">Cipher1</span> <span class="token operator">=</span> <span class="token keyword">fun</span> <span class="token punctuation">(</span><span class="token variable">X</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token variable">X</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token keyword">end</span><span class="token punctuation">,</span>
+   <span class="token variable">Cipher2</span> <span class="token operator">=</span> <span class="token keyword">fun</span> <span class="token punctuation">(</span><span class="token variable">X</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> <span class="token variable">X</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">3</span> <span class="token keyword">end</span><span class="token punctuation">,</span>
+   <span class="token number">11</span> <span class="token operator">=</span> <span class="token function">encrypt</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token variable">Cipher1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+   <span class="token number">17</span> <span class="token operator">=</span> <span class="token function">encrypt</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token variable">Cipher2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+   <span class="token number">3</span> <span class="token operator">=</span> <span class="token function">encrypt</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">,</span> <span class="token keyword">fun</span> <span class="token atom">math</span><span class="token punctuation">:</span><span class="token atom">log10</span><span class="token operator">/</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+   <span class="token atom">pass</span><span class="token punctuation">.</span>
+</code></pre>
+<p>In this code, the second parameter <code>Cipher_Function</code> is a function.  Common in functional programming, functions are passed and used liked they were any parameter like integers and strings.  The <code>fun (parameters) -&gt; expression end</code> syntax is used to define an anonymous function (often called a lambda function).  The <code>encrypt</code> function expects to receive a function that takes only one parameter.  The <code>fun math:log10/1</code> is an example of providing an existing 1-arity function.</p>
+<p>In the <code>test_encrypt</code> function, note that <code>Cipher1</code> and <code>Cipher2</code> variables were created.  We could not change the value of <code>Cipher1</code> because all variables in Erlang are immutable.</p>
+<h2 id="problem-set-2">Problem Set 2</h2>
+<p>You will find the link to the starting code template at the beginning of each reading (see the top of this document).  As you work on these problems, remember to look at the test code provided in the template.  There is a separate function (e.g. <code>test_ps2</code>) for each problem set.  This will help you to understand how these problems work.  You will need to uncomment out code in the test code functions as you work through each of these problems.</p>
+<ol>
+<li>Implement the <code>hello</code> function to display “Hello World!”.</li>
+<li>Implement the <code>add</code> function to add two numbers.</li>
+<li>Implement the <code>multiply</code> function three different ways each with different number of parameters (i.e. different arity):
+<ul>
+<li>Multiply one number (not very exciting)</li>
+<li>Multiply two numbers</li>
+<li>Multiply three numbers</li>
+</ul>
+</li>
+<li>Implement the <code>water</code> function that will take a temperature in Fahrenheit and return “Frozen”, “Gas”, or “Liquid”.  Implement this using three clauses that use the <code>when</code> guard.</li>
+<li>Implement the <code>fib</code> function to calculate the n<sup>th</sup> Fibonacci number.  Assume the 1st and 2nd number is 1.  You will need to use recursion.</li>
+<li>Implement the <code>sum</code> function to add up the numbers from 0 to N.  Use recursion instead of using any built in functions.</li>
+<li>Create lambda functions to pass to the <code>plot</code> function.  The <code>plot</code> function will create <code>{X,Y}</code> coordinates where <code>X</code> goes from -5 to 5 and <code>Y</code> is calculated from your lambda function.  Create lambda functions for the following scenarios:
+<ul>
+<li>Function that squares the number</li>
+<li>Function that subtracts one from the number</li>
+<li>Pass the <code>abs/1</code> built-in function directly</li>
+<li>Function that divides the number by three and then uses the <code>math:floor/1</code> built-in function to remove the decimal.</li>
+</ul>
+</li>
+</ol>
+<h2 id="part-3---lists-in-erlang">Part 3 - Lists in Erlang</h2>
+<p>Lists are built-in to Erlang at the syntax level.  During the course, we will write our own functions to work with lists and we will even re-create our own list data structure.  To support those activities, we need to understand how to use the built-in list first.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">playing_with_lists</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+   <span class="token variable">L1</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+   <span class="token atom">pass</span><span class="token punctuation">.</span>
+</code></pre>
+<p>Lists can be created using square brackets.  We can use a vertical bar to access the first element of the list.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">playing_with_lists</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+   <span class="token variable">L1</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+   <span class="token variable">L2</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">|</span><span class="token variable">L1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+   <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">L2</span><span class="token punctuation">,</span>
+   <span class="token atom">pass</span><span class="token punctuation">.</span>
+</code></pre>
+<p>The <code>[0|L1]</code> prepends the <code>0</code> in front of the <code>L1</code> list.  The <code>[0, 1, 2, 3, 4] = L2</code> will attempt to pattern match L2 with the list on the left hand side.  If this doesn’t match, our “test” will fail.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">playing_with_lists</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+   <span class="token variable">L1</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+   <span class="token punctuation">[</span><span class="token variable">A</span> <span class="token punctuation">|</span> <span class="token variable">_</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">L1</span><span class="token punctuation">,</span>
+   <span class="token number">1</span> <span class="token operator">=</span> <span class="token variable">A</span><span class="token punctuation">,</span>
+
+   <span class="token variable">L2</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+   <span class="token punctuation">[</span><span class="token variable">B</span><span class="token punctuation">,</span> <span class="token variable">C</span> <span class="token punctuation">|</span> <span class="token variable">_</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">L2</span><span class="token punctuation">,</span>
+   <span class="token number">2</span> <span class="token operator">=</span> <span class="token variable">B</span><span class="token punctuation">,</span>
+   <span class="token number">4</span> <span class="token operator">=</span> <span class="token variable">C</span><span class="token punctuation">,</span>
+   <span class="token atom">pass</span><span class="token punctuation">.</span>
+</code></pre>
+<p>Pattern matching can reuse the <code>[First|Rest]</code> format.  In the example above, we can extract the first or the first several values.  We can match multiple values at the front of the list using commas.  Note the use of the <code>_</code> which indicates we are ignoring the “rest” of the list.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">display_first</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">First</span><span class="token punctuation">|</span><span class="token variable">_Rest</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+	<span class="token atom">io</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"~p~n"</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token variable">First</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+
+<span class="token function">playing_with_lists</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+	<span class="token variable">L1</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	<span class="token function">display_first</span><span class="token punctuation">(</span><span class="token variable">L1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>   
+	<span class="token atom">pass</span><span class="token punctuation">.</span>
+</code></pre>
+<p>When the list <code>L1</code> is passed to the <code>display_first</code> function, the <code>[First|_Rest]</code> syntax will split the list up into the first value and the remainder of the list (the latter of which is not used in the function.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">display_first</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+	<span class="token atom">io</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"EMPTY~n"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+<span class="token function">display_first</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">First</span><span class="token punctuation">|</span><span class="token variable">_Rest</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+	<span class="token atom">io</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"~p~n"</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token variable">First</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+
+<span class="token function">playing_with_lists</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+	<span class="token variable">L1</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	<span class="token function">display_first</span><span class="token punctuation">(</span><span class="token variable">L1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>   
+	<span class="token atom">pass</span><span class="token punctuation">.</span>
+</code></pre>
+<p>In this example, a special clause is added for the empty list.  We use <code>[]</code> to represent an empty list.  If we wanted to represent a list of one item, we could use <code>[One]</code>.  If we wanted to represent a list of more than one item, we should use <code>[First|Rest]</code>.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">display_all</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+	<span class="token atom">io</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"end of list~n"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+<span class="token function">display_all</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">First</span><span class="token punctuation">|</span><span class="token variable">Rest</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+	<span class="token atom">io</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"~p "</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token variable">First</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+	<span class="token function">display_all</span><span class="token punctuation">(</span><span class="token variable">Rest</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+
+<span class="token function">playing_with_lists</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+	<span class="token variable">L1</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	<span class="token function">display_all</span><span class="token punctuation">(</span><span class="token variable">L1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>   
+	<span class="token atom">pass</span><span class="token punctuation">.</span>
+</code></pre>
+<p>In this code, we need to use the entire list to display every value.  Recursion is used on the <code>Rest</code> of the list.  The base case is the empty list.</p>
+<pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">playing_with_lists</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
+	<span class="token variable">L1</span> <span class="token operator">=</span> <span class="token atom">lists</span><span class="token punctuation">:</span><span class="token function">seq</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+	<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">L1</span><span class="token punctuation">,</span>
+	
+	<span class="token variable">L2</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token variable">N</span> <span class="token punctuation">|</span><span class="token punctuation">|</span> <span class="token variable">N</span> <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token atom">lists</span><span class="token punctuation">:</span><span class="token function">seq</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">L2</span><span class="token punctuation">,</span>
+
+	<span class="token variable">L3</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token variable">N</span><span class="token operator">*</span><span class="token number">3</span> <span class="token punctuation">|</span><span class="token punctuation">|</span> <span class="token variable">N</span> <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token atom">lists</span><span class="token punctuation">:</span><span class="token function">seq</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">,</span><span class="token number">21</span><span class="token punctuation">,</span><span class="token number">24</span><span class="token punctuation">,</span><span class="token number">27</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">L3</span><span class="token punctuation">,</span>
+
+	<span class="token variable">L4</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token variable">N</span><span class="token operator">*</span><span class="token number">3</span> <span class="token punctuation">|</span><span class="token punctuation">|</span> <span class="token variable">N</span> <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token atom">lists</span><span class="token punctuation">:</span><span class="token function">seq</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">N</span> <span class="token operator">rem</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">]</span>
+	<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">,</span><span class="token number">24</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">L4</span><span class="token punctuation">,</span>
+	
+	<span class="token atom">pass</span><span class="token punctuation">.</span>
+</code></pre>
+<p>There are multiple ways to create lists.  The <code>lists:seq</code> function will create numbers in a list from the range specified.  The other method is the list comprehension.  The syntax for the list comprehension is: <code>[expression || generator, filter]</code>  The <code>generator</code> is written with a <code>&lt;-</code> and provides a source list.  The <code>expression</code> uses the generated number to add to the list.  The optional <code>filter</code> is used to determine which generated values should be used to generate the list.  In the last example, the <code>rem</code> operator (often called modulo) is used to include only even numbers before tripling them.</p>
+<h2 id="problem-set-3">Problem Set 3</h2>
+<ol>
+<li>Write a <code>stack_push</code> function that treats the list as a stack (LIFO - Last In First Out).  The <code>stack_push</code> function will take two parameters, the <code>Stack</code> (ie, a list) and a value <code>N</code>.  This function should push the value <code>N</code> to the front of the <code>Stack</code>.</li>
+<li>Write a <code>stack_pop</code> function that returns a new stack with the first item removed.  If the stack is empty, then return the empty list <code>[]</code>.</li>
+<li>Finish the <code>quicksort</code> function provided to you in the starting code.  The algorithm for quicksort is to first pick a position in the list (in our case we will pick the first number) and call it our pivot.  We will then recursively call <code>quicksort</code> on all of the numbers less than the pivot and then call quicksort on all of the numbers greater than or equal to the pivot.  The correct sorted list is then the concatenation of the following 3 lists: <code>[sorted list of numbers less than the pivot] + [the one pivot] + [sorted list of numbers greater than or equal to the pivot]</code>.  The code is setup already but you need to write list comprehensions for creating:
+<ul>
+<li>A sublist containing all numbers in the list less than the pivot (first number in the list) which will be passed to the <code>quicksort</code> function.</li>
+<li>A sublist containing all numbers in the list greater than or equal to the pivot (first number in the list) which will be passed to the <code>quicksort</code> function.</li>
+</ul>
+</li>
+</ol>
+
+    </div>
+  </div>
+</body>
+
+</html>
