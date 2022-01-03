@@ -1,21 +1,20 @@
 % CSE 382 Prove 01
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed or uncompleted in a public file sharing site.
+% file completed in a public file sharing site.
 
 % Instructions: Use this template file for this prove assignment.
 % The details of what to do for each problem are found in 
-% the reading. Uncomment the test code as you solve each problem.
-% If a function is causing errors, comment it out so that your
-% code still runs.
+% the reading. IMPORTANT: Comment out code that is not 
+% running properly.  The `test_ps#` functions should return `pass`.
 
 % To run your Erlang code:
 % 1) Make sure you terminal is in the same folder as your code
 % 2) Run from the terminal: erl
 % 3) Compile your code form the erlang prompt: c(module_name)
-% Note that the module name is shown with the "-module" tag below
+% Note that the module name is shown within the "-module" tag below
 % Note that you must re-compile your code after changing your code
-% 4) Run your test functions 'packagename:functionname().'  For example: prove01:test_ps2().
+% 4) Run your test functions 'module_name:function_name().'  For example: prove01:test_ps2().
 
 -module(prove01).
 -export([test_ps2/0, test_ps3/0]).
