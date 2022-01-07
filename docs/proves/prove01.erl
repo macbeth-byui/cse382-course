@@ -145,7 +145,7 @@ test_ps3() ->
     %[30|_] = S3,
     %S4 = stack_pop(S3),
     %[20|_] = S4,
-	%S5 = stack_push(40),
+	%S5 = stack_push(S4,40),
 	%[40|_] = S5,
     %S6 = stack_pop(S5),
     %[40|_] = S5,
