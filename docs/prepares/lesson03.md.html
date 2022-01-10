@@ -69,7 +69,7 @@
 <ol>
 <li>Implement the <code>map</code> function described above and write test code to convert a list of measurements in inches to a list of measurements in centimeters.  Use the formula <span class="katex--inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>i</mi><mi>n</mi><mo>=</mo><mn>2.54</mn><mi>c</mi><mi>m</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">1 in = 2.54 cm.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.65952em; vertical-align: 0em;"></span><span class="mord">1</span><span class="mord mathnormal">in</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.64444em; vertical-align: 0em;"></span><span class="mord">2.54</span><span class="mord mathnormal">c</span><span class="mord mathnormal">m</span><span class="mord">.</span></span></span></span></span></li>
 <li>Using the <code>map</code> function you wrote, use a simple cipher to encrypt a list of characters.  The simple cipher should shift all characters by 1 per the ASCII table.  For example, “PASSWORD” should be “QBTTXPSE”.  If you pass a string into the <code>map</code> function, it will treat it like a list.  In Erlang, the head of the string will be represented as the numeric ASCII value allowing you to perform math operations on it.</li>
-<li>Rewrite the <code>map</code> function using a list comprehension and test it with your cipher test code.  Call the new function <code>map2</code>.</li>
+<li>Rewrite the <code>map</code> function using a list comprehension and test it with your cipher test code.  Call the new function <code>map_2</code>.</li>
 </ol>
 <h2 id="part-2---filter">Part 2 - Filter</h2>
 <p>The <code>filter</code> function is a functor that converts from a list to a list just like the <code>map</code> function.  However, the lambda function used by <code>filter</code> is intended to return a boolean result that will be used to determine if the value in the original list will be included in the new list.</p>
@@ -112,7 +112,7 @@
 <h2 id="problem-set-2">Problem Set 2</h2>
 <ol>
 <li>Implement the <code>filter</code> function in Erlang.  Use a <code>case</code> block to determine whether an item in the list should be included.  Test the <code>filter</code> to get a list of even numbers from a list using the lambda described in the reading.</li>
-<li>Rewrite the <code>filter</code> function so that it uses a list comprehension instead of using the <code>case</code>.  Test the new function with the same lambda function in the previous problem.  Call the new function <code>filter2</code>.</li>
+<li>Rewrite the <code>filter</code> function so that it uses a list comprehension instead of using the <code>case</code>.  Test the new function with the same lambda function in the previous problem.  Call the new function <code>filter_2</code>.</li>
 <li>Use the <code>filter</code> functions you wrote to filter a list of temperatures (in Celsius) that will support liquid water (as opposed to frozen ice or boiling steam).</li>
 <li>Use the <code>filter</code> function you wrote to filter a list of result strings that started with the prefix “ERROR:”.  You will need to look for an appropriate string function in the Erlang library to do this task.</li>
 </ol>
