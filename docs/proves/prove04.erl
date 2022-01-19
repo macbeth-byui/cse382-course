@@ -20,11 +20,8 @@
 % Problem 3.1
 
 
-% Problem 3.2
+% Problem 3.4
 
-
-% Problem 3.3
-% Provide specification and definition (as comments) along with the code
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -71,7 +68,7 @@ test_ps2() ->
     % Test Problem 2.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Using the same lambda function from problem 1.2, test the foldr function.
+    % Using the same lambda function from problem 1.2, test the foldr function that you wrote.
 
 
     pass.
@@ -83,28 +80,22 @@ test_ps3() ->
     % Test Problem 3.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write test code to create a list of eight 9's using gensame
-
+    % Write test code using unfold to generate an arithmetic sequence as instructed
+    %[5, 10, 15, 20, 25, 30] = put_your_code_here,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 3.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write test code to create a list of five even numbers starting with 4 using genincr
-
+    % Write test code using unfold to generate a geometric sequence as instructed
+    %[1, 0.5, 0.25, 0.125, 0.0625, 0.03125] = put_your_code_here,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 3.3
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write test code to create a list starting at 5 and ending at 30 stepping by 5 using genstep
-
-
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Test Problem 3.4
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-    % Write test code to create a geometric series of length 6 starting with 1 with a step of 1/2 using genstep
+    %[3,7,11,15,19] = range(3,5,4),
+    %[10,20,30,40,50,60] = range(10, 6, 10),
 
 
     pass.
