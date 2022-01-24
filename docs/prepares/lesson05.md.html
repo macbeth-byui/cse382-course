@@ -142,9 +142,9 @@
 <h2 id="problem-set-2">Problem Set 2</h2>
 <ol>
 <li>Implement the <code>curry3</code> function described above.  Using the <code>curry3</code> function, curry the <code>alert</code> function provided in the starting code.  Test your code with the code provided.</li>
-<li>Save and use an intermediate function from the curried <code>alert</code> function that contains the location (first parameter).  Test your code by calling your intermediate function twice with different Category and Message values.</li>
+<li>Save and use an intermediate function from the curried <code>alert</code> function that contains the location (first parameter).  Test your code by calling your intermediate function twice with different Category (second parameter) and Message (third parameter) values.  You can make up the values for these last two parameters in your test code.</li>
 <li>Save and use an intermediate function that contains the location and category (first and second parameter). Test your code by calling your intermediate function twice with different Message values.</li>
-<li>Curry the <code>range_check</code> function provided in the starting code.  Use the curried function as the lambda function for a <code>filter</code> on a list.  Notice that the currying process converted the 3 input function to a 1 input function which is compatible with the <code>filter</code> function.  Test your code twice to filter a list of numbers within some range.</li>
+<li>Curry the <code>range_check</code> function provided in the starting code using the <code>curry3</code> function you wrote earlier.  Use the curried function as the lambda function for a <code>filter</code> on a list.  Notice that the currying process converted the 3 input function to a 1 input function which is compatible with the <code>filter</code> function.  Test your code twice to filter a list of numbers within some range.</li>
 </ol>
 <h2 id="part-3---partial-applications">Part 3 - Partial Applications</h2>
 <p>When we curried a function, we composed each parameter one at a time.  We did this by creating functions that handled each parameter one at a time.  Another approach is to split the function up into behavior and compose the behaviors one at a time.  Just like currying, we can save intermediate functions.  If the functions include behaviors, then these intermediate functions can have calculated results within them for reuse.  We call this a partial application.  While there are some similarities, please note that partial applications and currying is different.</p>
@@ -192,7 +192,7 @@
         <span class="token keyword">end</span>
     <span class="token keyword">end</span><span class="token punctuation">.</span>
 </code></pre>
-<p>With this code, we can create reusable partial application funcitons that do part of the processing:</p>
+<p>With this code, we can create reusable partial application functions that do part of the processing:</p>
 <pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">map_filter_fold_test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
     <span class="token comment">% Useful lambdas for the map_filter_fold2 to use.</span>
     <span class="token variable">Square</span> <span class="token operator">=</span> <span class="token keyword">fun</span><span class="token punctuation">(</span><span class="token variable">X</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token variable">X</span> <span class="token operator">*</span> <span class="token variable">X</span> <span class="token keyword">end</span><span class="token punctuation">,</span>
@@ -242,7 +242,7 @@
 <p>Test the <code>process_dataset2</code> function by creating the following partial application functions from <code>process_dataset2</code>:</p>
 <ul>
 <li>Read the entire dataset only once and then calculate the average wind chill and the average pressure.  The expected results for the dataset provided are an average wind chill of 12 and an average pressure of about 29.735.</li>
-<li>Read the <code>Weather</code> column only once and then count how many observations included <code>Windy</code> and how many observations included <code>Mist</code>.  The expected results for the dataset provided are a count of 19 windy observations and 7 misty observations.</li>
+<li>Read the entire dataset and parse out the <code>Weather</code> column only once and then count how many observations included <code>Windy</code> and how many observations included <code>Mist</code>.  The expected results for the dataset provided are a count of 19 windy observations and 7 misty observations.</li>
 </ul>
 </li>
 </ol>

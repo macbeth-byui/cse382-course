@@ -196,8 +196,11 @@ test_ps3() ->
     %165 = (First10Squares(Odd))(0, Sum),
     %14745600 = (First10Squares(Even))(1,Product),
 
-    % Write and test a partial application function to obtain the first 20 triples that are even
-
+    % Write and test a partial application function to obtain the first 20 triples that are even and
+	% test per the instructions.
+    %First20TriplesOnlyEven = write_code_here,
+    %330 = write_code_here,
+    %219419659468800 = write_code_here
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 3.2 & 3.3
