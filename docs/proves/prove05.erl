@@ -131,7 +131,9 @@ test_ps1() ->
     % Test Problem 1.4
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write test code to chain multiples_of_list to problem 1.2
+    % Write test code to chain multiples_of_list to problem 1.2 to find multiples of 8
+    %[16,24] = write_code_here,
+    %[24] = write_code_here,
 
 
     pass.
