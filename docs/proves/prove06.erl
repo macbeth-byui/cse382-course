@@ -51,7 +51,7 @@ check_length(Password) ->
 % Most of the list monad code is provided below.  Implement the pop and bind functions.
 create() -> {nil, 0}.
 
-push(List, Value) -> {{Value, List},1}.
+push(Value, List) -> {{Value, List},1}.
 
 len({_List, Length}) -> Length.
 
@@ -61,8 +61,8 @@ value({List, _Length}) -> List.
 
 % Problem 3.2
 % Complete the second clause of the concat function per the instructions.
-concat(List2, nil) -> {List2, 0};
-concat(List2, {First, Rest}) -> 
+concat(nil, List2) -> {List2, 0};
+concat({First, Rest}, List2) -> 
     put_your_code_here.
 
 
@@ -219,7 +219,6 @@ test_ps3() ->
     %L13 = {{7,{8,nil}},2},
     %L14 = bind(bind(L13, fun concat/2, [value(L11)]), fun concat/2, [value(L10)]),
     %L15 = bind(L13, fun concat/2, [value(bind(L11, fun concat/2, [value(L10)]))]),
-
     %{1,{2,{3,{4,{5,{6,{7,{8,nil}}}}}}}} = value(L14),
     %8 = len(L14),
     %{1,{2,{3,{4,{5,{6,{7,{8,nil}}}}}}}} = value(L15),
