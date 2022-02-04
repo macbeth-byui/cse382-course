@@ -60,6 +60,10 @@ value({List, _Length}) -> List.
 
 
 % Problem 3.2
+% Complete the second clause of the concat function per the instructions.
+concat(List2, nil) -> {List2, 0};
+concat(List2, {First, Rest}) -> 
+    put_your_code_here.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -129,15 +133,15 @@ test_ps2() ->
 
     %Password1 = "simple",
     %Result1 = result_bind(result_bind(result_bind(result_unit(), Password1, fun check_mixed_case/1), Password1, fun check_number_exists/1), Password1, fun check_length/1),
-    %io:format("Result1 = ~p~n",[Result1]),
+    %io:format("Result1 = ~p~n",[Result1]), % Should show error with all three errors in the list
 
     %Password2 = "mostlygood23",
     %Result2 = result_bind(result_bind(result_bind(result_unit(), Password2, fun check_mixed_case/1), Password2, fun check_number_exists/1), Password2, fun check_length/1),
-    %io:format("Result2 = ~p~n",[Result2]),
+    %io:format("Result2 = ~p~n",[Result2]), % Should show error with one error about missing an upper case letter
 
     %Password3 = "GoodPassword42",
     %Result3 = result_bind(result_bind(result_bind(result_unit(), Password3, fun check_mixed_case/1), Password3, fun check_number_exists/1), Password3, fun check_length/1),
-    %io:format("Result3 = ~p~n",[Result3]),
+    %io:format("Result3 = ~p~n",[Result3]), % Should show ok 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.3
