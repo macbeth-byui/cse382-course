@@ -121,8 +121,14 @@ test_ps2() ->
     %L7 = add_rbt(L6,8),
     %{black,4,{black,3,{red,2,nil,nil},nil},{red,6,{black,5,nil,nil},{black,7,nil,{red,8,nil,nil}}}} = L7,
 
-    %L8 = add_rbt(L7, 5), % Check a duplicate value
-    %{black,4,{black,3,{red,2,nil,nil},nil},{red,6,{black,5,nil,nil},{black,7,nil,{red,8,nil,nil}}}} = L8,
+    %L8 = add_rbt(L7, 10), 
+    %{black,6,{black,4,{black,3,{red,2,nil,nil},nil},{black,5,nil,nil}},{black,8,{black,7,nil,nil},{black,10,nil,nil}}} = L8,
+
+    %L9 = add_rbt(L8, 1), 
+    %{black,6,{black,4,{red,2,{black,1,nil,nil},{black,3,nil,nil}},{black,5,nil,nil}},{black,8,{black,7,nil,nil},{black,10,nil,nil}}} = L9,
+
+    %L10 = add_rbt(L9, 0), 
+    %{black,6,{black,4,{red,2,{black,1,{red,0,nil,nil},nil},{black,3,nil,nil}},{black,5,nil,nil}},{black,8,{black,7,nil,nil},{black,10,nil,nil}}} = L10,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.1
