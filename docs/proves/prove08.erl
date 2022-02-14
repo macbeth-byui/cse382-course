@@ -152,9 +152,11 @@ test_ps3() ->
     % Test Problem 3.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Write test code to compare performance of the binary search tree
-    % and the red black tree per the instructions.
+    % and the red black tree per the instructions.  You can use the List
+    % variable below when performing the foldl functions.
     
-    
+    List = lists:seq(1,10000),
+
     % Report your analysis of the performance results (as code comments) below:
 
     pass.
