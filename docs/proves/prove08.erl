@@ -19,12 +19,12 @@
 
 % Problem 2.1
 % Finish the add_rbt by implementing add_rbt_ and the remaining scenarios
-% for the balance function per the instructions.
-add_rbt(Tree, New_Value) -> 
-    {_Color, Value, Left, Right} = add_rbt_(Tree, New_Value),
+% for the balance function (scenario 1 is already implemented) per the instructions.
+add_rbt(New_Value, Tree) -> 
+    {_Color, Value, Left, Right} = add_rbt_(New_Value, Tree),
     {black, Value, Left, Right}.  % Change the root so its always black
 
-add_rbt_(_Tree, _New_Value) -> implement_this_function.
+add_rbt_(New_Value, Node) -> implement_code_here.
 
 balance({black,Z,{red,X,A,{red,Y,B,C}},D}) -> {red,Y,{black,X,A,B},{black,Z,C,D}};
 
@@ -55,42 +55,42 @@ test_ps1() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 1.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %L1 = add(nil, 5),
+    %L1 = add(5, nil),
     %{5,nil,nil} = L1,
 
-    %L2 = add(L1, 3),
+    %L2 = add(3, L1),
     %{5,{3,nil,nil},nil} = L2,
 
-    %L3 = add(L2, 7),
+    %L3 = add(7, L2),
     %{5,{3,nil,nil},{7,nil,nil}} = L3,
 
-    %L4 = add(L3, 4),
+    %L4 = add(4, L3),
     %{5,{3,nil,{4,nil,nil}},{7,nil,nil}} = L4,
 
-    %L5 = add(L4, 2),
+    %L5 = add(2, L4),
     %{5,{3,{2,nil,nil},{4,nil,nil}},{7,nil,nil}} = L5,
 
-    %L6 = add(L5, 6),
+    %L6 = add(6, L5),
     %{5,{3,{2,nil,nil},{4,nil,nil}},{7,{6,nil,nil},nil}} = L6,
 
-    %L7 = add(L6,8),
+    %L7 = add(8, L6),
     %{5,{3,{2,nil,nil},{4,nil,nil}},{7,{6,nil,nil},{8,nil,nil}}} = L7,
 
-    %L8 = add(L7, 5), % Check a duplicate value
+    %L8 = add(5, L7), % Check a duplicate value
     %{5,{3,{2,nil,nil},{4,nil,nil}},{7,{6,nil,nil},{8,nil,nil}}} = L8,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 1.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %false = contains(L8, 1),
-    %true = contains(L8, 2),
-    %true = contains(L8, 3),
-    %true = contains(L8, 4),
-    %true = contains(L8, 5),
-    %true = contains(L8, 6),
-    %true = contains(L8, 7),
-    %true = contains(L8, 8),
-    %false = contains(L8, 9),
+    %false = contains(1, L8),
+    %true = contains(2, L8),
+    %true = contains(3, L8),
+    %true = contains(4, L8),
+    %true = contains(5, L8),
+    %true = contains(6, L8),
+    %true = contains(7, L8),
+    %true = contains(8, L8),
+    %false = contains(9, L8),
 
     pass.
 
@@ -100,48 +100,48 @@ test_ps2() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %L1 = add_rbt(nil, 5),
+    %L1 = add_rbt(5, nil),
     %{black,5,nil,nil} = L1,
 
-    %L2 = add_rbt(L1, 3),
+    %L2 = add_rbt(3, L1),
     %{black,5,{red,3,nil,nil},nil} = L2,
 
-    %L3 = add_rbt(L2, 7),
+    %L3 = add_rbt(7, L2),
     %{black,5,{red,3,nil,nil},{red,7,nil,nil}} = L3,
 
-    %L4 = add_rbt(L3, 4),
+    %L4 = add_rbt(4, L3),
     %{black,4,{black,3,nil,nil},{black,5,nil,{red,7,nil,nil}}} = L4,
     
-    %L5 = add_rbt(L4, 2),
+    %L5 = add_rbt(2, L4),
     %{black,4,{black,3,{red,2,nil,nil},nil},{black,5,nil,{red,7,nil,nil}}} = L5,
 
-    %L6 = add_rbt(L5, 6),
+    %L6 = add_rbt(6, L5),
     %{black,4,{black,3,{red,2,nil,nil},nil},{red,6,{black,5,nil,nil},{black,7,nil,nil}}} = L6,
 
-    %L7 = add_rbt(L6,8),
+    %L7 = add_rbt(8, L6),
     %{black,4,{black,3,{red,2,nil,nil},nil},{red,6,{black,5,nil,nil},{black,7,nil,{red,8,nil,nil}}}} = L7,
 
-    %L8 = add_rbt(L7, 10), 
+    %L8 = add_rbt(10, L7), 
     %{black,6,{black,4,{black,3,{red,2,nil,nil},nil},{black,5,nil,nil}},{black,8,{black,7,nil,nil},{black,10,nil,nil}}} = L8,
 
-    %L9 = add_rbt(L8, 1), 
+    %L9 = add_rbt(1, L8), 
     %{black,6,{black,4,{red,2,{black,1,nil,nil},{black,3,nil,nil}},{black,5,nil,nil}},{black,8,{black,7,nil,nil},{black,10,nil,nil}}} = L9,
 
-    %L10 = add_rbt(L9, 0), 
+    %L10 = add_rbt(0, L9), 
     %{black,6,{black,4,{red,2,{black,1,{red,0,nil,nil},nil},{black,3,nil,nil}},{black,5,nil,nil}},{black,8,{black,7,nil,nil},{black,10,nil,nil}}} = L10,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %false = contains_rbt(L8, 1),
-    %true = contains_rbt(L8, 2),
-    %true = contains_rbt(L8, 3),
-    %true = contains_rbt(L8, 4),
-    %true = contains_rbt(L8, 5),
-    %true = contains_rbt(L8, 6),
-    %true = contains_rbt(L8, 7),
-    %true = contains_rbt(L8, 8),
-    %false = contains_rbt(L8, 9),
+    %false = contains_rbt(-1, L10),
+    %true = contains_rbt(2, L10),
+    %true = contains_rbt(3, L10),
+    %true = contains_rbt(4, L10),
+    %true = contains_rbt(5, L10),
+    %true = contains_rbt(6, L10),
+    %true = contains_rbt(7, L10),
+    %true = contains_rbt(8, L10),
+    %false = contains_rbt(9, L10),
 
     pass.
 
@@ -151,7 +151,7 @@ test_ps3() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 3.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Write test code to compare performane of the binary search tree
+    % Write test code to compare performance of the binary search tree
     % and the red black tree per the instructions.
     
     
