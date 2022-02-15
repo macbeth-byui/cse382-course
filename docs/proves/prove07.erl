@@ -84,11 +84,11 @@ test_ps1() ->
     %{10, Stream5} = Stream4(),
     %{undefined, done} = Stream5(),
 
-    %Stream6 = range(1,10,4),
-    %{1, Stream7} = Stream6(),
-    %{5, Stream8} = Stream7(),
-    %{9, Stream9} = Stream8(),
-    %{undefined, done} = Stream9(),   
+    %Stream6 = range(10,1,-4),
+    %{10, Stream7} = Stream6(),
+    %{6, Stream8} = Stream7(),
+    %{2, Stream9} = Stream8(),
+    %{undefined, done} = Stream9(), 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 1.2
