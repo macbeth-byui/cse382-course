@@ -131,7 +131,7 @@ test_ps2() ->
     %{black,6,{black,4,{red,2,{black,1,{red,0,nil,nil},nil},{black,3,nil,nil}},{black,5,nil,nil}},{black,8,{black,7,nil,nil},{black,10,nil,nil}}} = L10,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Test Problem 2.1
+    % Test Problem 2.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     %false = contains_rbt(-1, L10),
     %true = contains_rbt(2, L10),
