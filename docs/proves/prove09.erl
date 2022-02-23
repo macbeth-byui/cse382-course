@@ -47,7 +47,7 @@ test_ps1() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Note that this test code when first executed will not perform the swaps
     % When Problem 2.1 is implemented, this code will behave differently.
-    %H = lists:foldl(fun (Value,Acc) -> insert(Value, Acc) end, nil, [10,15,20,5,12,17,19,20,21,13,8,1]),
+    %H = lists:foldl(fun insert/2, nil, [10,15,20,5,12,17,19,20,21,13,8,1]),
     %io:format("~p~n",[H]),
 
     % The result without swapping should be:
@@ -68,13 +68,13 @@ test_ps2() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %H = lists:foldl(fun (Value,Acc) -> insert(Value, Acc) end, nil, [10,15,20,5,12,17,19,20,21,13,8,1]),
+    %H = lists:foldl(fun insert/2, nil, [10,15,20,5,12,17,19,20,21,13,8,1]),
     %{1,1,{2,5,{2,10,{1,15,nil,nil},{1,20,nil,nil}},{1,8,{2,12,{2,19,{1,20,nil,nil},{1,21,nil,nil}},{1,13,{1,17,nil,nil},nil}},nil}},nil} = H,   
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %H1 = lists:foldl(fun (Value,Acc) -> insert(Value, Acc) end, nil, [10,15,20,5,12,17,19]),    
+    %H1 = lists:foldl(fun insert/2, nil, [10,15,20,5,12,17,19]),    
     %{3,5,{2,10,{1,15,nil,nil},{1,20,nil,nil}},{2,12,{1,17,nil,nil},{1,19,nil,nil}}} = H1,
 
     %H2 = remove_min(H1),
