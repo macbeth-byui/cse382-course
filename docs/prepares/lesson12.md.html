@@ -15,9 +15,9 @@
 <ul>
 <li><a href="#cse-382-lesson-12---queues-and-deques">CSE 382 Lesson 12 - Queues and Deques</a>
 <ul>
-<li><a href="#part-1---using-stacks-for-a-queue">Part 1 - Using Stacks for a Queue</a></li>
+<li><a href="#part-1---queues">Part 1 - Queues</a></li>
 <li><a href="#problem-set-1">Problem Set 1</a></li>
-<li><a href="#part-2---deque">Part 2 - Deque</a></li>
+<li><a href="#part-2---deques">Part 2 - Deques</a></li>
 <li><a href="#problem-set-2">Problem Set 2</a></li>
 <li><a href="#part-3---performance">Part 3 - Performance</a></li>
 <li><a href="#problem-set-3">Problem Set 3</a></li>
@@ -32,7 +32,7 @@
       <h1 id="cse-382-lesson-12---queues-and-deques">CSE 382 Lesson 12 - Queues and Deques</h1>
 <p>In Erlang you have noticed that it is more efficient to access the front of a list as opposed to the back of the list.  This means that it is very efficient to implement a stack.  Queues on the other hand are more expensive since we have to recursively traverse to the end of the list to enqueue new values.  To resolve this problem we will use a technique that combines two stacks together to form a queue.</p>
 <p>You can find the template for the problem sets in this lesson here: <a href="https://macbeth-byui.github.io/cse382-course/proves/prove12.erl">prove12.erl</a></p>
-<h2 id="part-1---using-stacks-for-a-queue">Part 1 - Using Stacks for a Queue</h2>
+<h2 id="part-1---queues">Part 1 - Queues</h2>
 <p>The basic functions of a queue include the ability to do the following:</p>
 <ul>
 <li><code>enqueue</code> - insert a new value at the back (or end) of the queue</li>
@@ -159,7 +159,7 @@
 <ol>
 <li>Implement the <code>enqueue</code>, <code>dequeue</code>, and <code>head</code> functions as described in the definitions above.  Use the test code provided to verify your implementations.  A <code>create</code> and <code>empty</code> function are already provided for you.</li>
 </ol>
-<h2 id="part-2---deque">Part 2 - Deque</h2>
+<h2 id="part-2---deques">Part 2 - Deques</h2>
 <p>Common queue implementations also include double-ended support.  Called a deque (pronounced ‘deck’), this should include support for the following additional functions:</p>
 <ul>
 <li><code>enqueue_front</code> - insert a new value at the front of the queue</li>
