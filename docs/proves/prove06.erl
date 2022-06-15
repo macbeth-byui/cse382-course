@@ -113,7 +113,7 @@ test_ps1() ->
 
 
 
-    pass.
+    ok.
 
 % Test code for problem set 2
 test_ps2() ->
@@ -157,7 +157,7 @@ test_ps2() ->
     Result3_With_Fold = put_your_fold_here,
     io:format("Result3_With_Fold = ~p~n",[Result3_With_Fold]),
 
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -224,4 +224,4 @@ test_ps3() ->
     %{1,{2,{3,{4,{5,{6,{7,{8,nil}}}}}}}} = value(L15),
     %8 = len(L15),
 
-    pass.
+    ok.

@@ -119,7 +119,7 @@ test_ps1() ->
     % Q18 = dequeue(Q17),
     % check_queue(Q18,nil,true),
 
-    pass.
+    ok.
 
 % Test code for problem set 2
 test_ps2() ->
@@ -182,7 +182,7 @@ test_ps2() ->
     % Q24 = dequeue(Q23),
     % check_deque(Q24,nil,nil,true),
   
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -207,4 +207,4 @@ test_ps3() ->
 
 
 
-    pass.
+    ok.

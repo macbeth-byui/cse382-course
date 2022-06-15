@@ -109,7 +109,7 @@ test_ps1() ->
     %Stream19 = words(""),
     %{undefined, done} = Stream19(),
 
-    pass.
+    ok.
 
 % Test code for problem set 2
 test_ps2() ->
@@ -121,7 +121,7 @@ test_ps2() ->
     
     %["The","cow","jumped","over","the","moon"] = collect(iter(words("The cow jumped over the moon"))),
 
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -147,4 +147,4 @@ test_ps3() ->
     %40.0 = send_to_server(Server2_PID, add, {60}),    % 20, 40, 60
     %42.5 = send_to_server(Server2_PID, add, {50}),    % 20, 40, 60, 50
 
-    pass.
+    ok.

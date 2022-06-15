@@ -92,7 +92,7 @@ test_ps1() ->
     %true = contains(8, L8),
     %false = contains(9, L8),
 
-    pass.
+    ok.
 
 % Test code for problem set 2
 test_ps2() ->
@@ -143,7 +143,7 @@ test_ps2() ->
     %true = contains_rbt(8, L10),
     %false = contains_rbt(9, L10),
 
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -159,4 +159,4 @@ test_ps3() ->
 
     % Report your analysis of the performance results (as code comments) below:
 
-    pass.
+    ok.

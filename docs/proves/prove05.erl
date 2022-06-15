@@ -136,7 +136,7 @@ test_ps1() ->
     %[24] = write_code_here,
 
 
-    pass.
+    ok.
 
 % Test code for problem set 2
 test_ps2() ->
@@ -171,7 +171,7 @@ test_ps2() ->
     % a list of numbers.  Test this in two different examples.
 
 
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -220,4 +220,4 @@ test_ps3() ->
 
     
     
-    pass.
+    ok.

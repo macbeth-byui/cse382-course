@@ -78,7 +78,7 @@ test_ps1() ->
     % T7 = add("dog",T6),
     % #{99 := #{111 := #{108 := #{100 := #{done := nil}},119 := #{done := nil}}}, 100 := #{97 := #{116 := #{101 := #{done := nil}}, 121 := #{115 := #{done := nil},done := nil}}, 111 := #{103 := #{done := nil}}}, done := nil} = T7,
 
-    pass.
+    ok.
 
 % Test code for problem set 2
 test_ps2() ->
@@ -108,7 +108,7 @@ test_ps2() ->
     % 7 = count(Trie),
     % 0 = count(nil),
     
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -128,4 +128,4 @@ test_ps3() ->
     io:format("Size List = ~p  Size Trie = ~p~n",[SizeList, SizeTrie]),
 
 
-    pass.
+    ok.

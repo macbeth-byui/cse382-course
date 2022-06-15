@@ -59,7 +59,7 @@ test_ps1() ->
     % Write the lambda funciton and call the fold to reverse a list
 
 
-    pass.
+    ok.
 
 % Test code for problem set 2
 test_ps2() ->
@@ -71,7 +71,7 @@ test_ps2() ->
     % Using the same lambda function from problem 1.2, test the foldr function that you wrote.
 
 
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -98,4 +98,4 @@ test_ps3() ->
     %[10,20,30,40,50,60] = range(10, 6, 10),
 
 
-    pass.
+    ok.

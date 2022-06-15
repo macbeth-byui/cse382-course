@@ -124,7 +124,7 @@ test_ps2() ->
     %[{-3,3},{-2,2},{-1,1},{0,0},{1,1},{2,2},{3,3}] = plot(put_function_here),
     %[{-3,-1.0},{-2,-1.0},{-1,-1.0},{0,0.0},{1,0.0},{2,0.0},{3,1.0}] = plot(put_function_here),
 
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -161,5 +161,5 @@ test_ps3() ->
     %[] = quicksort([]),
     %[1,2,3,4,5] = quicksort([3,1,5,4,2]),
 
-    pass.
+    ok.
 

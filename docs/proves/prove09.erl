@@ -60,7 +60,7 @@ test_ps1() ->
     %       {6,15,nil,
     %        {5,17,nil,{4,19,nil,{3,20,nil,{2,20,nil,{1,21,nil,nil}}}}}}}}}}}}
 
-    pass.
+    ok.
 
 % Test code for problem set 2
 test_ps2() ->
@@ -98,7 +98,7 @@ test_ps2() ->
     %H8 = remove_min(H7),
     %nil = H8,
 
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -132,4 +132,4 @@ test_ps3() ->
 
     % There is no test code for Problem 3.2 ... that is just an optional observation.
 
-    pass.
+    ok.

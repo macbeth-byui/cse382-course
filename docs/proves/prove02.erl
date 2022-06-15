@@ -85,7 +85,7 @@ test_ps1() ->
     %4 = tail([1,2,3,4]),
     %nil = tail([]),
 
-    pass.
+    ok.
 
 % Test code for problem set 2
 test_ps2() ->
@@ -126,7 +126,7 @@ test_ps2() ->
     %[1,2,3,4] = remove_at([1,2,3,4], 4),
     %[1,2,3,4] = remove_at([1,2,3,4], -1),
 
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -144,5 +144,5 @@ test_ps3() ->
     %[5,4,3,2,1] = backwards([1,2,3,4,5]),
     %[] = backwards([]),
 
-    pass.
+    ok.
 

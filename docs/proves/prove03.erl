@@ -53,7 +53,7 @@ test_ps1() ->
 
 
 
-    pass.
+    ok.
 
 % Test code for problem set 2
 test_ps2() ->
@@ -99,7 +99,7 @@ test_ps2() ->
 
 
     
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -119,4 +119,4 @@ test_ps3() ->
 
 
 
-    pass.
+    ok.

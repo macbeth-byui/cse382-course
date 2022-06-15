@@ -86,7 +86,7 @@ test_ps1() ->
     % {node,8,{node,4,{node,2,{leaf,800},{leaf,700}},{node,2,{leaf,600},{leaf,500}}},{node,4,{node,2,{leaf,400},{leaf,300}},{node,2,{leaf,200},{leaf,100}}}}
     %] = RAL8, 
 
-    pass.
+    ok.
 
 % Test code for problem set 2
 test_ps2() ->
@@ -136,7 +136,7 @@ test_ps2() ->
     % {node,4,{node,2,{leaf,400},{leaf,333}},{node,2,{leaf,200},{leaf,111}}}
     %] = RAL10,
     
-    pass.
+    ok.
 
 % Test code for problem set 3
 test_ps3() ->
@@ -148,4 +148,4 @@ test_ps3() ->
     % Add test code to compare the performance of RAL with 
     % Erlang list per the instructions
 
-    pass.
+    ok.
