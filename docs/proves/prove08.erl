@@ -1,12 +1,13 @@
 % CSE 382 Prove 08
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed in a public file sharing site.
+% file completed or uncompleted in a public file sharing site.
 
 % Instructions: Use this template file for this prove assignment.
 % The details of what to do for each problem are found in 
 % the reading. IMPORTANT: Comment out code that is not 
-% running properly.  The `test_ps#` functions should return `pass`.
+% running properly.  The `test_ps#` functions should return `ok`.
+% When writing tests use the `expected_result` = `actual result` format.
 
 -module(prove08).
 -export([test_ps1/0, test_ps2/0, test_ps3/0]).
@@ -36,14 +37,12 @@ balance(Node) -> Node.
 % The following functions are fully implemented for use by the Problem 3.1 test
 % code.
 start_perf() ->
-    eprof:start(),
     eprof:start_profiling([self()]).
 
 stop_perf(Title) ->
     io:format("Perf (~p): ~n",[Title]),
     eprof:stop_profiling(),
-    eprof:analyze(total),
-    eprof:stop().
+    eprof:analyze(total).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Test Code
@@ -157,6 +156,6 @@ test_ps3() ->
     
     List = lists:seq(1,10000),
 
-    % Report your analysis of the performance results (as code comments) below:
+    % Observations (see instructions):  
 
     ok.

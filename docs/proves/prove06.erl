@@ -1,12 +1,13 @@
 % CSE 382 Prove 06
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed in a public file sharing site.
+% file completed or uncompleted in a public file sharing site.
 
 % Instructions: Use this template file for this prove assignment.
 % The details of what to do for each problem are found in 
 % the reading. IMPORTANT: Comment out code that is not 
-% running properly.  The `test_ps#` functions should return `pass`.
+% running properly.  The `test_ps#` functions should return `ok`.
+% When writing tests use the `expected_result` = `actual result` format.
 
 -module(prove06).
 -export([test_ps1/0, test_ps2/0, test_ps3/0]).
@@ -60,10 +61,10 @@ value({List, _Length}) -> List.
 
 
 % Problem 3.2
-% Complete the second clause of the concat function per the instructions.
-concat(nil, List2) -> {List2, 0};
-concat({First, Rest}, List2) -> 
-    put_your_code_here.
+% The push2 function is implemented below.  Implement the pop2 and bind2 per the instructions.
+push2(Value, List) -> {ok, {{Value, List},1}}.
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -78,7 +79,7 @@ test_ps1() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     A1 = {"Bob", "1234", 100},
-    A2 = {"Tim", "2424", 200},
+    A2 = {"Tim", "2424", 600},
     A3 = {"Sue", "5851", 500},
 
     % Write test code to demonstrate the associative property with combineAccounts using the 3 accounts above
@@ -88,11 +89,11 @@ test_ps1() ->
     % Test Problem 1.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    A4 = {"Edward", "8879", 300},
+    A4 = {"Edward", "8879", 3000},
     A5 = {"George", "5546", 50},
 
     % Write test code using a fold to combine all 5 accounts into one account for Bob (A1)
-
+    % {"Edward", "8879", 4250} = put_your_foldl_code_here,
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -103,7 +104,7 @@ test_ps1() ->
     F2 = fun string:trim/1,
     F3 = fun string:reverse/1,
 
-    % Write test code to demonstrate the associate property with combineFunctions using the 3 functions above
+    % Write test code to demonstrate the associate property of combineFunctions using the 3 functions above
 
 
 
@@ -111,6 +112,9 @@ test_ps1() ->
     % Test Problem 1.4
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+    % Write test code to combine all three functions in the previous problem using a foldl per the instructions
+    % All_Combined = put_your_foldl_code_here,
+    % "FEDCBA" = All_Combined("   abCDef  "),
 
 
     ok.
@@ -206,22 +210,24 @@ test_ps3() ->
     % Test Problem 3.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    %L10 = {{1,{2,{3,nil}}},3},
-    %L11 = {{4,{5,{6,nil}}},3},
-    %L12 = bind(L11, fun concat/2, [value(L10)]),
-    %{1,{2,{3,{4,{5,{6,nil}}}}}} = value(L12),
-    %6 = len(L12),
+    % L10 = bind2(L9, fun push2/2, [100]),
+    % {100, nil} = value(L10),
+    % 1 = len(L10),
 
-    % To show associative property, both sides are demonstrated:
-    %    L14: L10++(L11++L13)
-    %    L15: (L10++L11)++L13  
+    % L11 = bind2(L10, fun push2/2, [200]),
+    % {200, {100, nil}} = value(L11),
+    % 2 = len(L11),
 
-    %L13 = {{7,{8,nil}},2},
-    %L14 = bind(bind(L13, fun concat/2, [value(L11)]), fun concat/2, [value(L10)]),
-    %L15 = bind(L13, fun concat/2, [value(bind(L11, fun concat/2, [value(L10)]))]),
-    %{1,{2,{3,{4,{5,{6,{7,{8,nil}}}}}}}} = value(L14),
-    %8 = len(L14),
-    %{1,{2,{3,{4,{5,{6,{7,{8,nil}}}}}}}} = value(L15),
-    %8 = len(L15),
+    % L12 = bind2(L11, fun pop2/1, []),
+    % {100, nil} = value(L12),
+    % 1 = len(L12),
+
+    % L13 = bind2(L12, fun pop2/1, []),
+    % nil = value(L13),
+    % 0 = len(L13),
+
+    % L14 = bind2(L13, fun pop2/1, []),
+    % nil = value(L14),
+    % 0 = len(L14),
 
     ok.

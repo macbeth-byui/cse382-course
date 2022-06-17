@@ -6,7 +6,7 @@
 % Instructions: Use this template file for this prove assignment.
 % The details of what to do for each problem are found in 
 % the reading. IMPORTANT: Comment out code that is not 
-% running properly.  The `test_ps#` functions should return `pass`.
+% running properly.  The `test_ps#` functions should return `ok`.
 
 % To run your Erlang code:
 % 1) Make sure you terminal is in the same folder as your code

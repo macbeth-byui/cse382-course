@@ -1,12 +1,13 @@
 % CSE 382 Prove 09
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed in a public file sharing site.
+% file completed or uncompleted in a public file sharing site.
 
 % Instructions: Use this template file for this prove assignment.
 % The details of what to do for each problem are found in 
 % the reading. IMPORTANT: Comment out code that is not 
-% running properly.  The `test_ps#` functions should return `pass`.
+% running properly.  The `test_ps#` functions should return `ok`.
+% When writing tests use the `expected_result` = `actual result` format.
 
 -module(prove09).
 -export([test_ps1/0, test_ps2/0, test_ps3/0]).
@@ -27,7 +28,7 @@ make(Value, Left, Right) ->
 % Problem 2.2
 
 
-% Problem 3.2
+% Problem 3.1
 % Implement the remove_min/2, insert/3, and merge/3 to take the compare lambda parameter.
 % The get_min function is provided for you to support the test code.
 get_min(nil) -> nil;
@@ -130,6 +131,5 @@ test_ps3() ->
     %{"EST",4,"Bob"} = get_min(PQ6),
     %nil = remove_min(PQ6, Calls_Compare),    
 
-    % There is no test code for Problem 3.2 ... that is just an optional observation.
 
     ok.

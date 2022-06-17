@@ -1,12 +1,13 @@
 % CSE 382 Prove 10
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed in a public file sharing site.
+% file completed or uncompleted in a public file sharing site.
 
 % Instructions: Use this template file for this prove assignment.
 % The details of what to do for each problem are found in 
 % the reading. IMPORTANT: Comment out code that is not 
-% running properly.  The `test_ps#` functions should return `pass`.
+% running properly.  The `test_ps#` functions should return `ok`.
+% When writing tests use the `expected_result` = `actual result` format.
 
 -module(prove10).
 -export([test_ps1/0, test_ps2/0, test_ps3/0]).
@@ -23,14 +24,12 @@
 
 % Code for use in Problem 3.1
 start_perf() ->
-    eprof:start(),
     eprof:start_profiling([self()]).
 
 stop_perf(Title) ->
     io:format("Perf (~p): ~n",[Title]),
     eprof:stop_profiling(),
-    eprof:analyze(total),
-    eprof:stop().
+    eprof:analyze(total).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Test Code
@@ -147,5 +146,8 @@ test_ps3() ->
 
     % Add test code to compare the performance of RAL with 
     % Erlang list per the instructions
+
+
+    % Observations (see instructions): 
 
     ok.

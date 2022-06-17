@@ -1,12 +1,13 @@
 % CSE 382 Prove 07
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed in a public file sharing site.
+% file completed or uncompleted in a public file sharing site.
 
 % Instructions: Use this template file for this prove assignment.
 % The details of what to do for each problem are found in 
 % the reading. IMPORTANT: Comment out code that is not 
-% running properly.  The `test_ps#` functions should return `pass`.
+% running properly.  The `test_ps#` functions should return `ok`.
+% When writing tests use the `expected_result` = `actual result` format.
 
 -module(prove07).
 -export([test_ps1/0, test_ps2/0, test_ps3/0, handle_server/0]).
@@ -37,10 +38,7 @@ iter(Stream) -> {undefined, Stream}.
 next({_,done}) -> {undefined, done};
 next({_,Lambda}) -> Lambda().
 
-value({Value,_Lambda}) -> Value.
-lambda({_Value,Lambda}) -> Lambda.
-
-collect(Stream) -> collect(Stream, []).
+collect(Stream) -> collect(iter(Stream), []).
 collect(Stream, Result) -> add_your_code_here.
 
 
@@ -117,9 +115,9 @@ test_ps2() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %[2,4,6,8,10] = collect(iter(range(2,10,2))),
+    % [2,4,6,8,10] = collect(range(2,10,2)),
     
-    %["The","cow","jumped","over","the","moon"] = collect(iter(words("The cow jumped over the moon"))),
+    % ["The","cow","jumped","over","the","moon"] = collect(words("The cow jumped over the moon")),
 
     ok.
 
@@ -146,5 +144,6 @@ test_ps3() ->
     %30.0 = send_to_server(Server2_PID, remove, {30}), % 20, 40
     %40.0 = send_to_server(Server2_PID, add, {60}),    % 20, 40, 60
     %42.5 = send_to_server(Server2_PID, add, {50}),    % 20, 40, 60, 50
+    %42.5 = send_to_server(Server2_PID, display, {}),
 
     ok.

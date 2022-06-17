@@ -48,7 +48,7 @@
     <span class="token number">6.0</span> <span class="token operator">=</span> <span class="token function">twice</span><span class="token punctuation">(</span><span class="token function">third</span><span class="token punctuation">(</span><span class="token function">square</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token number">4.0</span> <span class="token operator">=</span> <span class="token function">square</span><span class="token punctuation">(</span><span class="token function">twice</span><span class="token punctuation">(</span><span class="token function">third</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token number">2.0</span> <span class="token operator">=</span> <span class="token function">twice</span><span class="token punctuation">(</span><span class="token function">square</span><span class="token punctuation">(</span><span class="token function">third</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token atom">pass</span><span class="token punctuation">.</span>
+    <span class="token atom">ok</span><span class="token punctuation">.</span>
 </code></pre>
 <p>Note that we were able to chain the functions in all various permutations because each of the functions had a single number input and single number output.</p>
 <p>If you think about the <code>map</code> and <code>filter</code> functions, these could be chained together because they both have a single list as an input and output.  You will make this observation in the exercises below.</p>
@@ -78,11 +78,11 @@
    <span class="token comment">% then multiply all items by 2.</span>
    <span class="token punctuation">[</span><span class="token number">24</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">multiply_list</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">greater_list</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token variable">L</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 
-   <span class="token atom">pass</span><span class="token punctuation">.</span>
+   <span class="token atom">ok</span><span class="token punctuation">.</span>
 </code></pre>
 <h2 id="problem-set-1">Problem Set 1</h2>
 <ol>
-<li>Chain the <code>map</code>, <code>filter</code>, and <code>foldl</code> Erlang functions together (single line of code) as follows:</li>
+<li>Chain the <code>map</code>, <code>filter</code>, and <code>foldl</code> Erlang functions together (<strong>single line of code</strong>) as follows:</li>
 </ol>
 <ul>
 <li>Use <code>map</code> to triple all the values in the starting list <code>[1,2,3,4,5,6,7,8,9,10]</code></li>
@@ -92,7 +92,6 @@
 <ol start="2">
 <li>Implement the <code>greater_list</code> function provided above and the <code>multiply_list</code> function defined above.  Test it with the code provided in the template.</li>
 <li>Create a <code>multiples_of_list</code> function that takes an integer parameter <code>Value</code> and returns a function that will perform the appropriate filter on a list of integers.  The filter should only include values in the list that are multiples of <code>Value</code>.  Include a specification and definition for the function.  Test it with the code provided in the template.</li>
-<li>Chain <code>multiples_of_list</code> with the test code from problem 2 above to include only multiples of eight.</li>
 </ol>
 <h2 id="part-2---currying">Part 2 - Currying</h2>
 <p>With chaining, we were able to compose functions together serially.  With currying, we are able to compose input parameters to a function serially.  This done by creating functions to handle each input parameter.</p>
@@ -111,14 +110,14 @@
 
 <span class="token function">test_curry</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
     <span class="token number">14</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">add3_curry</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token atom">pass</span><span class="token punctuation">.</span>
+    <span class="token atom">ok</span><span class="token punctuation">.</span>
 </code></pre>
 <p>We can call the curried function and chain the inputs together.  A useful use of a curried function is to save one of the inner functions.  For example, if we frequently want to add 2 and 5 with other numbers, we can create a function <code>Add3_StartWith2And5</code>.</p>
 <pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">test_curry</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
     <span class="token variable">Add3_StartWith2And5</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">add3_curry</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token number">14</span> <span class="token operator">=</span> <span class="token variable">Add3_StartWith2And5</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token number">17</span> <span class="token operator">=</span> <span class="token variable">Add3_StartWith2And5</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
-    <span class="token atom">pass</span><span class="token punctuation">.</span>
+    <span class="token atom">ok</span><span class="token punctuation">.</span>
 </code></pre>
 <p>A generic function can be written to curry a function for specific number of input parameters.  For example, to support our <code>add3</code> function, we can write a function called <code>curry3</code>.  The input parameter for the <code>curry3</code> is the function we want to curry.</p>
 <blockquote>
@@ -137,14 +136,14 @@
     <span class="token variable">Add3_StartWith2And5</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">curry3</span><span class="token punctuation">(</span><span class="token keyword">fun</span> <span class="token atom">add3</span><span class="token operator">/</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token number">14</span> <span class="token operator">=</span> <span class="token variable">Add3_StartWith2And5</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token number">17</span> <span class="token operator">=</span> <span class="token variable">Add3_StartWith2And5</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token atom">pass</span><span class="token punctuation">.</span>
+    <span class="token atom">ok</span><span class="token punctuation">.</span>
 </code></pre>
 <h2 id="problem-set-2">Problem Set 2</h2>
 <ol>
 <li>Implement the <code>curry3</code> function described above.  Using the <code>curry3</code> function, curry the <code>alert</code> function provided in the starting code.  Test your code with the code provided.</li>
 <li>Save and use an intermediate function from the curried <code>alert</code> function that contains the location (first parameter).  Test your code by calling your intermediate function twice with different Category (second parameter) and Message (third parameter) values.  You can make up the values for these last two parameters in your test code.</li>
 <li>Save and use an intermediate function that contains the location and category (first and second parameter). Test your code by calling your intermediate function twice with different Message values.</li>
-<li>Curry the <code>range_check</code> function provided in the starting code using the <code>curry3</code> function you wrote earlier.  Use the curried function as the lambda function for a <code>filter</code> on a list.  Notice that the currying process converted the 3 input function to a 1 input function which is compatible with the <code>filter</code> function.  Test your code twice to filter a list of numbers within some range.</li>
+<li>The provided  <code>range_check</code> function takes a range (specified by the first two parameters <code>low</code> and <code>high</code>) and a value to test.  This function is not compatible with the <code>filter</code> function because it has arity 3.  Use the <code>curry3</code> to generate a function that checks if a value is in the specific range [10,20].  Apply this new function to the list provided in the provided starting code to find all numbers in the range [10,20] using the <code>filter</code> function.</li>
 </ol>
 <h2 id="part-3---partial-applications">Part 3 - Partial Applications</h2>
 <p>When we curried a function, we composed each parameter one at a time.  We did this by creating functions that handled each parameter one at a time.  Another approach is to split the function up into behavior and compose the behaviors one at a time.  Just like currying, we can save intermediate functions.  If the functions include behaviors, then these intermediate functions can have calculated results within them for reuse.  We call this a partial application.  While there are some similarities, please note that partial applications and currying is different.</p>
@@ -215,13 +214,13 @@
     <span class="token number">270</span> <span class="token operator">=</span> <span class="token variable">First20TriplesOnlyEven</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token variable">Sum</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token number">3656994324480</span> <span class="token operator">=</span> <span class="token variable">First20TriplesOnlyEven</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token variable">Product</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 
-    <span class="token atom">pass</span><span class="token punctuation">.</span>
+    <span class="token atom">ok</span><span class="token punctuation">.</span>
 
 </code></pre>
 <h2 id="problem-set-3">Problem Set 3</h2>
 <ol>
 <li>
-<p>Implement the <code>map_filter_fold2</code> code above.  Test the function with the test code provided in the starting code.  Write an additional partial application function that obtains the first 20 triples that are even (uses all parts of <code>map_filter_fold2</code> except the application of the fold).  Test your partial application function to calculate both the sum of all of the numbers (it should result in 330) and the product of all of the numbers (219419659468800).</p>
+<p>Implement the <code>map_filter_fold2</code> code above.  Test the function with the test code provided in the starting code.  Write an additional partial application function that obtains the first 20 triples that are even (uses all parts of <code>map_filter_fold2</code> except the application of the fold and save into the variable <code>First20TriplesOnlyEven</code> provided in the test code).  Test your partial application function to calculate both the sum of all of the numbers (it should result in 330) and the product of all of the numbers (219419659468800).</p>
 </li>
 <li>
 <p>Review the <code>process_dataset</code> function (there is some test code you can run as well) which has input parameters as follows:</p>
@@ -237,13 +236,7 @@
 <li>Extract a column from the dataset using a user supplied column number and column type using the <code>extract_column_array</code> function.</li>
 <li>Perform a user supplied function on the column</li>
 </ul>
-</li>
-<li>
-<p>Test the <code>process_dataset2</code> function by creating the following partial application functions from <code>process_dataset2</code>:</p>
-<ul>
-<li>Read the entire dataset only once and then calculate the average wind chill and the average pressure.  The expected results for the dataset provided are an average wind chill of 12 and an average pressure of about 29.735.</li>
-<li>Read the entire dataset and parse out the <code>Weather</code> column only once and then count how many observations included <code>Windy</code> and how many observations included <code>Mist</code>.  The expected results for the dataset provided are a count of 19 windy observations and 7 misty observations.</li>
-</ul>
+<p>Code is provided in the starting code to test your new <code>process_dataset2</code> function.</p>
 </li>
 </ol>
 

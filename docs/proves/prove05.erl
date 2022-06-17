@@ -1,12 +1,13 @@
 % CSE 382 Prove 05
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed in a public file sharing site.
+% file completed or uncompleted in a public file sharing site.
 
 % Instructions: Use this template file for this prove assignment.
 % The details of what to do for each problem are found in 
 % the reading. IMPORTANT: Comment out code that is not 
-% running properly.  The `test_ps#` functions should return `pass`.
+% running properly.  The `test_ps#` functions should return `ok`.
+% When writing tests use the `expected_result` = `actual result` format.
 
 -module(prove05).
 -export([test_ps1/0, test_ps2/0, test_ps3/0]).
@@ -127,14 +128,6 @@ test_ps1() ->
     %[7,14,21,28] = Multiples7(lists:seq(1,30)),
     %[42,49] = Multiples7(lists:seq(40,50)),
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Test Problem 1.4
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-    % Write test code to chain multiples_of_list to problem 1.2 to find multiples of 8
-    %[16,24] = write_code_here,
-    %[24] = write_code_here,
-
 
     ok.
 
@@ -166,10 +159,10 @@ test_ps2() ->
     % Test Problem 2.4
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write test code to curry all parameters in the range_check function
-    % Use the curried function with a filter function to filter
-    % a list of numbers.  Test this in two different examples.
-
+    % Write test code to curry the range_check and use it with a filter as described in the instructions
+    %Range_Check_10_to_20 = put_your_code_here_using_curry3,
+    %Full_List_of_Numbers = [3, 15, 23, 19, 6, 16, 13, -5, -20, 30],
+    %[15,19,16,13] = put_your_code_here_using_filter_and_the_two_variables_above,
 
     ok.
 
@@ -203,21 +196,29 @@ test_ps3() ->
     %219419659468800 = write_code_here
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Test Problem 3.2 & 3.3
+    % Test Problem 3.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     % Examples not using any partial applications  
     Avg_Temp = process_dataset("weather.csv", 6, int, fun list_average/1),
     io:format("Avg Temp = ~p~n",[Avg_Temp]), % Answer = 24.8472
     Count_Snow = process_dataset("weather.csv", 5, text, list_text_count("Snow")),
-    io:format("Count Snow = ~p~n",[Count_Snow]), % Answer = 32
+    io:format("Count Snow = ~p~n",[Count_Snow]), % Answer = 38
 
-    % Write partial application to read entire dataset only once and then test
+    % Test partial application to read entire dataset only once 
+    % Weather = process_dataset2("weather.csv"),
+    % Avg_WindChill = (Weather(8, int))(fun list_average/1), 
+    % io:format("Avg WindChill ~p~n",[Avg_WindChill]), % Answer = 12.0
+    % Avg_Pressure = (Weather(9,float))(fun list_average/1),
+    % io:format("Avg Pressure ~p~n",[Avg_Pressure]), % Answer = 29.735
 
-
-    % Write partial application to read the entire dataset and extract the 
-    % Observation column only once and then test.
-
+    % Test partial application to read the entire dataset and extract the 
+    % Observation column (column 5; text) only once 
+    % Weather_Obs = Weather(5, text),
+    % Count_Windy = Weather_Obs(list_text_count("Windy")), % Answer = 19
+    % io:format("Count Windy = ~p~n",[Count_Windy]),
+    % Count_Mist = Weather_Obs(list_text_count("Mist")), % Answer = 7
+    % io:format("Count Mist = ~p~n",[Count_Mist]),
     
     
     ok.

@@ -148,17 +148,15 @@
 </blockquote>
 <h2 id="part-3---performance">Part 3 - Performance</h2>
 <p>The binary search tree from Part 1 has performance of O(log n) if its balanced but as it becomes unbalanced, it becomes O(n).  The RBT from Part 2 has performance of O(log n) because it maintains the balanced state.  Even though there is more work needed to balance, it is offset by ability to find the spot for new nodes because its balanced.</p>
-<p>To compare the performance of both approaches for a tree with 10,000 nodes in the problem set below, we will use the <code>fprof</code> library in Erlang.  This library will report the number of times a function runs and the execution time of those functions.  As with tools like these, there is an overhead cost for running <code>fprof</code> but it will not prevent us from making observations.</p>
+<p>To compare the performance of both approaches for a tree with 10,000 nodes in the problem set below, we will use the <code>eprof</code> library in Erlang.  This library will report the number of times a function runs and the execution time of those functions.  As with tools like these, there is an overhead cost for running <code>eprof</code> but it will not prevent us from making observations.</p>
 <p>The following utility functions can be put around code to display performance results.</p>
 <pre class=" language-erlang"><code class="prism  language-erlang"><span class="token function">start_perf</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
-	<span class="token atom">eprof</span><span class="token punctuation">:</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 	<span class="token atom">eprof</span><span class="token punctuation">:</span><span class="token function">start_profiling</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token function">self</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
 
 <span class="token function">stop_perf</span><span class="token punctuation">(</span><span class="token variable">Title</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span>
 	<span class="token atom">io</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"Perf (~p): ~n"</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token variable">Title</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 	<span class="token atom">eprof</span><span class="token punctuation">:</span><span class="token function">stop_profiling</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-	<span class="token atom">eprof</span><span class="token punctuation">:</span><span class="token function">analyze</span><span class="token punctuation">(</span><span class="token atom">total</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-	<span class="token atom">eprof</span><span class="token punctuation">:</span><span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+	<span class="token atom">eprof</span><span class="token punctuation">:</span><span class="token function">analyze</span><span class="token punctuation">(</span><span class="token atom">total</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
 </code></pre>
 <p>If we wanted to compare the cost of adding to the front of a list and the cost of adding to the end of list, we would create a single <code>foldl</code> to perform those operations using a sequence of numbers from 1 to 10,000.</p>
 <pre class=" language-erlang"><code class="prism  language-erlang"><span class="token comment">% Code to test</span>
@@ -178,9 +176,9 @@
 	<span class="token atom">lists</span><span class="token punctuation">:</span><span class="token function">foldl</span><span class="token punctuation">(</span><span class="token keyword">fun</span> <span class="token atom">append</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token variable">List</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 	<span class="token function">stop_perf</span><span class="token punctuation">(</span><span class="token string">"append"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 
-	<span class="token atom">pass</span><span class="token punctuation">.</span>
+	<span class="token atom">ok</span><span class="token punctuation">.</span>
 </code></pre>
-<p>The code will take several seconds to run.  The output of <code>fprof</code> will include your functions and several others.  Sample output (results will vary on different computers) of <code>fprof</code> for this code including only the functions we are testing is given below:</p>
+<p>The code will take several seconds to run.  The output of <code>eprof</code> will include your functions and several others.  Sample output (results will vary on different computers) of <code>eprof</code> for this code including only the functions we are testing is given below:</p>
 <pre class=" language-shell"><code class="prism  language-shell">Perf ("prepend"):
 FUNCTION                          CALLS        %  TIME  [uS / CALLS]
 --------                          -----  -------  ----  [----------]

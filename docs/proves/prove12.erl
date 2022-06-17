@@ -1,12 +1,13 @@
 % CSE 382 Prove 12
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed in a public file sharing site.
+% file completed or uncompleted in a public file sharing site.
 
 % Instructions: Use this template file for this prove assignment.
 % The details of what to do for each problem are found in 
 % the reading. IMPORTANT: Comment out code that is not 
-% running properly.  The `test_ps#` functions should return `pass`.
+% running properly.  The `test_ps#` functions should return `ok`.
+% When writing tests use the `expected_result` = `actual result` format.
 
 -module(prove12).
 -export([test_ps1/0, test_ps2/0, test_ps3/0]).
@@ -44,14 +45,12 @@ tail(Parameters) -> todo.
 % Code for use in Problem 3.1
 
 start_perf() ->
-    eprof:start(),
     eprof:start_profiling([self()]).
 
 stop_perf(Title) ->
     io:format("Perf (~p): ~n",[Title]),
     eprof:stop_profiling(),
-    eprof:analyze(total),
-    eprof:stop().
+    eprof:analyze(total).
 
 % The following code is used in the test cases to 
 % display the queue/deque and check if the head, tail
@@ -181,6 +180,15 @@ test_ps2() ->
     % check_deque(Q23,4,4,false),
     % Q24 = dequeue(Q23),
     % check_deque(Q24,nil,nil,true),
+
+    % Q25 = enqueue_front(100,Q24),
+    % check_deque(Q25,100,100,false),
+    % Q26 = enqueue(200,Q25),
+    % check_deque(Q26,100,200,false),
+    % Q27 = dequeue_back(Q26),
+    % check_deque(Q27,100,100,false),
+    % Q28 = dequeue(Q27),
+    % check_deque(Q28,nil,nil,true),
   
     ok.
 
@@ -203,8 +211,10 @@ test_ps3() ->
 
     % Write Test Code to compare the performance of 
     % enqueue_front and dequeue_back on 1 million values
-    % per the instructions.
+    % per the instructions. 
 
+
+    % Observations (see instructions): 
 
 
     ok.

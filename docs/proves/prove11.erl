@@ -1,12 +1,13 @@
 % CSE 382 Prove 11
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed in a public file sharing site.
+% file completed or uncompleted in a public file sharing site.
 
 % Instructions: Use this template file for this prove assignment.
 % The details of what to do for each problem are found in 
 % the reading. IMPORTANT: Comment out code that is not 
-% running properly.  The `test_ps#` functions should return `pass`.
+% running properly.  The `test_ps#` functions should return `ok`.
+% When writing tests use the `expected_result` = `actual result` format.
 
 -module(prove11).
 -export([test_ps1/0, test_ps2/0, test_ps3/0]).
@@ -118,8 +119,7 @@ test_ps3() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % Write Test Code to compare the memory size of the phone numbers stored in a list
-    % versus stored in a Trie.  Write observations as described in the instructions 
-    % using comments below.
+    % versus stored in a Trie.  
 
     PhoneList = read_file("phone.txt"),
     PhoneTrie = put_your_code_here,
@@ -127,5 +127,6 @@ test_ps3() ->
     SizeTrie = put_your_code_here,
     io:format("Size List = ~p  Size Trie = ~p~n",[SizeList, SizeTrie]),
 
+    % Observations (see instructions): 
 
     ok.
