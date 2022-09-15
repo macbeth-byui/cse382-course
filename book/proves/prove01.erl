@@ -143,14 +143,14 @@ test_ps2() ->
     %[30|_] = S3,
     %S4 = stack_pop(S3),
     %[20|_] = S4,
-	%S5 = stack_push(S4,40),
-	%[40|_] = S5,
+    %S5 = stack_push(S4,40),
+    %[40|_] = S5,
     %S6 = stack_pop(S5),
     %[40|_] = S5,
     %S7 = stack_pop(S6),
     %[10] = S7,
-	%S8 = stack_pop(S7),
-	%[] = S8,
+    %S8 = stack_pop(S7),
+    %[] = S8,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.5
