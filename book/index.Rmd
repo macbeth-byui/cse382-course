@@ -1,0 +1,63 @@
+---
+title: "Patterns in Functional Programming"
+author: "Chad Macbeth"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  Design patterns and data structures common in functional programming.  The text uses Erlang to demonstrate the material.
+link-citations: yes
+github-repo: macbeth-byui/cse382-course
+---
+
+# Introduction {-}
+
+**Welcome to CSE 382 - Patterns in Functional Programming!**
+
+In previous classes, you may have looked at design patterns and data structures that are commonly used in programming.  When using functional programming, there are unique design patterns and different approaches to data structures that we need to consider.  Here is the schedule for the course:
+
+* Week 1: Erlang Basics
+* Week 2: Persistence
+* Weeks 3-7: Design Patterns
+	* Functors - Map, Filter, Fold, Unfold
+	* Chaining
+	* Currying
+	* Partial Applications
+	* Monoids
+	* Monads
+	* Streams (Lazy)
+* Weeks 8-12: Data Structures
+	* Binary Search Trees
+	* Min Heaps
+	* Random Access Lists
+	* Tries
+	* Queues & Deques
+
+This is a 3-credit class and there is a reading for each day (e.g. Part 1 before class on Monday, Part 2 before class on Wednesday, and Part 3 before class on Friday).  Each reading includes a problem set to complete.    You should work on each problem set after you do each reading.  During class we will cover the material in the reading with examples.  The material can be complicated and fast paced so you should do the reading and attempt some of the problems before class.
+
+We will be using Erlang in this class.  If you already know Clojure, you will find that Erlang is easier to use and learn (with much fewer parentheses!).  During the first week we will learn the basics of Erlang.  You will learn more about Erlang as you implement the material during the course.
+
+You will be given starting code for each problem set which you must use.  You should submit all the problem sets weekly on Saturday evening to stay on track.
+
+You can resubmit any of your work for a higher grade as many times as you want during the semester.  Late work will not be penalized so you can take more time if needed to learn the material.  However, submitting late work too frequently may result in getting behind which will have a negative impact on your learning and subsequent grade.  During Week 13 and 14 you will have an opportunity to catch up on any missed work.  
+
+At the beginning of Week 10, you will be given an open book, open note, take-home final exam which will be due on the last day of the semester.  The final exam will assess your understanding of principles taught during the course.
+
+Your grade will be composed of 80% for the weekly problem sets and 20% for the final exam.
+
+Attendance to class is highly encouraged.  If you miss no more than 3 days during the semester (excluding during Weeks 1 and 14), you will receive a 5% bonus on your final grade.
+
+Office hours and contact information for this semester can be found on the Syllabus page in I-Learn. 
+
+Useful websites that would be good to bookmark:
+
+* Erlang Book: https://learning.oreilly.com/library/view/programming-erlang-2nd/9781941222454/
+
+* Erlang Reference: https://erlangbyexample.org/
+
+$\nonumber$
+[![Creative Commons License - CC - BY](images/cc-88x31.png)](http://creativecommons.org/licenses/by/4.0/)
+

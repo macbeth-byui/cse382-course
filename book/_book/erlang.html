@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 - Erlang | Patterns in Functional Programming</title>
+  <meta name="description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 - Erlang | Patterns in Functional Programming" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  <meta name="github-repo" content="macbeth-byui/cse382-course" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 - Erlang | Patterns in Functional Programming" />
+  
+  <meta name="twitter:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  
+
+<meta name="author" content="Chad Macbeth" />
+
+
+<meta name="date" content="2022-09-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="persistence.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Patterns in Functional Programming</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="erlang.html"><a href="erlang.html"><i class="fa fa-check"></i><b>1</b> Erlang</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="erlang.html"><a href="erlang.html#quick-erlang-primer"><i class="fa fa-check"></i><b>1.1</b> Quick Erlang Primer</a></li>
+<li class="chapter" data-level="1.2" data-path="erlang.html"><a href="erlang.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>2</b> Persistence</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>2.1</b> Persistence in Lists</a></li>
+<li class="chapter" data-level="2.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>2.2</b> More List Persistence</a></li>
+<li class="chapter" data-level="2.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>2.3</b> Specifications and Definitions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html"><i class="fa fa-check"></i><b>3</b> Map and Filter Functors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#functors-and-map"><i class="fa fa-check"></i><b>3.1</b> Functors and Map</a></li>
+<li class="chapter" data-level="3.2" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#filter"><i class="fa fa-check"></i><b>3.2</b> Filter</a></li>
+<li class="chapter" data-level="3.3" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#functor-properties"><i class="fa fa-check"></i><b>3.3</b> Functor Properties</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html"><i class="fa fa-check"></i><b>4</b> Fold and Unfold Functors</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#fold"><i class="fa fa-check"></i><b>4.1</b> Fold</a></li>
+<li class="chapter" data-level="4.2" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#fold-right"><i class="fa fa-check"></i><b>4.2</b> Fold Right</a></li>
+<li class="chapter" data-level="4.3" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#unfold"><i class="fa fa-check"></i><b>4.3</b> Unfold</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html"><i class="fa fa-check"></i><b>5</b> Chaining, Currying, and Partial Applications</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#chaining"><i class="fa fa-check"></i><b>5.1</b> Chaining</a></li>
+<li class="chapter" data-level="5.2" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#currying"><i class="fa fa-check"></i><b>5.2</b> Currying</a></li>
+<li class="chapter" data-level="5.3" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#partial-applications"><i class="fa fa-check"></i><b>5.3</b> Partial Applications</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html"><i class="fa fa-check"></i><b>6</b> Monoids and Monads</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#monoids"><i class="fa fa-check"></i><b>6.1</b> Monoids</a></li>
+<li class="chapter" data-level="6.2" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#monads"><i class="fa fa-check"></i><b>6.2</b> Monads</a></li>
+<li class="chapter" data-level="6.3" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#list-monad"><i class="fa fa-check"></i><b>6.3</b> List Monad</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html"><i class="fa fa-check"></i><b>7</b> Streams and Lazy Evaluation</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#streams"><i class="fa fa-check"></i><b>7.1</b> Streams</a></li>
+<li class="chapter" data-level="7.2" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#stream-monad-collection"><i class="fa fa-check"></i><b>7.2</b> Stream Monad &amp; Collection</a></li>
+<li class="chapter" data-level="7.3" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#erlang-processes-streams"><i class="fa fa-check"></i><b>7.3</b> Erlang Processes &amp; Streams</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>8</b> Trees</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="trees.html"><a href="trees.html#binary-search-tree"><i class="fa fa-check"></i><b>8.1</b> Binary Search Tree</a></li>
+<li class="chapter" data-level="8.2" data-path="trees.html"><a href="trees.html#balanced-red-black-tree"><i class="fa fa-check"></i><b>8.2</b> Balanced Red-Black Tree</a></li>
+<li class="chapter" data-level="8.3" data-path="trees.html"><a href="trees.html#performance"><i class="fa fa-check"></i><b>8.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="min-heaps.html"><a href="min-heaps.html"><i class="fa fa-check"></i><b>9</b> Min Heaps</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="min-heaps.html"><a href="min-heaps.html#min-heap"><i class="fa fa-check"></i><b>9.1</b> Min Heap</a></li>
+<li class="chapter" data-level="9.2" data-path="min-heaps.html"><a href="min-heaps.html#efficient-inserting-and-removal"><i class="fa fa-check"></i><b>9.2</b> Efficient Inserting and Removal</a></li>
+<li class="chapter" data-level="9.3" data-path="min-heaps.html"><a href="min-heaps.html#priority-queue"><i class="fa fa-check"></i><b>9.3</b> Priority Queue</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="random-access-lists.html"><a href="random-access-lists.html"><i class="fa fa-check"></i><b>10</b> Random Access Lists</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="random-access-lists.html"><a href="random-access-lists.html#binary-numbers-and-the-ral"><i class="fa fa-check"></i><b>10.1</b> Binary Numbers and the RAL</a></li>
+<li class="chapter" data-level="10.2" data-path="random-access-lists.html"><a href="random-access-lists.html#lookup-and-update"><i class="fa fa-check"></i><b>10.2</b> Lookup and Update</a></li>
+<li class="chapter" data-level="10.3" data-path="random-access-lists.html"><a href="random-access-lists.html#performance-1"><i class="fa fa-check"></i><b>10.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="tries.html"><a href="tries.html"><i class="fa fa-check"></i><b>11</b> Tries</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="tries.html"><a href="tries.html#creating-the-trie"><i class="fa fa-check"></i><b>11.1</b> Creating the Trie</a></li>
+<li class="chapter" data-level="11.2" data-path="tries.html"><a href="tries.html#searching-and-counting"><i class="fa fa-check"></i><b>11.2</b> Searching and Counting</a></li>
+<li class="chapter" data-level="11.3" data-path="tries.html"><a href="tries.html#performance-2"><i class="fa fa-check"></i><b>11.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="queues-and-deques.html"><a href="queues-and-deques.html"><i class="fa fa-check"></i><b>12</b> Queues and Deques</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="queues-and-deques.html"><a href="queues-and-deques.html#queues"><i class="fa fa-check"></i><b>12.1</b> Queues</a></li>
+<li class="chapter" data-level="12.2" data-path="queues-and-deques.html"><a href="queues-and-deques.html#deques"><i class="fa fa-check"></i><b>12.2</b> Deques</a></li>
+<li class="chapter" data-level="12.3" data-path="queues-and-deques.html"><a href="queues-and-deques.html#performance-3"><i class="fa fa-check"></i><b>12.3</b> Performance</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Patterns in Functional Programming</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="erlang" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1 -</span> Erlang<a href="erlang.html#erlang" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this course we will be using the Erlang programming language. The material that we will cover could be implemented in many different langauges. Erlang will allow us to use less code to explore the design patterns and data structures. If you haven’t learned Erlang before, the two sections below will help you to quickly learn the language. As the course progresses, you will find that the implementation of future problem sets will improve your Erlang skills.</p>
+<div id="quick-erlang-primer" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Quick Erlang Primer<a href="erlang.html#quick-erlang-primer" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This tutorial is not meant to provide complete coverage of the Erlang language. You are encouraged to use the Erlang references you bookmarked as needed throughout the semester.</p>
+<p>When writing code in Erlang, you will put your code into a <code>.erl</code> file. Each Erlang file will include a <code>-module</code> and an <code>-export</code> tag. If I create a file called <code>learn_erlang.erl</code>, then I would create the following file:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb1-1"><a href="erlang.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-module</span><span class="fu">(</span><span class="ch">learn_erlang</span><span class="fu">).</span></span>
+<span id="cb1-2"><a href="erlang.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-export</span><span class="fu">([]).</span></span>
+<span id="cb1-3"><a href="erlang.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="erlang.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">% Put my functions here</span></span></code></pre></div>
+<p>The <code>-export</code> tag is used to list all functions that can be run externally. Functions are written in the format of <code>name(Parameters)  -&gt; expressions.</code> Note that parameters and variables always start with an uppercase letter. Functions and atoms (which are labels without values) are always lowercase.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb2-1"><a href="erlang.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-module</span><span class="fu">(</span><span class="ch">learn_erlang</span><span class="fu">).</span></span>
+<span id="cb2-2"><a href="erlang.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-export</span><span class="fu">([</span><span class="ch">hello</span><span class="op">/</span><span class="dv">0</span><span class="fu">,</span> <span class="ch">average</span><span class="op">/</span><span class="dv">2</span><span class="fu">]).</span></span>
+<span id="cb2-3"><a href="erlang.html#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="erlang.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hello()</span> <span class="op">-&gt;</span> <span class="fu">io:format(</span><span class="st">&quot;Hello World!~n&quot;</span><span class="fu">).</span></span>
+<span id="cb2-5"><a href="erlang.html#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="erlang.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">average(</span><span class="va">Number1</span><span class="fu">,</span> <span class="va">Number2</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">(</span><span class="va">Number1</span><span class="op">+</span><span class="va">Number2</span><span class="fu">)</span> <span class="op">/</span> <span class="dv">2</span><span class="fu">.</span></span></code></pre></div>
+<p>The <code>-export</code> tag shows the number of parameters (or the arity) of the function. Notice that each function ends with a period. To run the functions, execute the <code>erl</code> shell command from a terminal.</p>
+<pre class="shell"><code>Eshell V12.0  (abort with ^G)
+1&gt; c(learn_erlang).
+{ok,learn_erlang}
+2&gt; learn_erlang:average(10,20).
+15</code></pre>
+<p>The <code>c</code> command will compile a module. To run a function, type <code>module_name:function_name(parameters).</code> Notice the need to put the period just like in your code file.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb4-1"><a href="erlang.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slope(</span><span class="va">X1</span><span class="fu">,</span> <span class="va">Y1</span><span class="fu">,</span> <span class="va">X2</span><span class="fu">,</span> <span class="va">Y2</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
+<span id="cb4-2"><a href="erlang.html#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="va">Delta_X</span> <span class="op">=</span> <span class="va">X2</span> <span class="op">-</span> <span class="va">X1</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="erlang.html#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="va">Delta_Y</span> <span class="op">=</span> <span class="va">Y2</span> <span class="op">-</span> <span class="va">Y1</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="erlang.html#cb4-4" aria-hidden="true" tabindex="-1"></a>   <span class="va">Delta_Y</span> <span class="op">/</span> <span class="va">Delta_X</span><span class="fu">.</span></span></code></pre></div>
+<p>In the <code>slope</code> function, multiple expressions are used for a slightly more complicated function. Commas are used to separate expressions in the function with a final period at the end. The last expression represents the result of the function.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb5-1"><a href="erlang.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add(</span><span class="va">N1</span><span class="fu">,</span> <span class="va">N2</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">N1</span> <span class="op">+</span> <span class="va">N2</span><span class="fu">.</span></span>
+<span id="cb5-2"><a href="erlang.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">add(</span><span class="va">N1</span><span class="fu">,</span> <span class="va">N2</span><span class="fu">,</span> <span class="va">N3</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">N1</span> <span class="op">+</span> <span class="va">N2</span> <span class="op">+</span> <span class="va">N3</span><span class="fu">.</span></span>
+<span id="cb5-3"><a href="erlang.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">add(</span><span class="va">N1</span><span class="fu">,</span> <span class="va">N2</span><span class="fu">,</span> <span class="va">N3</span><span class="fu">,</span> <span class="va">N4</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">N1</span> <span class="op">+</span> <span class="va">N2</span> <span class="op">+</span> <span class="va">N3</span> <span class="op">+</span> <span class="va">N4</span><span class="fu">.</span></span></code></pre></div>
+<p>The function <code>add</code> exists with different arities which is why we write each one as a separate function separated by periods.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb6-1"><a href="erlang.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">divide(</span><span class="va">_N1</span><span class="fu">,</span> <span class="dv">0</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="dv">0</span><span class="fu">;</span></span>
+<span id="cb6-2"><a href="erlang.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">divide(</span><span class="va">N1</span><span class="fu">,</span> <span class="va">N2</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">N1</span> <span class="op">/</span> <span class="va">N2</span><span class="fu">.</span></span></code></pre></div>
+<p>In the function <code>divide</code>, we have only arity 2 but we have two different scenarios or clauses. Each clause is separated by semicolons and is evaluated in order until a match is found. If we divide by 0, then the first clause will run. If we divide by non-zero, then the second clause will run.</p>
+<p>In the <code>divide</code> function, also note that the first clause did not need to use <code>N1</code> in the expression. Unused parameters in Erlang are prefixed with an underscore.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb7-1"><a href="erlang.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">letter_grade(</span><span class="va">Grade</span><span class="fu">)</span> <span class="ch">when</span> <span class="va">Grade</span> <span class="op">&gt;=</span> <span class="dv">90</span> <span class="op">-&gt;</span> <span class="st">&quot;A&quot;</span><span class="fu">;</span></span>
+<span id="cb7-2"><a href="erlang.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">letter_grade(</span><span class="va">Grade</span><span class="fu">)</span> <span class="ch">when</span> <span class="va">Grade</span> <span class="op">&gt;=</span> <span class="dv">80</span> <span class="op">-&gt;</span> <span class="st">&quot;B&quot;</span><span class="fu">;</span></span>
+<span id="cb7-3"><a href="erlang.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">letter_grade(</span><span class="va">Grade</span><span class="fu">)</span> <span class="ch">when</span> <span class="va">Grade</span> <span class="op">&gt;=</span> <span class="dv">70</span> <span class="op">-&gt;</span> <span class="st">&quot;C&quot;</span><span class="fu">;</span></span>
+<span id="cb7-4"><a href="erlang.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">letter_grade(</span><span class="va">_Grade</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="st">&quot;F&quot;</span><span class="fu">.</span></span></code></pre></div>
+<p>The <code>when</code> keyword is called a guard and can be used with clauses. Basic Boolean logic can be done with a guard. For more complicated logic, a <code>case</code> statement can be used which will be seen later.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb8-1"><a href="erlang.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">factorial(</span><span class="va">N</span><span class="fu">)</span> <span class="ch">when</span> <span class="va">N</span> <span class="op">=&lt;</span> <span class="dv">1</span> <span class="op">-&gt;</span> <span class="dv">1</span><span class="fu">;</span></span>
+<span id="cb8-2"><a href="erlang.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">factorial(</span><span class="va">N</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">N</span> <span class="op">*</span> <span class="fu">factorial(</span><span class="va">N</span><span class="op">-</span><span class="dv">1</span><span class="fu">).</span></span></code></pre></div>
+<p>With the understanding of clauses, we can implement recursive solutions. In this example, the base case for <code>factorial</code> is represented by the first clause (notice the <code>=&lt;</code> syntax) and recursion is used in the second clause. The first clauses could have been rewritten without a guard if we didn’t worry about negative number as: <code>factorial(0) -&gt; 1;</code> We call this method of recursion “body recursion” because there are operations (multiply by <code>N</code>) outside of the recursive call.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb9-1"><a href="erlang.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">factorial(</span><span class="va">N</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">factorial(</span><span class="va">N</span><span class="fu">,</span> <span class="dv">1</span><span class="fu">).</span></span>
+<span id="cb9-2"><a href="erlang.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">factorial(</span><span class="dv">0</span><span class="fu">,</span> <span class="va">Result</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Result</span><span class="fu">;</span></span>
+<span id="cb9-3"><a href="erlang.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">factorial(</span><span class="va">N</span><span class="fu">,</span> <span class="va">Result</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">factorial(</span><span class="va">N</span><span class="op">-</span><span class="dv">1</span><span class="fu">,</span> <span class="va">N</span><span class="op">*</span><span class="va">Result</span><span class="fu">).</span></span></code></pre></div>
+<p>We can rewrite the same <code>factorial</code> function in what is called “tail recursion” format. In this case, there is no operation outside of the recursive call. This requires that we have the <code>Result</code> parameter to keep track of the ever growing value. To support a <code>Result</code> parameter, we provide a 1-arity version of the factorial function for the user to call which initializes the product to 1. When the base case is reached (in this case N is equal to 0), then we can just return the result we have been recursively growing. In Erlang, both of these methods result in the same performance. The readability for the specific problem you are solving should determine the method you use. One might argue that the “body recursion” method was easier to read.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb10-1"><a href="erlang.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">encrypt(</span><span class="va">Value</span><span class="fu">,</span> <span class="va">Cipher_Function</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Cipher_Function</span><span class="fu">(</span><span class="va">Value</span><span class="fu">).</span></span>
+<span id="cb10-2"><a href="erlang.html#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="erlang.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">test_encrypt()</span> <span class="op">-&gt;</span></span>
+<span id="cb10-4"><a href="erlang.html#cb10-4" aria-hidden="true" tabindex="-1"></a>   <span class="va">Cipher1</span> <span class="op">=</span> <span class="kw">fun</span> <span class="fu">(</span><span class="va">X</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">X</span> <span class="op">+</span> <span class="dv">1</span> <span class="kw">end</span><span class="fu">,</span></span>
+<span id="cb10-5"><a href="erlang.html#cb10-5" aria-hidden="true" tabindex="-1"></a>   <span class="va">Cipher2</span> <span class="op">=</span> <span class="kw">fun</span> <span class="fu">(</span><span class="va">X</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">(</span><span class="dv">2</span> <span class="op">*</span> <span class="va">X</span><span class="fu">)</span> <span class="op">-</span> <span class="dv">3</span> <span class="kw">end</span><span class="fu">,</span></span>
+<span id="cb10-6"><a href="erlang.html#cb10-6" aria-hidden="true" tabindex="-1"></a>   <span class="dv">11</span> <span class="op">=</span> <span class="fu">encrypt(</span><span class="dv">10</span><span class="fu">,</span> <span class="va">Cipher1</span><span class="fu">),</span></span>
+<span id="cb10-7"><a href="erlang.html#cb10-7" aria-hidden="true" tabindex="-1"></a>   <span class="dv">17</span> <span class="op">=</span> <span class="fu">encrypt(</span><span class="dv">10</span><span class="fu">,</span> <span class="va">Cipher2</span><span class="fu">),</span></span>
+<span id="cb10-8"><a href="erlang.html#cb10-8" aria-hidden="true" tabindex="-1"></a>   <span class="fl">3.0</span> <span class="op">=</span> <span class="fu">encrypt(</span><span class="dv">1000</span><span class="fu">,</span> <span class="kw">fun</span> <span class="fu">math:log10</span><span class="op">/</span><span class="dv">1</span><span class="fu">),</span></span>
+<span id="cb10-9"><a href="erlang.html#cb10-9" aria-hidden="true" tabindex="-1"></a>   <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>In this code, the second parameter <code>Cipher_Function</code> is a function. Common in functional programming, functions are passed and used liked they were any parameter like integers and strings. The <code>fun (parameters) -&gt; expression end</code> syntax is used to define an anonymous function (often called a lambda function). The <code>encrypt</code> function expects to receive a function that takes only one parameter. The <code>fun math:log10/1</code> is an example of providing an existing 1-arity function.</p>
+<p>In the <code>test_encrypt</code> function, note that <code>Cipher1</code> and <code>Cipher2</code> variables were created. We could not change the value of <code>Cipher1</code> because all variables in Erlang are immutable.</p>
+<div class="problembox">
+<p><strong>Problem Set 1</strong></p>
+<p>You can find the template for the problem sets in this lesson here: <a href="proves/prove01.erl">prove01.erl</a></p>
+<p>As you work on these problems (as well as all future problem sets), remember to look at the test code provided in the template. There is a separate function (e.g. <code>test_ps1</code>) for each problem set. This will help you to understand how these problems work. You will need to uncomment out code in the test code functions as you work through each of these problems.</p>
+<ol style="list-style-type: decimal">
+<li>Implement the <code>hello</code> function to display “Hello World!”.</li>
+<li>Implement the <code>add</code> function to add two numbers.</li>
+<li>Implement the <code>multiply</code> function three different ways each with different number of parameters (i.e. different arity):
+<ul>
+<li>Multiply one number (not very exciting)</li>
+<li>Multiply two numbers</li>
+<li>Multiply three numbers</li>
+</ul></li>
+<li>Implement the <code>water</code> function that will take a temperature in Fahrenheit and return “Frozen”, “Gas”, or “Liquid”. Implement this using three clauses that use the <code>when</code> guard.</li>
+<li>Implement the <code>fib</code> function to calculate the n<sup>th</sup> Fibonacci number. Assume the 1st and 2nd number is 1. You will need to use recursion. Recommend using body recursion.</li>
+<li>Implement the <code>sum</code> function to add up the numbers from 0 to N. Use recursion instead of using any built in functions. Recommend using body recursion.</li>
+<li>Create lambda functions to pass to the <code>plot</code> function. The <code>plot</code> function will create <code>{X,Y}</code> coordinates where <code>X</code> goes from -5 to 5 and <code>Y</code> is calculated from your lambda function. Create lambda functions for the following scenarios:
+<ul>
+<li>Function that squares the number</li>
+<li>Function that subtracts one from the number</li>
+<li>Pass the <code>abs/1</code> built-in function directly</li>
+<li>Function that divides the number by three and then uses the <code>math:floor/1</code> built-in function to remove the decimal.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="lists-in-erlang" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Lists in Erlang<a href="erlang.html#lists-in-erlang" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Lists are built-in to Erlang at the syntax level. During the course, we will write our own functions to work with lists and we will even re-create our own list data structure. To support those activities, we need to understand how to use the built-in list first.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb11-1"><a href="erlang.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">playing_with_lists()</span> <span class="op">-&gt;</span></span>
+<span id="cb11-2"><a href="erlang.html#cb11-2" aria-hidden="true" tabindex="-1"></a>   <span class="va">L1</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">],</span></span>
+<span id="cb11-3"><a href="erlang.html#cb11-3" aria-hidden="true" tabindex="-1"></a>   <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>Lists can be created using square brackets. We can use a vertical bar to access the first element of the list.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb12-1"><a href="erlang.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">playing_with_lists()</span> <span class="op">-&gt;</span></span>
+<span id="cb12-2"><a href="erlang.html#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="va">L1</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">],</span></span>
+<span id="cb12-3"><a href="erlang.html#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="va">L2</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">0</span><span class="fu">|</span><span class="va">L1</span><span class="fu">],</span></span>
+<span id="cb12-4"><a href="erlang.html#cb12-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">[</span><span class="dv">0</span><span class="fu">,</span> <span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">]</span> <span class="op">=</span> <span class="va">L2</span><span class="fu">,</span></span>
+<span id="cb12-5"><a href="erlang.html#cb12-5" aria-hidden="true" tabindex="-1"></a>   <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>The <code>[0|L1]</code> prepends the <code>0</code> in front of the <code>L1</code> list. The <code>[0, 1, 2, 3, 4] = L2</code> will attempt to pattern match L2 with the list on the left hand side. If this doesn’t match, our “test” will fail.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb13-1"><a href="erlang.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">playing_with_lists()</span> <span class="op">-&gt;</span></span>
+<span id="cb13-2"><a href="erlang.html#cb13-2" aria-hidden="true" tabindex="-1"></a>   <span class="va">L1</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">],</span></span>
+<span id="cb13-3"><a href="erlang.html#cb13-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">[</span><span class="va">A</span> <span class="fu">|</span> <span class="va">_</span><span class="fu">]</span> <span class="op">=</span> <span class="va">L1</span><span class="fu">,</span></span>
+<span id="cb13-4"><a href="erlang.html#cb13-4" aria-hidden="true" tabindex="-1"></a>   <span class="dv">1</span> <span class="op">=</span> <span class="va">A</span><span class="fu">,</span></span>
+<span id="cb13-5"><a href="erlang.html#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="erlang.html#cb13-6" aria-hidden="true" tabindex="-1"></a>   <span class="va">L2</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">2</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">,</span> <span class="dv">8</span><span class="fu">],</span></span>
+<span id="cb13-7"><a href="erlang.html#cb13-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">[</span><span class="va">B</span><span class="fu">,</span> <span class="va">C</span> <span class="fu">|</span> <span class="va">_</span><span class="fu">]</span> <span class="op">=</span> <span class="va">L2</span><span class="fu">,</span></span>
+<span id="cb13-8"><a href="erlang.html#cb13-8" aria-hidden="true" tabindex="-1"></a>   <span class="dv">2</span> <span class="op">=</span> <span class="va">B</span><span class="fu">,</span></span>
+<span id="cb13-9"><a href="erlang.html#cb13-9" aria-hidden="true" tabindex="-1"></a>   <span class="dv">4</span> <span class="op">=</span> <span class="va">C</span><span class="fu">,</span></span>
+<span id="cb13-10"><a href="erlang.html#cb13-10" aria-hidden="true" tabindex="-1"></a>   <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>Pattern matching can reuse the <code>[First|Rest]</code> format. In the example above, we can extract the first or the first several values. We can match multiple values at the front of the list using commas. Note the use of the <code>_</code> which indicates we are ignoring the “rest” of the list.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb14-1"><a href="erlang.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display_first([</span><span class="va">First</span><span class="fu">|</span><span class="va">_Rest</span><span class="fu">])</span> <span class="op">-&gt;</span></span>
+<span id="cb14-2"><a href="erlang.html#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">io:format(</span><span class="st">&quot;~p~n&quot;</span><span class="fu">,[</span><span class="va">First</span><span class="fu">]).</span></span>
+<span id="cb14-3"><a href="erlang.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="erlang.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">playing_with_lists()</span> <span class="op">-&gt;</span></span>
+<span id="cb14-5"><a href="erlang.html#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">L1</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">],</span></span>
+<span id="cb14-6"><a href="erlang.html#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_first(</span><span class="va">L1</span><span class="fu">),</span>   </span>
+<span id="cb14-7"><a href="erlang.html#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>When the list <code>L1</code> is passed to the <code>display_first</code> function, the <code>[First|_Rest]</code> syntax will split the list up into the first value and the remainder of the list (the latter of which is not used in the function.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb15-1"><a href="erlang.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display_first([])</span> <span class="op">-&gt;</span></span>
+<span id="cb15-2"><a href="erlang.html#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">io:format(</span><span class="st">&quot;EMPTY~n&quot;</span><span class="fu">);</span></span>
+<span id="cb15-3"><a href="erlang.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">display_first([</span><span class="va">First</span><span class="fu">|</span><span class="va">_Rest</span><span class="fu">])</span> <span class="op">-&gt;</span></span>
+<span id="cb15-4"><a href="erlang.html#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">io:format(</span><span class="st">&quot;~p~n&quot;</span><span class="fu">,[</span><span class="va">First</span><span class="fu">]).</span></span>
+<span id="cb15-5"><a href="erlang.html#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="erlang.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">playing_with_lists()</span> <span class="op">-&gt;</span></span>
+<span id="cb15-7"><a href="erlang.html#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">L1</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">],</span></span>
+<span id="cb15-8"><a href="erlang.html#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_first(</span><span class="va">L1</span><span class="fu">),</span>   </span>
+<span id="cb15-9"><a href="erlang.html#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_first([]),</span></span>
+<span id="cb15-10"><a href="erlang.html#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>In this example, a special clause is added for the empty list. We use <code>[]</code> to represent an empty list. If we wanted to represent a list of one item, we could use <code>[One]</code>. If we wanted to represent a list of more than one item, we should use <code>[First|Rest]</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb16-1"><a href="erlang.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display_all([])</span> <span class="op">-&gt;</span></span>
+<span id="cb16-2"><a href="erlang.html#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">io:format(</span><span class="st">&quot;end of list~n&quot;</span><span class="fu">);</span></span>
+<span id="cb16-3"><a href="erlang.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">display_all([</span><span class="va">First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">])</span> <span class="op">-&gt;</span></span>
+<span id="cb16-4"><a href="erlang.html#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">io:format(</span><span class="st">&quot;~p &quot;</span><span class="fu">,[</span><span class="va">First</span><span class="fu">]),</span></span>
+<span id="cb16-5"><a href="erlang.html#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_all(</span><span class="va">Rest</span><span class="fu">).</span></span>
+<span id="cb16-6"><a href="erlang.html#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="erlang.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">playing_with_lists()</span> <span class="op">-&gt;</span></span>
+<span id="cb16-8"><a href="erlang.html#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">L1</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">],</span></span>
+<span id="cb16-9"><a href="erlang.html#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_all(</span><span class="va">L1</span><span class="fu">),</span>   </span>
+<span id="cb16-10"><a href="erlang.html#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_all([]),</span></span>
+<span id="cb16-11"><a href="erlang.html#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>In this code, we need to use the entire list to display every value. Recursion is used on the <code>Rest</code> of the list. The base case is the empty list.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb17-1"><a href="erlang.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">playing_with_lists()</span> <span class="op">-&gt;</span></span>
+<span id="cb17-2"><a href="erlang.html#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">L1</span> <span class="op">=</span> <span class="fu">lists:seq(</span><span class="dv">1</span><span class="fu">,</span><span class="dv">10</span><span class="fu">),</span></span>
+<span id="cb17-3"><a href="erlang.html#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span><span class="dv">2</span><span class="fu">,</span><span class="dv">3</span><span class="fu">,</span><span class="dv">4</span><span class="fu">,</span><span class="dv">5</span><span class="fu">,</span><span class="dv">6</span><span class="fu">,</span><span class="dv">7</span><span class="fu">,</span><span class="dv">8</span><span class="fu">,</span><span class="dv">9</span><span class="fu">,</span><span class="dv">10</span><span class="fu">]</span> <span class="op">=</span> <span class="va">L1</span><span class="fu">,</span></span>
+<span id="cb17-4"><a href="erlang.html#cb17-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-5"><a href="erlang.html#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">L2</span> <span class="op">=</span> <span class="fu">[</span><span class="va">N</span> <span class="fu">||</span> <span class="va">N</span> <span class="op">&lt;-</span> <span class="fu">lists:seq(</span><span class="dv">1</span><span class="fu">,</span><span class="dv">10</span><span class="fu">)],</span></span>
+<span id="cb17-6"><a href="erlang.html#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span><span class="dv">2</span><span class="fu">,</span><span class="dv">3</span><span class="fu">,</span><span class="dv">4</span><span class="fu">,</span><span class="dv">5</span><span class="fu">,</span><span class="dv">6</span><span class="fu">,</span><span class="dv">7</span><span class="fu">,</span><span class="dv">8</span><span class="fu">,</span><span class="dv">9</span><span class="fu">,</span><span class="dv">10</span><span class="fu">]</span> <span class="op">=</span> <span class="va">L2</span><span class="fu">,</span></span>
+<span id="cb17-7"><a href="erlang.html#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="erlang.html#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">L3</span> <span class="op">=</span> <span class="fu">[</span><span class="va">N</span><span class="op">*</span><span class="dv">3</span> <span class="fu">||</span> <span class="va">N</span> <span class="op">&lt;-</span> <span class="fu">lists:seq(</span><span class="dv">1</span><span class="fu">,</span><span class="dv">10</span><span class="fu">)],</span></span>
+<span id="cb17-9"><a href="erlang.html#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">3</span><span class="fu">,</span><span class="dv">6</span><span class="fu">,</span><span class="dv">9</span><span class="fu">,</span><span class="dv">12</span><span class="fu">,</span><span class="dv">15</span><span class="fu">,</span><span class="dv">18</span><span class="fu">,</span><span class="dv">21</span><span class="fu">,</span><span class="dv">24</span><span class="fu">,</span><span class="dv">27</span><span class="fu">,</span><span class="dv">30</span><span class="fu">]</span> <span class="op">=</span> <span class="va">L3</span><span class="fu">,</span></span>
+<span id="cb17-10"><a href="erlang.html#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="erlang.html#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">L4</span> <span class="op">=</span> <span class="fu">[</span><span class="va">N</span><span class="op">*</span><span class="dv">3</span> <span class="fu">||</span> <span class="va">N</span> <span class="op">&lt;-</span> <span class="fu">lists:seq(</span><span class="dv">1</span><span class="fu">,</span><span class="dv">10</span><span class="fu">),</span> <span class="va">N</span> <span class="op">rem</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span><span class="fu">],</span></span>
+<span id="cb17-12"><a href="erlang.html#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">6</span><span class="fu">,</span><span class="dv">12</span><span class="fu">,</span><span class="dv">18</span><span class="fu">,</span><span class="dv">24</span><span class="fu">,</span><span class="dv">30</span><span class="fu">]</span> <span class="op">=</span> <span class="va">L4</span><span class="fu">,</span></span>
+<span id="cb17-13"><a href="erlang.html#cb17-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-14"><a href="erlang.html#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>There are multiple ways to create lists. The <code>lists:seq</code> function will create numbers in a list from the range specified. The other method is the list comprehension. The syntax for the list comprehension is: <code>[expression || generator, filter]</code> The <code>generator</code> is written with a <code>&lt;-</code> and provides a source list. The <code>expression</code> uses the generated number to add to the list. The optional <code>filter</code> is used to determine which generated values should be used to generate the list. In the last example, the <code>rem</code> operator (often called modulo) is used to include only even numbers before tripling them.</p>
+<div class="problembox">
+<p><strong>Problem Set 2</strong></p>
+<ol style="list-style-type: decimal">
+<li>Write a <code>stack_push</code> function that treats the list as a stack (LIFO - Last In First Out). The <code>stack_push</code> function will take two parameters, the <code>Stack</code> (ie, a list) and a value <code>N</code>. This function should push the value <code>N</code> to the front of the <code>Stack</code>.</li>
+<li>Write a <code>stack_pop</code> function that returns a new stack with the first item removed. If the stack is empty, then return the empty list <code>[]</code>.</li>
+<li>Finish the <code>quicksort</code> function provided to you in the starting code. The algorithm for quicksort is to first pick a position in the list (in our case we will pick the first number) and call it our pivot. We will then recursively call <code>quicksort</code> on all of the numbers less than the pivot and then call quicksort on all of the numbers greater than or equal to the pivot. The correct sorted list is then the concatenation (<code>++</code>) of the following 3 lists: <code>[sorted list of numbers less than the pivot] ++ [the one pivot] ++ [sorted list of numbers greater than or equal to the pivot]</code>. The code is setup already but you need to write list comprehensions for creating:
+<ul>
+<li>A sublist containing all numbers in the list less than the pivot (first number in the list) which will be passed to the <code>quicksort</code> function.</li>
+<li>A sublist containing all numbers in the list greater than or equal to the pivot (first number in the list) which will be passed to the <code>quicksort</code> function.</li>
+</ul></li>
+</ol>
+</div>
+<p><span class="math inline">\(\nonumber\)</span>
+<span class="math inline">\(\nonumber\)</span>
+<a href="http://creativecommons.org/licenses/by/4.0/"><img src="images/cc-88x31.png" alt="Creative Commons License - CC - BY" /></a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="persistence.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-erlang.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

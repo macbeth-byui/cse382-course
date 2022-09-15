@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 - Chaining, Currying, and Partial Applications | Patterns in Functional Programming</title>
+  <meta name="description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 - Chaining, Currying, and Partial Applications | Patterns in Functional Programming" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  <meta name="github-repo" content="macbeth-byui/cse382-course" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 - Chaining, Currying, and Partial Applications | Patterns in Functional Programming" />
+  
+  <meta name="twitter:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  
+
+<meta name="author" content="Chad Macbeth" />
+
+
+<meta name="date" content="2022-09-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="fold-and-unfold-functors.html"/>
+<link rel="next" href="monoids-and-monads.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Patterns in Functional Programming</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="erlang.html"><a href="erlang.html"><i class="fa fa-check"></i><b>1</b> Erlang</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="erlang.html"><a href="erlang.html#quick-erlang-primer"><i class="fa fa-check"></i><b>1.1</b> Quick Erlang Primer</a></li>
+<li class="chapter" data-level="1.2" data-path="erlang.html"><a href="erlang.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>2</b> Persistence</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>2.1</b> Persistence in Lists</a></li>
+<li class="chapter" data-level="2.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>2.2</b> More List Persistence</a></li>
+<li class="chapter" data-level="2.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>2.3</b> Specifications and Definitions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html"><i class="fa fa-check"></i><b>3</b> Map and Filter Functors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#functors-and-map"><i class="fa fa-check"></i><b>3.1</b> Functors and Map</a></li>
+<li class="chapter" data-level="3.2" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#filter"><i class="fa fa-check"></i><b>3.2</b> Filter</a></li>
+<li class="chapter" data-level="3.3" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#functor-properties"><i class="fa fa-check"></i><b>3.3</b> Functor Properties</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html"><i class="fa fa-check"></i><b>4</b> Fold and Unfold Functors</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#fold"><i class="fa fa-check"></i><b>4.1</b> Fold</a></li>
+<li class="chapter" data-level="4.2" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#fold-right"><i class="fa fa-check"></i><b>4.2</b> Fold Right</a></li>
+<li class="chapter" data-level="4.3" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#unfold"><i class="fa fa-check"></i><b>4.3</b> Unfold</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html"><i class="fa fa-check"></i><b>5</b> Chaining, Currying, and Partial Applications</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#chaining"><i class="fa fa-check"></i><b>5.1</b> Chaining</a></li>
+<li class="chapter" data-level="5.2" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#currying"><i class="fa fa-check"></i><b>5.2</b> Currying</a></li>
+<li class="chapter" data-level="5.3" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#partial-applications"><i class="fa fa-check"></i><b>5.3</b> Partial Applications</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html"><i class="fa fa-check"></i><b>6</b> Monoids and Monads</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#monoids"><i class="fa fa-check"></i><b>6.1</b> Monoids</a></li>
+<li class="chapter" data-level="6.2" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#monads"><i class="fa fa-check"></i><b>6.2</b> Monads</a></li>
+<li class="chapter" data-level="6.3" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#list-monad"><i class="fa fa-check"></i><b>6.3</b> List Monad</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html"><i class="fa fa-check"></i><b>7</b> Streams and Lazy Evaluation</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#streams"><i class="fa fa-check"></i><b>7.1</b> Streams</a></li>
+<li class="chapter" data-level="7.2" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#stream-monad-collection"><i class="fa fa-check"></i><b>7.2</b> Stream Monad &amp; Collection</a></li>
+<li class="chapter" data-level="7.3" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#erlang-processes-streams"><i class="fa fa-check"></i><b>7.3</b> Erlang Processes &amp; Streams</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>8</b> Trees</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="trees.html"><a href="trees.html#binary-search-tree"><i class="fa fa-check"></i><b>8.1</b> Binary Search Tree</a></li>
+<li class="chapter" data-level="8.2" data-path="trees.html"><a href="trees.html#balanced-red-black-tree"><i class="fa fa-check"></i><b>8.2</b> Balanced Red-Black Tree</a></li>
+<li class="chapter" data-level="8.3" data-path="trees.html"><a href="trees.html#performance"><i class="fa fa-check"></i><b>8.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="min-heaps.html"><a href="min-heaps.html"><i class="fa fa-check"></i><b>9</b> Min Heaps</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="min-heaps.html"><a href="min-heaps.html#min-heap"><i class="fa fa-check"></i><b>9.1</b> Min Heap</a></li>
+<li class="chapter" data-level="9.2" data-path="min-heaps.html"><a href="min-heaps.html#efficient-inserting-and-removal"><i class="fa fa-check"></i><b>9.2</b> Efficient Inserting and Removal</a></li>
+<li class="chapter" data-level="9.3" data-path="min-heaps.html"><a href="min-heaps.html#priority-queue"><i class="fa fa-check"></i><b>9.3</b> Priority Queue</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="random-access-lists.html"><a href="random-access-lists.html"><i class="fa fa-check"></i><b>10</b> Random Access Lists</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="random-access-lists.html"><a href="random-access-lists.html#binary-numbers-and-the-ral"><i class="fa fa-check"></i><b>10.1</b> Binary Numbers and the RAL</a></li>
+<li class="chapter" data-level="10.2" data-path="random-access-lists.html"><a href="random-access-lists.html#lookup-and-update"><i class="fa fa-check"></i><b>10.2</b> Lookup and Update</a></li>
+<li class="chapter" data-level="10.3" data-path="random-access-lists.html"><a href="random-access-lists.html#performance-1"><i class="fa fa-check"></i><b>10.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="tries.html"><a href="tries.html"><i class="fa fa-check"></i><b>11</b> Tries</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="tries.html"><a href="tries.html#creating-the-trie"><i class="fa fa-check"></i><b>11.1</b> Creating the Trie</a></li>
+<li class="chapter" data-level="11.2" data-path="tries.html"><a href="tries.html#searching-and-counting"><i class="fa fa-check"></i><b>11.2</b> Searching and Counting</a></li>
+<li class="chapter" data-level="11.3" data-path="tries.html"><a href="tries.html#performance-2"><i class="fa fa-check"></i><b>11.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="queues-and-deques.html"><a href="queues-and-deques.html"><i class="fa fa-check"></i><b>12</b> Queues and Deques</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="queues-and-deques.html"><a href="queues-and-deques.html#queues"><i class="fa fa-check"></i><b>12.1</b> Queues</a></li>
+<li class="chapter" data-level="12.2" data-path="queues-and-deques.html"><a href="queues-and-deques.html#deques"><i class="fa fa-check"></i><b>12.2</b> Deques</a></li>
+<li class="chapter" data-level="12.3" data-path="queues-and-deques.html"><a href="queues-and-deques.html#performance-3"><i class="fa fa-check"></i><b>12.3</b> Performance</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Patterns in Functional Programming</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chaining-currying-and-partial-applications" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5 -</span> Chaining, Currying, and Partial Applications<a href="chaining-currying-and-partial-applications.html#chaining-currying-and-partial-applications" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this lesson we will learn about three different but related design patterns. <code>Chaining</code> will consider the composition of functions. <code>Currying</code> will convert a function into multiple functions based on input parameters thus allowing you to chain the input parameters together. <code>Partial Applications</code> will convert a function into multiple functions based on behavior thus allowing you to execute part of the original function and reuse the result multiple times.</p>
+<div id="chaining" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Chaining<a href="chaining-currying-and-partial-applications.html#chaining" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If we need to apply multiple operations on our inputs, we can define each operation in a function and then chain them together. Chaining is the process of executing a series of functions where the output of one is used as the input for the next. Mathematically, we show chaining or composition as follows:</p>
+<div class="formulabox">
+<p><span class="math inline">\(\mathit{f}(g(h())) = \mathit{f} \circ g \circ h\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>In this example, <span class="math inline">\(h\)</span> runs first and passes the result to function <span class="math inline">\(g\)</span>. After <span class="math inline">\(g\)</span> runs, the result is passed to function <span class="math inline">\(\mathit{f}\)</span>.</p>
+<p>Consider the following Erlang functions that are chained together in various ways:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb29-1"><a href="chaining-currying-and-partial-applications.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">twice(</span><span class="va">X</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="dv">2</span> <span class="op">*</span> <span class="va">X</span><span class="fu">.</span></span>
+<span id="cb29-2"><a href="chaining-currying-and-partial-applications.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">square(</span><span class="va">X</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">X</span> <span class="op">*</span> <span class="va">X</span><span class="fu">.</span></span>
+<span id="cb29-3"><a href="chaining-currying-and-partial-applications.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">third(</span><span class="va">X</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">X</span> <span class="op">/</span> <span class="dv">3</span><span class="fu">.</span></span>
+<span id="cb29-4"><a href="chaining-currying-and-partial-applications.html#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="chaining-currying-and-partial-applications.html#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">test_chain()</span> <span class="op">-&gt;</span></span>
+<span id="cb29-6"><a href="chaining-currying-and-partial-applications.html#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="fl">6.0</span> <span class="op">=</span> <span class="fu">third(twice(square(</span><span class="dv">3</span><span class="fu">))),</span></span>
+<span id="cb29-7"><a href="chaining-currying-and-partial-applications.html#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="fl">6.0</span> <span class="op">=</span> <span class="fu">twice(third(square(</span><span class="dv">3</span><span class="fu">))),</span></span>
+<span id="cb29-8"><a href="chaining-currying-and-partial-applications.html#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="fl">4.0</span> <span class="op">=</span> <span class="fu">square(twice(third(</span><span class="dv">3</span><span class="fu">))),</span></span>
+<span id="cb29-9"><a href="chaining-currying-and-partial-applications.html#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="fl">2.0</span> <span class="op">=</span> <span class="fu">twice(square(third(</span><span class="dv">3</span><span class="fu">))),</span></span>
+<span id="cb29-10"><a href="chaining-currying-and-partial-applications.html#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>Note that we were able to chain the functions in all various permutations because each of the functions had a single number input and single number output.</p>
+<p>If you think about the <code>map</code> and <code>filter</code> functions, these could be chained together because they both have a single list as an input and output. You will make this observation in the exercises below.</p>
+<p>When we chain functions, we can also work with functions that return functions. Consider the functions <code>multiply_list</code> and <code>greater_list</code>:</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ multiply\_list :: real \rightarrow (\lambda :: [real] \rightarrow [real]).\)</span></p>
+<p><span class="math inline">\(spec ~ ~ \lambda_{map} :: real \rightarrow real.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ multiply\_list :: Value \rightarrow (\lambda :: List \rightarrow (map ~ ~ (\lambda_{map} :: Item \rightarrow Item * Value) ~ ~ List)).\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ greater\_list :: real \rightarrow (\lambda :: [real] \rightarrow [real]).\)</span></p>
+<p><span class="math inline">\(spec ~ ~ \lambda_{filter} :: real \rightarrow boolean.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ greater\_list :: Value \rightarrow (\lambda :: List \rightarrow (\mathit{filter} ~ ~ (\lambda_{filter} :: Item \rightarrow Item &gt; Value) ~ ~ List)).\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>In these definitions, the function returns a function that does either a <code>map</code> or a <code>filter</code>. The lambda function for <code>map</code> and <code>filter</code> is constructed using the <span class="math inline">\(Value\)</span> input parameter. For example, if <code>multiply_list</code> receives 4 for <span class="math inline">\(Value\)</span>, then a function that performs a <code>map</code> on the list with a lambda of <span class="math inline">\(\lambda_{map} :: Item \rightarrow Item * 4\)</span> is created.</p>
+<p>The implementation of the <code>multiply_list</code> function is given below in both Erlang and Clojure. The implementation for <code>greater_list</code> is left for an exercise. An example of chaining these together is given as well.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb30-1"><a href="chaining-currying-and-partial-applications.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiply_list(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="kw">fun</span><span class="fu">(</span><span class="va">List</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">lists:map(</span><span class="kw">fun</span><span class="fu">(</span><span class="va">Item</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Value</span> <span class="op">*</span> <span class="va">Item</span> <span class="kw">end</span><span class="fu">,</span> <span class="va">List</span><span class="fu">)</span> <span class="kw">end</span><span class="fu">.</span></span>
+<span id="cb30-2"><a href="chaining-currying-and-partial-applications.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">greater_list(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="ch">implemented_in_exercise</span><span class="fu">.</span></span>
+<span id="cb30-3"><a href="chaining-currying-and-partial-applications.html#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="chaining-currying-and-partial-applications.html#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">test_chain()</span> <span class="op">-&gt;</span></span>
+<span id="cb30-5"><a href="chaining-currying-and-partial-applications.html#cb30-5" aria-hidden="true" tabindex="-1"></a>   <span class="co">% Multiply all items in list by 2 and then</span></span>
+<span id="cb30-6"><a href="chaining-currying-and-partial-applications.html#cb30-6" aria-hidden="true" tabindex="-1"></a>   <span class="co">% filter for all items greater than 10.</span></span>
+<span id="cb30-7"><a href="chaining-currying-and-partial-applications.html#cb30-7" aria-hidden="true" tabindex="-1"></a>   <span class="va">L</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">2</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">,</span> <span class="dv">8</span><span class="fu">,</span> <span class="dv">10</span><span class="fu">,</span> <span class="dv">12</span><span class="fu">],</span></span>
+<span id="cb30-8"><a href="chaining-currying-and-partial-applications.html#cb30-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">[</span><span class="dv">12</span><span class="fu">,</span><span class="dv">16</span><span class="fu">,</span><span class="dv">20</span><span class="fu">,</span><span class="dv">24</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">(greater_list(</span><span class="dv">10</span><span class="fu">))((multiply_list(</span><span class="dv">2</span><span class="fu">))(</span><span class="va">L</span><span class="fu">)),</span></span>
+<span id="cb30-9"><a href="chaining-currying-and-partial-applications.html#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="chaining-currying-and-partial-applications.html#cb30-10" aria-hidden="true" tabindex="-1"></a>   <span class="co">% Filter for all items greater than 10 and </span></span>
+<span id="cb30-11"><a href="chaining-currying-and-partial-applications.html#cb30-11" aria-hidden="true" tabindex="-1"></a>   <span class="co">% then multiply all items by 2.</span></span>
+<span id="cb30-12"><a href="chaining-currying-and-partial-applications.html#cb30-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">[</span><span class="dv">24</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">(multiply_list(</span><span class="dv">2</span><span class="fu">))((greater_list(</span><span class="dv">10</span><span class="fu">))(</span><span class="va">L</span><span class="fu">)),</span></span>
+<span id="cb30-13"><a href="chaining-currying-and-partial-applications.html#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-14"><a href="chaining-currying-and-partial-applications.html#cb30-14" aria-hidden="true" tabindex="-1"></a>   <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<div class="problembox">
+<p><strong>Problem Set 1</strong></p>
+<p>You can find the template for the problem sets in this lesson here: <a href="proves/prove05.erl">prove05.erl</a></p>
+<ol style="list-style-type: decimal">
+<li>Chain the <code>map</code>, <code>filter</code>, and <code>foldl</code> Erlang functions together (<strong>single line of code</strong>) as follows:</li>
+</ol>
+<ul>
+<li>Use <code>map</code> to triple all the values in the starting list <code>[1,2,3,4,5,6,7,8,9,10]</code></li>
+<li>Use <code>filter</code> to only save the even numbers from the <code>map</code> result</li>
+<li>Use <code>foldl</code> to get the product of those even numbers from the <code>filter</code> result. The expected result is 933120.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Implement the <code>greater_list</code> function provided above and the <code>multiply_list</code> function defined above. Test it with the code provided in the template.</li>
+<li>Create a <code>multiples_of_list</code> function that takes an integer parameter <code>Value</code> and returns a function that will perform the appropriate filter on a list of integers. The filter should only include values in the list that are multiples of <code>Value</code>. Include a specification and definition for the function. Test it with the code provided in the template.</li>
+</ol>
+</div>
+</div>
+<div id="currying" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Currying<a href="chaining-currying-and-partial-applications.html#currying" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With chaining, we were able to compose functions together serially. With currying, we are able to compose input parameters to a function serially. This done by creating functions to handle each input parameter.</p>
+<p>Consider the following math function which adds three numbers:</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ add3 :: real ~ ~ real ~ ~ real \rightarrow real.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ add3 :: Value_1 ~ ~ Value_2 ~ ~ Value_3 \rightarrow Value_1 + Value_2 + Value_3.\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>To curry this function, we need to rewrite it to accept only one parameter and return a function to take the next parameter. This process of returning a function to take the next parameter will continue until all parameters have been received. The final function that received the last parameter will actually perform the function behavior with all the inputs. Here is the curried version of the <code>add3</code> function.</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ add3\_curry :: real \rightarrow (\lambda_1 :: real \rightarrow (\lambda_2 :: real \rightarrow real)).\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ add3\_curry :: Value_1 \rightarrow (\lambda_1 :: Value_2 \rightarrow (\lambda_2 :: Value_3 \rightarrow\)</span></p>
+<p><span class="math inline">\(\quad \quad Value_1 + Value_2 + Value_3)).\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>Here is the code implementation for the curried function:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb31-1"><a href="chaining-currying-and-partial-applications.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add3_curry(</span><span class="va">Value1</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">(</span><span class="kw">fun</span><span class="fu">(</span><span class="va">Value2</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">(</span><span class="kw">fun</span><span class="fu">(</span><span class="va">Value3</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Value1</span> <span class="op">+</span> <span class="va">Value2</span> <span class="op">+</span> <span class="va">Value3</span> <span class="kw">end</span><span class="fu">)</span> <span class="kw">end</span><span class="fu">).</span></span>
+<span id="cb31-2"><a href="chaining-currying-and-partial-applications.html#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="chaining-currying-and-partial-applications.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">test_curry()</span> <span class="op">-&gt;</span></span>
+<span id="cb31-4"><a href="chaining-currying-and-partial-applications.html#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">14</span> <span class="op">=</span> <span class="fu">((add3_curry(</span><span class="dv">2</span><span class="fu">))(</span><span class="dv">5</span><span class="fu">))(</span><span class="dv">7</span><span class="fu">),</span></span>
+<span id="cb31-5"><a href="chaining-currying-and-partial-applications.html#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>We can call the curried function and chain the inputs together. A useful use of a curried function is to save one of the inner functions. For example, if we frequently want to add 2 and 5 with other numbers, we can create a function <code>Add3_StartWith2And5</code>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb32-1"><a href="chaining-currying-and-partial-applications.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_curry()</span> <span class="op">-&gt;</span></span>
+<span id="cb32-2"><a href="chaining-currying-and-partial-applications.html#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">Add3_StartWith2And5</span> <span class="op">=</span> <span class="fu">(add3_curry(</span><span class="dv">2</span><span class="fu">))(</span><span class="dv">5</span><span class="fu">),</span></span>
+<span id="cb32-3"><a href="chaining-currying-and-partial-applications.html#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">14</span> <span class="op">=</span> <span class="va">Add3_StartWith2And5</span><span class="fu">(</span><span class="dv">7</span><span class="fu">),</span></span>
+<span id="cb32-4"><a href="chaining-currying-and-partial-applications.html#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">17</span> <span class="op">=</span> <span class="va">Add3_StartWith2And5</span><span class="fu">(</span><span class="dv">10</span><span class="fu">).</span></span>
+<span id="cb32-5"><a href="chaining-currying-and-partial-applications.html#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>A generic function can be written to curry a function for specific number of input parameters. For example, to support our <code>add3</code> function, we can write a function called <code>curry3</code>. The input parameter for the <code>curry3</code> is the function we want to curry.</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda :: a_1 ~ ~ a_2 ~ ~ a_3 \rightarrow a_4.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ curry3 :: \lambda \rightarrow (\lambda_1 :: a_1 \rightarrow (\lambda_2 :: a_2 \rightarrow (\lambda_3 :: a_3 \rightarrow a_4)))\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ curry3 :: \lambda \rightarrow (\lambda_1 :: Param_1 \rightarrow (\lambda_2 :: Param_2 \rightarrow (\lambda_3 :: Param_3 \rightarrow\)</span></p>
+<p><span class="math inline">\(\quad \quad (\lambda ~ ~ Param_1 ~ ~ Param_2 ~ ~ Param_3))))\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>When the <code>curry3</code> function is called, it returns a function <span class="math inline">\(\lambda_1\)</span> that takes the first parameter of the <span class="math inline">\(\lambda\)</span>. The function that returns will subsequently return a function <span class="math inline">\(\lambda_2\)</span> that takes the second parameter. This process continues to receive the 3rd parameter. The final function <span class="math inline">\(\lambda_3\)</span> when called will finally perform the <span class="math inline">\(\lambda\)</span> function on the 3 parameters previously received.</p>
+<p>This generic <code>curry3</code> function can be written in Erlang and used as follows:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb33-1"><a href="chaining-currying-and-partial-applications.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add3(</span><span class="va">Param1</span><span class="fu">,</span><span class="va">Param2</span><span class="fu">,</span><span class="va">Param3</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Param1</span> <span class="op">+</span> <span class="va">Param2</span> <span class="op">+</span> <span class="va">Param3</span><span class="fu">.</span></span>
+<span id="cb33-2"><a href="chaining-currying-and-partial-applications.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curry3(</span><span class="va">Lambda</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">(</span><span class="kw">fun</span><span class="fu">(</span><span class="va">Param1</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">(</span><span class="kw">fun</span><span class="fu">(</span><span class="va">Param2</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">(</span><span class="kw">fun</span><span class="fu">(</span><span class="va">Param3</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Lambda</span><span class="fu">(</span><span class="va">Param1</span><span class="fu">,</span> <span class="va">Param2</span><span class="fu">,</span> <span class="va">Param3</span><span class="fu">)</span> <span class="kw">end</span><span class="fu">)</span> <span class="kw">end</span><span class="fu">)</span> <span class="kw">end</span><span class="fu">).</span></span>
+<span id="cb33-3"><a href="chaining-currying-and-partial-applications.html#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="chaining-currying-and-partial-applications.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">test_curry()</span> <span class="op">-&gt;</span></span>
+<span id="cb33-5"><a href="chaining-currying-and-partial-applications.html#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">14</span> <span class="op">=</span> <span class="fu">(((curry3(</span><span class="kw">fun</span> <span class="ch">add3</span><span class="op">/</span><span class="dv">3</span><span class="fu">))(</span><span class="dv">2</span><span class="fu">))(</span><span class="dv">5</span><span class="fu">))(</span><span class="dv">7</span><span class="fu">),</span></span>
+<span id="cb33-6"><a href="chaining-currying-and-partial-applications.html#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="chaining-currying-and-partial-applications.html#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">Add3_StartWith2And5</span> <span class="op">=</span> <span class="fu">((curry3(</span><span class="kw">fun</span> <span class="ch">add3</span><span class="op">/</span><span class="dv">3</span><span class="fu">))(</span><span class="dv">2</span><span class="fu">))(</span><span class="dv">5</span><span class="fu">),</span></span>
+<span id="cb33-8"><a href="chaining-currying-and-partial-applications.html#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">14</span> <span class="op">=</span> <span class="va">Add3_StartWith2And5</span><span class="fu">(</span><span class="dv">7</span><span class="fu">),</span></span>
+<span id="cb33-9"><a href="chaining-currying-and-partial-applications.html#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">17</span> <span class="op">=</span> <span class="va">Add3_StartWith2And5</span><span class="fu">(</span><span class="dv">10</span><span class="fu">),</span></span>
+<span id="cb33-10"><a href="chaining-currying-and-partial-applications.html#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<div class="problembox">
+<p><strong>Problem Set 2</strong></p>
+<ol style="list-style-type: decimal">
+<li>Implement the <code>curry3</code> function described above. Using the <code>curry3</code> function, curry the <code>alert</code> function provided in the starting code. Test your code with the code provided.</li>
+<li>Save and use an intermediate function from the curried <code>alert</code> function that contains the location (first parameter). Test your code by calling your intermediate function twice with different Category (second parameter) and Message (third parameter) values. You can make up the values for these last two parameters in your test code.</li>
+<li>Save and use an intermediate function that contains the location and category (first and second parameter). Test your code by calling your intermediate function twice with different Message values.</li>
+<li>The provided <code>range_check</code> function takes a range (specified by the first two parameters <code>low</code> and <code>high</code>) and a value to test. This function is not compatible with the <code>filter</code> function because it has arity 3. Use the <code>curry3</code> to generate a function that checks if a value is in the specific range [10,20]. Apply this new function to the list provided in the provided starting code to find all numbers in the range [10,20] using the <code>filter</code> function.</li>
+</ol>
+</div>
+</div>
+<div id="partial-applications" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Partial Applications<a href="chaining-currying-and-partial-applications.html#partial-applications" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When we curried a function, we composed each parameter one at a time. We did this by creating functions that handled each parameter one at a time. Another approach is to split the function up into behavior and compose the behaviors one at a time. Just like currying, we can save intermediate functions. If the functions include behaviors, then these intermediate functions can have calculated results within them for reuse. We call this a partial application. While there are some similarities, please note that partial applications and currying is different.</p>
+<p>Consider the following function which performs a map, filter, and fold (in order) on a range from 1 to <span class="math inline">\(Value\)</span>. Note that the definition is more complicated and the <span class="math inline">\(=\)</span> is used to save intermediate results as each step is performed. This type of function has several parameters. Note that the <code>range</code> function is assumed to exist which will create a list of numbers from 1 to the specified value.</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda_{map} :: int \rightarrow real.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ \lambda_{filter} :: real \rightarrow boolean.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ \lambda_{fold} :: real ~ ~ real \rightarrow real.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ map\_\mathit{f}ilter\_\mathit{f}old :: integer ~ ~ \lambda_{map} ~ ~ \lambda_{filter} ~ ~ real ~ ~ \lambda_{fold} \rightarrow real.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ map\_\mathit{f}ilter\_\mathit{f}old :: Value ~ ~ \lambda_{map} ~ ~ \lambda_{filter} ~ ~ FoldInit ~ ~ \lambda_{fold} \rightarrow\)</span></p>
+<p><span class="math inline">\(\quad \quad List = (range ~ ~ Value),\)</span></p>
+<p><span class="math inline">\(\quad \quad MapList = (map ~ ~ \lambda_{map} ~ ~ List),\)</span></p>
+<p><span class="math inline">\(\quad \quad FilterList = (filter ~ ~ \lambda_{filter} ~ ~ MapList),\)</span></p>
+<p><span class="math inline">\(\quad \quad FoldResult = (foldl ~ ~ \lambda_{fold} ~ ~ FoldInit ~ ~ FilterList),\)</span></p>
+<p><span class="math inline">\(\quad \quad FoldResult.\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>Every time we call this function, we will have to do the initial map and filter again. If we using a common set of data, then this could be wasteful. Like currying, creating a partial application has the benefit of creating functions with fewer parameters. In a partial application, we will split this function into multiple functions in which each smaller function will perform part of the larger function and return a function to do the rest. The function that is returned will contain the partial results from the smaller function.</p>
+<p>Here is a new version of <code>map_filter_fold</code> that uses partial applications:</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda_{map} :: int \rightarrow real.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ \lambda_{filter} :: real \rightarrow boolean.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ \lambda_{fold} :: real ~ ~ real \rightarrow real.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ map\_\mathit{f}ilter\_\mathit{f}old2 :: integer \rightarrow (\lambda_1 :: \lambda_{map} \rightarrow (\lambda_2 :: \lambda_{filter} \rightarrow\)</span></p>
+<p><span class="math inline">\(\quad \quad (\lambda_3 :: real ~ ~ \lambda_{fold} \rightarrow real))\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ map\_\mathit{f}ilter\_\mathit{f}old2 :: Value \rightarrow\)</span></p>
+<p><span class="math inline">\(\quad \quad List = (range ~ ~ Value),\)</span></p>
+<p><span class="math inline">\(\quad \quad \lambda_1 :: \lambda_{map} \rightarrow\)</span></p>
+<p><span class="math inline">\(\quad \quad \quad \quad MapList = (map ~ ~ \lambda_{map} ~ ~ List),\)</span></p>
+<p><span class="math inline">\(\quad \quad \quad \quad \lambda_2 :: \lambda_{filter} \rightarrow\)</span></p>
+<p><span class="math inline">\(\quad \quad \quad \quad \quad \quad FilterList = (filter ~ ~ \lambda_{filter} ~ ~ MapList),\)</span></p>
+<p><span class="math inline">\(\quad \quad \quad \quad \quad \quad \lambda_3 :: FoldInit ~ ~ \lambda_{fold} \rightarrow\)</span></p>
+<p><span class="math inline">\(\quad \quad \quad \quad \quad \quad \quad \quad FoldResult = (foldl ~ ~ \lambda_{fold} ~ ~ FoldInit ~ ~ FilterList),\)</span></p>
+<p><span class="math inline">\(\quad \quad \quad \quad \quad \quad \quad \quad FoldResult.\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>The code is given below.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb34-1"><a href="chaining-currying-and-partial-applications.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_filter_fold2(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
+<span id="cb34-2"><a href="chaining-currying-and-partial-applications.html#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">List</span> <span class="op">=</span> <span class="fu">lists:seq(</span><span class="dv">1</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">),</span></span>
+<span id="cb34-3"><a href="chaining-currying-and-partial-applications.html#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">(</span><span class="va">MapL</span><span class="fu">)</span> <span class="op">-&gt;</span> </span>
+<span id="cb34-4"><a href="chaining-currying-and-partial-applications.html#cb34-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">MapList</span> <span class="op">=</span> <span class="fu">lists:map(</span><span class="va">MapL</span><span class="fu">,</span> <span class="va">List</span><span class="fu">),</span></span>
+<span id="cb34-5"><a href="chaining-currying-and-partial-applications.html#cb34-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">fun</span> <span class="fu">(</span><span class="va">FilterL</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
+<span id="cb34-6"><a href="chaining-currying-and-partial-applications.html#cb34-6" aria-hidden="true" tabindex="-1"></a>            <span class="va">FilterList</span> <span class="op">=</span> <span class="fu">lists:filter(</span><span class="va">FilterL</span><span class="fu">,</span> <span class="va">MapList</span><span class="fu">),</span></span>
+<span id="cb34-7"><a href="chaining-currying-and-partial-applications.html#cb34-7" aria-hidden="true" tabindex="-1"></a>            <span class="kw">fun</span> <span class="fu">(</span><span class="va">FoldInit</span><span class="fu">,</span> <span class="va">FoldL</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
+<span id="cb34-8"><a href="chaining-currying-and-partial-applications.html#cb34-8" aria-hidden="true" tabindex="-1"></a>                <span class="va">FoldResult</span> <span class="op">=</span> <span class="fu">lists:foldl(</span><span class="va">FoldL</span><span class="fu">,</span> <span class="va">FoldInit</span><span class="fu">,</span> <span class="va">FilterList</span><span class="fu">),</span></span>
+<span id="cb34-9"><a href="chaining-currying-and-partial-applications.html#cb34-9" aria-hidden="true" tabindex="-1"></a>                <span class="va">FoldResult</span></span>
+<span id="cb34-10"><a href="chaining-currying-and-partial-applications.html#cb34-10" aria-hidden="true" tabindex="-1"></a>            <span class="kw">end</span></span>
+<span id="cb34-11"><a href="chaining-currying-and-partial-applications.html#cb34-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span></span>
+<span id="cb34-12"><a href="chaining-currying-and-partial-applications.html#cb34-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span><span class="fu">.</span></span></code></pre></div>
+<p>With this code, we can create reusable partial application functions that do part of the processing:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb35-1"><a href="chaining-currying-and-partial-applications.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_filter_fold_test()</span> <span class="op">-&gt;</span></span>
+<span id="cb35-2"><a href="chaining-currying-and-partial-applications.html#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">% Useful lambdas for the map_filter_fold2 to use.</span></span>
+<span id="cb35-3"><a href="chaining-currying-and-partial-applications.html#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">Square</span> <span class="op">=</span> <span class="kw">fun</span><span class="fu">(</span><span class="va">X</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">X</span> <span class="op">*</span> <span class="va">X</span> <span class="kw">end</span><span class="fu">,</span></span>
+<span id="cb35-4"><a href="chaining-currying-and-partial-applications.html#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">Triple</span> <span class="op">=</span> <span class="kw">fun</span><span class="fu">(</span><span class="va">X</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="dv">3</span> <span class="op">*</span> <span class="va">X</span> <span class="kw">end</span><span class="fu">,</span></span>
+<span id="cb35-5"><a href="chaining-currying-and-partial-applications.html#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">Odd</span> <span class="op">=</span> <span class="kw">fun</span><span class="fu">(</span><span class="va">X</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">X</span> <span class="op">rem</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span> <span class="kw">end</span><span class="fu">,</span></span>
+<span id="cb35-6"><a href="chaining-currying-and-partial-applications.html#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">Even</span> <span class="op">=</span> <span class="kw">fun</span><span class="fu">(</span><span class="va">X</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">X</span> <span class="op">rem</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span> <span class="kw">end</span><span class="fu">,</span></span>
+<span id="cb35-7"><a href="chaining-currying-and-partial-applications.html#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">Sum</span> <span class="op">=</span> <span class="kw">fun</span><span class="fu">(</span><span class="va">X</span><span class="fu">,</span><span class="va">Y</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">X</span><span class="op">+</span><span class="va">Y</span> <span class="kw">end</span><span class="fu">,</span></span>
+<span id="cb35-8"><a href="chaining-currying-and-partial-applications.html#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">Product</span> <span class="op">=</span> <span class="kw">fun</span><span class="fu">(</span><span class="va">X</span><span class="fu">,</span><span class="va">Y</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">X</span><span class="op">*</span><span class="va">Y</span> <span class="kw">end</span><span class="fu">,</span></span>
+<span id="cb35-9"><a href="chaining-currying-and-partial-applications.html#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="chaining-currying-and-partial-applications.html#cb35-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">% Example not using any partial applications    </span></span>
+<span id="cb35-11"><a href="chaining-currying-and-partial-applications.html#cb35-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">35</span> <span class="op">=</span> <span class="fu">(((map_filter_fold2(</span><span class="dv">6</span><span class="fu">))(</span><span class="va">Square</span><span class="fu">))(</span><span class="va">Odd</span><span class="fu">))(</span><span class="dv">0</span><span class="fu">,</span> <span class="va">Sum</span><span class="fu">),</span></span>
+<span id="cb35-12"><a href="chaining-currying-and-partial-applications.html#cb35-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb35-13"><a href="chaining-currying-and-partial-applications.html#cb35-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">% Example creating partial applications</span></span>
+<span id="cb35-14"><a href="chaining-currying-and-partial-applications.html#cb35-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">First10Squares</span> <span class="op">=</span> <span class="fu">(map_filter_fold2(</span><span class="dv">10</span><span class="fu">))(</span><span class="va">Square</span><span class="fu">),</span></span>
+<span id="cb35-15"><a href="chaining-currying-and-partial-applications.html#cb35-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">First20TriplesOnlyEven</span> <span class="op">=</span> <span class="fu">((map_filter_fold2(</span><span class="dv">20</span><span class="fu">))(</span><span class="va">Triple</span><span class="fu">))(</span><span class="va">Even</span><span class="fu">),</span></span>
+<span id="cb35-16"><a href="chaining-currying-and-partial-applications.html#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-17"><a href="chaining-currying-and-partial-applications.html#cb35-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">% Using the partial applications</span></span>
+<span id="cb35-18"><a href="chaining-currying-and-partial-applications.html#cb35-18" aria-hidden="true" tabindex="-1"></a>    <span class="dv">165</span> <span class="op">=</span> <span class="fu">(</span><span class="va">First10Squares</span><span class="fu">(</span><span class="va">Odd</span><span class="fu">))(</span><span class="dv">0</span><span class="fu">,</span> <span class="va">Sum</span><span class="fu">),</span></span>
+<span id="cb35-19"><a href="chaining-currying-and-partial-applications.html#cb35-19" aria-hidden="true" tabindex="-1"></a>    <span class="dv">14745600</span> <span class="op">=</span> <span class="fu">(</span><span class="va">First10Squares</span><span class="fu">(</span><span class="va">Even</span><span class="fu">))(</span><span class="dv">1</span><span class="fu">,</span><span class="va">Product</span><span class="fu">),</span></span>
+<span id="cb35-20"><a href="chaining-currying-and-partial-applications.html#cb35-20" aria-hidden="true" tabindex="-1"></a>    <span class="dv">270</span> <span class="op">=</span> <span class="va">First20TriplesOnlyEven</span><span class="fu">(</span><span class="dv">0</span><span class="fu">,</span><span class="va">Sum</span><span class="fu">),</span></span>
+<span id="cb35-21"><a href="chaining-currying-and-partial-applications.html#cb35-21" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3656994324480</span> <span class="op">=</span> <span class="va">First20TriplesOnlyEven</span><span class="fu">(</span><span class="dv">1</span><span class="fu">,</span><span class="va">Product</span><span class="fu">),</span></span>
+<span id="cb35-22"><a href="chaining-currying-and-partial-applications.html#cb35-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-23"><a href="chaining-currying-and-partial-applications.html#cb35-23" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<div class="problembox">
+<p><strong>Problem Set 1</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Implement the <code>map_filter_fold2</code> code above. Test the function with the test code provided in the starting code. Write an additional partial application function that obtains the first 20 triples that are even (uses all parts of <code>map_filter_fold2</code> except the application of the fold and save into the variable <code>First20TriplesOnlyEven</code> provided in the test code). Test your partial application function to calculate both the sum of all of the numbers (it should result in 330) and the product of all of the numbers (219419659468800).</p></li>
+<li><p>Review the <code>process_dataset</code> function (there is some test code you can run as well) which has input parameters as follows:</p>
+<ul>
+<li>Filename - The dataset csv file. You will use the file called <code>weather.csv</code> You can download that file here: <a href="proves/weather.csv">weather.csv</a></li>
+<li>ColumnId - The column to process (first column is designated as column 1)</li>
+<li>ColumnType - Either the atom <code>text</code> or <code>int</code> or <code>float</code> so the proper formatting is done</li>
+<li>CalcL - One arity function used to aggregate all the values in the column extracted. Two functions have been created for you already for use including <code>list_average</code> and <code>list_text_count</code>.</li>
+</ul>
+<p>Using this <code>process_dataset</code> function, create a <code>process_dataset2</code> function that will allow partial applications to be created. The new <code>process_dataset2</code> should split up the functions in the following ways:</p>
+<ul>
+<li>Read the entire dataset from a user supplied file using the <code>read_csv_file</code> function</li>
+<li>Extract a column from the dataset using a user supplied column number and column type using the <code>extract_column_array</code> function.<br />
+</li>
+<li>Perform a user supplied function on the column</li>
+</ul>
+<p>Code is provided in the starting code to test your new <code>process_dataset2</code> function.</p></li>
+</ol>
+</div>
+<p><span class="math inline">\(\nonumber\)</span>
+<span class="math inline">\(\nonumber\)</span>
+<a href="http://creativecommons.org/licenses/by/4.0/"><img src="images/cc-88x31.png" alt="Creative Commons License - CC - BY" /></a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="fold-and-unfold-functors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="monoids-and-monads.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/05-chaining_currying_partapp.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

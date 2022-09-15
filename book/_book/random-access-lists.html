@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 - Random Access Lists | Patterns in Functional Programming</title>
+  <meta name="description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 - Random Access Lists | Patterns in Functional Programming" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  <meta name="github-repo" content="macbeth-byui/cse382-course" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 - Random Access Lists | Patterns in Functional Programming" />
+  
+  <meta name="twitter:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  
+
+<meta name="author" content="Chad Macbeth" />
+
+
+<meta name="date" content="2022-09-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="min-heaps.html"/>
+<link rel="next" href="tries.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Patterns in Functional Programming</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="erlang.html"><a href="erlang.html"><i class="fa fa-check"></i><b>1</b> Erlang</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="erlang.html"><a href="erlang.html#quick-erlang-primer"><i class="fa fa-check"></i><b>1.1</b> Quick Erlang Primer</a></li>
+<li class="chapter" data-level="1.2" data-path="erlang.html"><a href="erlang.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>2</b> Persistence</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>2.1</b> Persistence in Lists</a></li>
+<li class="chapter" data-level="2.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>2.2</b> More List Persistence</a></li>
+<li class="chapter" data-level="2.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>2.3</b> Specifications and Definitions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html"><i class="fa fa-check"></i><b>3</b> Map and Filter Functors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#functors-and-map"><i class="fa fa-check"></i><b>3.1</b> Functors and Map</a></li>
+<li class="chapter" data-level="3.2" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#filter"><i class="fa fa-check"></i><b>3.2</b> Filter</a></li>
+<li class="chapter" data-level="3.3" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#functor-properties"><i class="fa fa-check"></i><b>3.3</b> Functor Properties</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html"><i class="fa fa-check"></i><b>4</b> Fold and Unfold Functors</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#fold"><i class="fa fa-check"></i><b>4.1</b> Fold</a></li>
+<li class="chapter" data-level="4.2" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#fold-right"><i class="fa fa-check"></i><b>4.2</b> Fold Right</a></li>
+<li class="chapter" data-level="4.3" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#unfold"><i class="fa fa-check"></i><b>4.3</b> Unfold</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html"><i class="fa fa-check"></i><b>5</b> Chaining, Currying, and Partial Applications</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#chaining"><i class="fa fa-check"></i><b>5.1</b> Chaining</a></li>
+<li class="chapter" data-level="5.2" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#currying"><i class="fa fa-check"></i><b>5.2</b> Currying</a></li>
+<li class="chapter" data-level="5.3" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#partial-applications"><i class="fa fa-check"></i><b>5.3</b> Partial Applications</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html"><i class="fa fa-check"></i><b>6</b> Monoids and Monads</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#monoids"><i class="fa fa-check"></i><b>6.1</b> Monoids</a></li>
+<li class="chapter" data-level="6.2" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#monads"><i class="fa fa-check"></i><b>6.2</b> Monads</a></li>
+<li class="chapter" data-level="6.3" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#list-monad"><i class="fa fa-check"></i><b>6.3</b> List Monad</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html"><i class="fa fa-check"></i><b>7</b> Streams and Lazy Evaluation</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#streams"><i class="fa fa-check"></i><b>7.1</b> Streams</a></li>
+<li class="chapter" data-level="7.2" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#stream-monad-collection"><i class="fa fa-check"></i><b>7.2</b> Stream Monad &amp; Collection</a></li>
+<li class="chapter" data-level="7.3" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#erlang-processes-streams"><i class="fa fa-check"></i><b>7.3</b> Erlang Processes &amp; Streams</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>8</b> Trees</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="trees.html"><a href="trees.html#binary-search-tree"><i class="fa fa-check"></i><b>8.1</b> Binary Search Tree</a></li>
+<li class="chapter" data-level="8.2" data-path="trees.html"><a href="trees.html#balanced-red-black-tree"><i class="fa fa-check"></i><b>8.2</b> Balanced Red-Black Tree</a></li>
+<li class="chapter" data-level="8.3" data-path="trees.html"><a href="trees.html#performance"><i class="fa fa-check"></i><b>8.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="min-heaps.html"><a href="min-heaps.html"><i class="fa fa-check"></i><b>9</b> Min Heaps</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="min-heaps.html"><a href="min-heaps.html#min-heap"><i class="fa fa-check"></i><b>9.1</b> Min Heap</a></li>
+<li class="chapter" data-level="9.2" data-path="min-heaps.html"><a href="min-heaps.html#efficient-inserting-and-removal"><i class="fa fa-check"></i><b>9.2</b> Efficient Inserting and Removal</a></li>
+<li class="chapter" data-level="9.3" data-path="min-heaps.html"><a href="min-heaps.html#priority-queue"><i class="fa fa-check"></i><b>9.3</b> Priority Queue</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="random-access-lists.html"><a href="random-access-lists.html"><i class="fa fa-check"></i><b>10</b> Random Access Lists</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="random-access-lists.html"><a href="random-access-lists.html#binary-numbers-and-the-ral"><i class="fa fa-check"></i><b>10.1</b> Binary Numbers and the RAL</a></li>
+<li class="chapter" data-level="10.2" data-path="random-access-lists.html"><a href="random-access-lists.html#lookup-and-update"><i class="fa fa-check"></i><b>10.2</b> Lookup and Update</a></li>
+<li class="chapter" data-level="10.3" data-path="random-access-lists.html"><a href="random-access-lists.html#performance-1"><i class="fa fa-check"></i><b>10.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="tries.html"><a href="tries.html"><i class="fa fa-check"></i><b>11</b> Tries</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="tries.html"><a href="tries.html#creating-the-trie"><i class="fa fa-check"></i><b>11.1</b> Creating the Trie</a></li>
+<li class="chapter" data-level="11.2" data-path="tries.html"><a href="tries.html#searching-and-counting"><i class="fa fa-check"></i><b>11.2</b> Searching and Counting</a></li>
+<li class="chapter" data-level="11.3" data-path="tries.html"><a href="tries.html#performance-2"><i class="fa fa-check"></i><b>11.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="queues-and-deques.html"><a href="queues-and-deques.html"><i class="fa fa-check"></i><b>12</b> Queues and Deques</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="queues-and-deques.html"><a href="queues-and-deques.html#queues"><i class="fa fa-check"></i><b>12.1</b> Queues</a></li>
+<li class="chapter" data-level="12.2" data-path="queues-and-deques.html"><a href="queues-and-deques.html#deques"><i class="fa fa-check"></i><b>12.2</b> Deques</a></li>
+<li class="chapter" data-level="12.3" data-path="queues-and-deques.html"><a href="queues-and-deques.html#performance-3"><i class="fa fa-check"></i><b>12.3</b> Performance</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Patterns in Functional Programming</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="random-access-lists" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10 -</span> Random Access Lists<a href="random-access-lists.html#random-access-lists" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The lists that we have used in this course have been linked lists. If we want to find something in the list, we have to search resulting in O(n) performance. We could use a binary search tree or a min heap to help us find things better but then we lose the order in which items were added. The name of dynamic arrays for which you can maintain order and have good lookup by index is done differently in functional languages when compared to the python list, the java ArrayList, or the C++ vector. A common solution is the Random Access List (RAL).</p>
+<div id="binary-numbers-and-the-ral" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Binary Numbers and the RAL<a href="random-access-lists.html#binary-numbers-and-the-ral" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In Erlang, there is not a way to quickly access a specific index in a list with O(1). In Part 3, you will explore the performance of the <code>nth</code> function that Erlang provides to do this. The difficulty is that we have to traverse through the entire list from beginning to the target index. To improve on this, we would like to find an O(log n) solution that maintains the order of the values. O(log n) makes us think about binary search trees. However, we need to store information in the trees that keeps the order the same. Binary Search Trees sacrifice order for performance.</p>
+<p>To find a solution, we will consider a problem that at first does not seem related. Consider binary numbers (purposefully with leading zeros) going from 1 to 7: 001, 010, 011, 100, 101, 110, and 111. When we want to add 1 to our number, we will go from right to left and do one of the following:</p>
+<ul>
+<li>If we encounter a 0, we will replace it with a 1 and make no more changes.</li>
+<li>If we encounter a 1, we will replace it with a 0 and consider these two steps again for the next number in the sequence. In this case we are mathematically carrying the 1 to the next item in the sequence.</li>
+</ul>
+<p>If we try to do this in Erlang, we will be frustrated by the fact that we are going from right to left. Since it is more natural to go left (index 0) to right, we will flip our binary numbers around. When we read right to left, we call this little endian notation whereas when we read left to right, we call this big endian notation. To work better in Erlang, we will use the big endian notation</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Base 10 Value</th>
+<th>Little Endian Notation (Right to Left)</th>
+<th>Big Endian Notation (Left to Right)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>001</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>010</td>
+<td>010</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>011</td>
+<td>110</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>100</td>
+<td>001</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>101</td>
+<td>101</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>110</td>
+<td>011</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>111</td>
+<td>111</td>
+</tr>
+</tbody>
+</table>
+<p>Here is the specification and definition for incrementing a binary sequence (going left to right in big endian format) where the sequence starts at 1 and the sequence is stored in a list. Note that the definition follows the two rules for incrementing a binary sequence that we identified earlier. An empty list would represent the value of 0.</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ inc :: [integer] \rightarrow [integer].\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ inc :: [0|Rest] \rightarrow [1|Rest];\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ inc :: [1|Rest] \rightarrow [0|( inc ~ ~ Rest)];\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>The erlang code is shown below:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb64-1"><a href="random-access-lists.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inc([])</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">];</span></span>
+<span id="cb64-2"><a href="random-access-lists.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">inc([</span><span class="dv">0</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">])</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">];</span></span>
+<span id="cb64-3"><a href="random-access-lists.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">inc([</span><span class="dv">1</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">])</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="dv">0</span><span class="fu">|inc(</span><span class="va">Rest</span><span class="fu">)].</span></span>
+<span id="cb64-4"><a href="random-access-lists.html#cb64-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-5"><a href="random-access-lists.html#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="fu">test()</span> <span class="op">-&gt;</span></span>
+<span id="cb64-6"><a href="random-access-lists.html#cb64-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lists:foldl(</span></span>
+<span id="cb64-7"><a href="random-access-lists.html#cb64-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">fun</span><span class="fu">(</span><span class="va">_Value</span><span class="fu">,</span><span class="va">Acc</span><span class="fu">)</span> <span class="op">-&gt;</span> </span>
+<span id="cb64-8"><a href="random-access-lists.html#cb64-8" aria-hidden="true" tabindex="-1"></a>            <span class="va">X</span><span class="op">=</span><span class="fu">inc(</span><span class="va">Acc</span><span class="fu">),</span> </span>
+<span id="cb64-9"><a href="random-access-lists.html#cb64-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">io:format(</span><span class="st">&quot;~p~n&quot;</span><span class="fu">,[</span><span class="va">X</span><span class="fu">]),</span> </span>
+<span id="cb64-10"><a href="random-access-lists.html#cb64-10" aria-hidden="true" tabindex="-1"></a>            <span class="va">X</span> </span>
+<span id="cb64-11"><a href="random-access-lists.html#cb64-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span><span class="fu">,</span> <span class="fu">[],</span> <span class="fu">lists:seq(</span><span class="dv">1</span><span class="fu">,</span><span class="dv">15</span><span class="fu">)),</span></span>
+<span id="cb64-12"><a href="random-access-lists.html#cb64-12" aria-hidden="true" tabindex="-1"></a>    <span class="ch">pass</span><span class="fu">.</span></span></code></pre></div>
+<p>The result of running the test code up to 15 (1111) is shown below:</p>
+<pre class="shell"><code>[1]
+[0,1]
+[1,1]
+[0,0,1]
+[1,0,1]
+[0,1,1]
+[1,1,1]
+[0,0,0,1]
+[1,0,0,1]
+[0,1,0,1]
+[1,1,0,1]
+[0,0,1,1]
+[1,0,1,1]
+[0,1,1,1]
+[1,1,1,1]</code></pre>
+<p>Now that we can build these binary sequences, lets observe what each “1” represents. Notice that when you write binary numbers, each “1” represents <span class="math inline">\(2^n\)</span> possible values. In other words, we could say that each “1” is storing those values for us. In the following binary sequence (written left to right as we did before): 1011, the 1’s represent: <span class="math inline">\(2^0\)</span>, <span class="math inline">\(2^2\)</span>, and <span class="math inline">\(2^3\)</span> for a total of 13. In other words we could say that 1011 represents 13 different things.</p>
+<p>To see those 13 different things, we will represent each 1 by a tree. These trees will be special in that each tree will have <span class="math inline">\(2^n\)</span> leaves where <span class="math inline">\(n\)</span> represents the index in the binary sequence (starting at 0). Trees with <span class="math inline">\(2^n\)</span> leaves are not hard to build. A complete and balanced tree of height 2 will have <span class="math inline">\(2^2\)</span> leaves, a tree with height 3 will have <span class="math inline">\(2^3\)</span> leaves, and so on. Here is the representation of 1011 (or 13) using these trees:</p>
+<p><img src="images/ral13.drawio.png" /></p>
+<p>Notice that the 0’s are represented with <span class="math inline">\(nil\)</span> instead of a tree. We call this list of trees a Random Access List (RAL). When you look at this list of trees, you will notice there are a grand total of 13 leaves. Each of these leaves represent the actual 13 pieces of data in the RAL. All the other nodes in the tree including the <span class="math inline">\(nil\)</span> values in the list represent the organization of the RAL to enable the O(log n) behavior. If you wanted to go to one of these leaves, you could traverse the sequence from left to right (which would be O(log n)) and then traverse down to one of the leaves (which would also be O(log n)). We will explore how this works in the next section.</p>
+<p>To add new items to a RAL, we will use a similar algorithm for adding one to our binary sequence:</p>
+<ul>
+<li>If we encounter a <span class="math inline">\(nil\)</span> (think a 0 in the binary sequence), we will replace it with a tree (think a 1) containing <span class="math inline">\(2^n\)</span> (where is <span class="math inline">\(n\)</span> is our current index) and make no more changes. The tree that we add will either be a tree of height 1 (if the RAL was previously empty) or it will be a tree that was carried over from the recursive call in the next step below.</li>
+<li>If we encounter a tree (not <span class="math inline">\(nil\)</span>, think a 1 in the binary sequence), we will replace it with a <span class="math inline">\(nil\)</span> (think 0) and carry the tree to the next sequence and recursively consider these two steps again. If a tree was carried over, then we have to carry both the tree(s) from the previous sequence position(s) along with this position.</li>
+</ul>
+<p>Let’s visually look at how this works first as we store letters in a RAL starting with an empty RAL. Notice that when we add a new letter to our RAL, it will prepend it to the front just like adding a new digit to a binary sequence. In each diagram, a non-leaf node is left empty and the leaf nodes contain the actual data. Remember that each tree must be balanced and complete with <span class="math inline">\(2^n\)</span> leaves each.</p>
+<p>Add A to an empty RAL:</p>
+<p><img src="images/ral1.drawio.png" /></p>
+<p>Add B to the RAL (will require a replacement of the first tree with a <span class="math inline">\(nil\)</span> and merge the new tree with B and the former tree with A):</p>
+<p><img src="images/ral2.drawio.png" /></p>
+<p>Add C to the RAL (there is a space to put the new tree with C):</p>
+<p><img src="images/ral3.drawio.png" /></p>
+<p>Add D to the RAL (have to merge the C and D and then merge it with the B/A tree and then put it in the next available spot to the right):</p>
+<p><img src="images/ral4.drawio.png" /></p>
+<p>Add E (space exists for that in index 0):</p>
+<p><img src="images/ral5.drawio.png" /></p>
+<p>Add F (merge the new tree with F and the the tree with E … notice that the binary number shown above the boxes is increasing like our first binary example):</p>
+<p><img src="images/ral6.drawio.png" /></p>
+<p>Add G (which has an available space):</p>
+<p><img src="images/ral7.drawio.png" /></p>
+<p>Finally add H (which requires us to merge our new tree with H along with the other 3 trees to create the new tree in index 3).</p>
+<p><img src="images/ral8.drawio.png" /></p>
+<p>To create the RAL in software, we will need a structure to represent each of the trees in the list. The root node of each of the trees will be represented by a <span class="math inline">\(ral\_tree\)</span> node. Our structure distinguishes between non-leaf nodes (no values) and leaf nodes (values). The non-leaf nodes called <span class="math inline">\(node\)</span> will include a reference to the left and right sub-trees as well as a <span class="math inline">\(Count\)</span>. The <span class="math inline">\(Count\)</span> will represent the number of leaves under this node. The <span class="math inline">\(Count\)</span> of a leaf node will always be 1. We store the <span class="math inline">\(Count\)</span> in each non-leaf node to make it easier to merge a <span class="math inline">\(ral\_tree\)</span> with another <span class="math inline">\(ral\_tree\)</span>. We will also use this <span class="math inline">\(Count\)</span> when trying to access values in our RAL by index later on.</p>
+<div class="formulabox">
+<p><span class="math inline">\(struct ~ ~ ral\_tree\)</span></p>
+<p><span class="math inline">\(\quad \quad \lbrace atom(node), integer:Count, ral\_tree:Le\mathit{f}t, ral\_tree:Right \rbrace ~ ~ or\)</span></p>
+<p><span class="math inline">\(\quad \quad \lbrace atom(lea\mathit{f}), a:Value \rbrace.\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>The RAL will be represented by a list of <span class="math inline">\(ral\_tree\)</span> objects. Our <code>prepend</code> function will use the following specification and definition:</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ prepend :: a ~ ~ [ral\_tree] \rightarrow [ral\_tree].\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ prepend :: Value ~ ~ RAL \rightarrow (merge ~ ~ \lbrace lea\mathit{f}, Value \rbrace ~ ~ RAL).\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>The <code>merge</code> function is responsible for implementing the two rules just like <code>inc</code> was used to implement the two similar rules with the binary sequence. The <span class="math inline">\(\lbrace leaf, Value \rbrace\)</span> will be merged (or carried) into the existing RAL (or binary sequence). Here is the specification and definition for the <code>merge</code> function. Compare and contrast this with the <code>inc</code> function we wrote earlier. When we have to merge (or carry over) a tree with an existing tree, we create a new root node and put the carry over tree to the left and the existing tree to the right. The <span class="math inline">\(Count\)</span> for the new root node of the tree will be the sum of the counts of the two trees that were merged together. Refer back to the diagrams earlier to see how this merge was happening as we added a new letter to our RAL.</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ merge :: ral\_tree ~ ~ [ral\_tree] \rightarrow [ral\_tree].\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ merge :: Carry\_Tree ~ ~ [] \rightarrow [Carry\_Tree];\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ merge :: Carry\_Tree ~ ~ [nil|Rest\_Trees] \rightarrow [Carry\_Tree|Rest\_Trees];\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ merge :: Carry\_Tree ~ ~ [Tree|Rest\_Trees] \rightarrow\)</span></p>
+<p><span class="math inline">\(\quad \quad Merged\_Tree = \lbrace left\_as\_an\_exercise \rbrace,\)</span></p>
+<p><span class="math inline">\(\quad \quad [nil|(merge ~ ~ Merged\_Tree ~ ~ Rest\_Trees].\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>The <code>count</code> function used above will either return 1 for a leaf or the <span class="math inline">\(Count\)</span> value from the <code>ral_tree</code> structure. The implementations of all of these functions in Erlang is left for an exercise.</p>
+<div class="problembox">
+<p><strong>Problem Set 1</strong></p>
+<p>You can find the template for the problem sets in this lesson here: <a href="proves/prove10.erl">prove10.erl</a></p>
+<ol style="list-style-type: decimal">
+<li>Implement the <code>prepend</code>, <code>merge</code>, and <code>count</code> functions as described above. The specification and definition for <code>prepend</code> and <code>merge</code> are provided. You will need complete the definition for <code>merge</code> by determining what <code>Merged_Tree</code> should be equal to. The specification and definition for <code>count</code> is not provided but it is described at the end of the reading above. Use the test code provided to verify your implementation.</li>
+</ol>
+</div>
+</div>
+<div id="lookup-and-update" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Lookup and Update<a href="random-access-lists.html#lookup-and-update" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Finding a specific value in the RAL relies on the relation to the binary sequence that we started with. The diagram below shows the RAL with 7 items (111 binary sequence). In this diagram, the numbers in the non-leaf nodes show the value of <span class="math inline">\(Count\)</span> (remember a leaf node has a <span class="math inline">\(Count\)</span> of 1). The boxes in the list are also annotated with the power of 2 that they represent. Note that the power of 2 represents the number of leaves in the <span class="math inline">\(ral\_tree\)</span>.</p>
+<p><img src="images/ral7_counting.drawio.png" /></p>
+<p>If we wanted to find the 5th number (index 4) in the RAL (where the G in the first leaf on the left is considered index 0), then we first need to traverse the list to find the correct <span class="math inline">\(ral\_tree\)</span>. If we start at the first <span class="math inline">\(ral\_tree\)</span>, we see that the <span class="math inline">\(Count\)</span> is 1 which means there is only 1 value in this first <span class="math inline">\(ral\_tree\)</span>. Index 4 is not in this <span class="math inline">\(ral\_tree\)</span>. We will subtract 1 from our Index and keep moving.</p>
+<p><img src="images/ral7_counting_step2.drawio.png" /></p>
+<p>We then consider whether the value we are looking for is within the 2nd node of the RAL. Our updated index of 3 is <span class="math inline">\(\geq\)</span> to <span class="math inline">\(2^1\)</span> so we subtract <span class="math inline">\(2^1\)</span> from our index and move on.</p>
+<p><img src="images/ral7_counting_step3.drawio.png" /></p>
+<p>We then consider whether the value we are looking for is within the 3rd node of the RAL. Our updated index of 1 is not <span class="math inline">\(\geq\)</span> to <span class="math inline">\(2^2\)</span>. Therefore we know that the value we are looking for is somewhere within the this 3rd <span class="math inline">\(ral\_list\)</span>.</p>
+<p>The specification and definition for the lookup function is give below. Note that the <code>lookup_in_tree</code> function is used to find the desired value (i.e. leaf) in the <code>ral_tree</code>.</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ lookup :: integer ~ ~ [ral\_tree] \rightarrow a.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ lookup :: Index ~ ~ RAL \rightarrow nil \text{when} ~ ~ Index &lt; 0;\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ lookup :: Index ~ ~ [] \rightarrow nil;\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ lookup :: Index ~ ~ [nil|Rest\_Trees] \rightarrow (lookup ~ ~ Index ~ ~ Rest\_Trees);\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ lookup :: Index ~ ~ [Tree|Rest\_Trees] \rightarrow (lookup ~ ~ Index-(count ~ ~ Tree) ~ ~ Rest\_Trees)\)</span></p>
+<p><span class="math inline">\(\quad \quad \text{when} ~ ~ Index \geq (count ~ ~ Tree);\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ lookup :: Index ~ ~ [Tree|Rest\_Trees] \rightarrow (lookup\_in\_tree ~ ~ Index ~ ~ Tree).\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>In the definition, the first two clauses handle invalid index scenarios. The third clause handles the case where as we are going through the RAL list, we come across a <span class="math inline">\(ral\_tree\)</span> that is <span class="math inline">\(nil\)</span>. We know there are no values in there, so we keep going. Notice that we don’t decrease our <span class="math inline">\(Index\)</span> because there were not any values (or leaves) in that <span class="math inline">\(ral\_tree\)</span>. In the fourth clause, there are values in the <span class="math inline">\(ral_tree\)</span> but we haven’t arrived at the <span class="math inline">\(ral\_tree\)</span> for our <span class="math inline">\(Index\)</span> value yet. In the fifth case, we have found the target <span class="math inline">\(ral\_tree\)</span> and we will use <code>lookup_in_tree</code> to find the specific leaf.</p>
+<p>We now have to traverse the <span class="math inline">\(ral\_tree\)</span> to find the leaf associated with our Index value. In our previous example, the <span class="math inline">\(Index\)</span> was equal to 3 when we found our target <span class="math inline">\(ral\_tree\)</span>. We will use that <span class="math inline">\(Index\)</span> to find our leaf. The process is as follows:</p>
+<ol style="list-style-type: decimal">
+<li>If the current node of the <span class="math inline">\(ral\_tree\)</span> is a <span class="math inline">\(leaf\)</span>, then we have found our value (this is true because we assume that the <span class="math inline">\(ral\_tree\)</span> was created correctly in the first place).</li>
+<li>If the current node of the <span class="math inline">\(ral\_tree\)</span> is a <span class="math inline">\(node\)</span>, then we have to either go left or right:
+<ul>
+<li>If the current <span class="math inline">\(Index\)</span> is <span class="math inline">\(&lt;\)</span> the <span class="math inline">\(Count / 2\)</span> (number of leaves on either side of the current node), then keep looking towards the left.</li>
+<li>If the current <span class="math inline">\(index\)</span> is <span class="math inline">\(\geq\)</span> the <span class="math inline">\(Count / 2\)</span>, then keep looking towards the right. In this case, we need to subtract off <span class="math inline">\(Count / 2\)</span> from the <span class="math inline">\(Index\)</span> because the <span class="math inline">\(Count\)</span> values of children nodes will be relative to the parent node.</li>
+</ul></li>
+</ol>
+<p>The definition and implementation of the <code>lookup_in_tree</code> function based on this process will be left for an exercise.</p>
+<p>If we wanted to update a value in the RAL, the process is almost the same as looking up a value. The <code>update</code> function will be just like the <code>lookup</code> function and the <code>update_in_tree</code> function will be just like the <code>lookup_in_tree</code> function. The table below shows the differences:</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>lookup</th>
+<th>update</th>
+<th>lookup_in_tree</th>
+<th>update_in_tree</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Search for the <span class="math inline">\(ral\_tree\)</span> based on the <span class="math inline">\(Index\)</span>. When found, return the value returned from <code>lookup_in_tree</code>.</td>
+<td>Search for the <span class="math inline">\(ral\_tree\)</span> based on the <span class="math inline">\(Index\)</span>. Rebuild the RAL list from left to right (like an <code>insert_at</code> function) until the <span class="math inline">\(ral\_tree\)</span> is found. When found, use the updated <span class="math inline">\(ral\_tree\)</span> returned from <code>update_in_tree</code>. The remaining RAL list is reused.</td>
+<td>Use the <span class="math inline">\(Index\)</span> to traverse the tree left and right until the value is found. Return the value in the <span class="math inline">\(leaf\)</span> that was found.</td>
+<td>Use the <span class="math inline">\(Index\)</span> to traverse the tree left and right. Rebuild the tree (in the same way as was done with the Binary Search Tree) starting with the <span class="math inline">\(leaf\)</span> using the new modified value.</td>
+</tr>
+</tbody>
+</table>
+<p>The definition for <code>update</code> is provided below. The definition and implementation of the <code>update_in_tree</code> is left as an exercise.</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ update:: integer ~ ~ a ~ ~ [ral\_tree] \rightarrow [ral\_tree].\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ update:: Index ~ ~ Value ~ ~ RAL \rightarrow RAL ~ ~ \text{when} ~ ~ Index &lt; 0;\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ update:: Index ~ ~ Value ~ ~ [] \rightarrow [];\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ update:: Index ~ ~ Value ~ ~ [nil|Rest\_Trees] \rightarrow (update ~ ~ Index ~ ~ Value ~ ~ Rest\_Trees);\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ update:: Index ~ ~ Value ~ ~ [Tree|Rest\_Trees] \rightarrow\)</span></p>
+<p><span class="math inline">\(\quad \quad [Tree|(update ~ ~ Index-(count ~ ~ Tree) ~ ~ Value ~ ~ Rest\_Trees)]\)</span></p>
+<p><span class="math inline">\(\quad \quad \text{when} ~ ~ Index \geq (count ~ ~ Tree);\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ update:: Index ~ ~ Value ~ ~ [Tree|Rest\_Trees] \rightarrow\)</span></p>
+<p><span class="math inline">\(\quad \quad [(update\_in\_tree ~ ~ Index ~ ~ Value ~ ~ Tree)|Rest\_Trees].\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>Notice that an additional difference is that the <code>update</code> function will return the original RAL if the index is incorrect.</p>
+<div class="problembox">
+<p><strong>Problem Set 2</strong></p>
+<ol style="list-style-type: decimal">
+<li>Implement <code>lookup</code> and <code>lookup_in_tree</code> based on the descriptions above. Use the test code provided to verify your implementation.</li>
+<li>Implement <code>update</code> and <code>update_in_tree</code> based on the descriptions above. Use the test code provided to verify your implementation.</li>
+</ol>
+</div>
+</div>
+<div id="performance-1" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Performance<a href="random-access-lists.html#performance-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The cost of traversing the RAL list will be O(log n) and cost of traversing a <span class="math inline">\(ral\_tree\)</span> will also be O(log n) which means that our <code>lookup</code> and <code>update</code> functions are O(log n). If we used a standard list, we would need to recursively search from left to right to find the desired index which would result in O(n). To demonstrate this, you can use the <code>nth</code> function provided by Erlang which will provide the value at a specified index in a list. Note that the <code>nth</code> function treats the first elements as Index 1 instead of 0 like our RAL.</p>
+<p>Using the same <code>start_perf</code> and <code>stop_perf</code> used in previous lessons, we can measure the time it takes to access the last item in a very large 1,000,000 item Erlang list.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb66-1"><a href="random-access-lists.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">start_perf()</span> <span class="op">-&gt;</span></span>
+<span id="cb66-2"><a href="random-access-lists.html#cb66-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">eprof:start(),</span></span>
+<span id="cb66-3"><a href="random-access-lists.html#cb66-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">eprof:start_profiling([self()]).</span></span>
+<span id="cb66-4"><a href="random-access-lists.html#cb66-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-5"><a href="random-access-lists.html#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stop_perf(</span><span class="va">Title</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
+<span id="cb66-6"><a href="random-access-lists.html#cb66-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">io:format(</span><span class="st">&quot;Perf (~p): ~n&quot;</span><span class="fu">,[</span><span class="va">Title</span><span class="fu">]),</span></span>
+<span id="cb66-7"><a href="random-access-lists.html#cb66-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">eprof:stop_profiling(),</span></span>
+<span id="cb66-8"><a href="random-access-lists.html#cb66-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">eprof:analyze(</span><span class="ch">total</span><span class="fu">),</span></span>
+<span id="cb66-9"><a href="random-access-lists.html#cb66-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">eprof:stop().</span></span>
+<span id="cb66-10"><a href="random-access-lists.html#cb66-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-11"><a href="random-access-lists.html#cb66-11" aria-hidden="true" tabindex="-1"></a><span class="fu">test()</span> <span class="op">-&gt;</span></span>
+<span id="cb66-12"><a href="random-access-lists.html#cb66-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">List</span> <span class="op">=</span> <span class="fu">lists:seq(</span><span class="dv">0</span><span class="fu">,</span><span class="dv">999999</span><span class="fu">),</span></span>
+<span id="cb66-13"><a href="random-access-lists.html#cb66-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">start_perf(),</span></span>
+<span id="cb66-14"><a href="random-access-lists.html#cb66-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">999999</span> <span class="op">=</span> <span class="fu">lists:nth(</span><span class="dv">1000000</span><span class="fu">,</span><span class="va">List</span><span class="fu">),</span></span>
+<span id="cb66-15"><a href="random-access-lists.html#cb66-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop_perf(</span><span class="st">&quot;list lookup last one&quot;</span><span class="fu">),</span></span>
+<span id="cb66-16"><a href="random-access-lists.html#cb66-16" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>The comparison of accessing the last item in a RAL with the last item in an Erlang list is left for an exercise.</p>
+<div class="problembox">
+<p><strong>Problem Set 3</strong></p>
+<ol style="list-style-type: decimal">
+<li>Create a RAL with 1,000,000 items by using a <code>foldl</code> and the <code>prepend</code> function. Using <code>start_perf</code> and <code>stop_perf</code> (provided in the test code), compare the time for looking up index 999,999 (the last item) in both the Erlang List and the RAL. Discuss your observations in comments within your code. Note both the CALLS and the TIME columns when comparing the performance.</li>
+</ol>
+</div>
+<p><span class="math inline">\(\nonumber\)</span>
+<span class="math inline">\(\nonumber\)</span>
+<a href="http://creativecommons.org/licenses/by/4.0/"><img src="images/cc-88x31.png" alt="Creative Commons License - CC - BY" /></a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="min-heaps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tries.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/10-rals.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

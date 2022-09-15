@@ -1,10 +1,8 @@
-﻿# CSE 382 Lesson 6 - Monoid & Monad Design Patterns
+# Monoids and Monads
 
 In this lesson we will learn about two related design patterns: Monoids and Monads.  Like Functors, these design patterns are based on mathematical principles that are represented frequently in many programming languages including functional ones.
 
-You can find the template for the problem sets in this lesson here: [prove06.erl](https://macbeth-byui.github.io/cse382-course/proves/prove06.erl)
-
-## Part 1 - Monoids
+## Monoids
 
 Monoids are functions that combine things using a binary operation that have the following properties:
 
@@ -23,13 +21,16 @@ Due to the closure property, we are able to combine things easily with our funct
 
 As an example, we will rewrite the ability to combine (i.e. concatenate) two lists.  Notice in the definition below we are purposefully not using $++$ because this `combine_list` function is actually trying to implement $++$.  
 
->$spec ~ ~ combine\_list :: [a] ~ ~ [a] \rightarrow [a].$
->
->$de\mathit{f} ~ ~ combine\_list :: []~ ~ List \rightarrow List;$
->
->$de\mathit{f} ~ ~ combine\_list :: List ~ ~ [] \rightarrow List;$
->
->$de\mathit{f} ~ ~ combine\_list :: [First|Rest] ~ ~ [] \rightarrow [First | (combine\_list ~ ~ List ~ ~ Rest)]$
+:::: {.formulabox data-latex=""}
+$spec ~ ~ combine\_list :: [a] ~ ~ [a] \rightarrow [a].$
+
+$de\mathit{f} ~ ~ combine\_list :: []~ ~ List \rightarrow List;$
+
+$de\mathit{f} ~ ~ combine\_list :: List ~ ~ [] \rightarrow List;$
+
+$de\mathit{f} ~ ~ combine\_list :: [First|Rest] ~ ~ [] \rightarrow [First | (combine\_list ~ ~ List ~ ~ Rest)]$
+::::
+$\nonumber$
 
 The first part of the definition provides support for the identity property.  Observe that this function can be chained together in different pairs (associative property) and the result is the same.  
 
@@ -70,34 +71,50 @@ test_combine_list() ->
 
 Comparing with other languages, monoids should seem familiar to operator overloading or overriding.  The ability to define what it means to perform an operator on anything.  While Monoids are restricted primarily to combining operators, the principle is closure is still important.  For example, consider a function that combines two accounts.  Each account is defined by an owner, an identifier, and a balance.  We could write a function that does the following:
 
->$struct ~ ~ account ~ ~ \lbrace string:Owner, string:Identi\mathit{f}ier, real:Balance \rbrace.$
->
->$spec ~ ~ combine\_accounts :: account ~~ account \rightarrow real.$
->
->$de\mathit{f} ~ ~ combine\_accounts :: Account_2 ~~ Account_1 \rightarrow Account_1.Balance + Account_2.Balance.$
+:::: {.formulabox data-latex=""}
+$struct ~ ~ account ~ ~ \lbrace string:Owner, string:Identi\mathit{f}ier, real:Balance \rbrace.$
+
+$spec ~ ~ combine\_accounts :: account ~~ account \rightarrow real.$
+
+$de\mathit{f} ~ ~ combine\_accounts :: Account_2 ~~ Account_1 \rightarrow Account_1.Balance + Account_2.Balance.$
+::::
+$\nonumber$
 
 However, with this definition, we don't have closure since our inputs are Accounts and our output is a Balance.  When developing a monoid, it is important to return a compatible type.  In this case, when we combine the accounts, we should return an account. In our example below, we will choose to keep the owner and identifier from the account that had the highest balance when recreating our Account (which we are representing by a tuple of size 3). 
 
->$struct ~ ~ account ~ ~ \lbrace string:Owner, string:Identi\mathit{f}ier, real:Balance \rbrace.$
->
->$spec ~ ~ combine\_accounts :: account ~~ account \rightarrow account$
->
->$de\mathit{f} ~ ~ combine\_accounts :: Account_1 ~ ~ nil \rightarrow Account_1;$
->
->$de\mathit{f} ~ ~ combine\_accounts :: nil ~ ~ Account_2 \rightarrow Account_2;$
->
->$de\mathit{f} ~ ~ combine\_accounts :: Account_1 ~~ Account_2 \rightarrow \lbrace Account_1.Owner, Account_1.Identi\mathit{f}ier, Account_1.Balance + Account_2.Balance \rbrace ~ ~ \text{when} ~ ~ Account_1.Balance \ge Account_2.Balance ;$
->
->$de\mathit{f} ~ ~ combine\_accounts :: Account_1 ~~ Account_2 \rightarrow \lbrace Account_2.Owner, Account_2.Identi\mathit{f}ier, Account_1.Balance + Account_2.Balance \rbrace.$
+:::: {.formulabox data-latex=""}
+$struct ~ ~ account ~ ~ \lbrace string:Owner, string:Identi\mathit{f}ier, real:Balance \rbrace.$
 
-## Problem Set 1
+$spec ~ ~ combine\_accounts :: account ~~ account \rightarrow account$
+
+$de\mathit{f} ~ ~ combine\_accounts :: Account_1 ~ ~ nil \rightarrow Account_1;$
+
+$de\mathit{f} ~ ~ combine\_accounts :: nil ~ ~ Account_2 \rightarrow Account_2;$
+
+$de\mathit{f} ~ ~ combine\_accounts :: Account_1 ~~ Account_2 \rightarrow$
+
+$\quad \quad \lbrace Account_1.Owner, Account_1.Identi\mathit{f}ier, Account_1.Balance + Account_2.Balance \rbrace ~ ~$
+
+$\quad \quad \text{when} ~ ~ Account_1.Balance \ge Account_2.Balance ;$
+
+$de\mathit{f} ~ ~ combine\_accounts :: Account_1 ~~ Account_2 \rightarrow$
+
+$\quad \quad \lbrace Account_2.Owner, Account_2.Identi\mathit{f}ier, Account_1.Balance + Account_2.Balance \rbrace.$
+::::
+$\nonumber$
+
+:::: {.problembox data-latex=""}
+**Problem Set 1**
+
+You can find the template for the problem sets in this lesson here: [prove06.erl](proves/prove06.erl)
 
 1. Implement the `combine_acounts` function as described above. Demonstrate that the Associative Property works to combine 3 accounts together.
 2. Use a `foldl` to demonstrate the ability to combine 5 accounts.  Use the test code provided in the starting code.
 3. A monoid can be used to combine anything.  In a functional language, that includes functions.  Write a monoid that combines two functions of arity 1.  Call your combination function `combine_functions`.  Remember that `combine_functions` must satisfy the closure property which means that it must also return a function with arity 1.  It should also satisfy the identify property (combine a function with `nil`).  Test your code to show that it works with the Associative property.  Use the 1 arity Erlang functions `to_upper`, `trim`, and `reverse` for testing your monoid (provided in the test code).  Consider an input string such as "   abCDef   " which would result in "FEDCBA" after all 3 functions are applied.
 4. Use `foldl` to combine all three functions together from the previous problem.  Use the test code provided in the starting code.
+::::
 
-## Part 2 - Monads
+## Monads
 
 When we consider the closure property we saw with the Monoid, it may not always be practical to have the data types be consistent between inputs and outputs.  Some functions may need to return additional data (i.e. meta-data) which is of a different type.  A Monad is a type that contains additional data that is part of strategy to simplify or generalize our software.  This meta-data can be used for several purposes including saving error and state information.  
 
@@ -105,15 +122,20 @@ A common Monad seen in software is called the `Maybe`.  A `Maybe` type is a tupl
 
 In this example, the `use_inventory` function will return a `Maybe`.  The result will be `ok` if there was inventory available to use and it will return `fail` if there was no inventory available.  The meta-data `ok` and `fail` describe the inventory value.
 
->$struct ~ ~ maybe$
->$\kern{2em}\lbrace atom(ok), a:Value \rbrace ~ ~ or$
->$\kern{2em}\lbrace atom(fail) \rbrace.$
+:::: {.formulabox data-latex=""}
+$struct ~ ~ maybe$
 
->$spec ~ ~ use\_inventory :: integer \rightarrow maybe$
->
->$de\mathit{f} ~ ~ use\_inventory :: Inventory \rightarrow \lbrace fail \rbrace ~ ~ \text{when} ~ ~ Inventory == 0;$
->
->$de\mathit{f} ~ ~ use\_inventory :: Inventory \rightarrow \lbrace ok, Inventory - 1 \rbrace .$
+$\quad \quad \lbrace atom(ok), a:Value \rbrace ~ ~ or$
+
+$\quad \quad \lbrace atom(fail) \rbrace.$
+
+$spec ~ ~ use\_inventory :: integer \rightarrow maybe$
+
+$de\mathit{f} ~ ~ use\_inventory :: Inventory \rightarrow \lbrace fail \rbrace ~ ~ \text{when} ~ ~ Inventory == 0;$
+
+$de\mathit{f} ~ ~ use\_inventory :: Inventory \rightarrow \lbrace ok, Inventory - 1 \rbrace .$
+::::
+$\nonumber$
 
 Here is the code implementation for our `use_inventory` function:
 
@@ -121,28 +143,36 @@ Here is the code implementation for our `use_inventory` function:
 use_inventory(Inventory) when Inventory == 0 -> {fail};
 use_inventory(Inventory) -> {ok, Inventory - 1}.
 ```
+
 In this example, `use_inventory` returns a `Maybe` instead of a number which means we don't have closure which affects are ability to chain properly.  Monad types include helper functions to adapt the output of a function (i.e. `Maybe`) to the input of a function (i.e. number).  Each Monad must include a type constructor (often called `unit`) and a `bind` function described below.
 
 The type constructor will provide a way to create a Monad type using a given value. Here is the type constructor for our `Maybe` type:
 
->$spec ~ ~ maybe\_unit :: a \rightarrow maybe.$
->
->$de\mathit{f} ~ ~ maybe\_unit :: Value \rightarrow \lbrace ok, Value \rbrace.$
+:::: {.formulabox data-latex=""}
+$spec ~ ~ maybe\_unit :: a \rightarrow maybe.$
+
+$de\mathit{f} ~ ~ maybe\_unit :: Value \rightarrow \lbrace ok, Value \rbrace.$
+::::
+$\nonumber$
 
 Here is the code for the `Maybe` type constructor:
 
 ```erlang
 maybe_unit(Value) -> {ok, Value}.
 ```
+
 The bind will provide way to apply a function to a Monad type.  If the `Maybe` is `ok`, then it will extract the value and apply the function to it.  Note that the return of the function will be a `Maybe` again.  If the `Maybe` is `fail`, then it will not run the function but instead just return a `Maybe` showing `fail`.  The `bind` function will manage the meta data of `ok` and `fail` in our Monad.  The use of the bind function allows us to chain functions that return the `Maybe` Monad type.  Here is the bind definition:
 
->$spec ~ ~ \lambda :: a \rightarrow maybe.$
->
->$spec ~ ~ maybe\_bind :: maybe ~ ~ \lambda \rightarrow maybe.$
->
->$de\mathit{f} ~ ~ maybe\_bind :: \lbrace ok, Value \rbrace ~ ~ \lambda \rightarrow (\lambda ~ ~ Value);$
->
->$de\mathit{f} ~ ~ maybe\_bind :: \lbrace fail \rbrace ~ ~ \lambda \rightarrow \lbrace fail \rbrace.$
+:::: {.formulabox data-latex=""}
+$spec ~ ~ \lambda :: a \rightarrow maybe.$
+
+$spec ~ ~ maybe\_bind :: maybe ~ ~ \lambda \rightarrow maybe.$
+
+$de\mathit{f} ~ ~ maybe\_bind :: \lbrace ok, Value \rbrace ~ ~ \lambda \rightarrow (\lambda ~ ~ Value);$
+
+$de\mathit{f} ~ ~ maybe\_bind :: \lbrace fail \rbrace ~ ~ \lambda \rightarrow \lbrace fail \rbrace.$
+::::
+$\nonumber$
 
 Here is the code for the `Maybe` bind:
 
@@ -161,14 +191,17 @@ test_maybe() ->
 ```
 For each Monad we create, we may need one or more bind functions to provide the proper support for the unique meta data in our Monad.  In the problem set below, you will write a bind function that will combine meta data from previous bind executions.
 
-## Problem Set 2
+:::: {.problembox data-latex=""}
+**Problem Set 2**
+
 1. Write a function called `cut_half` which will divide a number by 2 and returns a `Maybe` (as defined above) with an integer (not floating point) answer.  If the remainder after division is not 0 (i.e. fractional) or if the number was less than or equal to 1, then the `Maybe` should indicate `fail`. Implement the `maybe_bind` and `maybe_unit` functions above and use the code in the template for testing.
 2. We will define a Monad called `Result` which is either `{ok}` or `{error, List of Error Messages}`. You will use this `Result` Monad to perform checks on a password. The `check_mixed_case`, `check_number_exists`, and `check_length` functions provided to you already use this `Result` Monad type.  Notice that each function returns a list of size 1 when an `error` is returned.  You need to write  the `result_unit` and `result_bind` functions.  The bind function should save all previous reasons in the Result.  For example, if the password provided to these functions was "simple", and you chained together all 3 checking functions, then the `bind` would result in an `error` result containing a list of all 3 error strings.  Use the code in the template for testing.
 3. Modify the test code provided in the previous problem to chain the bind functions together using a `foldl` instead.
+::::
 
-## Part 3 - List Monad
+## List Monad
 
-In a few weeks we will begin our exploration of data structures within a functional language.  Reflecting back earlier in the semester, we saw how the list was used in both Erlang and Clojure.  One thing that we have not yet explored is how to implement a length function for our list.  Even though Erlang and Clojure have a built-in length function which is good to always use, implementing the length can be a good example for exploring the Monad further.  
+In a few weeks we will begin our exploration of data structures within a functional language.  Reflecting back earlier in the semester, we saw how the list was used in Erlang.  One thing that we have not yet explored is how to implement a length function for our list.  Even though Erlang has a built-in length function which is good to always use, implementing the length can be a good example for exploring the Monad further.  
 
 Before we look at the Monad, we are going to define our lists a little bit differently from previous weeks.  Instead of using the built-in list data type in our languages, we are going to create our list completely from scratch.  Doing this will prepare us for the data structures we will see in the future.
 
@@ -179,23 +212,34 @@ Let's define a list using tuples:
 * Two Item List: `{Item1, {Item2, nil}}`
 * Three Item List: `{Item1, {Item2, {Item3, nil}}}`
 
-![](https://macbeth-byui.github.io/cse382-course/images/ThreeItemCustomList.drawio.png)
+![](images/ThreeItemCustomList.drawio.png)
 
 The first item in each tuple represents the value in the list and the second item in the tuple represents the remainder of the list.  This is very similar to the $[First|Rest]$ format we often write where $First$ represents the first value in the list and the $Rest$ represents the remainder of the list.
 
 For simplicity, we will define a push and pop function which will only affect the front of our list.
 
->$struct ~ ~ list ~ ~ \lbrace a:First, list:Rest \rbrace.$
+:::: {.formulabox data-latex=""}
+$struct ~ ~ list ~ ~ \lbrace a:First, list:Rest \rbrace.$
+::::
+$\nonumber$
 
->$spec ~ ~ push :: a ~ ~ list \rightarrow list.$
->
->$de\mathit{f} ~ ~ push :: Value ~ ~ List \rightarrow \lbrace Value, List \rbrace.$
+:::: {.formulabox data-latex=""}
 
->$spec ~ ~ pop :: list \rightarrow list.$
->
->$de\mathit{f} ~ ~ pop :: nil \rightarrow nil$
->>
->$de\mathit{f} ~ ~ pop :: \lbrace First, Rest \rbrace \rightarrow Rest.$
+$spec ~ ~ push :: a ~ ~ list \rightarrow list.$
+
+$de\mathit{f} ~ ~ push :: Value ~ ~ List \rightarrow \lbrace Value, List \rbrace.$
+::::
+$\nonumber$
+
+:::: {.formulabox data-latex=""}
+
+$spec ~ ~ pop :: list \rightarrow list.$
+
+$de\mathit{f} ~ ~ pop :: nil \rightarrow nil$
+
+$de\mathit{f} ~ ~ pop :: \lbrace First, Rest \rbrace \rightarrow Rest.$
+::::
+$\nonumber$
 
 Implementing this code we have the following:
 
@@ -205,6 +249,7 @@ push(List, Value) -> {Value, List}.
 pop(nil) -> nil;
 pop({_First, Rest}) -> Rest.
 ```
+
 If we wanted to calculate the length function, we would need to visit every item in our list to count.  To avoid this, we can store the length as meta-data using a Monad.  We will define our list Monad type to be: `{List, Length}`.  Using this type, our example lists now look like this:
 
 * Empty List: `{nil, 0}`
@@ -212,7 +257,7 @@ If we wanted to calculate the length function, we would need to visit every item
 * Two Item List: `{{Item1, {Item2, nil}}, 2}`
 * Three Item List: `{{Item1, {Item2, {Item3, nil}}}, 3}`
 
-![](https://macbeth-byui.github.io/cse382-course/images/ThreeItemCustomListMonad.drawio.png)
+![](images/ThreeItemCustomListMonad.drawio.png)
 
 Recall that Monad functions don't take the Monad type as an input but they should return the Monad type.  That will mean that when we call our `push` and `pop` functions, the length must be stripped off.  How does the `push` and `pop` know what to set the length to in the result?  Remember that the `bind` function is responsible for managing the meta data.  We will have the `push` and `pop` return a delta length.  For `push`, the delta length will be positive 1 and for `pop`, the delta length will be negative 1.  We will have the `bind` manage the length meta-data.  
 
@@ -220,42 +265,59 @@ In our specifications and definitions below, we will modify the `push` and `pop`
 
 The bind will be more complex because it will need to handle both `push` and `pop` functions which have different arity.  The $[a]$ (called `Optional_Parameters` in the definition) contains the variable number of parameters to pass to `push` and `pop`.  We will use a traditional Erlang list data structure to store these parameters.
 
->$struct ~ ~ list ~ ~ \lbrace a:First, list:Rest \rbrace.$
->
->$struct ~ ~ m\_list ~ ~ \lbrace list:List, integer:Length \rbrace.$
+:::: {.formulabox data-latex=""}
+$struct ~ ~ list ~ ~ \lbrace a:First, list:Rest \rbrace.$
 
->$spec ~ ~ push :: a ~ ~ list \rightarrow m\_list.$
->
->$de\mathit{f} ~ ~ push :: Value ~ ~ List \rightarrow \lbrace \lbrace Value, List \rbrace, 1\rbrace.$
+$struct ~ ~ m\_list ~ ~ \lbrace list:List, integer:Length \rbrace.$
+::::
+$\nonumber$
 
->$spec ~ ~ pop :: list \rightarrow m\_list.$
->
->$de\mathit{f} ~ ~ pop :: nil \rightarrow (create);$
->
->$de\mathit{f} ~ ~ pop :: \lbrace First, Rest \rbrace \rightarrow \lbrace Rest, -1 \rbrace.$
+:::: {.formulabox data-latex=""}
+$spec ~ ~ push :: a ~ ~ list \rightarrow m\_list.$
 
->$spec ~ ~ create :: ~ ~ \rightarrow m\_list.$
->
->$de\mathit{f} ~ ~ create :: \rightarrow \lbrace nil, 0 \rbrace.$
+$de\mathit{f} ~ ~ push :: Value ~ ~ List \rightarrow \lbrace \lbrace Value, List \rbrace, 1\rbrace.$
+::::
+$\nonumber$
 
+:::: {.formulabox data-latex=""}
+$spec ~ ~ pop :: list \rightarrow m\_list.$
 
->$spec ~ ~ \lambda_{bind} :: list \rightarrow m\_list.$
->
->$spec ~ ~ bind :: m\_list ~ ~ \lambda_{bind} ~ ~ [a] \rightarrow m\_list.$
->
->$de\mathit{f} ~ ~ bind :: \lbrace List, Length \rbrace ~ ~ \lambda_{bind} ~ ~ Optional\_Parameters \rightarrow$
->
->$\kern{2em}\lbrace New\_List, Delta\_Length \rbrace = (\lambda_{bind} ~ ~ Optional\_Parameters ++ List),$
->
->$\kern{2em}\lbrace New\_List, Length + Delta\_Length \rbrace.$
+$de\mathit{f} ~ ~ pop :: nil \rightarrow (create);$
 
->$spec ~ ~ value :: m\_list \rightarrow list.$
->
->$de\mathit{f} ~ ~ value :: \lbrace List, Length \rbrace \rightarrow List.$
+$de\mathit{f} ~ ~ pop :: \lbrace First, Rest \rbrace \rightarrow \lbrace Rest, -1 \rbrace.$
+::::
+$\nonumber$
 
->$spec ~ ~ len :: m\_list \rightarrow integer.$
->
->$de\mathit{f} ~ ~ len :: \lbrace List, Length \rbrace \rightarrow Length.$
+:::: {.formulabox data-latex=""}
+$spec ~ ~ create :: ~ ~ \rightarrow m\_list.$
+
+$de\mathit{f} ~ ~ create :: \rightarrow \lbrace nil, 0 \rbrace.$
+::::
+$\nonumber$
+
+:::: {.formulabox data-latex=""}
+$spec ~ ~ \lambda_{bind} :: list \rightarrow m\_list.$
+
+$spec ~ ~ bind :: m\_list ~ ~ \lambda_{bind} ~ ~ [a] \rightarrow m\_list.$
+
+$de\mathit{f} ~ ~ bind :: \lbrace List, Length \rbrace ~ ~ \lambda_{bind} ~ ~ Optional\_Parameters \rightarrow$
+
+$\quad \quad \lbrace New\_List, Delta\_Length \rbrace = (\lambda_{bind} ~ ~ Optional\_Parameters ++ List),$
+
+$\quad \quad \lbrace New\_List, Length + Delta\_Length \rbrace.$
+::::
+$\nonumber$
+
+:::: {.formulabox data-latex=""}
+$spec ~ ~ value :: m\_list \rightarrow list.$
+
+$de\mathit{f} ~ ~ value :: \lbrace List, Length \rbrace \rightarrow List.$
+
+$spec ~ ~ len :: m\_list \rightarrow integer.$
+
+$de\mathit{f} ~ ~ len :: \lbrace List, Length \rbrace \rightarrow Length.$
+::::
+$\nonumber$
 
 When implemented, you will need to use the `apply` function in Erlang to handle passing the `List` and `Optional_Parameters` to the $\lambda_{bind}$ function.  If `push` is used, then the `Optional_Parameters` will be a one element list containing the value to push.  If `pop` is used, the `Optional_Parameters` will be an empty list.  Some of these functions are implemented below and some are left as an exercise.
 
@@ -283,21 +345,31 @@ L4 = bind(L3, fun push/2, [6]),
 L5 = bind(L4, fun pop/1, []),
 ```
 
-## Problem Set 3
+:::: {.problembox data-latex=""}
+**Problem Set 3**
+
 1. Implement the `pop` and `bind` function with the list Monad type.  Use the code in the template to test.  Note that the `apply` function is available in Erlang which will call a function and pass a variable list of arguments to the function.  Use the code in the template to test.
 
-2. Sometimes a function uses more than one Monad type.  Since its possible for the `pop` to fail in the case of an empty list, it might be a good to use the `Maybe` monad type so we can return `{fail}` in that case.  In the case of the `push`, we don't have any reason to return `{fail}`. but to support the `bind`, we will be consistent.  The `bind` needs to handle the case where one of our functions returns `{fail}`.    When this happens, an empty list should be created and returned back (which is what `pop` currently does).  We need to write three new functions: `push2`, `pop2`, and `bind2` that support `Maybe`.  The `push2` function is already written for you.  Use the specifications below and the tests provided in the starting code.  The `bind2` function will likely need to use the `case of` block to determine what to do based on the result of running the $\lambda_{bind2}$ function.
+2. Sometimes a function uses more than one Monad type.  Since its possible for the `pop` to fail in the case of an empty list, it might be a good to use the `Maybe` monad type so we can return `{fail}` in that case.  In the case of the `push`, we don't have any reason to return `{fail}`. However, to support the `bind`, we will be consistent and return the `Maybe` monad type.  The `bind` needs to handle the case where one of our functions returns `{fail}`.    When this happens, an empty list should be created and returned back (which is what `pop` currently does).  We need to write three new functions: `push2`, `pop2`, and `bind2` that support `Maybe`.  The `push2` function is already written for you.  Use the specifications below and the tests provided in the starting code.  The `bind2` function will likely need to use the `case of` block to determine what to do based on the result of running the $\lambda_{bind2}$ function.
 
->$struct ~ ~ maybe\_m\_list$
->$\kern{2em}\lbrace atom(ok), m\_list:Value \rbrace ~ ~ or$
->$\kern{2em}\lbrace atom(fail) \rbrace.$
->
->$spec ~ ~ push2 :: a ~ ~ list \rightarrow maybe\_m\_list.$
->
->$spec ~ ~ pop2 :: list \rightarrow maybe\_m\_list.$
->
->$spec ~ ~ \lambda_{bind2} :: list \rightarrow maybe\_m\_list.$
->
->$spec ~ ~ bind2 :: m\_list ~ ~ \lambda_{bind2} ~ ~ [a] \rightarrow m\_list.$
+:::: {.formulabox data-latex=""}
+$struct ~ ~ maybe\_m\_list$
+
+$\quad \quad \lbrace atom(ok), m\_list:Value \rbrace ~ ~ or$
+
+$\quad \quad \lbrace atom(fail) \rbrace.$
+
+$spec ~ ~ push2 :: a ~ ~ list \rightarrow maybe\_m\_list.$
+
+$spec ~ ~ pop2 :: list \rightarrow maybe\_m\_list.$
+
+$spec ~ ~ \lambda_{bind2} :: list \rightarrow maybe\_m\_list.$
+
+$spec ~ ~ bind2 :: m\_list ~ ~ \lambda_{bind2} ~ ~ [a] \rightarrow m\_list.$
+:::: 
  
- 
+::::
+
+$\nonumber$
+$\nonumber$
+[![Creative Commons License - CC - BY](images/cc-88x31.png)](http://creativecommons.org/licenses/by/4.0/)
