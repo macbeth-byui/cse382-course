@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2022-09-08" />
+<meta name="date" content="2022-10-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -233,8 +233,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <code>map</code> and <code>filter</code> are common functions that are available in programming languages to simplify the process of processing a loop. Frequently also simplified with a list comprehension syntax, these functions provide an introduction to a very common subset of functions called functors.</p>
 <div id="functors-and-map" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Functors and Map<a href="map-and-filter-functors.html#functors-and-map" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A functor is a mathematical term used in the field of category theory. The concept is that a functor is something that can convert from one “category” to another “category”. In computer science, we consider these “categories” to be data types. The most common conversion involves the list. The <code>map</code> and <code>filter</code> that we use this week convert from a list to another list. The <code>fold</code> and <code>unfold</code> that we learn about next week convert from a list to a single result (and vice versa).</p>
-<p>Let’s consider the <code>map</code> function first. The <code>map</code> converts a list to another list using a lambda function. The lambda function. defines how to convert each item in the original list to an item in the result list.</p>
+<p>A functor is a mathematical term used in the field of category theory. The concept is that a functor is something that can convert from one “category” to another “category”. In computer science, we consider these “categories” to be data types. The most common conversion involves the list. The <code>map</code> and <code>filter</code> that we use this week convert from a list to another list. The <code>fold</code> and <code>unfold</code> that we learn about next week convert from a list to a single result (and vice versa). In all of these cases, we can envision the need for some kind of loop (or are in our recursion) to the task of a functor.</p>
+<p>Let’s consider the <code>map</code> function first. The <code>map</code> converts a list to another list using a lambda function. The lambda function defines how to convert each item in the original list to an item in the resulting list.</p>
 <p><img src="images/map.drawio.png" /></p>
 <p>If I wanted to double all the values in the list, I would use the following lambda function:</p>
 <div class="formulabox">
@@ -254,16 +254,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(de\mathit{f} ~ ~ \lambda :: Text ~ ~ \rightarrow (length ~ ~ Text).\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>Notice that the <code>map</code> function is expecting that the lambda always has 2 input parameters.</p>
+<p>Notice that the <code>map</code> function is expecting that the lambda always have exactly 1 input parameter.</p>
 <p>Here is the formal definition of the <code>map</code>:</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ \lambda :: a_1 \rightarrow a_2.\)</span></p>
 <p><span class="math inline">\(spec ~ ~ map :: \lambda ~ ~ [a_1]\rightarrow [a_2].\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ map :: \lambda ~ ~ [] \rightarrow [];\)</span></p>
-<p><span class="math inline">\(de\mathit{f} ~ ~ map :: \lambda ~ ~ [First | Rest] \rightarrow [(\lambda ~ ~ First)|(map ~ ~ \lambda ~ ~ Rest)]\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ map :: \lambda ~ ~ [First | Rest] \rightarrow [(\lambda ~ ~ First)|(map ~ ~ \lambda ~ ~ Rest)].\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>First thing to notice is that <code>map</code> function does reply on the definition for <span class="math inline">\(\lambda\)</span>. Also notice the recursive nature of the <code>map</code> as it applies the lambda function to the each element one at a time starting with the first element (<span class="math inline">\(First\)</span>). The result of calling the lambda function (<span class="math inline">\(\lambda ~ ~ First\)</span>) becomes the new value to add to the front of the resulting list.</p>
+<p>First thing to notice is that the <code>map</code> function does reply on the definition for <span class="math inline">\(\lambda\)</span>. Also notice the recursive nature of the <code>map</code> as it applies the lambda function to the each element one at a time starting with the first element (<span class="math inline">\(First\)</span>). The result of (<span class="math inline">\(\lambda ~ ~ First\)</span>) will be the new value that is placed in the resulting list.</p>
 <p>Consider the code implementation in Erlang below.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb22-1"><a href="map-and-filter-functors.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map(</span><span class="va">_Lambda</span><span class="fu">,</span> <span class="fu">[])</span> <span class="op">-&gt;</span> <span class="fu">[];</span></span>
 <span id="cb22-2"><a href="map-and-filter-functors.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map(</span><span class="va">Lambda</span><span class="fu">,</span> <span class="fu">[</span><span class="va">First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">])</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">Lambda</span><span class="fu">(</span><span class="va">First</span><span class="fu">)|map(</span><span class="va">Lambda</span><span class="fu">,</span> <span class="va">Rest</span><span class="fu">)].</span></span></code></pre></div>
@@ -272,9 +272,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Problem Set 1</strong></p>
 <p>You can find the template for the problem sets in this lesson here: <a href="proves/prove03.erl">prove03.erl</a></p>
 <ol style="list-style-type: decimal">
-<li>Implement the <code>map</code> function described above and write test code to convert a list of measurements in inches to a list of measurements in centimeters. Use the formula <span class="math inline">\(1 in = 2.54 cm.\)</span></li>
-<li>Using the <code>map</code> function you wrote, use a simple cipher to encrypt a list of characters. The simple cipher should shift all characters by 1 per the <a href="https://www.asciitable.com/">ASCII table</a> . For example, “PASSWORD” should be “QBTTXPSE”. In Erlang, a string is represented as a list of characters. Therefore, you can list notation with strings. Additionally, each character is treated as a number as shown in the ASCII table which means you can add numbers to letters.</li>
-<li>Rewrite the <code>map</code> function using a list comprehension and test it with your cipher test code. Call the new function <code>map_2</code>.</li>
+<li>Implement the <code>map</code> function described above and write test code to convert a list of measurements in inches to a list of measurements in centimeters. Use the formula <span class="math inline">\(1 in = 2.54 cm\)</span>. You will need to modify the test provided in the starting code.</li>
+<li>Using the <code>map</code> function you wrote, use a simple cipher to encrypt a list of characters. The simple cipher should shift all characters by 1 per the <a href="https://www.asciitable.com/">ASCII table</a> . For example, “PASSWORD” should be “QBTTXPSE”. In Erlang, a string is represented as a list of characters. Therefore, you can list notation with strings. Additionally, each character is treated as a number as shown in the ASCII table which means you can add numbers to letters. You will need to modify the test provided in the starting code.</li>
+<li>Rewrite the <code>map</code> function using a list comprehension and call the new function <code>map_2</code>. Test the new <code>map_2</code> function in the same way as you tested <code>map</code> with the cipher test above.</li>
 </ol>
 </div>
 </div>
@@ -290,12 +290,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>If I wanted to include only three digit numbers, then the lambda function would be:</p>
 <div class="formulabox">
-<p><span class="math inline">\(spec ~ ~ \lambda :: integer \rightarrow boolean\)</span></p>
+<p><span class="math inline">\(spec ~ ~ \lambda :: integer \rightarrow boolean.\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ \lambda :: Value \rightarrow Value \ge 100 ~ ~ and ~ ~ Value \le 999.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>In both of these examples above, the lambda function is expected to return a boolean condition. If it returns true, then the item will be included in the resulting list.</p>
-<p>The formal definition of the <code>filter</code> is given below. The implementation is left for an exercise. Note that Erlang does have a built-in function called <code>lists:filter</code>.</p>
+<p>The formal definition of the <code>filter</code> is given below. The implementation is left for an exercise.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ \lambda :: a \rightarrow boolean\)</span></p>
 <p><span class="math inline">\(spec ~ ~ \mathit{filter} :: \lambda ~ ~ [a] \rightarrow [a].\)</span></p>
@@ -304,38 +304,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(de\mathit{f} ~ ~ \mathit{filter} :: \lambda ~ ~ [First | Rest] \rightarrow (\mathit{filter} ~ ~ \lambda ~ ~ Rest).\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>In Erlang, we are limited in what we can put in a <code>when</code> guard including boolean operations and a limited subset of built-in functions. When we need to compare a computed result (in the case of the <code>filter</code> we need to run the lambda function and consider the result), you can use a <code>case</code> statement. With a <code>case</code> statement, you can use <code>_Else</code> to represent the default or otherwise case.</p>
+<p>In Erlang, we are limited in what we can put in a <code>when</code> guard including boolean operations and a limited subset of built-in functions. When we need to compare a computed result (in the case of the <code>filter</code> we need to run the lambda function and consider the result), you can use a <code>case</code> statement. With a <code>case</code> statement, you can use <code>_Else</code> to represent the default or otherwise case. These <code>case</code> examples below provide a mechanism for traditional <code>if/else</code> conditional blocks.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb23-1"><a href="map-and-filter-functors.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">did_it_work(</span><span class="va">Number</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
 <span id="cb23-2"><a href="map-and-filter-functors.html#cb23-2" aria-hidden="true" tabindex="-1"></a>   <span class="va">Result</span> <span class="op">=</span> <span class="fu">process_it(</span><span class="va">Number</span><span class="fu">),</span></span>
-<span id="cb23-3"><a href="map-and-filter-functors.html#cb23-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">case</span> <span class="va">Result</span> <span class="kw">of</span></span>
-<span id="cb23-4"><a href="map-and-filter-functors.html#cb23-4" aria-hidden="true" tabindex="-1"></a>      <span class="dv">42</span> <span class="op">-&gt;</span> <span class="fu">do_something(</span><span class="va">Number</span><span class="fu">);</span></span>
-<span id="cb23-5"><a href="map-and-filter-functors.html#cb23-5" aria-hidden="true" tabindex="-1"></a>      <span class="va">_Else</span> <span class="op">-&gt;</span> <span class="fu">do_something_else(</span><span class="va">Number</span><span class="fu">)</span></span>
-<span id="cb23-6"><a href="map-and-filter-functors.html#cb23-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span><span class="fu">.</span></span>
-<span id="cb23-7"><a href="map-and-filter-functors.html#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="map-and-filter-functors.html#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="fu">try_something_else(</span><span class="va">Number</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
-<span id="cb23-9"><a href="map-and-filter-functors.html#cb23-9" aria-hidden="true" tabindex="-1"></a>   <span class="va">Result</span> <span class="op">=</span> <span class="fu">process_it(</span><span class="va">Number</span><span class="fu">),</span></span>
-<span id="cb23-10"><a href="map-and-filter-functors.html#cb23-10" aria-hidden="true" tabindex="-1"></a>   <span class="kw">case</span> <span class="va">Number</span> <span class="op">&gt;</span> <span class="dv">42</span> <span class="kw">of</span></span>
-<span id="cb23-11"><a href="map-and-filter-functors.html#cb23-11" aria-hidden="true" tabindex="-1"></a>      <span class="ch">true</span> <span class="op">-&gt;</span> <span class="fu">do_something(</span><span class="va">Number</span><span class="fu">);</span></span>
-<span id="cb23-12"><a href="map-and-filter-functors.html#cb23-12" aria-hidden="true" tabindex="-1"></a>      <span class="va">_Else</span> <span class="op">-&gt;</span> <span class="fu">do_something_else(</span><span class="va">Number</span><span class="fu">)</span></span>
-<span id="cb23-13"><a href="map-and-filter-functors.html#cb23-13" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span><span class="fu">.</span></span></code></pre></div>
+<span id="cb23-3"><a href="map-and-filter-functors.html#cb23-3" aria-hidden="true" tabindex="-1"></a>   <span class="co">% Use case to compare the value of a variable</span></span>
+<span id="cb23-4"><a href="map-and-filter-functors.html#cb23-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">case</span> <span class="va">Result</span> <span class="kw">of</span></span>
+<span id="cb23-5"><a href="map-and-filter-functors.html#cb23-5" aria-hidden="true" tabindex="-1"></a>      <span class="dv">42</span> <span class="op">-&gt;</span> <span class="fu">do_something(</span><span class="va">Number</span><span class="fu">);</span></span>
+<span id="cb23-6"><a href="map-and-filter-functors.html#cb23-6" aria-hidden="true" tabindex="-1"></a>      <span class="va">_Else</span> <span class="op">-&gt;</span> <span class="fu">do_something_else(</span><span class="va">Number</span><span class="fu">)</span></span>
+<span id="cb23-7"><a href="map-and-filter-functors.html#cb23-7" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span><span class="fu">.</span></span>
+<span id="cb23-8"><a href="map-and-filter-functors.html#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="map-and-filter-functors.html#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="fu">try_something_else(</span><span class="va">Number</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
+<span id="cb23-10"><a href="map-and-filter-functors.html#cb23-10" aria-hidden="true" tabindex="-1"></a>   <span class="va">Result</span> <span class="op">=</span> <span class="fu">process_it(</span><span class="va">Number</span><span class="fu">),</span></span>
+<span id="cb23-11"><a href="map-and-filter-functors.html#cb23-11" aria-hidden="true" tabindex="-1"></a>   <span class="co">% Use case to determine if a boolean expression is true</span></span>
+<span id="cb23-12"><a href="map-and-filter-functors.html#cb23-12" aria-hidden="true" tabindex="-1"></a>   <span class="kw">case</span> <span class="va">Number</span> <span class="op">&gt;</span> <span class="dv">42</span> <span class="kw">of</span></span>
+<span id="cb23-13"><a href="map-and-filter-functors.html#cb23-13" aria-hidden="true" tabindex="-1"></a>      <span class="ch">true</span> <span class="op">-&gt;</span> <span class="fu">do_something(</span><span class="va">Number</span><span class="fu">);</span></span>
+<span id="cb23-14"><a href="map-and-filter-functors.html#cb23-14" aria-hidden="true" tabindex="-1"></a>      <span class="va">_Else</span> <span class="op">-&gt;</span> <span class="fu">do_something_else(</span><span class="va">Number</span><span class="fu">)</span></span>
+<span id="cb23-15"><a href="map-and-filter-functors.html#cb23-15" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span><span class="fu">.</span></span></code></pre></div>
 <p>Note that Erlang provides this function as a built-in function called <code>lists:filter</code>.</p>
 <div class="problembox">
 <p><strong>Problem Set 2</strong></p>
 <ol style="list-style-type: decimal">
-<li>Implement the <code>filter</code> function in Erlang. Use a <code>case</code> block to determine whether an item in the list should be included. Test the <code>filter</code> to get a list of even numbers from a list using the lambda described in the reading.</li>
+<li>Implement the <code>filter</code> function in Erlang. Use a <code>case</code> block to determine whether an item in the list should be included. Test the <code>filter</code> to get a list of even numbers from a list using the lambda described in the reading. You will need to modify the test provided in the starting code.</li>
 <li>Rewrite the <code>filter</code> function so that it uses a list comprehension instead of using the <code>case</code>. Test the new function with the same lambda function in the previous problem. Call the new function <code>filter_2</code>.</li>
 <li>Use the <code>filter</code> functions you wrote to filter a list of temperatures (in Celsius) that will support liquid water (as opposed to frozen ice or boiling steam).</li>
-<li>Use the <code>filter</code> function you wrote to filter a list of result strings that started with the prefix “ERROR:”. Consider using the <code>string:prefix</code> function to solve this problem.</li>
+<li>Use the <code>filter</code> function you wrote to filter a list of result strings that started with the prefix “ERROR:”. Consider using the <code>string:prefix</code> function to solve this problem. You can learn more about that library function in the <a href="https://www.erlang.org/doc/man/string.html">Erlang Documentation for the string module</a>.</li>
 </ol>
 </div>
 </div>
 <div id="functor-properties" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Functor Properties<a href="map-and-filter-functors.html#functor-properties" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Our <code>map</code> and <code>filter</code> functions are special in that satisfy the following properties which apply in mathematics to functors:</p>
+<p>Our <code>map</code> and <code>filter</code> functions are special in that they satisfy the following properties which apply in mathematics for functors:</p>
 <ol style="list-style-type: decimal">
 <li>Identity - The functor must be able to convert back to itself. In math, 1 is an identity for multiplication and 0 is an identify for addition.<br />
 </li>
-<li>Distributive - The functor must be able to behave with the distributive property. In math, if I had a functor <span class="math inline">\(f\)</span> and two other functions <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span>, then the following must be true: <span class="math inline">\(f(g(h)) = f(g)(f(h))\)</span>. This is frequently written using composition notation: <span class="math inline">\(f(g \circ h) = f(g) \circ f(h)\)</span>. This means that I can apply my function <span class="math inline">\(f\)</span> to either <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span> combined or I can apply function <span class="math inline">\(f\)</span> separately to <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span> and then combine the results.</li>
+<li>Distributive - The functor must be able to satisfy the distributive property. In math, if I had a functor <span class="math inline">\(f\)</span> and two other functions <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span>, then the following must be true: <span class="math inline">\(f(g(h)) = f(g)(f(h))\)</span>. This is frequently written using composition notation: <span class="math inline">\(f(g \circ h) = f(g) \circ f(h)\)</span>. This means that I can apply my functor <span class="math inline">\(f\)</span> to either <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span> combined or I can apply functor <span class="math inline">\(f\)</span> separately to <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span> and then combine the results.</li>
 </ol>
 <p>In the examples below, we will observe how these mathematical properties are satisfied by <code>map</code> and <code>filter</code>. The identity property requires us to find a <span class="math inline">\(\lambda\)</span> that will result in no changes to our original list.</p>
 <div class="formulabox">

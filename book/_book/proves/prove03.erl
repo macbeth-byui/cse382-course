@@ -36,15 +36,21 @@ test_ps1() ->
     % Test Problem 1.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write test code below to convert a list of measurements
-
+    % Modify the test code below to convert a list of measurements
+    %Data_In = [1, 2, 3, 4, 5],
+    %In_to_Cm_Lambda = put_your_lambda_function_here,
+    %Data_Cm = use_map_function_here,
+    %[2.54, 5.08, 7.62, 10.16, 12.7] = Data_Cm,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 1.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write test code below to implement a simple cipher using map
-
+    % Modify the test code below to implement a simple cipher using map
+	%Password = "PASSWORD",
+    %Cipher_Lambda = put_your_lambda_function_here,
+    %Encrypted = use_map_function_here,
+    %"QBTTXPSE" = Encrypted,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 1.3
@@ -63,8 +69,11 @@ test_ps2() ->
     % Test Problem 2.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write test code below to get the even numbers from a list using filter
-
+    % Modify the test code below to get the even numbers from a list using filter
+    %Numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    %Even_Lambda = put_your_lambda_function_here,
+    %Even_Numbers = use_filter_function_here
+    %[2, 4, 6, 8, 10] = Even_Numbers,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.2
@@ -78,8 +87,8 @@ test_ps2() ->
     % Test Problem 2.3
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write test code to get liquid temperatures from a list using filter
-
+    % Modify the test code to get liquid temperatures from a list using filter
+	%[20, 80] = filter(put_your_lambda_function_here, [-10, 20, -15, 110, 80]),
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.4

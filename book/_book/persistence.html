@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2022-09-08" />
+<meta name="date" content="2022-10-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -230,21 +230,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="persistence" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">Chapter 2 -</span> Persistence<a href="persistence.html#persistence" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>When we think about data structures, we think of things that change as more things are added, modified, or removed. However, in our functional world, we are dealing with immutability. This conflict causes us to learn about persistence. This week we will explore persistence with the common list.</p>
+<p>When we think about data structures, we expect that the data structure will change when things are added, modified, or deleted. However, in our functional world, we are dealing with immutability. This conflict causes us to learn about persistence. This week we will explore persistence with the common list.</p>
 <div id="persistence-in-lists" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Persistence in Lists<a href="persistence.html#persistence-in-lists" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The lists that we are going to look at early in this course are actually linked lists. We will explore an indexed version when we look at Random Access Lists later on. Lets consider the list below that already has five elements within it.</p>
 <p><img src="images/FiveElementList.drawio.png" /></p>
-<p>Note that we have a variable <code>L1</code> that contains a reference to the first node in the list and each node in the list contains a reference to the next node. If we want to add a new node to the front of this list, we have to do it without violating the immutability rule. When we add the new node, we are creating a new list. Notice that <code>L2</code> below points to the new node we have created. However, since the remaining list doesn’t need to change, we just connect the new node to the original <code>L1</code>. Since we get to reuse the entire list, the performance for prepending to the front is only O(1).</p>
+<p>Note that we have a variable <code>L1</code> that contains a reference to the first node in the list and each node in the list contains a reference to the next node. If we want to add a new node to the front of this list, we have to do it without violating the immutability rule. When we add the new node, we are creating a new list. Notice that <code>L2</code> points to the new node we have created. However, since the remaining list doesn’t need to change, we just connect the new node to the original <code>L1</code>. Since we get to reuse the entire list, the performance for prepending to the front is only O(1).</p>
 <p><img src="images/FiveElementListPrepend.drawio.png" /></p>
 <p>Notice we have persisted the original list and created the new list by reusing what we originally had. This is what we mean be persistent data structures.</p>
 <p>The code for this <code>prepend</code> operation does not require any recursion.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb18-1"><a href="persistence.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prepend(</span><span class="va">List</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">Value</span><span class="fu">|</span><span class="va">List</span><span class="fu">].</span></span></code></pre></div>
-<p>Let’s consider the situation where we want to append a new node to the end of the list. Looking at our original four item list, how do we add a new item to the end. We will need to create a new list <code>L3</code> and try to reuse as much as possible. However, since we are adding the new node to the end, this will cause us to not have any reuse.</p>
+<p>Let’s consider the situation where we want to append a new node to the end of the list ‘L2’. We will need to create a new list <code>L3</code> and try to reuse as much as possible. However, since we are adding the new node to the end, this will actually result in no reuse.</p>
 <p><img src="images/FiveElementListAppend.drawio.png" /></p>
-<p>Notice in the picture above, the last node in the original list has to change because it needs to reference the new node instead of referencing nothing. This is a change so a new node is needed. The original last node is persisted as part of <code>L1</code> and <code>L2</code>.</p>
-<p>The code for this <code>append</code> function requires the use of recursion. When we recurse to the end of the list (calling <code>append</code> recursively until we are left with an empty list) then we create our new node as a 1 item list.</p>
-<p>Once we get the new node created, we return from our recursive calls and begin adding new nodes for each of the values that were in our previous list.</p>
+<p>Notice in the picture above, the last node in both <code>L1</code> and <code>L2</code> has to change because it needs to reference the new node instead of referencing nothing. This is a change which conflicts with immutability rules. We can’t change node <code>E</code> to point from nothing to the new node <code>G</code>. Therefore, we need to create a new ‘E’ node that connects to ‘G’. The new <code>E</code> node will require us to create a new <code>D</code> node, and so forth. In the end, we have to make a copy of all nodes to append <code>G</code> to produce <code>L3</code>.</p>
+<p>The code for this <code>append</code> function requires the use of recursion. When we arrive at the end of the list by calling <code>append</code> recursively, then we will create our new node as a 1 item list. Once we get the new node created, we return from our recursive calls and begin adding new nodes for each of the values that were in our previous list.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb19-1"><a href="persistence.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">append([],</span> <span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">Value</span><span class="fu">];</span></span>
 <span id="cb19-2"><a href="persistence.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">append([</span><span class="va">First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">],</span> <span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">First</span> <span class="fu">|</span> <span class="fu">append(</span><span class="va">Rest</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">)].</span></span></code></pre></div>
 <p>When we look at the <code>append</code> function it may be concerning that there is no reuse. If all we did was call the <code>append</code> function, there would be multiple duplicates of our data all over our memory. In our programming languages, garbage collection will remove any memory that is no longer referenced by another variable. However, there is a cost for not having reuse. We have to recreate the entire list again which is O(n) performance.</p>
@@ -263,14 +262,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="more-list-persistence" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> More List Persistence<a href="persistence.html#more-list-persistence" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Lets consider two more scenarios with the list and observe how persistence is maintained. First, how do we remove the first value in our list? The only thing that will be affected is our variable referencing the front of the list. In the diagram below, <code>L1</code> is the original list and <code>L2</code> is the new list with the first item removed.</p>
-<p><img src="images/FiveElementList.drawio.png" /></p>
+<p><img src="images/FiveElementListDeleteFirst.drawio.png" /></p>
 <p>Notice that <code>L2</code> is referencing the second item in the list which means all but the first original node is being reused. Both the original list and the new list persist.</p>
 <p>Here is the code for our <code>remove_first</code> function.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb20-1"><a href="persistence.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove_first([])</span> <span class="op">-&gt;</span> <span class="fu">[];</span></span>
 <span id="cb20-2"><a href="persistence.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">remove_first([</span><span class="va">_First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">])</span> <span class="op">-&gt;</span> <span class="va">Rest</span><span class="fu">.</span></span></code></pre></div>
-<p>Suppose we start with our original five item list <code>L1</code> again and consider inserting an item in the middle. This will be a combination of the ideas that we have seen prepending and appending to our list with respect to reuse. If we insert after index 2 (where the first element is index 0), then we will need new nodes up to index 2 and we can reuse everything after index 2.</p>
+<p>Suppose we start with our original five item list <code>L1</code> again and consider inserting a node <code>F</code> in the middle after node <code>C</code>. This will be a combination of the ideas that we have seen prepending and appending to our list with respect to reuse. If we insert after index 2 (where the first element is index 0), then we will need new nodes up to index 2 and we can reuse everything after index 2.</p>
 <p><img src="images/FiveElementListInsertAt.drawio.png" /></p>
-<p>Here is the code for our <code>insert_at</code> function. In this code, we will decrement our <code>Index</code> as we recursively search through the list. Once our <code>Index</code> reaches 0 then we know we have reached the desired location. We will then create our new node and connect it (reuse) to the remaining nodes in our original list. Notice that if our <code>Index</code> was negative then the original list is returned. For an <code>Index</code> too big, we could use the <code>length</code> function in the first clause. However, to avoid checking the length in every recursive <code>insert_at</code> function call, we have introduced the third clause. If our <code>Index</code> is 0 in the second clause, then we know we have found the place to insert. However, if the <code>Index</code> is not 0 but the <code>List</code> is empty, then we know that our index was too big. This logic is added in the third clause.</p>
+<p>Here is the code for our <code>insert_at</code> function. In this code, we will decrement our <code>Index</code> as we recursively search through the list. Once our <code>Index</code> reaches 0 then we know we have reached the desired location. We will then create our new node and connect it (reuse) to the remaining nodes in our original list. If our <code>Index</code> is 0 in the second clause, then we know we have found the place to insert. Notice that if our <code>Index</code> was negative then the original list is returned. For an <code>Index</code> too big, we could use the <code>length</code> function in the first clause. However, to avoid checking the length in every recursive <code>insert_at</code> function call, we have introduced the third clause. However, if the <code>Index</code> is not 0 but the <code>List</code> is empty (the third clause), then we know that our index was too big.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb21-1"><a href="persistence.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">insert_at(</span><span class="va">List</span><span class="fu">,</span> <span class="va">_Value</span><span class="fu">,</span> <span class="va">Index</span><span class="fu">)</span> <span class="ch">when</span> <span class="va">Index</span> <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">-&gt;</span> <span class="va">List</span><span class="fu">;</span></span>
 <span id="cb21-2"><a href="persistence.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">insert_at(</span><span class="va">List</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">,</span> <span class="dv">0</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">Value</span> <span class="fu">|</span> <span class="va">List</span><span class="fu">];</span></span>
 <span id="cb21-3"><a href="persistence.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">insert_at([],</span> <span class="va">_Value</span><span class="fu">,</span> <span class="va">_Index</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[];</span></span>
@@ -281,7 +280,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Implement the <code>remove_first</code> as shown above.</li>
 <li>Implement <code>insert_at</code> function as shown above.</li>
 <li>Implement a function called <code>remove_last</code> that removes the last item in the list. If the list is empty, then return an empty list.</li>
-<li>Implement a function called <code>remove_at</code> like the <code>insert_at</code> function which removes an item at a specific index. If the index is invalid, then return the original list.</li>
+<li>Implement a function called <code>remove_at</code> like the <code>insert_at</code> function which removes an item at a specific index. Notice that this function does not have a <code>Value</code> parameter since we are removing. Additionally, unlike <code>insert_at</code>, specifying an index equal to the length of the list is considered an invalid index. If the index is invalid (too small or too big), then return the original list.</li>
 </ol>
 </div>
 </div>
@@ -316,12 +315,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>In this example, there are three fields each with a type and an optional name. The keyword <span class="math inline">\(or\)</span> will be used if there are different tuple sizes (arity) permitted in our custom type.</p>
-<p>A definition is how the function will use the inputs to produce the output. Names will be used to give meaning to the inputs. You should refer back to the specification to understand the types. When we write definitions, we will use the following notations (excluding common ones you have seen previously such as Boolean operators and mathematical operators):</p>
+<p>A definition is how the function will use the inputs to produce the output. Names will be used to give meaning to the inputs. You should refer back to the specification to understand the types. When we write definitions, we will use the following notations:</p>
 <div class="formulabox">
 <ul>
 <li><span class="math inline">\(=\)</span> : Save an intermediate result into an immutable variable</li>
 <li><span class="math inline">\(+\)</span>, <span class="math inline">\(-\)</span>, <span class="math inline">\(*\)</span>, <span class="math inline">\(/\)</span>, <span class="math inline">\(and\)</span>, <span class="math inline">\(or\)</span>, <span class="math inline">\(&gt;\)</span>, <span class="math inline">\(&lt;\)</span>, <span class="math inline">\(\geq\)</span>, <span class="math inline">\(\leq\)</span>, <span class="math inline">\(==\)</span>, <span class="math inline">\(\not=\)</span> : Commonly used operators.</li>
-<li><span class="math inline">\((\lambda ~ ~ input_1 ~ ~ input_2 ~ ~ input_3)\)</span> : Call a function (in this case called <span class="math inline">\(\lambda\)</span> with the supplied parameters. Notice that this does feel like a function call in Clojure with the parentheses.</li>
+<li><span class="math inline">\((\lambda ~ ~ input_1 ~ ~ input_2 ~ ~ input_3)\)</span> : Call a function (in this case called <span class="math inline">\(\lambda\)</span> with the supplied parameters. Notice that this does feel like a function call in Clojure with the parentheses).</li>
 <li><span class="math inline">\([]\)</span> : Empty List</li>
 <li><span class="math inline">\(\lbrace \looparrowleft \rbrace\)</span> : Empty Dictionary</li>
 <li><span class="math inline">\([First|Rest]\)</span> : This splits the list where First is the first element in the list and Rest is the rest of the list.</li>
@@ -350,14 +349,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(de\mathit{f} ~ ~ name :: input_1 ~ ~ input_2 ~ ~ input_3 \rightarrow output\_expressions.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>If a function name exists with different number of inputs (different arity) then we will write a specification for each one. The definition for each specification may take multiple clauses. Each clause will handle a different scenario and will be separated by a semicolon. Clauses are evaluated in order. If a clause doesn’t use all the inputs, then an underscore is placed in front of the input name.</p>
+<p>If a function name exists with different number of inputs (different arity) then we will write a specification for each one. The definition for each specification may take multiple clauses. Each clause will handle a different scenario and will be separated by a semicolon. Clauses are evaluated in order.</p>
 <p>Let’s do some examples with our list functions. Here is the specification and definition for the <code>prepend</code> function. The prepend function took a list and a value. Therefore the specification will use inputs of <span class="math inline">\([a]\)</span> and <span class="math inline">\(a\)</span>. The output is just a longer list so it will be <span class="math inline">\([a]\)</span>.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ prepend :: [a] ~ ~ a \rightarrow [a].\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ prepend :: List ~ ~ Value \rightarrow [Value|List].\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>The append function will have a similar specification but the definition will be more complicated since we had to use recursion. When you call a function in your definition, you should be the function call in parentheses. Notice that the definition uses the <span class="math inline">\([]\)</span> and <span class="math inline">\([First|Rest]\)</span> notation in the input to help us differentiate the two clauses.</p>
+<p>The append function will have a similar specification but the definition will be more complicated since we had to use recursion. When you call a function in your definition, you should put the function call in parentheses without commas between parameters. Notice that the definition uses the <span class="math inline">\([]\)</span> and <span class="math inline">\([First|Rest]\)</span> notation in the input to help us differentiate the two clauses.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ append :: [a] ~ ~ a \rightarrow [a].\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ append :: [] ~ ~ Value \rightarrow [Value];\)</span></p>
@@ -374,12 +373,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In the <code>insert_at</code> function, we need to have something called a guard. Guards are like if statements that are applied to either a clause or to part of the code within a clause. We use the phrase <span class="math inline">\(when\)</span> in our definition to indicate a guard. The 3 clauses are evaluated in order.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ insert\_at :: [a] ~ ~ a ~ ~ integer \rightarrow [a].\)</span></p>
-<p><span class="math inline">\(de\mathit{f} ~ ~ insert\_at :: List ~ ~ Value ~ ~ Index \rightarrow List ~ ~ \text{when} ~ ~ Index &lt; 0 ~ ~ or ~ ~ Index &gt; (length ~ ~ List);\)</span></p>
-<p><span class="math inline">\(de\mathit{f} ~ ~ insert\_at :: List ~ ~ Value ~ ~ Index \rightarrow [Value|List] ~ ~ \text{when} ~ ~ Index == 0;\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ insert\_at :: List ~ ~ Value ~ ~ Index \rightarrow List ~ ~ \text{when} ~ ~ Index &lt; 0;\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ insert\_at :: List ~ ~ Value ~ ~ 0 \rightarrow [Value|List];\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ insert\_at :: [] ~ ~ Value ~ ~ Index \rightarrow [];\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ insert\_at :: [First|Rest] ~ ~ Value ~ ~ Index \rightarrow [First|(insert\_at ~ ~ Rest ~ ~ Value ~ ~ Index-1)].\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>In the definition above, we assume that there is a <code>length</code> function available.</p>
 <div class="problembox">
 <p><strong>Problem Set 3</strong></p>
 <ol style="list-style-type: decimal">

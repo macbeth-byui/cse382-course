@@ -4,9 +4,9 @@ The `map` and `filter` are common functions that are available in programming la
 
 ## Functors and Map
 
-A functor is a mathematical term used in the field of category theory.  The concept is that a functor is something that can convert from one "category" to another "category".  In computer science, we consider these "categories" to be data types.  The most common conversion involves the list.  The `map` and `filter` that we use this week convert from a list to another list.  The `fold` and `unfold` that we learn about next week convert from a list to a single result (and vice versa).
+A functor is a mathematical term used in the field of category theory.  The concept is that a functor is something that can convert from one "category" to another "category".  In computer science, we consider these "categories" to be data types.  The most common conversion involves the list.  The `map` and `filter` that we use this week convert from a list to another list.  The `fold` and `unfold` that we learn about next week convert from a list to a single result (and vice versa).  In all of these cases, we can envision the need for some kind of loop (or are in our recursion) to the task of a functor.
 
-Let's consider the `map` function first.  The `map` converts a list to another list using a lambda function.  The lambda function. defines how to convert each item in the original list to an item in the result list.
+Let's consider the `map` function first.  The `map` converts a list to another list using a lambda function.  The lambda function defines how to convert each item in the original list to an item in the resulting list.
 
 ![](images/map.drawio.png)
 
@@ -37,7 +37,7 @@ $de\mathit{f} ~ ~ \lambda :: Text ~ ~ \rightarrow (length ~ ~ Text).$
 ::::
 $\nonumber$
 
-Notice that the `map` function is expecting that the lambda always has 2 input parameters.  
+Notice that the `map` function is expecting that the lambda always have exactly 1 input parameter.  
 
 Here is the formal definition of the `map`:
 
@@ -48,11 +48,11 @@ $spec ~ ~ map :: \lambda ~ ~ [a_1]\rightarrow [a_2].$
 
 $de\mathit{f} ~ ~ map :: \lambda ~ ~ [] \rightarrow [];$
 
-$de\mathit{f} ~ ~ map :: \lambda ~ ~ [First | Rest] \rightarrow [(\lambda ~ ~ First)|(map ~ ~ \lambda ~ ~ Rest)]$
+$de\mathit{f} ~ ~ map :: \lambda ~ ~ [First | Rest] \rightarrow [(\lambda ~ ~ First)|(map ~ ~ \lambda ~ ~ Rest)].$
 ::::
 $\nonumber$
 
-First thing to notice is that `map` function does reply on the definition for $\lambda$.  Also notice the recursive nature of the `map` as it applies the lambda function to the each element one at a time starting with the first element ($First$).  The result of calling the lambda function ($\lambda ~ ~ First$) becomes the new value to add to the front of the resulting list.
+First thing to notice is that the `map` function does reply on the definition for $\lambda$.  Also notice the recursive nature of the `map` as it applies the lambda function to the each element one at a time starting with the first element ($First$).  The result of ($\lambda ~ ~ First$) will be the new value that is placed in the resulting list.
 
 Consider the code implementation in Erlang below.
 
@@ -67,9 +67,9 @@ Functors in programming will frequently use a lambda function to allow us to wri
 
 You can find the template for the problem sets in this lesson here: [prove03.erl](proves/prove03.erl)
 
-1. Implement the `map` function described above and write test code to convert a list of measurements in inches to a list of measurements in centimeters.  Use the formula $1 in = 2.54 cm.$
-2. Using the `map` function you wrote, use a simple cipher to encrypt a list of characters.  The simple cipher should shift all characters by 1 per the [ASCII table](https://www.asciitable.com/) .  For example, "PASSWORD" should be "QBTTXPSE".  In Erlang, a string is represented as a list of characters.  Therefore, you can list notation with strings.  Additionally, each character is treated as a number as shown in the ASCII table which means you can add numbers to letters.
-3. Rewrite the `map` function using a list comprehension and test it with your cipher test code.  Call the new function `map_2`.
+1. Implement the `map` function described above and write test code to convert a list of measurements in inches to a list of measurements in centimeters.  Use the formula $1 in = 2.54 cm$.  You will need to modify the test provided in the starting code.
+2. Using the `map` function you wrote, use a simple cipher to encrypt a list of characters.  The simple cipher should shift all characters by 1 per the [ASCII table](https://www.asciitable.com/) .  For example, "PASSWORD" should be "QBTTXPSE".  In Erlang, a string is represented as a list of characters.  Therefore, you can list notation with strings.  Additionally, each character is treated as a number as shown in the ASCII table which means you can add numbers to letters.  You will need to modify the test provided in the starting code.
+3. Rewrite the `map` function using a list comprehension and call the new function `map_2`.  Test the new `map_2` function in the same way as you tested `map` with the cipher test above.
 ::::
 
 ## Filter
@@ -90,7 +90,7 @@ $\nonumber$
 If I wanted to include only three digit numbers, then the lambda function would be:
 
 :::: {.formulabox data-latex=""}
-$spec ~ ~ \lambda :: integer \rightarrow boolean$
+$spec ~ ~ \lambda :: integer \rightarrow boolean.$
 
 $de\mathit{f} ~ ~ \lambda :: Value \rightarrow Value \ge 100 ~ ~ and ~ ~ Value \le 999.$
 ::::
@@ -98,7 +98,7 @@ $\nonumber$
 
 In both of these examples above, the lambda function is expected to return a boolean condition.  If it returns true, then the item will be included in the resulting list.
 
-The formal definition of the `filter` is given below.  The implementation is left for an exercise.  Note that Erlang does have a built-in function called `lists:filter`.
+The formal definition of the `filter` is given below.  The implementation is left for an exercise. 
 
 :::: {.formulabox data-latex=""}
 $spec ~ ~ \lambda :: a \rightarrow boolean$
@@ -113,11 +113,12 @@ $de\mathit{f} ~ ~ \mathit{filter} :: \lambda ~ ~ [First | Rest] \rightarrow (\ma
 ::::
 $\nonumber$
 
-In Erlang, we are limited in what we can put in a `when` guard including boolean operations and a limited subset of built-in functions. When we need to compare a computed result (in the case of the `filter` we need to run the lambda function and consider the result), you can use a `case` statement.  With a `case` statement, you can use `_Else` to represent the default or otherwise case.
+In Erlang, we are limited in what we can put in a `when` guard including boolean operations and a limited subset of built-in functions. When we need to compare a computed result (in the case of the `filter` we need to run the lambda function and consider the result), you can use a `case` statement.  With a `case` statement, you can use `_Else` to represent the default or otherwise case.  These `case` examples below provide a mechanism for traditional `if/else` conditional blocks.
 
 ```erlang
 did_it_work(Number) ->
    Result = process_it(Number),
+   % Use case to compare the value of a variable
    case Result of
       42 -> do_something(Number);
       _Else -> do_something_else(Number)
@@ -125,6 +126,7 @@ did_it_work(Number) ->
 
 try_something_else(Number) ->
    Result = process_it(Number),
+   % Use case to determine if a boolean expression is true
    case Number > 42 of
       true -> do_something(Number);
       _Else -> do_something_else(Number)
@@ -135,18 +137,18 @@ Note that Erlang provides this function as a built-in function called `lists:fil
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
-1. Implement the `filter` function in Erlang.  Use a `case` block to determine whether an item in the list should be included.  Test the `filter` to get a list of even numbers from a list using the lambda described in the reading.
+1. Implement the `filter` function in Erlang.  Use a `case` block to determine whether an item in the list should be included.  Test the `filter` to get a list of even numbers from a list using the lambda described in the reading.  You will need to modify the test provided in the starting code.
 2. Rewrite the `filter` function so that it uses a list comprehension instead of using the `case`.  Test the new function with the same lambda function in the previous problem.  Call the new function `filter_2`.
 3. Use the `filter` functions you wrote to filter a list of temperatures (in Celsius) that will support liquid water (as opposed to frozen ice or boiling steam).
-4. Use the `filter` function you wrote to filter a list of result strings that started with the prefix "ERROR:".  Consider using the `string:prefix` function to solve this problem.
+4. Use the `filter` function you wrote to filter a list of result strings that started with the prefix "ERROR:".  Consider using the `string:prefix` function to solve this problem.  You can learn more about that library function in the [Erlang Documentation for the string module](https://www.erlang.org/doc/man/string.html).
 ::::
 
 ## Functor Properties
 
-Our `map` and `filter` functions are special in that satisfy the following properties which apply in mathematics to functors:
+Our `map` and `filter` functions are special in that they satisfy the following properties which apply in mathematics for functors:
 
 1. Identity - The functor must be able to convert back to itself.  In math, 1 is an identity for multiplication and 0 is an identify for addition.  
-2. Distributive - The functor must be able to behave with the distributive property.  In math, if I had a functor $f$ and two other functions $g$ and $h$, then the following must be true: $f(g(h)) = f(g)(f(h))$.  This is frequently written using composition notation: $f(g \circ h) = f(g) \circ f(h)$.    This means that I can apply my function $f$ to either $g$ and $h$ combined or I can apply function $f$ separately to $g$ and $h$ and then combine the results.
+2. Distributive - The functor must be able to satisfy  the distributive property.  In math, if I had a functor $f$ and two other functions $g$ and $h$, then the following must be true: $f(g(h)) = f(g)(f(h))$.  This is frequently written using composition notation: $f(g \circ h) = f(g) \circ f(h)$.    This means that I can apply my functor $f$ to either $g$ and $h$ combined or I can apply functor $f$ separately to $g$ and $h$ and then combine the results.
 
 In the examples below, we will observe how these mathematical properties are satisfied by `map` and `filter`.    The identity property requires us to find a $\lambda$ that will result in no changes to our original list.
 
