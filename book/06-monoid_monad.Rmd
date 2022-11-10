@@ -11,6 +11,7 @@ Monoids are functions that combine things using a binary operation that have the
 * Identity - There is always something we can combine with that will retun the original value using our function.
 
 In programming, we have already used monoids several times including: 
+
 * Adding numbers
 * Combining Strings
 * Combining Lists
@@ -28,7 +29,7 @@ $de\mathit{f} ~ ~ combine\_list :: []~ ~ List \rightarrow List;$
 
 $de\mathit{f} ~ ~ combine\_list :: List ~ ~ [] \rightarrow List;$
 
-$de\mathit{f} ~ ~ combine\_list :: [First|Rest] ~ ~ [] \rightarrow [First | (combine\_list ~ ~ List ~ ~ Rest)]$
+$de\mathit{f} ~ ~ combine\_list :: [First|Rest] ~ ~ List2 \rightarrow [First | (combine\_list ~ ~ Rest ~ ~ List2)]$
 ::::
 $\nonumber$
 
@@ -39,7 +40,7 @@ combine_list(List, []) -> List;
 
 combine_list([], List) -> List;
 
-combine_list([First|Rest],List) -> [First | combine_list(List,Rest)].
+combine_list([First|Rest],List2) -> [First | combine_list(Rest, List2)].
 
 test_combine_list() ->
     [1, 2, 3, 4, 5, 6] = combine_list([1,2,3], [4,5,6]),
@@ -58,7 +59,7 @@ test_combine_list() ->
     ok.
 ```
 
-Since we are combining things, monoids frequently work well with a `fold`.  In Erlang, the `fold` function expects the lambda (in our case the `combine_list` monoid) to have the accumulator as the second parameter.  Note that the identity property came in handy here.  Note that in this case, our accumulator is the first list being passed in.  We will need to take this into account in our `foldl` lambda.  We could swap the parameters in `combine_list` but this will cause some confusion later in the week when we write a combine function for a new list data structure we will create.  Additionally, having the second parameter be the first list can cause confusion when using the function.
+Since we are combining things, monoids frequently work well with a `fold`.  In Erlang, the `fold` function expects the lambda (in our case the `combine_list` monoid) to have the accumulator as the second parameter.  Note that the identity property came in handy here.  In this case, our accumulator is the first list being passed in.  We will need to take this into account in our `foldl` lambda.  We could swap the parameters in `combine_list` but this will cause some confusion later in the week when we write a combine function for a new list data structure we will create.  Additionally, having the second parameter be the first list can cause confusion when using the function.
 
 ```erlang
 test_combine_list() ->
@@ -69,7 +70,7 @@ test_combine_list() ->
     ok.
 ```
 
-Comparing with other languages, monoids should seem familiar to operator overloading or overriding.  The ability to define what it means to perform an operator on anything.  While Monoids are restricted primarily to combining operators, the principle is closure is still important.  For example, consider a function that combines two accounts.  Each account is defined by an owner, an identifier, and a balance.  We could write a function that does the following:
+Comparing with other languages, monoids should seem familiar to operator overloading or overriding.  The ability to define what it means to perform an operator on anything.  While Monoids are restricted primarily to combining operators, the principle of closure is still important.  For example, consider a function that combines two accounts.  Each account is defined by an owner, an identifier, and a balance.  We could write a function that does the following:
 
 :::: {.formulabox data-latex=""}
 $struct ~ ~ account ~ ~ \lbrace string:Owner, string:Identi\mathit{f}ier, real:Balance \rbrace.$
@@ -80,7 +81,7 @@ $de\mathit{f} ~ ~ combine\_accounts :: Account_2 ~~ Account_1 \rightarrow Accoun
 ::::
 $\nonumber$
 
-However, with this definition, we don't have closure since our inputs are Accounts and our output is a Balance.  When developing a monoid, it is important to return a compatible type.  In this case, when we combine the accounts, we should return an account. In our example below, we will choose to keep the owner and identifier from the account that had the highest balance when recreating our Account (which we are representing by a tuple of size 3). 
+However, with this definition, we don't have closure since our inputs are Accounts and our output is a real number.  When developing a monoid, it is important to return a compatible type.  In this case, when we combine the accounts, we should return an account. In our example below, we will choose to keep the owner and identifier from the account that had the highest balance when recreating our Account (which we are representing by a tuple of size 3). 
 
 :::: {.formulabox data-latex=""}
 $struct ~ ~ account ~ ~ \lbrace string:Owner, string:Identi\mathit{f}ier, real:Balance \rbrace.$
@@ -108,15 +109,15 @@ $\nonumber$
 
 You can find the template for the problem sets in this lesson here: [prove06.erl](proves/prove06.erl)
 
-1. Implement the `combine_acounts` function as described above. Demonstrate that the Associative Property works to combine 3 accounts together.
+1. Implement the `combine_acounts` function as described above. Demonstrate that the Associative Property works to combine 3 accounts provided in the test code together.  Note that as you demonstrate the associative property, Tim should be the final account owner.
 2. Use a `foldl` to demonstrate the ability to combine 5 accounts.  Use the test code provided in the starting code.
-3. A monoid can be used to combine anything.  In a functional language, that includes functions.  Write a monoid that combines two functions of arity 1.  Call your combination function `combine_functions`.  Remember that `combine_functions` must satisfy the closure property which means that it must also return a function with arity 1.  It should also satisfy the identify property (combine a function with `nil`).  Test your code to show that it works with the Associative property.  Use the 1 arity Erlang functions `to_upper`, `trim`, and `reverse` for testing your monoid (provided in the test code).  Consider an input string such as "   abCDef   " which would result in "FEDCBA" after all 3 functions are applied.
+3. A monoid can be used to combine anything.  In a functional language, that includes functions.  Write a monoid that combines two functions of arity 1.  Call your combination function `combine_functions`.  Remember that `combine_functions` must satisfy the closure property which means that it must also return a function with arity 1.  It should also satisfy the identify property (combine a function with `nil`).  Test your code to show that it works with the Associative property.  Use the 1 arity Erlang functions `to_upper`, `trim`, and `reverse` for testing your monoid (provided in the test code).  The test code will test an input string such as "   abCDef   " which would result in "FEDCBA" after all 3 functions are applied.
 4. Use `foldl` to combine all three functions together from the previous problem.  Use the test code provided in the starting code.
 ::::
 
 ## Monads
 
-When we consider the closure property we saw with the Monoid, it may not always be practical to have the data types be consistent between inputs and outputs.  Some functions may need to return additional data (i.e. meta-data) which is of a different type.  A Monad is a type that contains additional data that is part of strategy to simplify or generalize our software.  This meta-data can be used for several purposes including saving error and state information.  
+When we consider the closure property we saw with the Monoid, it may not always be practical to have the data types be consistent between inputs and outputs.  Some functions may need to return additional data (i.e. meta-data) which is of a different type.  A Monad is a type that contains additional meta-data that is part of strategy to simplify or generalize our software.  This meta-data can be used for several purposes including saving error and state information.
 
 A common Monad seen in software is called the `Maybe`.  A `Maybe` type is a tuple of size 1 or 2.  The first value in the tuple is either `ok` or `fail`.  The second value is an actual value (or result) and is only provided if the first value was `ok`.  We call the `ok` or `fail` meta-data.  Meta-data is information that describes our primary data.
 
@@ -161,7 +162,7 @@ Here is the code for the `Maybe` type constructor:
 maybe_unit(Value) -> {ok, Value}.
 ```
 
-The bind will provide way to apply a function to a Monad type.  If the `Maybe` is `ok`, then it will extract the value and apply the function to it.  Note that the return of the function will be a `Maybe` again.  If the `Maybe` is `fail`, then it will not run the function but instead just return a `Maybe` showing `fail`.  The `bind` function will manage the meta data of `ok` and `fail` in our Monad.  The use of the bind function allows us to chain functions that return the `Maybe` Monad type.  Here is the bind definition:
+The bind will provide way to apply a function to a Monad type.  If the `Maybe` is `ok`, then it will extract the value and apply the function to it.  Note that the return of the function will be a `Maybe` again.  If the `Maybe` is `fail`, then it will not run the function but instead just return a `Maybe` showing `fail`.  The `bind` function will manage the meta data of `ok` and `fail` in our Monad.  The use of the bind function allows us to chain functions that return the `Maybe` Monad type.  Here is the bind definition.  Notice that the $\lambda$ is monadic in that it returns (but does not receive) a Monad type.
 
 :::: {.formulabox data-latex=""}
 $spec ~ ~ \lambda :: a \rightarrow maybe.$
@@ -216,12 +217,12 @@ Let's define a list using tuples:
 
 The first item in each tuple represents the value in the list and the second item in the tuple represents the remainder of the list.  This is very similar to the $[First|Rest]$ format we often write where $First$ represents the first value in the list and the $Rest$ represents the remainder of the list.
 
-For simplicity, we will define a push and pop function which will only affect the front of our list.
-
 :::: {.formulabox data-latex=""}
 $struct ~ ~ list ~ ~ \lbrace a:First, list:Rest \rbrace.$
 ::::
 $\nonumber$
+
+For simplicity, we will define a push and pop function which will only affect the front of our list.
 
 :::: {.formulabox data-latex=""}
 
@@ -279,6 +280,8 @@ $de\mathit{f} ~ ~ push :: Value ~ ~ List \rightarrow \lbrace \lbrace Value, List
 ::::
 $\nonumber$
 
+Notice in the `pop` funciton below, we are reusing our `create` type constructor for convienance.
+
 :::: {.formulabox data-latex=""}
 $spec ~ ~ pop :: list \rightarrow m\_list.$
 
@@ -289,20 +292,22 @@ $de\mathit{f} ~ ~ pop :: \lbrace First, Rest \rbrace \rightarrow \lbrace Rest, -
 $\nonumber$
 
 :::: {.formulabox data-latex=""}
-$spec ~ ~ create :: ~ ~ \rightarrow m\_list.$
+$spec ~ ~ create :: \rightarrow m\_list.$
 
 $de\mathit{f} ~ ~ create :: \rightarrow \lbrace nil, 0 \rbrace.$
 ::::
 $\nonumber$
 
+Recall that only our `push` function has an additional value parameter.  If `pop` is called, we would expect our `Optional_Parameters` to be an empty list.  We have generalized our $\lambda_{bind}$ to take a list of optional parameters which potential could be empty.  We will use the Erlang function `apply` to pass these optional parameters to match our `push` and `pop` specifications previously given above.
+
 :::: {.formulabox data-latex=""}
-$spec ~ ~ \lambda_{bind} :: list \rightarrow m\_list.$
+$spec ~ ~ \lambda_{bind} :: [a] list \rightarrow m\_list.$
 
 $spec ~ ~ bind :: m\_list ~ ~ \lambda_{bind} ~ ~ [a] \rightarrow m\_list.$
 
 $de\mathit{f} ~ ~ bind :: \lbrace List, Length \rbrace ~ ~ \lambda_{bind} ~ ~ Optional\_Parameters \rightarrow$
 
-$\quad \quad \lbrace New\_List, Delta\_Length \rbrace = (\lambda_{bind} ~ ~ Optional\_Parameters ++ List),$
+$\quad \quad \lbrace New\_List, Delta\_Length \rbrace = (\lambda_{bind} ~ ~ Optional\_Parameters ~ ~ List),$
 
 $\quad \quad \lbrace New\_List, Length + Delta\_Length \rbrace.$
 ::::

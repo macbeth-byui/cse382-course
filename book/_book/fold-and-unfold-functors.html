@@ -12,7 +12,7 @@
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
-  <meta name="github-repo" content="macbeth-byui/cse382-course" />
+  
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 4 - Fold and Unfold Functors | Patterns in Functional Programming" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2022-10-27" />
+<meta name="date" content="2022-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -230,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="fold-and-unfold-functors" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">Chapter 4 -</span> Fold and Unfold Functors<a href="fold-and-unfold-functors.html#fold-and-unfold-functors" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>The <code>fold</code> and <code>unfold</code> are part of the common functor design patterns. A <code>fold</code> will convert from a list to a single value whereas an <code>unfold</code> will convert from a single value and a list.</p>
+<p>The <code>fold</code> and <code>unfold</code> are part of the common functor design patterns. A <code>fold</code> will convert from a list to a single value whereas an <code>unfold</code> will convert from a single value to a list.</p>
 <div id="fold" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Fold<a href="fold-and-unfold-functors.html#fold" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Just like the <code>map</code> and <code>filter</code> patterns, we will use a lambda function to define what we want to do with each item of the list. Unlike the <code>map</code> and <code>filter</code>, we will not apply the lambda function to determine what to put in the resulting list. Instead (in the case of <code>fold</code>) we will use the lambda function to determine how each item in our list contributes to the one single value result. The lambda function is used to combine all the values in the list.</p>
@@ -248,7 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The result of the lambda functions will be passed in as the accumulator value when we goto the next item in the list. This implies that we will need to define what the initial accumulator value should be.</p>
 <p><img src="images/fold.drawio.png" /></p>
-<p>Notice that the <code>fold</code> function is expecting that the lambda always has 2 input parameters where the second parameter is the accumulator. The single output of the <span class="math inline">\(\lambda\)</span> function is the updated accumulator.</p>
+<p>Notice that the <code>fold</code> function is expecting that the lambda to always have 2 input parameters where the second parameter is the accumulator. The single output of the <span class="math inline">\(\lambda\)</span> function is the updated accumulator.</p>
 <p>Here is the formal definition of the <code>fold</code>:</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ \lambda :: a_1 ~ ~ a_2 \rightarrow a_2.\)</span></p>
@@ -276,7 +276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="fold-right" class="section level2 hasAnchor" number="4.2">
 <h2><span class="header-section-number">4.2</span> Fold Right<a href="fold-and-unfold-functors.html#fold-right" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>When you look at the definition of <code>fold</code> notice that the list is processed from left to right. We can define a function that goes from right to left called <code>foldr</code>. This function will require us to traverse to the end of the list before we can actually call the lambda function.</p>
+<p>When you look at the definition of <code>fold</code> notice that the list is processed from left to right. We can define a function that goes from right to left called <code>foldr</code>. This function will require us to traverse to the end of the list before we can actually call the lambda function. In some cases, folding right instead of folding left will result in different results.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ \lambda :: a_1 ~ ~ a_2 \rightarrow a_2.\)</span></p>
 <p><span class="math inline">\(spec ~ ~ \mathit{foldr} :: \lambda ~ ~ a_2 ~ ~ [a_1]\rightarrow a_2.\)</span></p>
@@ -288,15 +288,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="problembox">
 <p><strong>Problem Set 2</strong></p>
 <ol style="list-style-type: decimal">
-<li>Implement <code>foldr</code> and test it with the concatenation of a list of strings. Observe the different behavior with the left <code>fold</code>.</li>
+<li>Implement <code>foldr</code> and test it with the concatenation of a list of strings. Observe the different behavior with the right fold versus the left fold done previously.</li>
 </ol>
 </div>
 </div>
 <div id="unfold" class="section level2 hasAnchor" number="4.3">
 <h2><span class="header-section-number">4.3</span> Unfold<a href="fold-and-unfold-functors.html#unfold" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>fold</code> design pattern is used when you want to consolidate from one larger thing to a smaller thing such as a list to a single value. If we want to go backwards, this is called an <code>unfold</code>. Note that folding and unfolding are not inversely related. For example, if I had a list of numbers <code>[2 5 3 1]</code> and I folded them up using a simple sum function, I would get <code>11</code>. However, if started with <code>11</code> and worked backwards, I could get a possible solution such as <code>[7 1 3 0]</code> which is different from our original list.</p>
-<p>When we <code>unfold</code>, we are relying on some initial conditions to generate the next value for our list based on those initial conditions.</p>
-<p>Suppose we wanted to generate a list of <span class="math inline">\(Count\)</span> numbers with a value of <span class="math inline">\(Value\)</span>. We want to <code>unfold</code> our initial conditions to obtain a list of numbers. For example, if <span class="math inline">\(Count\)</span> is 4 and <span class="math inline">\(Value\)</span> is 6, then the <code>gensame</code> function should result in <code>[6 6 6 6]</code>. Here is a definition for our <code>gensame</code> function:</p>
+<p>When we <code>unfold</code>, we are relying on some initial conditions to generate the next value for our list.</p>
+<p>Suppose we wanted to generate a list repeated numbers. The number to repeat we will call <span class="math inline">\(Value\)</span> and the number of repeated values we will call <span class="math inline">\(Count\)</span>. We want to <code>unfold</code> our initial conditions (<span class="math inline">\(Value\)</span> and <span class="math inline">\(Count\)</span>) to obtain the list of numbers. For example, if <span class="math inline">\(Count\)</span> is 4 and <span class="math inline">\(Value\)</span> is 6, then the <code>gensame</code> function should result in <code>[6 6 6 6]</code>. Here is a definition for our <code>gensame</code> function:</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ gensame :: integer ~ ~ real \rightarrow [real].\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ gensame :: 0 ~ ~ Value \rightarrow [];\)</span></p>
@@ -322,9 +322,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>Looking at these two examples, we can generalize our function. Let’s create a generic <code>unfold</code> function that works for more than just numbers.</p>
 <p><img src="images/unfold.drawio.png" /></p>
-<p>This function does not exist in the Erlang library primarily because its not generic enough. We can create an <code>unfold</code> type function that does not rely on a <code>Count</code> variable or uses a lambda function that has a different number of parameters. The specification and definition is the same as <code>genincr</code> but will have a more generalized lambda specification with no definition.</p>
+<p>This function does not exist in the Erlang library primarily because its not generic enough. We could have other means to replace <span class="math inline">\(Count\)</span> or we can even create a stream (we will see those later in the course). For our purposes, we will create a generic <code>unfold</code> function that uses <span class="math inline">\(Count\)</span> but has a generic <span class="math inline">\(\lambda\)</span> that works with any type. The specification and definition is give below:</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ \lambda :: a \rightarrow a.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ unfold :: integer ~ ~ a ~ ~ \lambda \rightarrow [a].\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ unfold :: 0 ~ ~ Curr ~ ~ \lambda \rightarrow [];\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ unfold :: Count ~ ~ Curr ~ ~ \lambda \rightarrow [Curr | (unfold ~ ~ (Count-1) ~ ~ (\lambda ~ ~ Curr) ~ ~ \lambda)].\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The Erlang code for <code>unfold</code> is given below:</p>

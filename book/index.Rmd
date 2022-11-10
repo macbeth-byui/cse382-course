@@ -10,7 +10,6 @@ bibliography: [book.bib]
 description: |
   Design patterns and data structures common in functional programming.  The text uses Erlang to demonstrate the material.
 link-citations: yes
-github-repo: macbeth-byui/cse382-course
 ---
 
 # Introduction {-}

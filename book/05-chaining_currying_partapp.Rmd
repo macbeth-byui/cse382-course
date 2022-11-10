@@ -55,7 +55,7 @@ $\nonumber$
 
 In these definitions, the function returns a function that does either a `map` or a `filter`.  The lambda function for `map` and `filter` is constructed using the $Value$ input parameter.  For example, if `multiply_list` receives 4 for $Value$, then a function that performs a `map` on the list with a lambda of $\lambda_{map} :: Item \rightarrow Item * 4$ is created.
 
-The implementation of the `multiply_list` function is given below in both Erlang and Clojure.  The implementation for `greater_list` is left for an exercise.  An example of chaining these together is given as well.
+The implementation of the `multiply_list` function is given below in Erlang.  The implementation for `greater_list` is left for an exercise.  An example of chaining these together is given as well.
 
 ```erlang
 multiply_list(Value) -> fun(List) -> lists:map(fun(Item) -> Value * Item end, List) end.
@@ -89,7 +89,7 @@ You can find the template for the problem sets in this lesson here: [prove05.erl
 
 ## Currying
 
-With chaining, we were able to compose functions together serially.  With currying, we are able to compose input parameters to a function serially.  This done by creating functions to handle each input parameter.  
+With chaining, we were able to compose functions together serially.  With currying, we are able to compose input parameters to a function serially.  This done by creating functions to handle each input parameter separately.  
 
 Consider the following math function which adds three numbers:
 
@@ -170,7 +170,7 @@ test_curry() ->
 
 ## Partial Applications
 
-When we curried a function, we composed each parameter one at a time.  We did this by creating functions that handled each parameter one at a time.  Another approach is to split the function up into behavior and compose the behaviors one at a time.  Just like currying, we can save intermediate functions.  If the functions include behaviors, then these intermediate functions can have calculated results within them for reuse.  We call this a partial application.  While there are some similarities, please note that partial applications and currying is different.
+When we curried a function, we composed each parameter one at a time.  We did this by creating functions that handled each parameter one at a time.  Another approach is to split the function up into behavior and compose the behaviors one at a time.  Just like currying, we can save intermediate functions.  If the functions include behaviors, then these intermediate functions can have calculated results within them for reuse.  We call this a partial application.  While there are some similarities, please note that partial applications and currying are different.
 
 Consider the following function which performs a map, filter, and fold (in order) on a range from 1 to $Value$.  Note that the definition is more complicated and the $=$ is used to save intermediate results as each step is performed.  This type of function has several parameters.  Note that the `range` function is assumed to exist which will create a list of numbers from 1 to the specified value.
 

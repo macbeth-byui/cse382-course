@@ -193,17 +193,17 @@ test_ps3() ->
 	% test per the instructions.
     %First20TriplesOnlyEven = write_code_here,
     %330 = write_code_here,
-    %219419659468800 = write_code_here
+    %219419659468800 = write_code_here,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 3.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     % Examples not using any partial applications  
-    Avg_Temp = process_dataset("weather.csv", 6, int, fun list_average/1),
-    io:format("Avg Temp = ~p~n",[Avg_Temp]), % Answer = 24.8472
-    Count_Snow = process_dataset("weather.csv", 5, text, list_text_count("Snow")),
-    io:format("Count Snow = ~p~n",[Count_Snow]), % Answer = 38
+    % Avg_Temp = process_dataset("weather.csv", 6, int, fun list_average/1),
+    % io:format("Avg Temp = ~p~n",[Avg_Temp]), % Answer = 24.8472
+    % Count_Snow = process_dataset("weather.csv", 5, text, list_text_count("Snow")),
+    % io:format("Count Snow = ~p~n",[Count_Snow]), % Answer = 38
 
     % Test partial application to read entire dataset only once 
     % Weather = process_dataset2("weather.csv"),

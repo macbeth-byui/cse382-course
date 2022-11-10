@@ -83,6 +83,8 @@ test_ps1() ->
     A3 = {"Sue", "5851", 500},
 
     % Write test code to demonstrate the associative property with combineAccounts using the 3 accounts above
+    % {"Tim","2424",1200} = put_your_code_here,
+    % {"Tim","2424",1200} = put_your_code_here,
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -105,7 +107,11 @@ test_ps1() ->
     F3 = fun string:reverse/1,
 
     % Write test code to demonstrate the associate property of combineFunctions using the 3 functions above
+    % Combined_F1 = put_your_code_here,
+    % Combined_F2 = put_your_code_here,
 
+    % "FEDCBA" = Combined_F1("   abCDef  "),
+    % "FEDCBA" = Combined_F2("   abCDef  "),
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%

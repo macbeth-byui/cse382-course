@@ -12,7 +12,7 @@
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
-  <meta name="github-repo" content="macbeth-byui/cse382-course" />
+  
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 5 - Chaining, Currying, and Partial Applications | Patterns in Functional Programming" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2022-10-27" />
+<meta name="date" content="2022-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -266,7 +266,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>In these definitions, the function returns a function that does either a <code>map</code> or a <code>filter</code>. The lambda function for <code>map</code> and <code>filter</code> is constructed using the <span class="math inline">\(Value\)</span> input parameter. For example, if <code>multiply_list</code> receives 4 for <span class="math inline">\(Value\)</span>, then a function that performs a <code>map</code> on the list with a lambda of <span class="math inline">\(\lambda_{map} :: Item \rightarrow Item * 4\)</span> is created.</p>
-<p>The implementation of the <code>multiply_list</code> function is given below in both Erlang and Clojure. The implementation for <code>greater_list</code> is left for an exercise. An example of chaining these together is given as well.</p>
+<p>The implementation of the <code>multiply_list</code> function is given below in Erlang. The implementation for <code>greater_list</code> is left for an exercise. An example of chaining these together is given as well.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb30-1"><a href="chaining-currying-and-partial-applications.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiply_list(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="kw">fun</span><span class="fu">(</span><span class="va">List</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">lists:map(</span><span class="kw">fun</span><span class="fu">(</span><span class="va">Item</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Value</span> <span class="op">*</span> <span class="va">Item</span> <span class="kw">end</span><span class="fu">,</span> <span class="va">List</span><span class="fu">)</span> <span class="kw">end</span><span class="fu">.</span></span>
 <span id="cb30-2"><a href="chaining-currying-and-partial-applications.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">greater_list(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="ch">implemented_in_exercise</span><span class="fu">.</span></span>
 <span id="cb30-3"><a href="chaining-currying-and-partial-applications.html#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -300,7 +300,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="currying" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> Currying<a href="chaining-currying-and-partial-applications.html#currying" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>With chaining, we were able to compose functions together serially. With currying, we are able to compose input parameters to a function serially. This done by creating functions to handle each input parameter.</p>
+<p>With chaining, we were able to compose functions together serially. With currying, we are able to compose input parameters to a function serially. This done by creating functions to handle each input parameter separately.</p>
 <p>Consider the following math function which adds three numbers:</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ add3 :: real ~ ~ real ~ ~ real \rightarrow real.\)</span></p>
@@ -358,7 +358,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="partial-applications" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> Partial Applications<a href="chaining-currying-and-partial-applications.html#partial-applications" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>When we curried a function, we composed each parameter one at a time. We did this by creating functions that handled each parameter one at a time. Another approach is to split the function up into behavior and compose the behaviors one at a time. Just like currying, we can save intermediate functions. If the functions include behaviors, then these intermediate functions can have calculated results within them for reuse. We call this a partial application. While there are some similarities, please note that partial applications and currying is different.</p>
+<p>When we curried a function, we composed each parameter one at a time. We did this by creating functions that handled each parameter one at a time. Another approach is to split the function up into behavior and compose the behaviors one at a time. Just like currying, we can save intermediate functions. If the functions include behaviors, then these intermediate functions can have calculated results within them for reuse. We call this a partial application. While there are some similarities, please note that partial applications and currying are different.</p>
 <p>Consider the following function which performs a map, filter, and fold (in order) on a range from 1 to <span class="math inline">\(Value\)</span>. Note that the definition is more complicated and the <span class="math inline">\(=\)</span> is used to save intermediate results as each step is performed. This type of function has several parameters. Note that the <code>range</code> function is assumed to exist which will create a list of numbers from 1 to the specified value.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ \lambda_{map} :: int \rightarrow real.\)</span></p>

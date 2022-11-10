@@ -12,7 +12,7 @@
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
-  <meta name="github-repo" content="macbeth-byui/cse382-course" />
+  
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 6 - Monoids and Monads | Patterns in Functional Programming" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2022-10-27" />
+<meta name="date" content="2022-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -240,10 +240,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
 <li>Identity - There is always something we can combine with that will retun the original value using our function.</li>
 </ul>
-<p>In programming, we have already used monoids several times including:
-* Adding numbers
-* Combining Strings
-* Combining Lists</p>
+<p>In programming, we have already used monoids several times including:</p>
+<ul>
+<li>Adding numbers</li>
+<li>Combining Strings</li>
+<li>Combining Lists</li>
+</ul>
 <p>Frequently the following operators are monoids: <span class="math inline">\(+\)</span>, <span class="math inline">\(++\)</span>, <span class="math inline">\(*\)</span>, <span class="math inline">\(\land\)</span>, <span class="math inline">\(\lor\)</span></p>
 <p>Due to the closure property, we are able to combine things easily with our functions using chaining because the input and output interfaces are compatible. Due to the associative property, we can divide the work up into individual combinations and even use threading to complete them in parallel on a multi-processor platform. Due to the identity we can deal with special cases (e.g. add no numbers, work with an empty list).</p>
 <p>As an example, we will rewrite the ability to combine (i.e. concatenate) two lists. Notice in the definition below we are purposefully not using <span class="math inline">\(++\)</span> because this <code>combine_list</code> function is actually trying to implement <span class="math inline">\(++\)</span>.</p>
@@ -251,7 +253,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(spec ~ ~ combine\_list :: [a] ~ ~ [a] \rightarrow [a].\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ combine\_list :: []~ ~ List \rightarrow List;\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ combine\_list :: List ~ ~ [] \rightarrow List;\)</span></p>
-<p><span class="math inline">\(de\mathit{f} ~ ~ combine\_list :: [First|Rest] ~ ~ [] \rightarrow [First | (combine\_list ~ ~ List ~ ~ Rest)]\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ combine\_list :: [First|Rest] ~ ~ List2 \rightarrow [First | (combine\_list ~ ~ Rest ~ ~ List2)]\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The first part of the definition provides support for the identity property. Observe that this function can be chained together in different pairs (associative property) and the result is the same.</p>
@@ -259,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb36-2"><a href="monoids-and-monads.html#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-3"><a href="monoids-and-monads.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">combine_list([],</span> <span class="va">List</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">List</span><span class="fu">;</span></span>
 <span id="cb36-4"><a href="monoids-and-monads.html#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="monoids-and-monads.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">combine_list([</span><span class="va">First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">],</span><span class="va">List</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">First</span> <span class="fu">|</span> <span class="fu">combine_list(</span><span class="va">List</span><span class="fu">,</span><span class="va">Rest</span><span class="fu">)].</span></span>
+<span id="cb36-5"><a href="monoids-and-monads.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">combine_list([</span><span class="va">First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">],</span><span class="va">List2</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">First</span> <span class="fu">|</span> <span class="fu">combine_list(</span><span class="va">Rest</span><span class="fu">,</span> <span class="va">List2</span><span class="fu">)].</span></span>
 <span id="cb36-6"><a href="monoids-and-monads.html#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-7"><a href="monoids-and-monads.html#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">test_combine_list()</span> <span class="op">-&gt;</span></span>
 <span id="cb36-8"><a href="monoids-and-monads.html#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">combine_list([</span><span class="dv">1</span><span class="fu">,</span><span class="dv">2</span><span class="fu">,</span><span class="dv">3</span><span class="fu">],</span> <span class="fu">[</span><span class="dv">4</span><span class="fu">,</span><span class="dv">5</span><span class="fu">,</span><span class="dv">6</span><span class="fu">]),</span></span>
@@ -276,21 +278,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb36-19"><a href="monoids-and-monads.html#cb36-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">combine_list(</span><span class="va">L1</span><span class="fu">,</span> <span class="fu">combine_list(</span><span class="va">L2</span><span class="fu">,</span> <span class="va">L3</span><span class="fu">)),</span></span>
 <span id="cb36-20"><a href="monoids-and-monads.html#cb36-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-21"><a href="monoids-and-monads.html#cb36-21" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
-<p>Since we are combining things, monoids frequently work well with a <code>fold</code>. In Erlang, the <code>fold</code> function expects the lambda (in our case the <code>combine_list</code> monoid) to have the accumulator as the second parameter. Note that the identity property came in handy here. Note that in this case, our accumulator is the first list being passed in. We will need to take this into account in our <code>foldl</code> lambda. We could swap the parameters in <code>combine_list</code> but this will cause some confusion later in the week when we write a combine function for a new list data structure we will create. Additionally, having the second parameter be the first list can cause confusion when using the function.</p>
+<p>Since we are combining things, monoids frequently work well with a <code>fold</code>. In Erlang, the <code>fold</code> function expects the lambda (in our case the <code>combine_list</code> monoid) to have the accumulator as the second parameter. Note that the identity property came in handy here. In this case, our accumulator is the first list being passed in. We will need to take this into account in our <code>foldl</code> lambda. We could swap the parameters in <code>combine_list</code> but this will cause some confusion later in the week when we write a combine function for a new list data structure we will create. Additionally, having the second parameter be the first list can cause confusion when using the function.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb37-1"><a href="monoids-and-monads.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_combine_list()</span> <span class="op">-&gt;</span></span>
 <span id="cb37-2"><a href="monoids-and-monads.html#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">L1</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">],</span></span>
 <span id="cb37-3"><a href="monoids-and-monads.html#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">L2</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">],</span></span>
 <span id="cb37-4"><a href="monoids-and-monads.html#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">L3</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">],</span></span>
 <span id="cb37-5"><a href="monoids-and-monads.html#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">lists:foldl(</span><span class="kw">fun</span> <span class="fu">(</span><span class="va">Value</span><span class="fu">,</span><span class="va">Acc</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">combine_list(</span><span class="va">Acc</span><span class="fu">,</span><span class="va">Value</span><span class="fu">),</span> <span class="fu">[],</span> <span class="fu">[</span><span class="va">L1</span><span class="fu">,</span> <span class="va">L2</span><span class="fu">,</span> <span class="va">L3</span><span class="fu">]),</span></span>
 <span id="cb37-6"><a href="monoids-and-monads.html#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
-<p>Comparing with other languages, monoids should seem familiar to operator overloading or overriding. The ability to define what it means to perform an operator on anything. While Monoids are restricted primarily to combining operators, the principle is closure is still important. For example, consider a function that combines two accounts. Each account is defined by an owner, an identifier, and a balance. We could write a function that does the following:</p>
+<p>Comparing with other languages, monoids should seem familiar to operator overloading or overriding. The ability to define what it means to perform an operator on anything. While Monoids are restricted primarily to combining operators, the principle of closure is still important. For example, consider a function that combines two accounts. Each account is defined by an owner, an identifier, and a balance. We could write a function that does the following:</p>
 <div class="formulabox">
 <p><span class="math inline">\(struct ~ ~ account ~ ~ \lbrace string:Owner, string:Identi\mathit{f}ier, real:Balance \rbrace.\)</span></p>
 <p><span class="math inline">\(spec ~ ~ combine\_accounts :: account ~~ account \rightarrow real.\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ combine\_accounts :: Account_2 ~~ Account_1 \rightarrow Account_1.Balance + Account_2.Balance.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>However, with this definition, we don’t have closure since our inputs are Accounts and our output is a Balance. When developing a monoid, it is important to return a compatible type. In this case, when we combine the accounts, we should return an account. In our example below, we will choose to keep the owner and identifier from the account that had the highest balance when recreating our Account (which we are representing by a tuple of size 3).</p>
+<p>However, with this definition, we don’t have closure since our inputs are Accounts and our output is a real number. When developing a monoid, it is important to return a compatible type. In this case, when we combine the accounts, we should return an account. In our example below, we will choose to keep the owner and identifier from the account that had the highest balance when recreating our Account (which we are representing by a tuple of size 3).</p>
 <div class="formulabox">
 <p><span class="math inline">\(struct ~ ~ account ~ ~ \lbrace string:Owner, string:Identi\mathit{f}ier, real:Balance \rbrace.\)</span></p>
 <p><span class="math inline">\(spec ~ ~ combine\_accounts :: account ~~ account \rightarrow account\)</span></p>
@@ -307,16 +309,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Problem Set 1</strong></p>
 <p>You can find the template for the problem sets in this lesson here: <a href="proves/prove06.erl">prove06.erl</a></p>
 <ol style="list-style-type: decimal">
-<li>Implement the <code>combine_acounts</code> function as described above. Demonstrate that the Associative Property works to combine 3 accounts together.</li>
+<li>Implement the <code>combine_acounts</code> function as described above. Demonstrate that the Associative Property works to combine 3 accounts provided in the test code together. Note that as you demonstrate the associative property, Tim should be the final account owner.</li>
 <li>Use a <code>foldl</code> to demonstrate the ability to combine 5 accounts. Use the test code provided in the starting code.</li>
-<li>A monoid can be used to combine anything. In a functional language, that includes functions. Write a monoid that combines two functions of arity 1. Call your combination function <code>combine_functions</code>. Remember that <code>combine_functions</code> must satisfy the closure property which means that it must also return a function with arity 1. It should also satisfy the identify property (combine a function with <code>nil</code>). Test your code to show that it works with the Associative property. Use the 1 arity Erlang functions <code>to_upper</code>, <code>trim</code>, and <code>reverse</code> for testing your monoid (provided in the test code). Consider an input string such as ” abCDef ” which would result in “FEDCBA” after all 3 functions are applied.</li>
+<li>A monoid can be used to combine anything. In a functional language, that includes functions. Write a monoid that combines two functions of arity 1. Call your combination function <code>combine_functions</code>. Remember that <code>combine_functions</code> must satisfy the closure property which means that it must also return a function with arity 1. It should also satisfy the identify property (combine a function with <code>nil</code>). Test your code to show that it works with the Associative property. Use the 1 arity Erlang functions <code>to_upper</code>, <code>trim</code>, and <code>reverse</code> for testing your monoid (provided in the test code). The test code will test an input string such as ” abCDef ” which would result in “FEDCBA” after all 3 functions are applied.</li>
 <li>Use <code>foldl</code> to combine all three functions together from the previous problem. Use the test code provided in the starting code.</li>
 </ol>
 </div>
 </div>
 <div id="monads" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Monads<a href="monoids-and-monads.html#monads" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>When we consider the closure property we saw with the Monoid, it may not always be practical to have the data types be consistent between inputs and outputs. Some functions may need to return additional data (i.e. meta-data) which is of a different type. A Monad is a type that contains additional data that is part of strategy to simplify or generalize our software. This meta-data can be used for several purposes including saving error and state information.</p>
+<p>When we consider the closure property we saw with the Monoid, it may not always be practical to have the data types be consistent between inputs and outputs. Some functions may need to return additional data (i.e. meta-data) which is of a different type. A Monad is a type that contains additional meta-data that is part of strategy to simplify or generalize our software. This meta-data can be used for several purposes including saving error and state information.</p>
 <p>A common Monad seen in software is called the <code>Maybe</code>. A <code>Maybe</code> type is a tuple of size 1 or 2. The first value in the tuple is either <code>ok</code> or <code>fail</code>. The second value is an actual value (or result) and is only provided if the first value was <code>ok</code>. We call the <code>ok</code> or <code>fail</code> meta-data. Meta-data is information that describes our primary data.</p>
 <p>In this example, the <code>use_inventory</code> function will return a <code>Maybe</code>. The result will be <code>ok</code> if there was inventory available to use and it will return <code>fail</code> if there was no inventory available. The meta-data <code>ok</code> and <code>fail</code> describe the inventory value.</p>
 <div class="formulabox">
@@ -340,7 +342,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>Here is the code for the <code>Maybe</code> type constructor:</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb39-1"><a href="monoids-and-monads.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">maybe_unit(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">ok</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">}.</span></span></code></pre></div>
-<p>The bind will provide way to apply a function to a Monad type. If the <code>Maybe</code> is <code>ok</code>, then it will extract the value and apply the function to it. Note that the return of the function will be a <code>Maybe</code> again. If the <code>Maybe</code> is <code>fail</code>, then it will not run the function but instead just return a <code>Maybe</code> showing <code>fail</code>. The <code>bind</code> function will manage the meta data of <code>ok</code> and <code>fail</code> in our Monad. The use of the bind function allows us to chain functions that return the <code>Maybe</code> Monad type. Here is the bind definition:</p>
+<p>The bind will provide way to apply a function to a Monad type. If the <code>Maybe</code> is <code>ok</code>, then it will extract the value and apply the function to it. Note that the return of the function will be a <code>Maybe</code> again. If the <code>Maybe</code> is <code>fail</code>, then it will not run the function but instead just return a <code>Maybe</code> showing <code>fail</code>. The <code>bind</code> function will manage the meta data of <code>ok</code> and <code>fail</code> in our Monad. The use of the bind function allows us to chain functions that return the <code>Maybe</code> Monad type. Here is the bind definition. Notice that the <span class="math inline">\(\lambda\)</span> is monadic in that it returns (but does not receive) a Monad type.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ \lambda :: a \rightarrow maybe.\)</span></p>
 <p><span class="math inline">\(spec ~ ~ maybe\_bind :: maybe ~ ~ \lambda \rightarrow maybe.\)</span></p>
@@ -380,11 +382,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p><img src="images/ThreeItemCustomList.drawio.png" /></p>
 <p>The first item in each tuple represents the value in the list and the second item in the tuple represents the remainder of the list. This is very similar to the <span class="math inline">\([First|Rest]\)</span> format we often write where <span class="math inline">\(First\)</span> represents the first value in the list and the <span class="math inline">\(Rest\)</span> represents the remainder of the list.</p>
-<p>For simplicity, we will define a push and pop function which will only affect the front of our list.</p>
 <div class="formulabox">
 <p><span class="math inline">\(struct ~ ~ list ~ ~ \lbrace a:First, list:Rest \rbrace.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
+<p>For simplicity, we will define a push and pop function which will only affect the front of our list.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ push :: a ~ ~ list \rightarrow list.\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ push :: Value ~ ~ List \rightarrow \lbrace Value, List \rbrace.\)</span></p>
@@ -422,6 +424,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(de\mathit{f} ~ ~ push :: Value ~ ~ List \rightarrow \lbrace \lbrace Value, List \rbrace, 1\rbrace.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
+<p>Notice in the <code>pop</code> funciton below, we are reusing our <code>create</code> type constructor for convienance.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ pop :: list \rightarrow m\_list.\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ pop :: nil \rightarrow (create);\)</span></p>
@@ -429,15 +432,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <div class="formulabox">
-<p><span class="math inline">\(spec ~ ~ create :: ~ ~ \rightarrow m\_list.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ create :: \rightarrow m\_list.\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ create :: \rightarrow \lbrace nil, 0 \rbrace.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
+<p>Recall that only our <code>push</code> function has an additional value parameter. If <code>pop</code> is called, we would expect our <code>Optional_Parameters</code> to be an empty list. We have generalized our <span class="math inline">\(\lambda_{bind}\)</span> to take a list of optional parameters which potential could be empty. We will use the Erlang function <code>apply</code> to pass these optional parameters to match our <code>push</code> and <code>pop</code> specifications previously given above.</p>
 <div class="formulabox">
-<p><span class="math inline">\(spec ~ ~ \lambda_{bind} :: list \rightarrow m\_list.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ \lambda_{bind} :: [a] list \rightarrow m\_list.\)</span></p>
 <p><span class="math inline">\(spec ~ ~ bind :: m\_list ~ ~ \lambda_{bind} ~ ~ [a] \rightarrow m\_list.\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ bind :: \lbrace List, Length \rbrace ~ ~ \lambda_{bind} ~ ~ Optional\_Parameters \rightarrow\)</span></p>
-<p><span class="math inline">\(\quad \quad \lbrace New\_List, Delta\_Length \rbrace = (\lambda_{bind} ~ ~ Optional\_Parameters ++ List),\)</span></p>
+<p><span class="math inline">\(\quad \quad \lbrace New\_List, Delta\_Length \rbrace = (\lambda_{bind} ~ ~ Optional\_Parameters ~ ~ List),\)</span></p>
 <p><span class="math inline">\(\quad \quad \lbrace New\_List, Length + Delta\_Length \rbrace.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
