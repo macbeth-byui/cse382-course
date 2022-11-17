@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2022-11-10" />
+<meta name="date" content="2022-11-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -235,10 +235,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">7.1</span> Streams<a href="streams-and-lazy-evaluation.html#streams" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A stream provides information to us one item at a time whenever we need it. This implies that when writing a stream, we need to consider two things:</p>
 <ul>
-<li>Provide the user a function to call when they are ready to get the next thing.</li>
-<li>The function that we provide must be aware of what the previous thing was so it can give the next thing.</li>
+<li>The user needs to provide a function to call to evaluate the next item in the stream.</li>
+<li>The function provided must be aware of the previous item.</li>
 </ul>
-<p>Let’s look at both of these needs separately. If we wanted to provide the user with the ability to add 1 to a number at any time, we could write a function that return a function to be called later.</p>
+<p>Let’s look at both of these needs separately. If we wanted to provide the user with the ability to add 1 to a number at any time, we could write a function that returns a function to be called later.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ lazy\_incr\_once :: integer \rightarrow (\lambda :: \rightarrow integer).\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ lazy\_incr\_once :: Value \rightarrow (\lambda :: \rightarrow Value + 1).\)</span></p>
@@ -251,7 +251,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb45-5"><a href="streams-and-lazy-evaluation.html#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">5</span> <span class="op">=</span> <span class="va">L</span><span class="fu">(),</span></span>
 <span id="cb45-6"><a href="streams-and-lazy-evaluation.html#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">5</span> <span class="op">=</span> <span class="va">L</span><span class="fu">(),</span></span>
 <span id="cb45-7"><a href="streams-and-lazy-evaluation.html#cb45-7" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
-<p>In the code above, we are running the function that was returned when we called <code>lazy_incr_once</code>. Combine this concept with the desire to have the function return something based on the previous result. In the <code>lazy_incr</code> function, we will return two things: the next value and the next function to call. Notice that we are defining a custom data type called <code>iterator</code> which will contain both of these things. Our ultimate goal by the next lesson is to define this as a Monad.</p>
+<p>In the code above, we are running the function that was returned when we called <code>lazy_incr_once</code>. It adds 1 to the original value 4 that was provided but never increases on subsequent calls. We now combine this with the desire to have the function return something based on the previous result. In the <code>lazy_incr</code> function, we will return two things: the next value and a brand new function to call to obtain the next value. Notice that we are defining a custom data type called <code>iterator</code> which will contain both of these things. Our ultimate goal by the next lesson is to define this as a Monad.</p>
 <div class="formulabox">
 <p><span class="math inline">\(struct ~ ~ iterator ~ ~ \lbrace a, \lambda_{stream} \rbrace.\)</span></p>
 <p><span class="math inline">\(spec ~ ~ \lambda_{stream} :: \rightarrow iterator.\)</span></p>
@@ -267,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb46-6"><a href="streams-and-lazy-evaluation.html#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span><span class="dv">6</span><span class="fu">,</span> <span class="va">L3</span><span class="fu">}</span> <span class="op">=</span> <span class="va">L2</span><span class="fu">(),</span></span>
 <span id="cb46-7"><a href="streams-and-lazy-evaluation.html#cb46-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span><span class="dv">7</span><span class="fu">,</span> <span class="va">L4</span><span class="fu">}</span> <span class="op">=</span> <span class="va">L3</span><span class="fu">(),</span></span>
 <span id="cb46-8"><a href="streams-and-lazy-evaluation.html#cb46-8" aria-hidden="true" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
-<p>Another classic stream is the range function which will provide a sequence of numbers but only one at a time. In this function, we will assume that the sequence will from <code>Start</code> to <code>Stop</code>, inclusive and that <code>Start &lt;= Stop</code>. Unlike the previous example, this iterator will need to stop. We will modify our new <code>fixed_iterator</code> to have other possible values.</p>
+<p>Another classic stream is the range function which will provide a sequence of numbers but only one at a time. In this function, we will assume that the sequence will go from <code>Start</code> to <code>Stop</code>, inclusive and that <code>Start &lt;= Stop</code>. Unlike the previous example, this iterator will need to stop. We will modify our new <code>fixed_iterator</code> to have other possible values.</p>
 <div class="formulabox">
 <p><span class="math inline">\(struct ~ ~ \mathit{f}ixed\_iterator\)</span></p>
 <p><span class="math inline">\(\quad \quad \lbrace a, \lambda_{stream} \rbrace ~ ~ or\)</span></p>
@@ -301,14 +301,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Problem Set 1</strong></p>
 <p>You can find the template for the problem sets in this lesson here: <a href="proves/prove07.erl">prove07.erl</a></p>
 <ol style="list-style-type: decimal">
-<li>Modify the <code>range</code> function to take a third parameter called <code>step</code>. You should increase the sequence by the amount of <code>step</code>. If the <code>step</code> is negative, then create a decreasing sequence. If the <code>step</code> is 0, then the <code>done</code> state should occur immediately. Test code is provided to test your stream.</li>
-<li>Create a new stream called <code>words</code> which will split text by spaces into sub-strings Each time the stream is called, it should return back the next string. For example, if the text was “The cow jumped over the moon.”, then the stream would first return “The”, then “cow”, then “jumped”, and so forth. Use the <code>fixed_iterator</code> Monad type described above. You are provided a function called <code>first_word</code> which returns a tuple in the format <code>{Word, Rest}</code> where <code>Word</code> is the first word and <code>Rest</code> is the remaining text (just like working with values in a list). Test code is provided to test your stream.</li>
+<li>Modify the <code>range</code> function to take a third parameter called <code>Step</code>. You should increase the sequence by the amount of <code>Step</code>. If the <code>Step</code> is negative, then create a decreasing sequence. If the <code>Step</code> is 0, then the <code>done</code> state should occur immediately. Test code is provided to test your stream.</li>
+<li>Create a new stream called <code>words</code> which will split text by spaces into sub-strings. Each time the stream is called, it should return back the next string. For example, if the text was “The cow jumped over the moon.”, then the stream would first return “The”, then “cow”, then “jumped”, and so forth. Use the same <code>fixed_iterator</code> type described above. You are provided a function called <code>first_word</code> which returns a tuple in the format <code>{Word, Rest}</code> where <code>Word</code> is the first word and <code>Rest</code> is the remaining text (just like working with values in a list). Test code is provided to test your stream.</li>
 </ol>
 </div>
 </div>
 <div id="stream-monad-collection" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Stream Monad &amp; Collection<a href="streams-and-lazy-evaluation.html#stream-monad-collection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In the previous section we created a <code>fixed_iterator</code> Monad that the <code>range</code> function supported. To complete the Monad definition, we need a type constructor (or unit function) and a bind function. Since the type constructor will need to create a stream that hasn’t started yet, we will modify our specification for the Monad Type we had earlier (the second condition in the struct is new):</p>
+<p>In the previous section we created a <code>fixed_iterator</code> type that the <code>range</code> function supported. This type is actually a Monad. The <span class="math inline">\(\lambda_{stream}\)</span> provided in the <code>fixed_iterator</code> is the meta-data or state that we are maintaining for our stream. To complete the Monad definition, we need a type constructor (or unit function) and a bind function. Since the type constructor will need to create a stream that hasn’t started yet, we will modify our specification for the Monad Type we had earlier (the second condition in the struct is new):</p>
 <div class="formulabox">
 <p><span class="math inline">\(struct ~ ~ \mathit{f}ixed\_iterator\)</span></p>
 <p><span class="math inline">\(\quad \quad \lbrace a, \lambda_{stream} \rbrace ~ ~ or\)</span></p>
@@ -323,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(de\mathit{f} ~ ~ iter :: \lambda_{stream} \rightarrow \lbrace unde\mathit{f}ined, \lambda_{stream} \rbrace.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>The bind should allow us to take our <code>fixed_iterator</code> (the Monad type returned by the <code>iter</code> function) and pass it to our stream function which will return an updated <code>fixed_iterator</code>. Remember that our stream function is always regenerated and has no input parameters. The next function is re-created each time with the next value built-into the function. We will call our bind function <code>next</code> and it will be responsible for getting the next stream iteration. Unlike previous bind functions we have used, this bind will not take a function parameter because it is applied only to our <span class="math inline">\(\lambda_{stream}\)</span>.</p>
+<p>The bind should allow us to take our <code>fixed_iterator</code> (the Monad type returned by the <code>iter</code> function) and pass it to our stream function which will return an updated <code>fixed_iterator</code>. Remember that our stream function is always regenerated and has no input parameters. The next function is re-created each time with the next value built-into the function. We will call our bind function <code>next</code> and it will be responsible for getting the next stream iteration. Unlike previous bind functions we have used, this bind will not take a function parameter because we will limit the application of this bind function only to our <span class="math inline">\(\lambda_{stream}\)</span> function.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ next :: \mathit{f}ixed\_iterator \rightarrow \mathit{f}ixed\_iterator.\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ next :: \lbrace Value, done \rbrace \rightarrow \lbrace unde\mathit{f}ined, done \rbrace;\)</span></p>
@@ -351,7 +351,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb51-10"><a href="streams-and-lazy-evaluation.html#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="fu">io:format(</span><span class="st">&quot;~p~n&quot;</span><span class="fu">,[value(</span><span class="va">Next5</span><span class="fu">)]),</span>  <span class="co">% Print undefined</span></span>
 <span id="cb51-11"><a href="streams-and-lazy-evaluation.html#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="va">Next6</span> <span class="op">=</span> <span class="fu">next(</span><span class="va">Next5</span><span class="fu">),</span></span>
 <span id="cb51-12"><a href="streams-and-lazy-evaluation.html#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="fu">io:format(</span><span class="st">&quot;~p~n&quot;</span><span class="fu">,[value(</span><span class="va">Next6</span><span class="fu">)]),</span>  <span class="co">% Print undefined</span></span></code></pre></div>
-<p>A common function that is implemented when lazy streams are supported is the <code>collect</code>. The <code>collect</code> function will undo the “laziness” of our data structure by iterating through the entire <span class="math inline">\(\lambda_{stream}\)</span> and put all the results in order into a traditional list.</p>
+<p>A common function that is implemented when lazy streams are supported is the <code>collect</code>. The <code>collect</code> function will undo the “laziness” of our data structure by iterating through the entire <span class="math inline">\(\lambda_{stream}\)</span> and put all the results in order into a traditional list. This <code>collect</code> function is an example of the unfold functor pattern.</p>
 <p>The specification for the <code>collect</code> is given below:</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ collect :: \lambda_{stream} \rightarrow [a].\)</span></p>
@@ -364,7 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The erlang code for <code>collect/1</code> is given below:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb52-1"><a href="streams-and-lazy-evaluation.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect(</span><span class="va">Stream</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">(</span><span class="ch">collect</span> <span class="fu">(</span><span class="ch">iter</span> ~ ~ <span class="va">Stream</span><span class="fu">),</span> <span class="fu">[]).</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb52-1"><a href="streams-and-lazy-evaluation.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect(</span><span class="va">Stream</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">collect(iter(</span><span class="va">Stream</span><span class="fu">),</span> <span class="fu">[]).</span></span></code></pre></div>
 <p>The implementation of the <code>collect/2</code> function is left for an exercise below.</p>
 <div class="problembox">
 <p><strong>Problem Set 2</strong></p>
@@ -384,14 +384,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\lbrace Client\_PID, Command, \lbrace Parameters \rbrace \rbrace\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>Response back to the client are formatted as follows:</p>
+<p>Responses back to the client are formatted as follows:</p>
 <div class="formulabox">
 <p><span class="math inline">\(\lbrace Response \rbrace\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>This simple server has only two commands:
-* echo - Send the text back to the client
-* add - Add the two numbers and send back the answer to the client.</p>
+<p>This simple server has only two commands:</p>
+<ul>
+<li>echo - Send the text back to the client</li>
+<li>add - Add the two numbers and send back the answer to the client.</li>
+</ul>
 <p>The server can handle only one request at a time. After the server handles the request, the <code>handle_server</code> function is called again to handle the next request. This ability to handle only one thing at a time will help us create the unique ID server later on. Let’s first look at the Erlang code needed:</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb53-1"><a href="streams-and-lazy-evaluation.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">handle_server()</span> <span class="op">-&gt;</span></span>
 <span id="cb53-2"><a href="streams-and-lazy-evaluation.html#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">receive</span></span>
@@ -457,7 +459,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>remove - Removes a number from the running average and returns the current average</li>
 <li>display - Returns the current average</li>
 </ul>
-When implementing the running average server, you should save the current sum and current number of numbers in your server. You should not store the list of numbers. Test code is provided for you.</li>
+When implementing the running average server, you should save the current sum and current number of numbers in your server. You should not store the list of numbers. Additionally, you don’t have to consider error scenarios that would lead to divide by 0. Test code is provided for you.</li>
 </ol>
 </div>
 <p><span class="math inline">\(\nonumber\)</span>

@@ -6,10 +6,10 @@ In this lesson we will learn about the Stream Design Pattern.  Streams are thing
 
 A stream provides information to us one item at a time whenever we need it.  This implies that when writing a stream, we need to consider two things:
 
-* Provide the user a function to call when they are ready to get the next thing.
-* The function that we provide must be aware of what the previous thing was so it can give the next thing.
+* The user needs to provide a function to call to evaluate the next item in the stream.
+* The function provided must be aware of the previous item.
 
-Let's look at both of these needs separately.  If we wanted to provide the user with the ability to add 1 to a number at any time, we could write a function that return a function to be called later.
+Let's look at both of these needs separately.  If we wanted to provide the user with the ability to add 1 to a number at any time, we could write a function that returns a function to be called later.
 
 :::: {.formulabox data-latex=""}
 $spec ~ ~ lazy\_incr\_once :: integer \rightarrow (\lambda :: \rightarrow integer).$
@@ -27,7 +27,7 @@ test() ->
     5 = L(),
     ok.
 ```
-In the code above, we are running the function that was returned when we called `lazy_incr_once`.  Combine this concept with the desire to have the function return something based on the previous result.  In the `lazy_incr` function, we will return two things: the next value and the next function to call.  Notice that we are defining a custom data type called `iterator` which will contain both of these things.  Our ultimate goal by the next lesson is to define this as a Monad.
+In the code above, we are running the function that was returned when we called `lazy_incr_once`.  It adds 1 to the original value 4 that was provided but never increases on subsequent calls.  We now combine this with the desire to have the function return something based on the previous result.  In the `lazy_incr` function, we will return two things: the next value and a brand new function to call to obtain the next value.  Notice that we are defining a custom data type called `iterator` which will contain both of these things.  Our ultimate goal by the next lesson is to define this as a Monad.
 
 :::: {.formulabox data-latex=""}
 $struct ~ ~ iterator ~ ~ \lbrace a, \lambda_{stream} \rbrace.$
@@ -51,7 +51,7 @@ test() ->
     ok.
 ```
 
-Another classic stream is the range function which will provide a sequence of numbers but only one at a time.  In this function, we will assume that the sequence will from `Start` to `Stop`, inclusive and that `Start <= Stop`.  Unlike the previous example, this iterator will need to stop.  We will modify our new `fixed_iterator` to have other possible values.
+Another classic stream is the range function which will provide a sequence of numbers but only one at a time.  In this function, we will assume that the sequence will go from `Start` to `Stop`, inclusive and that `Start <= Stop`.  Unlike the previous example, this iterator will need to stop.  We will modify our new `fixed_iterator` to have other possible values.
 
 :::: {.formulabox data-latex=""}
 $struct ~ ~ \mathit{f}ixed\_iterator$
@@ -106,13 +106,13 @@ test() ->
 
 You can find the template for the problem sets in this lesson here: [prove07.erl](proves/prove07.erl)
 
-1. Modify the `range` function to take a third parameter called `step`.  You should increase the sequence by the amount of `step`.  If the `step` is negative, then create a decreasing sequence.  If the `step` is 0, then the `done` state should occur immediately.  Test code is provided to test your stream.
-2. Create a new stream called `words` which will split text by spaces into sub-strings   Each time the stream is called, it should return back the next string.  For example, if the text was "The cow jumped over the moon.", then the stream would first return "The", then "cow", then "jumped", and so forth.  Use the `fixed_iterator` Monad type described above.  You are provided a function called `first_word` which returns a tuple in the format `{Word, Rest}` where `Word` is the first word and `Rest` is the remaining text (just like working with values in a list).  Test code is provided to test your stream.
+1. Modify the `range` function to take a third parameter called `Step`.  You should increase the sequence by the amount of `Step`.  If the `Step` is negative, then create a decreasing sequence.  If the `Step` is 0, then the `done` state should occur immediately.  Test code is provided to test your stream.
+2. Create a new stream called `words` which will split text by spaces into sub-strings.   Each time the stream is called, it should return back the next string.  For example, if the text was "The cow jumped over the moon.", then the stream would first return "The", then "cow", then "jumped", and so forth.  Use the same `fixed_iterator` type described above.  You are provided a function called `first_word` which returns a tuple in the format `{Word, Rest}` where `Word` is the first word and `Rest` is the remaining text (just like working with values in a list).  Test code is provided to test your stream.
 ::::
 
 ## Stream Monad & Collection
 
-In the previous section we created a `fixed_iterator` Monad that the `range` function supported.  To complete the Monad definition, we need a type constructor (or unit function) and a bind function.  Since the type constructor will need to create a stream that hasn't started yet, we will modify our specification for the Monad Type we had earlier (the second condition in the struct is new):
+In the previous section we created a `fixed_iterator` type that the `range` function supported.  This type is actually a Monad.  The $\lambda_{stream}$ provided in the `fixed_iterator` is the meta-data or state that we are maintaining for our stream. To complete the Monad definition, we need a type constructor (or unit function) and a bind function.  Since the type constructor will need to create a stream that hasn't started yet, we will modify our specification for the Monad Type we had earlier (the second condition in the struct is new):
 
 :::: {.formulabox data-latex=""}
 $struct ~ ~ \mathit{f}ixed\_iterator$
@@ -136,7 +136,7 @@ $de\mathit{f} ~ ~ iter :: \lambda_{stream} \rightarrow \lbrace unde\mathit{f}ine
 ::::
 $\nonumber$
 
-The bind should allow us to take our `fixed_iterator` (the Monad type returned by the `iter` function) and pass it to our stream function which will return an updated `fixed_iterator`.  Remember that our stream function is always regenerated and has no input parameters.  The next function is re-created each time with the next value built-into the function.  We will call our bind function `next` and it will be responsible for getting the next stream iteration.  Unlike previous bind functions we have used, this bind will not take a function parameter because it is applied only to our $\lambda_{stream}$.
+The bind should allow us to take our `fixed_iterator` (the Monad type returned by the `iter` function) and pass it to our stream function which will return an updated `fixed_iterator`.  Remember that our stream function is always regenerated and has no input parameters.  The next function is re-created each time with the next value built-into the function.  We will call our bind function `next` and it will be responsible for getting the next stream iteration.  Unlike previous bind functions we have used, this bind will not take a function parameter because we will limit the application of this bind function only to our $\lambda_{stream}$ function.
 
 :::: {.formulabox data-latex=""}
 $spec ~ ~ next :: \mathit{f}ixed\_iterator \rightarrow \mathit{f}ixed\_iterator.$
@@ -176,7 +176,7 @@ Next6 = next(Next5),
 io:format("~p~n",[value(Next6)]),  % Print undefined
 ```
 
-A common function that is implemented when lazy streams are supported is the `collect`.  The `collect` function will undo the "laziness" of our data structure by iterating through the entire $\lambda_{stream}$ and put all the results in order into a traditional list.
+A common function that is implemented when lazy streams are supported is the `collect`.  The `collect` function will undo the "laziness" of our data structure by iterating through the entire $\lambda_{stream}$ and put all the results in order into a traditional list.  This `collect` function is an example of the unfold functor pattern.
 
 The specification for the `collect` is given below:
 
@@ -197,7 +197,7 @@ $\nonumber$
 The erlang code for `collect/1` is given below:
 
 ```erlang
-collect(Stream) -> (collect (iter ~ ~ Stream), []).
+collect(Stream) -> collect(iter(Stream), []).
 ```
 The implementation of the `collect/2` function is left for an exercise below.
 
@@ -224,7 +224,7 @@ $\lbrace Client\_PID, Command, \lbrace Parameters \rbrace \rbrace$
 ::::
 $\nonumber$
 
-Response back to the client are formatted as follows:
+Responses back to the client are formatted as follows:
 
 :::: {.formulabox data-latex=""}
 $\lbrace Response \rbrace$
@@ -232,6 +232,7 @@ $\lbrace Response \rbrace$
 $\nonumber$
 
 This simple server has only two commands:
+
 * echo - Send the text back to the client
 * add - Add the two numbers and send back the answer to the client.
 
@@ -318,7 +319,7 @@ Reusing the same `send_to_server` function, we can generate new unique ID's as f
 	* remove - Removes a number from the running average and returns the current average
 	* display - Returns the current average
 	
-	When implementing the running average server, you should save the current sum and current number of numbers in your server.  You should not store the list of numbers.  Test code is provided for you.
+	When implementing the running average server, you should save the current sum and current number of numbers in your server.  You should not store the list of numbers.  Additionally, you don't have to consider error scenarios that would lead to divide by 0.  Test code is provided for you.
 ::::
 
 $\nonumber$

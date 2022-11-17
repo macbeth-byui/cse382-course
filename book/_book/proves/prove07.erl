@@ -87,25 +87,28 @@ test_ps1() ->
     %{6, Stream8} = Stream7(),
     %{2, Stream9} = Stream8(),
     %{undefined, done} = Stream9(), 
+	
+	%Stream10 = range(1,1,0),
+    %{undefined, done} = Stream10(),
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 1.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %Stream10 = words("The cow jumped over the moon"),
-    %{"The", Stream11} = Stream10(),
-    %{"cow", Stream12} = Stream11(),
-    %{"jumped", Stream13} = Stream12(),
-    %{"over", Stream14} = Stream13(),
-    %{"the", Stream15} = Stream14(),
-    %{"moon", Stream16} = Stream15(),
-    %{undefined, done} = Stream16(),
+    %Stream11 = words("The cow jumped over the moon"),
+    %{"The", Stream12} = Stream11(),
+    %{"cow", Stream13} = Stream12(),
+    %{"jumped", Stream14} = Stream13(),
+    %{"over", Stream15} = Stream14(),
+    %{"the", Stream16} = Stream15(),
+    %{"moon", Stream17} = Stream16(),
+    %{undefined, done} = Stream17(),
 
-    %Stream17 = words("Happy"),
-    %{"Happy", Stream18} = Stream17(),
-    %{undefined, done} = Stream18(),
-
-    %Stream19 = words(""),
+    %Stream18 = words("Happy"),
+    %{"Happy", Stream19} = Stream18(),
     %{undefined, done} = Stream19(),
+
+    %Stream20 = words(""),
+    %{undefined, done} = Stream20(),
 
     ok.
 
