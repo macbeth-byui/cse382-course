@@ -5,17 +5,19 @@ In Erlang you have noticed that it is more efficient to access the front of a li
 ## Queues
 
 The basic functions of a queue include the ability to do the following:
+
 * `enqueue` - insert a new value at the back (or end) of the queue
 * `dequeue` - remove a value from the front (or start) of the queue
 * `head` - get the value from the front of the queue
 
 If we used a list to do this, we would have O(1) for the `dequeue` and the head but O(n) for the `enqueue`.  To resolve this problem, we will use two lists and treat both them as stacks as follows:
-* `Front` - This stack will always have the next value to `dequeue` available at the front of the stack.  The `head` function will use this stack as well.
-* `Back` - This stack will always have the next value to `enqueue` be available at the front of the stack.
+
+* `Front` - This stack will always have the next value to `dequeue` available at the front of the stack.  The `head` function will use this stack as well.  
+* `Back` - This stack will always have the most recent value `enqueued` be available at the front of the stack.
 
 ![](images/queue.drawio.png)
 
-The dilemma with this arrangement is that we have no way to get values added to `Back` to migrate over to the `Front`.  This would be mean that `Front` would always be empty.  To resolve this problem we introduce a rule, or an invariant, which is that the `Front` can only be empty if the `Back` is also empty.  If both are empty, then we say the queue is empty as well.  This rule requires us to move items between the two stacks as needed.
+The dilemma with this arrangement is that we have no way to get values added to `Back` to migrate over to the `Front`.  This would  mean that `Front` would always be empty.  To resolve this problem we introduce a rule, or an invariant, which is that the `Front` can only be empty if the `Back` is also empty.  If both are empty, then we say the queue is empty as well.  This rule requires us to move items between the two stacks as needed.
 
 We will store both stacks in a single structure:
 
@@ -54,7 +56,7 @@ $de\mathit{f} ~ ~ enqueue :: Value ~ ~ \lbrace Front, Back \rbrace \rightarrow \
 ::::
 $\nonumber$
 
-Ensuring our rule regarding the `Front` being empty only when `Back` is empty is a little more complicated for the `dequeue` function.  Normally we remove the value from the `Front` stack.  However, if the `Front` stack only has one value, then we must prevent it from going empty.  This is accomplished by taking the values in the `Back` and moving them to the `Front`.  However, the order of the values must be swapped because the first one of the `Back` should be the last one to be remove from the `Front`.
+Ensuring our rule regarding the `Front` being empty only when `Back` is empty is a little more complicated for the `dequeue` function.  Normally we remove the value from the `Front` stack.  However, if the `Front` stack only has one value, then we must prevent it from going empty.  This is accomplished by taking the values in the `Back` and moving them to the `Front`.  However, the order of the values must be swapped because the first one of the `Back` should be the last one to be removed from the `Front`.
 
 |Operation|Front|Back|
 |-|-|-|
@@ -92,7 +94,7 @@ $\nonumber$
 
 You can find the template for the problem sets in this lesson here: [prove12.erl](proves/prove12.erl)
 
-1. Implement the `enqueue`, `dequeue`, and `head` functions as described in the definitions above.  Use the test code provided to verify your implementations.  A `create` and `empty` function are already provided for you.
+1. Implement the `enqueue`, `dequeue`, and `head` functions as described in the definitions above.  Use the test code provided to verify your implementations.  A `create` and `empty` function are already provided for you.  In the test code, the `check_queue` will verify that the queue was created correctly.
 ::::
 
 ## Deques
@@ -108,6 +110,7 @@ Common queue implementations also include double-ended support.  Called a deque 
 The rule that we had for the Queue (`Front` can't be empty unless the `Back` was empty also) resulted in us having a simple `head` function.  If we don't do something similar for our new deque functions, we will be forced to use recursion for our Tail.  Right now it is very common for our `Front` to contain all the values because we reversed the values from `Back` and moved them all over.  This would mean that we would need to recurse to the end of `Front` to find the tail.
 
 We introduce an modified rule for the Deque which is that neither the `Front` nor the `Back` can be empty if there are 2 or more items in the Deque.  This means that our stacks will always take the following formats:
+
 * `Front` is empty and `Back` is empty - Empty Deque
 * `Front` has one item and `Back` is empty - Deque with only one item
 * `Front` is empty and `Back` has one item - Another valid deque with only one item
@@ -155,12 +158,12 @@ $de\mathit{f} ~ ~ head :: \lbrace [], [One] \rbrace \rightarrow One;$
 ::::
 $\nonumber$
 
-To implement our three new functions, we will make them symmetrical with the three we already have.  The `enqueue_front` function will put the first new value in the `Back` and subsequent values in the `Front`.   There is another special case we need to consider.  What if the first call was to `enqueue` and then `enqueue_front` was called.  The `enqueue` function would put the first value in the `Front`.   If `enqueue_front` was called second, it would put the "subsequent" values in the `Front` as well thus causing an imbalance which is against our rules.  Therefore, we have included the 2nd clause to handle this case. 
+To implement our three new functions, we will make them symmetrical with the three we already have.  The `enqueue_front` function will put the first new value in the `Back` and subsequent values in the `Front`.   There is another special case we need to consider.  What if the first call was to `enqueue` and then `enqueue_front` was called.  The `enqueue` function would put the first value in the `Front`.   If `enqueue_front` was called second, it would put the "subsequent" values in the `Front` as well thus causing an imbalance which is against our rules.  Therefore, we have included the 2nd clause to put the previous value added into the Back and the new value added into the Front.
 
 :::: {.formulabox data-latex=""}
 $de\mathit{f} ~ ~ enqueue\_front :: Value ~ ~ \lbrace [], [] \rbrace \rightarrow \lbrace [], [Value] \rbrace;$
 
-$de\mathit{f} ~ ~ enqueue\_front :: Value ~ ~ \lbrace [One], [] \rbrace \rightarrow \lbrace [One], [Value] \rbrace;$
+$de\mathit{f} ~ ~ enqueue\_front :: Value ~ ~ \lbrace [One], [] \rbrace \rightarrow \lbrace [Value], [One] \rbrace;$
 
 $de\mathit{f} ~ ~ enqueue\_front :: Value ~ ~ \lbrace Front, Back \rbrace \rightarrow \lbrace [Value|Front], Back \rbrace.$
 ::::
@@ -208,7 +211,7 @@ $\nonumber$
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
-1.  Implement the `enqueue_front`, `dequeue_back`, and `tail` functions as described in the definitions above.  You will also need to modify the `dequeue` and `head` to support the deque.  Use the test code provided to verify your implementations.
+1.  Implement the `enqueue_front`, `dequeue_back`, and `tail` functions as described in the definitions above.  You will also need to modify the `dequeue` and `head` to support the deque.  Use the test code provided to verify your implementations.  You will need to use the `lists:split` function provided in Erlang.
 ::::
 
 ## Performance

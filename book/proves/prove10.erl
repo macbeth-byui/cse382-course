@@ -147,7 +147,16 @@ test_ps3() ->
     % Add test code to compare the performance of RAL with 
     % Erlang list per the instructions
 
+    %List1 = lists:seq(0,999999),
+    %start_perf(),
+    %999999 = lists:nth(1000000, List1),
+    %stop_perf("list lookup last one"),
 
+    
+    %start_perf(),
+    
+    %stop_perf("ral lookup last one"),
+	
     % Observations (see instructions): 
 
     ok.

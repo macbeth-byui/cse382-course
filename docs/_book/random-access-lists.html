@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2022-11-17" />
+<meta name="date" content="2022-12-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -230,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="random-access-lists" class="section level1 hasAnchor" number="10">
 <h1><span class="header-section-number">Chapter 10 -</span> Random Access Lists<a href="random-access-lists.html#random-access-lists" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>The lists that we have used in this course have been linked lists. If we want to find something in the list, we have to search resulting in O(n) performance. We could use a binary search tree or a min heap to help us find things better but then we lose the order in which items were added. The name of dynamic arrays for which you can maintain order and have good lookup by index is done differently in functional languages when compared to the python list, the java ArrayList, or the C++ vector. A common solution is the Random Access List (RAL).</p>
+<p>The lists that we have used in this course have been linked lists. If we want to find something in the list, we have to search resulting in O(n) performance. We could use a binary search tree or a min heap to help us find things better but then we lose the order in which items were added. In other languages, we use dynamic arrays such as the python list the java ArrayList or the C++ vector. These dynamic arrays provide O(1) lookup. In a purely functional language, this is not possible. However, an improved solution over the linked list is the Random Access List (RAL).</p>
 <div id="binary-numbers-and-the-ral" class="section level2 hasAnchor" number="10.1">
 <h2><span class="header-section-number">10.1</span> Binary Numbers and the RAL<a href="random-access-lists.html#binary-numbers-and-the-ral" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In Erlang, there is not a way to quickly access a specific index in a list with O(1). In Part 3, you will explore the performance of the <code>nth</code> function that Erlang provides to do this. The difficulty is that we have to traverse through the entire list from beginning to the target index. To improve on this, we would like to find an O(log n) solution that maintains the order of the values. O(log n) makes us think about binary search trees. However, we need to store information in the trees that keeps the order the same. Binary Search Trees sacrifice order for performance.</p>
@@ -239,7 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>If we encounter a 0, we will replace it with a 1 and make no more changes.</li>
 <li>If we encounter a 1, we will replace it with a 0 and consider these two steps again for the next number in the sequence. In this case we are mathematically carrying the 1 to the next item in the sequence.</li>
 </ul>
-<p>If we try to do this in Erlang, we will be frustrated by the fact that we are going from right to left. Since it is more natural to go left (index 0) to right, we will flip our binary numbers around. When we read right to left, we call this little endian notation whereas when we read left to right, we call this big endian notation. To work better in Erlang, we will use the big endian notation</p>
+<p>If we try to do this in Erlang, we will be frustrated by the fact that we are going from right to left. Since it is more natural in Erlang to go left (index 0) to right, we will flip our binary numbers around. When we read right to left, we call this little endian notation whereas when we read left to right, we call this big endian notation. To work better in Erlang, we will use the big endian notation</p>
 <table>
 <colgroup>
 <col width="33%" />
@@ -294,8 +294,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Here is the specification and definition for incrementing a binary sequence (going left to right in big endian format) where the sequence starts at 1 and the sequence is stored in a list. Note that the definition follows the two rules for incrementing a binary sequence that we identified earlier. An empty list would represent the value of 0.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ inc :: [integer] \rightarrow [integer].\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ inc :: [] \righarrow [1];\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ inc :: [0|Rest] \rightarrow [1|Rest];\)</span></p>
-<p><span class="math inline">\(de\mathit{f} ~ ~ inc :: [1|Rest] \rightarrow [0|( inc ~ ~ Rest)];\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ inc :: [1|Rest] \rightarrow [0|( inc ~ ~ Rest)].\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The erlang code is shown below:</p>
@@ -333,7 +334,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Notice that the 0’s are represented with <span class="math inline">\(nil\)</span> instead of a tree. We call this list of trees a Random Access List (RAL). When you look at this list of trees, you will notice there are a grand total of 13 leaves. Each of these leaves represent the actual 13 pieces of data in the RAL. All the other nodes in the tree including the <span class="math inline">\(nil\)</span> values in the list represent the organization of the RAL to enable the O(log n) behavior. If you wanted to go to one of these leaves, you could traverse the sequence from left to right (which would be O(log n)) and then traverse down to one of the leaves (which would also be O(log n)). We will explore how this works in the next section.</p>
 <p>To add new items to a RAL, we will use a similar algorithm for adding one to our binary sequence:</p>
 <ul>
-<li>If we encounter a <span class="math inline">\(nil\)</span> (think a 0 in the binary sequence), we will replace it with a tree (think a 1) containing <span class="math inline">\(2^n\)</span> (where is <span class="math inline">\(n\)</span> is our current index) and make no more changes. The tree that we add will either be a tree of height 1 (if the RAL was previously empty) or it will be a tree that was carried over from the recursive call in the next step below.</li>
+<li>If we encounter a <span class="math inline">\(nil\)</span> (think a 0 in the binary sequence), we will replace it with a tree (think a 1) containing <span class="math inline">\(2^n\)</span> (where is <span class="math inline">\(n\)</span> is our current index) leaves and make no more changes. The tree that we add will either be a tree of height 1 (if the RAL was previously empty) or it will be a tree that was carried over from the recursive call in the next step below.</li>
 <li>If we encounter a tree (not <span class="math inline">\(nil\)</span>, think a 1 in the binary sequence), we will replace it with a <span class="math inline">\(nil\)</span> (think 0) and carry the tree to the next sequence and recursively consider these two steps again. If a tree was carried over, then we have to carry both the tree(s) from the previous sequence position(s) along with this position.</li>
 </ul>
 <p>Let’s visually look at how this works first as we store letters in a RAL starting with an empty RAL. Notice that when we add a new letter to our RAL, it will prepend it to the front just like adding a new digit to a binary sequence. In each diagram, a non-leaf node is left empty and the leaf nodes contain the actual data. Remember that each tree must be balanced and complete with <span class="math inline">\(2^n\)</span> leaves each.</p>
@@ -373,10 +374,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(de\mathit{f} ~ ~ merge :: Carry\_Tree ~ ~ [nil|Rest\_Trees] \rightarrow [Carry\_Tree|Rest\_Trees];\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ merge :: Carry\_Tree ~ ~ [Tree|Rest\_Trees] \rightarrow\)</span></p>
 <p><span class="math inline">\(\quad \quad Merged\_Tree = \lbrace left\_as\_an\_exercise \rbrace,\)</span></p>
-<p><span class="math inline">\(\quad \quad [nil|(merge ~ ~ Merged\_Tree ~ ~ Rest\_Trees].\)</span></p>
+<p><span class="math inline">\(\quad \quad [nil|(merge ~ ~ Merged\_Tree ~ ~ Rest\_Trees)].\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>The <code>count</code> function used above will either return 1 for a leaf or the <span class="math inline">\(Count\)</span> value from the <code>ral_tree</code> structure. The implementations of all of these functions in Erlang is left for an exercise.</p>
+<p>The <code>count</code> function will be need to determine the new count of the <code>Merged_Tree</code>. The <code>count</code> function will either return 1 for a leaf or the <span class="math inline">\(Count\)</span> value from the <code>ral_tree</code> structure. The implementations of all of these functions in Erlang is left for an exercise.</p>
 <div class="problembox">
 <p><strong>Problem Set 1</strong></p>
 <p>You can find the template for the problem sets in this lesson here: <a href="proves/prove10.erl">prove10.erl</a></p>
@@ -397,7 +398,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The specification and definition for the lookup function is give below. Note that the <code>lookup_in_tree</code> function is used to find the desired value (i.e. leaf) in the <code>ral_tree</code>.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ lookup :: integer ~ ~ [ral\_tree] \rightarrow a.\)</span></p>
-<p><span class="math inline">\(de\mathit{f} ~ ~ lookup :: Index ~ ~ RAL \rightarrow nil \text{when} ~ ~ Index &lt; 0;\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ lookup :: Index ~ ~ RAL \rightarrow nil ~ ~ \text{when} ~ ~ Index &lt; 0;\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ lookup :: Index ~ ~ [] \rightarrow nil;\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ lookup :: Index ~ ~ [nil|Rest\_Trees] \rightarrow (lookup ~ ~ Index ~ ~ Rest\_Trees);\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ lookup :: Index ~ ~ [Tree|Rest\_Trees] \rightarrow (lookup ~ ~ Index-(count ~ ~ Tree) ~ ~ Rest\_Trees)\)</span></p>
@@ -405,7 +406,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(de\mathit{f} ~ ~ lookup :: Index ~ ~ [Tree|Rest\_Trees] \rightarrow (lookup\_in\_tree ~ ~ Index ~ ~ Tree).\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>In the definition, the first two clauses handle invalid index scenarios. The third clause handles the case where as we are going through the RAL list, we come across a <span class="math inline">\(ral\_tree\)</span> that is <span class="math inline">\(nil\)</span>. We know there are no values in there, so we keep going. Notice that we don’t decrease our <span class="math inline">\(Index\)</span> because there were not any values (or leaves) in that <span class="math inline">\(ral\_tree\)</span>. In the fourth clause, there are values in the <span class="math inline">\(ral_tree\)</span> but we haven’t arrived at the <span class="math inline">\(ral\_tree\)</span> for our <span class="math inline">\(Index\)</span> value yet. In the fifth case, we have found the target <span class="math inline">\(ral\_tree\)</span> and we will use <code>lookup_in_tree</code> to find the specific leaf.</p>
+<p>In the definition, the first two clauses handle invalid index scenarios. The third clause handles the case where as we are going through the RAL list, we come across a <span class="math inline">\(ral\_tree\)</span> that is <span class="math inline">\(nil\)</span>. We know there are no values in there, so we keep going. Notice that we don’t decrease our <span class="math inline">\(Index\)</span> because there were not any values (or leaves) in that <span class="math inline">\(ral\_tree\)</span>. In the fourth clause, there are values in the <span class="math inline">\(ral\_tree\)</span> but we haven’t arrived at the <span class="math inline">\(ral\_tree\)</span> for our <span class="math inline">\(Index\)</span> value yet. In the fifth case, we have found the target <span class="math inline">\(ral\_tree\)</span> and we will use <code>lookup_in_tree</code> to find the specific leaf.</p>
 <p>We now have to traverse the <span class="math inline">\(ral\_tree\)</span> to find the leaf associated with our Index value. In our previous example, the <span class="math inline">\(Index\)</span> was equal to 3 when we found our target <span class="math inline">\(ral\_tree\)</span>. We will use that <span class="math inline">\(Index\)</span> to find our leaf. The process is as follows:</p>
 <ol style="list-style-type: decimal">
 <li>If the current node of the <span class="math inline">\(ral\_tree\)</span> is a <span class="math inline">\(leaf\)</span>, then we have found our value (this is true because we assume that the <span class="math inline">\(ral\_tree\)</span> was created correctly in the first place).</li>
@@ -465,7 +466,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="performance-1" class="section level2 hasAnchor" number="10.3">
 <h2><span class="header-section-number">10.3</span> Performance<a href="random-access-lists.html#performance-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The cost of traversing the RAL list will be O(log n) and cost of traversing a <span class="math inline">\(ral\_tree\)</span> will also be O(log n) which means that our <code>lookup</code> and <code>update</code> functions are O(log n). If we used a standard list, we would need to recursively search from left to right to find the desired index which would result in O(n). To demonstrate this, you can use the <code>nth</code> function provided by Erlang which will provide the value at a specified index in a list. Note that the <code>nth</code> function treats the first elements as Index 1 instead of 0 like our RAL.</p>
+<p>The cost of traversing the RAL list will be O(log n) and cost of traversing a <span class="math inline">\(ral\_tree\)</span> will also be O(log n) which means that our <code>lookup</code> and <code>update</code> functions are O(log n). If we used a standard Erlang list, we would need to recursively search from left to right to find the desired index which would result in O(n). To demonstrate this, you can use the <code>nth</code> function provided by Erlang which will provide the value at a specified index in a list. Note that the <code>nth</code> function treats the first elements as Index 1 instead of 0 like our RAL.</p>
 <p>Using the same <code>start_perf</code> and <code>stop_perf</code> used in previous lessons, we can measure the time it takes to access the last item in a very large 1,000,000 item Erlang list.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb66-1"><a href="random-access-lists.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">start_perf()</span> <span class="op">-&gt;</span></span>
 <span id="cb66-2"><a href="random-access-lists.html#cb66-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">eprof:start(),</span></span>
@@ -487,7 +488,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="problembox">
 <p><strong>Problem Set 3</strong></p>
 <ol style="list-style-type: decimal">
-<li>Create a RAL with 1,000,000 items by using a <code>foldl</code> and the <code>prepend</code> function. Using <code>start_perf</code> and <code>stop_perf</code> (provided in the test code), compare the time for looking up index 999,999 (the last item) in both the Erlang List and the RAL. Discuss your observations in comments within your code. Note both the CALLS and the TIME columns when comparing the performance.</li>
+<li>Create a RAL with 1,000,000 items (values 0 to 999,999) by using a <code>foldl</code> and the <code>prepend</code> function. Using <code>start_perf</code> and <code>stop_perf</code> (provided in the test code), compare the time for looking up index 999,999 (the last item) in both the Erlang List and the RAL. Discuss your observations in comments within your code. Note both the CALLS and the TIME columns when comparing the performance.</li>
 </ol>
 </div>
 <p><span class="math inline">\(\nonumber\)</span>
@@ -516,25 +517,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
+"sharing": null,
 "fontsettings": {
 "theme": "white",
 "family": "sans",
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/10-rals.Rmd",
-"text": "Edit"
+"link": null,
+"text": null
 },
 "history": {
 "link": null,

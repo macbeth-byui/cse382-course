@@ -198,12 +198,22 @@ test_ps3() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 3.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-    % Write Test Code to compare the performance of 
+	
+	% Write Test Code to compare the performance of 
     % enqueue and dequeue on 1 million values
-    % per the instructions.
+    % per the instructions. 
 
+    % List = lists:seq(1,1000000),
 
+    % start_perf(),
+    
+    % stop_perf("enqueue"),
+
+    % start_perf(),
+    
+    % stop_perf("dequeue"),
+	
+	% Observations (see instructions): 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 3.2
@@ -212,6 +222,15 @@ test_ps3() ->
     % Write Test Code to compare the performance of 
     % enqueue_front and dequeue_back on 1 million values
     % per the instructions. 
+
+
+    % start_perf(),
+    
+    % stop_perf("enqueue_front"),
+
+    % start_perf(),
+    
+    % stop_perf("dequeue_front"),
 
 
     % Observations (see instructions): 

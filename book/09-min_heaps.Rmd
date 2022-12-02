@@ -9,19 +9,20 @@ The diagram below shows a Min Heap.  More specifically its a "Leftist" Min Heap 
 ![](images/heap_example.drawio.png)
 
 When we look at this Min Heap, we see three characteristics:
+
 1. The smallest value is in the root node
 2. The values along each right spine (both from the root and from other nodes) are sorted.  
 3. For each node, the length of the right spine from the left and right links are such that the one on the left is greater than or equal to the one of the right.  For example, if you look at node 12, the left side (node 19) has a distance of 2 on the right spine (following 19 and 21) and the right side (node 13) has a distance of 1 on the right spine (following only 13).  We call this distance, the "rank".
 
 If we want to add items to this Min Heap, we are going to add them in order along the right spine starting with the root node.  When we insert in the node, we will need to work our way back up the tree and check to make sure we have not violated our need to have the left rank be greater than or equal to the right rank.  If there is a problem, the solution is to just swap the left with the right.
 
-Before we look at specifications, definitions, and code, we will first build a Min Heap by adding the following numbers in order (same values you will find in the test code for the problem set):  10, 15, 20, 5, 12, 17, 19, 20, 21, 13, 8, and 1.  As you look at this list of numbers, note that we will have some interesting results at various times.  For example, when add the 5 and the 1 we will be replacing the root node since the root node must contain the minimum value.  Also, when we add 13, we will be replacing along the right spine from the root since the right spine from any node must be in order.  In all of these operations, remember that we are persisting previous versions of the min heap.  
+Before we look at specifications, definitions, and code, we will first build a Min Heap by adding the following numbers in order (same values you will find in the test code for the problem set):  10, 15, 20, 5, 12, 17, 19, 20, 21, 13, 8, and 1.  As you look at this list of numbers, note that we will have some interesting results at various times.  For example, when we add the 5 and the 1 we will be replacing the root node since the root node must contain the minimum value.  In all of these operations, remember that we are persisting previous versions of the min heap.  
 
 The addition of our first node 10 is trivial since the min heap is empty.  In each of these diagrams, we will show the rank on the upper right of the circle.
 
 ![](images/heap1.drawio.png)
 
-The addition of 15 will require us to compare it with 10 (the first only value on the right spine from the root).  When we insert, we will always insert to the Right.  When we get to the case that we are inserting in the middle of the spine, we will keep the left of our new node empty and the right of the new node will be the remainder of the spine unchanged.  
+The addition of 15 will require us to compare it with 10 (the only value on the right spine from the root).  When we insert, we will always insert to the Right.  When we get to the case that we are inserting in the middle of the spine, we will keep the left of our new node empty and the right of the new node will be the remainder of the spine unchanged.  
 
 ![](images/heap2.drawio.png)
 
@@ -33,7 +34,7 @@ When we add 20, we have a spot and no swapping is needed.
 
 ![](images/heap4.drawio.png)
 
-When we add 5, our first comparison shows that 5 should be before 20 on the right spine.  When adding a new node to anywhere but the end of the spine, we will leave the left link empty and the right link will be the remainder of the spine unchanged.  After doing this, we work our way back up (not too far in this case) to check ranks.  We don't check the ranks of the spine that we left unchanged.  The ranks at node 5 show that we need to swap.
+When we add 5, our first comparison shows that 5 should be before 10 on the right spine.  When adding a new node to anywhere but the end of the spine, we will leave the left link empty and the right link will be the remainder of the spine unchanged.  After doing this, we work our way back up (not too far in this case) to check ranks.  We don't check the ranks of the spine that we left unchanged.  The ranks at node 5 show that we need to swap.
 
 ![](images/heap5.drawio.png)
 
@@ -41,7 +42,7 @@ When we add 12, it can be done with no swapping.
 
 ![](images/heap6.drawio.png)
 
-When we add 17, we start our comparisons with the node that we added (which is no issues because its at the end) and then work our way up the spine comparing ranks.  At the 12, we see a need to swap.
+After we add 17 the correct place on the right spine, we start our comparisons with the node that we added and then work our way up the spine comparing ranks.  At the 12, we see a need to swap.
 
 ![](images/heap7.drawio.png)
 
@@ -49,7 +50,7 @@ When we add the 19, it can be done with no swapping.
 
 ![](images/heap8.drawio.png)
 
-When we add the 20, it can also be done with no swapping.  Notice that there was no problem adding this duplicate.  If the duplicate was the root node already, we could choose to replace it with our new value and push the duplicate down (all depends on how we write our boolean comparison).
+When we add the 20, it can also be done with a small swap at the 19.  Notice that 20 is already in the heap but this was not a problem.  If the duplicate was the root node already, we could choose to replace it with our new value and push the duplicate down (all depends on how we write our boolean comparison).
 
 ![](images/heap9.drawio.png)
 
@@ -127,7 +128,7 @@ A third option combines both of these:
 insert(New_Value, Node={Rank, Value, Left, Right}) -> ...
 ```
 
-Using this third option, I can easily reference the whole `Node` or one its pieces by name.  If the latter is done, you can also replace unused parameters with `_` if desired.
+Using this third option, we can easily reference the whole `Node` or one its pieces by name.  If the latter is done, you can also replace unused parameters with `_` if desired.
 ::::
 
 ## Efficient Inserting and Removal
@@ -147,7 +148,7 @@ $\quad \quad Rank\_Left = (rank ~ ~ \mathit{Left}),$
 
 $\quad \quad Rank\_Right = (rank ~ ~ Right),$
 
-$\quad \quad \lbrace Rank\_Right + 1, Value, \mathit{Left}, Right \rbrace ~ ~ \text{when} ~ ~ Rank\_L \geq Rank\_R;$
+$\quad \quad \lbrace Rank\_Right + 1, Value, \mathit{Left}, Right \rbrace ~ ~ \text{when} ~ ~ Rank\_Left \geq Rank\_Right;$
 ::::
 $\nonumber$
 
@@ -227,16 +228,16 @@ $\nonumber$
 
 The implementation of `merge` and `remove_min` are left for exercises.
 
-Since the `merge` function successfully handled merging a min heap with another min heap of size 1, we could reuse the `merge` function to simplify our `insert` function.   We are merging our new node (created with `make`) with our existing min heap (`Node` - which could be nil).
+Since the `merge` function successfully handled merging a min heap with another min heap of size 1, we could reuse the `merge` function to simplify our `insert` function.   We are merging our new node (created with `make`) with our existing min heap (`Heap` - which could be nil).
 
 ```erlang
-insert(New_Value, Node) -> merge(make(New_Value, nil, nil), Node).
+insert(New_Value, Heap) -> merge(make(New_Value, nil, nil), Heap).
 ```
 
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
-1. Modify the existing `make` function  to properly perform the swaps per the definition above (including the second scenario in the definition which was not provided to you).   Use the test code provided to test your function.  
+1. Modify the existing `make` function  to properly perform the swaps per the definition above (including the second scenario in the definition which was not provided to you).  You should be able to combine both scenarios into a single clause using a `case of` block.  Use the test code provided to test your function.  
 2. Implement the `merge` function and the `remove_min` function as described above.  Use the test code provided to test your function.  Once your code is working, you can modify your `insert` function to use the code provided above that uses `merge`.
 ::::
 
@@ -263,6 +264,8 @@ $\nonumber$
 If we are going to provide this $\lambda_{compare}$ to our `merge` function, we are going to need to create a `merge/3`.  Since `merge` is called by `insert` and `remove_min`, we will need to create an `insert/3` and `remove_min/2` as well to receive the $\lambda_{compare}$.
 
 :::: {.formulabox data-latex=""}
+$spec ~ ~ merge :: node ~ ~ node ~ ~ \lambda_{compare} \rightarrow node.$
+
 $spec ~ ~ insert :: a ~ ~ node ~ ~ \lambda_{compare} \rightarrow node.$
 
 $spec ~ ~ remove\_min :: node ~ ~ \lambda_{compare} \rightarrow node.$

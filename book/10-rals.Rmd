@@ -1,6 +1,6 @@
 # Random Access Lists
 
-The lists that we have used in this course have been linked lists.  If we want to find something in the list, we have to search resulting in O(n) performance.  We could use a binary search tree or a min heap to help us find things better but then we lose the order in which items were added.  The name of dynamic arrays for which you can maintain order and have good lookup by index is done differently in functional languages when compared to the python list, the java ArrayList, or the C++ vector.  A common solution is the Random Access List (RAL).
+The lists that we have used in this course have been linked lists.  If we want to find something in the list, we have to search resulting in O(n) performance.  We could use a binary search tree or a min heap to help us find things better but then we lose the order in which items were added.  In other languages, we use dynamic arrays such as the python list the java ArrayList or the C++ vector.  These dynamic arrays provide O(1) lookup.  In a purely functional language, this is not possible.  However, an improved solution over the linked list is the Random Access List (RAL).
 
 ## Binary Numbers and the RAL
 
@@ -11,7 +11,7 @@ To find a solution, we will consider a problem that at first does not seem relat
 * If we encounter a 0, we will replace it with a 1 and make no more changes.
 * If we encounter a 1, we will replace it with a 0 and consider these two steps again for the next number in the sequence.  In this case we are mathematically carrying the 1 to the next item in the sequence.  
 
-If we try to do this in Erlang, we will be frustrated by the fact that we are going from right to left.  Since it is more natural to go left (index 0) to right, we will flip our binary numbers around.  When we read right to left, we call this little endian notation whereas when we read left to right, we call this big endian notation.  To work better in Erlang, we will use the big endian notation
+If we try to do this in Erlang, we will be frustrated by the fact that we are going from right to left.  Since it is more natural in Erlang to go left (index 0) to right, we will flip our binary numbers around.  When we read right to left, we call this little endian notation whereas when we read left to right, we call this big endian notation.  To work better in Erlang, we will use the big endian notation
 
 |Base 10 Value|Little Endian Notation (Right to Left)|Big Endian Notation (Left to Right)|
 |-|-|-|
@@ -28,9 +28,11 @@ Here is the specification and definition for incrementing a binary sequence (goi
 :::: {.formulabox data-latex=""}
 $spec ~ ~ inc :: [integer] \rightarrow [integer].$
 
+$de\mathit{f} ~ ~ inc :: [] \righarrow [1];$
+
 $de\mathit{f} ~ ~ inc :: [0|Rest] \rightarrow [1|Rest];$
 
-$de\mathit{f} ~ ~ inc :: [1|Rest] \rightarrow [0|( inc ~ ~ Rest)];$
+$de\mathit{f} ~ ~ inc :: [1|Rest] \rightarrow [0|( inc ~ ~ Rest)].$
 ::::
 $\nonumber$
 
@@ -79,7 +81,7 @@ Notice that the 0's are represented with $nil$ instead of a tree.  We call this 
 
 To add new items to a RAL, we will use a similar algorithm for adding one to our binary sequence:
 
-* If we encounter a $nil$ (think a 0 in the binary sequence), we will replace it with a tree (think a 1) containing $2^n$ (where is $n$ is our current index) and make no more changes.  The tree that we add will either be a tree of height 1 (if the RAL was previously empty) or it will be a tree that was carried over from the recursive call in the next step below.
+* If we encounter a $nil$ (think a 0 in the binary sequence), we will replace it with a tree (think a 1) containing $2^n$ (where is $n$ is our current index) leaves and make no more changes.  The tree that we add will either be a tree of height 1 (if the RAL was previously empty) or it will be a tree that was carried over from the recursive call in the next step below.
 * If we encounter a tree (not $nil$, think a 1 in the binary sequence), we will replace it with a $nil$ (think 0) and carry the tree to the next sequence and recursively consider these two steps again.   If a tree was carried over, then we have to carry both the tree(s) from the previous sequence position(s) along with this position.
 
 Let's visually look at how this works first as we store letters in a RAL starting with an empty RAL.  Notice that when we add a new letter to our RAL, it will prepend it to the front just like adding a new digit to a binary sequence.  In each diagram, a non-leaf node is left empty and the leaf nodes contain the actual data. Remember that each tree must be balanced and complete with $2^n$ leaves each.
@@ -149,11 +151,11 @@ $de\mathit{f} ~ ~ merge :: Carry\_Tree ~ ~ [Tree|Rest\_Trees] \rightarrow$
 
 $\quad \quad Merged\_Tree = \lbrace left\_as\_an\_exercise \rbrace,$
 
-$\quad \quad [nil|(merge ~ ~ Merged\_Tree ~ ~ Rest\_Trees].$
+$\quad \quad [nil|(merge ~ ~ Merged\_Tree ~ ~ Rest\_Trees)].$
 ::::
 $\nonumber$
 
-The `count` function used above will either return 1 for a leaf or the $Count$ value from the `ral_tree` structure.  The implementations of all of these functions in Erlang is left for an exercise.
+The `count` function will be need to determine the new count of the `Merged_Tree`.  The `count` function will either return 1 for a leaf or the $Count$ value from the `ral_tree` structure.  The implementations of all of these functions in Erlang is left for an exercise.
 
 :::: {.problembox data-latex=""}
 **Problem Set 1**
@@ -184,7 +186,7 @@ The specification and definition for the lookup function is give below.  Note th
 :::: {.formulabox data-latex=""}
 $spec ~ ~ lookup :: integer ~ ~ [ral\_tree] \rightarrow a.$
 
-$de\mathit{f} ~ ~ lookup :: Index ~ ~ RAL \rightarrow nil \text{when} ~ ~ Index < 0;$
+$de\mathit{f} ~ ~ lookup :: Index ~ ~ RAL \rightarrow nil ~ ~ \text{when} ~ ~ Index < 0;$
 
 $de\mathit{f} ~ ~ lookup :: Index ~ ~ [] \rightarrow nil;$
 
@@ -198,7 +200,7 @@ $de\mathit{f} ~ ~ lookup :: Index ~ ~ [Tree|Rest\_Trees] \rightarrow (lookup\_in
 ::::
 $\nonumber$
 
-In the definition, the first two clauses handle invalid index scenarios.  The third clause handles the case where as we are going through the RAL list, we come across a $ral\_tree$ that is $nil$.  We know there are no values in there, so we keep going.  Notice that we don't decrease our $Index$ because there were not any values (or leaves) in that $ral\_tree$.  In the fourth clause, there are values in the $ral_tree$ but we haven't arrived at the $ral\_tree$ for our $Index$ value yet.  In the fifth case, we have found the target $ral\_tree$ and we will use `lookup_in_tree` to find the specific leaf.
+In the definition, the first two clauses handle invalid index scenarios.  The third clause handles the case where as we are going through the RAL list, we come across a $ral\_tree$ that is $nil$.  We know there are no values in there, so we keep going.  Notice that we don't decrease our $Index$ because there were not any values (or leaves) in that $ral\_tree$.  In the fourth clause, there are values in the $ral\_tree$ but we haven't arrived at the $ral\_tree$ for our $Index$ value yet.  In the fifth case, we have found the target $ral\_tree$ and we will use `lookup_in_tree` to find the specific leaf.
 
 We now have to traverse the $ral\_tree$ to find the leaf associated with our Index value.  In our previous example, the $Index$ was equal to 3 when we found our target $ral\_tree$.  We will use that $Index$  to find our leaf.  The process is as follows:
 
@@ -249,7 +251,7 @@ Notice that an additional difference is that the `update`  function will return 
 
 ## Performance
 
-The cost of traversing the RAL list will be O(log n) and cost of traversing a $ral\_tree$ will also be O(log n) which means that our `lookup` and `update` functions are O(log n).  If we used a standard list, we would need to recursively search from left to right to find the desired index which would result in O(n).  To demonstrate this, you can use the `nth` function provided by Erlang which will provide the value at a specified index in a list.  Note that the `nth` function treats the first elements as Index 1 instead of 0 like our RAL.
+The cost of traversing the RAL list will be O(log n) and cost of traversing a $ral\_tree$ will also be O(log n) which means that our `lookup` and `update` functions are O(log n).  If we used a standard Erlang list, we would need to recursively search from left to right to find the desired index which would result in O(n).  To demonstrate this, you can use the `nth` function provided by Erlang which will provide the value at a specified index in a list.  Note that the `nth` function treats the first elements as Index 1 instead of 0 like our RAL.
 
 Using the same `start_perf` and `stop_perf` used in previous lessons, we can measure the time it takes to access the last item in a very large 1,000,000 item Erlang list. 
 
@@ -277,7 +279,7 @@ The comparison of accessing the last item in a RAL with the last item in an Erla
 :::: {.problembox data-latex=""}
 **Problem Set 3**
 
-1. Create a RAL with 1,000,000 items by using a `foldl` and the `prepend` function.  Using `start_perf` and `stop_perf` (provided in the test code), compare the time for looking up index 999,999 (the last item) in both the Erlang List and the RAL.  Discuss your observations in comments within your code.  Note both the CALLS and the TIME columns when comparing the performance.
+1. Create a RAL with 1,000,000 items (values 0 to 999,999) by using a `foldl` and the `prepend` function.  Using `start_perf` and `stop_perf` (provided in the test code), compare the time for looking up index 999,999 (the last item) in both the Erlang List and the RAL.  Discuss your observations in comments within your code.  Note both the CALLS and the TIME columns when comparing the performance.
 ::::
 
 $\nonumber$

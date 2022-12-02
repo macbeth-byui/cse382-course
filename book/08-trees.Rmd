@@ -34,7 +34,7 @@ Finally, we show the creation of $T_6$ by adding the new new node 5.
 
 The software will discard older versions of the Tree when they are not needed anymore.  However, the persistence we use in the data structure is important to satisfy the immutability rules.
 
-Notice that the there is always a path through the tree that we have to re-create from the root node down to the node that we added.  When we reuse a node in the tree, we will reuse both the node and all the nodes it is connected too.  We will not have to have use recursion when we reuse a node.
+Notice that the there is always a path through the tree that we have to re-create from the root node down to the node that we added.  When we reuse a node in the tree, we will reuse both the node and all the nodes it is connected too.  We will not have to have to use recursion when we reuse a node.
 
 Let's begin with the structure of the node:
 
@@ -55,6 +55,7 @@ $\nonumber$
 In our specification, we are assuming that $a$ represents a type that can be compared with boolean operators.
 
 There are 4 scenarios when adding a new item to a tree:
+
 * Empty Tree - Create a new root `node`.  We will define an empty tree as `nil`.
 * Value to add is less than the current node value - Create a new `node` reusing the right link.  The left link is created by recursively calling `add` on the left sub-tree.
 * Value to add is greater than the current node value - Create a new `node` reusing the left link.  The right link is created by recursively calling `add` on the right sub-tree.
@@ -65,9 +66,13 @@ The definition for `add` is given below.  The implementation for both `add` and 
 :::: {.formulabox data-latex=""}
 $\mathit{def} ~ ~ add :: New\_Value ~ ~ nil \rightarrow \lbrace New\_Value, nil, nil \rbrace;$
 
-$\mathit{def} ~ ~ add :: New\_Value ~ ~ \lbrace Value, Left, Right \rbrace  \rightarrow \lbrace Value, (add ~ ~ New\_Value ~ ~ Left), Right \rbrace ~ ~ \text{when} ~ ~ New\_Value < Value;$
+$\mathit{def} ~ ~ add :: New\_Value ~ ~ \lbrace Value, Left, Right \rbrace  \rightarrow \lbrace Value, (add ~ ~ New\_Value ~ ~ Left), Right \rbrace$
 
-$\mathit{def} ~ ~ add :: New\_Value ~ ~ \lbrace Value, Left, Right \rbrace \rightarrow \lbrace Value, Left, (add ~ ~ New\_Value ~ ~ Right) \rbrace ~ ~ \text{when} ~ ~ New\_Value > Value;$
+$\quad \quad \text{when} ~ ~ New\_Value < Value;$
+
+$\mathit{def} ~ ~ add :: New\_Value ~ ~ \lbrace Value, Left, Right \rbrace \rightarrow \lbrace Value, Left, (add ~ ~ New\_Value ~ ~ Right) \rbrace$
+
+$\quad \quad \text{when} ~ ~ New\_Value > Value;$
 
 $\mathit{def} ~ ~ add :: New\_Value ~ ~ Node \rightarrow Node.$
 ::::
@@ -84,7 +89,7 @@ You can find the template for the problem sets in this lesson here: [prove08.erl
 
 ## Balanced Red-Black Tree
 
-Since a binary search tree orders left and right of node relative to the values, traversing the tree (either to insert or find) can provide an O(log n) performance.  However, this can only be achieved if the tree is balanced.  If we added the numbers 1, 2, 3, 4, 5, 6, 7 in order to a tree, they would also be add to the right.  Searching for a number in the tree would be the same as searching a list which is O(n)
+Since a binary search tree is ordered relative to the values, traversing the tree (either to insert or find) can provide an O(log n) performance.  However, this can only be achieved if the tree is balanced.  If we added the numbers 1, 2, 3, 4, 5, 6, 7 in order to a tree, they would all be added to the right as shown below.  Searching for a number in the tree would be the same as searching a list which is O(n)
 
 ![](images/unbalanced_tree.drawio.png)
 
@@ -92,11 +97,11 @@ However, if the numbers were added 4, 2, 6, 1, 3, 5, 7 then we would get a tree 
 
 ![](images/balanced_tree.drawio.png)
 
-Since we can't rely on the order of the data, there are other  strategies and algorithms that can be used.  A common one is the Red Back Tree (RBT).  The RBT uses a set of rules to determine if part of a tree is unbalanced.  If something is unbalanced, a modification is made to balance the tree.  In other words, after the creation of any node in the `add` function, we will potentially perform a `balance` function.  
+Since we can't rely on the order of the data, there are other  strategies and algorithms that can be used.  A common one is the Red Black Tree (RBT).  The RBT uses a set of rules to determine if part of a tree is unbalanced.  If something is unbalanced, a modification is made to balance the tree.  In other words, after the creation of any node in the `add` function, we will potentially perform a `balance` function.  
 
 The rules for an RBT are as follows:
 
-1. Every node is either red or black - In our algorithm we will choose to start all nodes out red.
+1. Every node is either red or black - In our algorithm we will choose to start all nodes red.
 2. The root is always black - In our algorithm we will choose to change the root node to black after the inserting and all balancing is completed.
 3. No two adjacent nodes are red.
 4. Every path from a node to a leaf has the same number of black nodes.
@@ -114,25 +119,29 @@ $\quad \quad \lbrace atom(black), a:Value, node:\mathit{Left}, node:Right \rbrac
 ::::
 $\nonumber$
 
-We will use the function names `add_rbt` and `contains_rbt` so they are unique from the traditional binary search tree.  These `contains_rbt` is the same as `contains` as the color is only important for adding and therefore is unused in the `contains_rbt`.
+We will use the function names `add_rbt` and `contains_rbt` so they are unique from the traditional binary search tree.  The `contains_rbt` is the same as `contains` as the color is only important for adding and therefore is unused in the `contains_rbt`.
 
 The `add_rbt` function is very similar to the `add` with the following distinctions:
+
 * When we create a new node we color it red
 * When we create a new node that reuses one link and recursively adds the node on the other link, we need to call a `balance` function (discussed later) on the new node we created.
-* When we are done adding the node, we need to change the root node to be black.  This will necessitate a helper function so that we have `add_rbt` and `add_rbt_` both.
+* When we are done adding the node, we need to change the root node to be black.  This will necessitate an additional helper function.  The `add_rbt` will call `add_rbt_` which will do most of the work.  When `add_rbt_` is done, `add_rbt` will force the root node to be black.
 
-The specification and definition for the `add_rbt` is shown below:
+The specification and definition for the `add_rbt` and `add_rbt_` are shown below:
 
 :::: {.formulabox data-latex=""}
 $spec ~ ~ add\_rbt :: a ~ ~ node \rightarrow node.$
-
-$spec ~ ~ add\_rbt\_ :: a ~ ~ node \rightarrow node.$
 
 $\mathit{def} ~ ~ add\_rbt :: New\_Value ~ ~ Tree \rightarrow$
 
 $\quad \quad New\_Root = (add\_rbt\_ ~ ~ New\_Value ~ ~ Tree),$
 
 $\quad \quad \lbrace black, New\_Root.Value, New\_Root.\mathit{Left}, New\_Root.Right \rbrace.$
+::::
+$\nonumber$
+
+:::: {.formulabox data-latex=""}
+$spec ~ ~ add\_rbt\_ :: a ~ ~ node \rightarrow node.$
 
 $\mathit{def} ~ ~ add\_rbt\_ :: New\_Value ~ ~ nil \rightarrow \lbrace red, New\_Value, nil, nil \rbrace;$
 

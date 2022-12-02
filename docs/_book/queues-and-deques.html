@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2022-11-17" />
+<meta name="date" content="2022-12-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -233,15 +233,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In Erlang you have noticed that it is more efficient to access the front of a list as opposed to the back of the list. This means that it is very efficient to implement a stack. Queues on the other hand are more expensive since we have to recursively traverse to the end of the list to enqueue new values. To resolve this problem we will use a technique that combines two stacks together to form a queue.</p>
 <div id="queues" class="section level2 hasAnchor" number="12.1">
 <h2><span class="header-section-number">12.1</span> Queues<a href="queues-and-deques.html#queues" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The basic functions of a queue include the ability to do the following:
-* <code>enqueue</code> - insert a new value at the back (or end) of the queue
-* <code>dequeue</code> - remove a value from the front (or start) of the queue
-* <code>head</code> - get the value from the front of the queue</p>
-<p>If we used a list to do this, we would have O(1) for the <code>dequeue</code> and the head but O(n) for the <code>enqueue</code>. To resolve this problem, we will use two lists and treat both them as stacks as follows:
-* <code>Front</code> - This stack will always have the next value to <code>dequeue</code> available at the front of the stack. The <code>head</code> function will use this stack as well.
-* <code>Back</code> - This stack will always have the next value to <code>enqueue</code> be available at the front of the stack.</p>
+<p>The basic functions of a queue include the ability to do the following:</p>
+<ul>
+<li><code>enqueue</code> - insert a new value at the back (or end) of the queue</li>
+<li><code>dequeue</code> - remove a value from the front (or start) of the queue</li>
+<li><code>head</code> - get the value from the front of the queue</li>
+</ul>
+<p>If we used a list to do this, we would have O(1) for the <code>dequeue</code> and the head but O(n) for the <code>enqueue</code>. To resolve this problem, we will use two lists and treat both them as stacks as follows:</p>
+<ul>
+<li><code>Front</code> - This stack will always have the next value to <code>dequeue</code> available at the front of the stack. The <code>head</code> function will use this stack as well.<br />
+</li>
+<li><code>Back</code> - This stack will always have the most recent value <code>enqueued</code> be available at the front of the stack.</li>
+</ul>
 <p><img src="images/queue.drawio.png" /></p>
-<p>The dilemma with this arrangement is that we have no way to get values added to <code>Back</code> to migrate over to the <code>Front</code>. This would be mean that <code>Front</code> would always be empty. To resolve this problem we introduce a rule, or an invariant, which is that the <code>Front</code> can only be empty if the <code>Back</code> is also empty. If both are empty, then we say the queue is empty as well. This rule requires us to move items between the two stacks as needed.</p>
+<p>The dilemma with this arrangement is that we have no way to get values added to <code>Back</code> to migrate over to the <code>Front</code>. This would mean that <code>Front</code> would always be empty. To resolve this problem we introduce a rule, or an invariant, which is that the <code>Front</code> can only be empty if the <code>Back</code> is also empty. If both are empty, then we say the queue is empty as well. This rule requires us to move items between the two stacks as needed.</p>
 <p>We will store both stacks in a single structure:</p>
 <div class="formulabox">
 <p><span class="math inline">\(struct ~ ~ queue \lbrace [a] : Front, [a] : Back \rbrace.\)</span></p>
@@ -297,7 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(de\mathit{f} ~ ~ enqueue :: Value ~ ~ \lbrace Front, Back \rbrace \rightarrow \lbrace Front, [Value|Back] \rbrace.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>Ensuring our rule regarding the <code>Front</code> being empty only when <code>Back</code> is empty is a little more complicated for the <code>dequeue</code> function. Normally we remove the value from the <code>Front</code> stack. However, if the <code>Front</code> stack only has one value, then we must prevent it from going empty. This is accomplished by taking the values in the <code>Back</code> and moving them to the <code>Front</code>. However, the order of the values must be swapped because the first one of the <code>Back</code> should be the last one to be remove from the <code>Front</code>.</p>
+<p>Ensuring our rule regarding the <code>Front</code> being empty only when <code>Back</code> is empty is a little more complicated for the <code>dequeue</code> function. Normally we remove the value from the <code>Front</code> stack. However, if the <code>Front</code> stack only has one value, then we must prevent it from going empty. This is accomplished by taking the values in the <code>Back</code> and moving them to the <code>Front</code>. However, the order of the values must be swapped because the first one of the <code>Back</code> should be the last one to be removed from the <code>Front</code>.</p>
 <table>
 <thead>
 <tr class="header">
@@ -361,7 +366,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Problem Set 1</strong></p>
 <p>You can find the template for the problem sets in this lesson here: <a href="proves/prove12.erl">prove12.erl</a></p>
 <ol style="list-style-type: decimal">
-<li>Implement the <code>enqueue</code>, <code>dequeue</code>, and <code>head</code> functions as described in the definitions above. Use the test code provided to verify your implementations. A <code>create</code> and <code>empty</code> function are already provided for you.</li>
+<li>Implement the <code>enqueue</code>, <code>dequeue</code>, and <code>head</code> functions as described in the definitions above. Use the test code provided to verify your implementations. A <code>create</code> and <code>empty</code> function are already provided for you. In the test code, the <code>check_queue</code> will verify that the queue was created correctly.</li>
 </ol>
 </div>
 </div>
@@ -375,11 +380,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p><img src="images/deque.drawio.png" /></p>
 <p>The rule that we had for the Queue (<code>Front</code> can’t be empty unless the <code>Back</code> was empty also) resulted in us having a simple <code>head</code> function. If we don’t do something similar for our new deque functions, we will be forced to use recursion for our Tail. Right now it is very common for our <code>Front</code> to contain all the values because we reversed the values from <code>Back</code> and moved them all over. This would mean that we would need to recurse to the end of <code>Front</code> to find the tail.</p>
-<p>We introduce an modified rule for the Deque which is that neither the <code>Front</code> nor the <code>Back</code> can be empty if there are 2 or more items in the Deque. This means that our stacks will always take the following formats:
-* <code>Front</code> is empty and <code>Back</code> is empty - Empty Deque
-* <code>Front</code> has one item and <code>Back</code> is empty - Deque with only one item
-* <code>Front</code> is empty and <code>Back</code> has one item - Another valid deque with only one item
-* <code>Front</code> is not empty and <code>Back</code> is not empty - Deque with more than two or more items</p>
+<p>We introduce an modified rule for the Deque which is that neither the <code>Front</code> nor the <code>Back</code> can be empty if there are 2 or more items in the Deque. This means that our stacks will always take the following formats:</p>
+<ul>
+<li><code>Front</code> is empty and <code>Back</code> is empty - Empty Deque</li>
+<li><code>Front</code> has one item and <code>Back</code> is empty - Deque with only one item</li>
+<li><code>Front</code> is empty and <code>Back</code> has one item - Another valid deque with only one item</li>
+<li><code>Front</code> is not empty and <code>Back</code> is not empty - Deque with more than two or more items</li>
+</ul>
 <p>For this to work, we will need to modify our approach for <code>dequeue</code> that said to reverse all the values from <code>Back</code> and move them to the <code>Front</code>. This action would cause <code>Front</code> to have potentially more than one item and <code>Back</code> to be empty.</p>
 <p>Instead of reversing and moving all of the <code>Back</code> on a dequeue, we will reverse and move only half of the values. This will ensure that we will always still have some value in the <code>Back</code> (assuming we have 2 or more items still in the deque).</p>
 <table>
@@ -460,10 +467,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(de\mathit{f} ~ ~ head :: \lbrace [], [One] \rbrace \rightarrow One;\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>To implement our three new functions, we will make them symmetrical with the three we already have. The <code>enqueue_front</code> function will put the first new value in the <code>Back</code> and subsequent values in the <code>Front</code>. There is another special case we need to consider. What if the first call was to <code>enqueue</code> and then <code>enqueue_front</code> was called. The <code>enqueue</code> function would put the first value in the <code>Front</code>. If <code>enqueue_front</code> was called second, it would put the “subsequent” values in the <code>Front</code> as well thus causing an imbalance which is against our rules. Therefore, we have included the 2nd clause to handle this case.</p>
+<p>To implement our three new functions, we will make them symmetrical with the three we already have. The <code>enqueue_front</code> function will put the first new value in the <code>Back</code> and subsequent values in the <code>Front</code>. There is another special case we need to consider. What if the first call was to <code>enqueue</code> and then <code>enqueue_front</code> was called. The <code>enqueue</code> function would put the first value in the <code>Front</code>. If <code>enqueue_front</code> was called second, it would put the “subsequent” values in the <code>Front</code> as well thus causing an imbalance which is against our rules. Therefore, we have included the 2nd clause to put the previous value added into the Back and the new value added into the Front.</p>
 <div class="formulabox">
 <p><span class="math inline">\(de\mathit{f} ~ ~ enqueue\_front :: Value ~ ~ \lbrace [], [] \rbrace \rightarrow \lbrace [], [Value] \rbrace;\)</span></p>
-<p><span class="math inline">\(de\mathit{f} ~ ~ enqueue\_front :: Value ~ ~ \lbrace [One], [] \rbrace \rightarrow \lbrace [One], [Value] \rbrace;\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ enqueue\_front :: Value ~ ~ \lbrace [One], [] \rbrace \rightarrow \lbrace [Value], [One] \rbrace;\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ enqueue\_front :: Value ~ ~ \lbrace Front, Back \rbrace \rightarrow \lbrace [Value|Front], Back \rbrace.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
@@ -494,7 +501,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="problembox">
 <p><strong>Problem Set 2</strong></p>
 <ol style="list-style-type: decimal">
-<li>Implement the <code>enqueue_front</code>, <code>dequeue_back</code>, and <code>tail</code> functions as described in the definitions above. You will also need to modify the <code>dequeue</code> and <code>head</code> to support the deque. Use the test code provided to verify your implementations.</li>
+<li>Implement the <code>enqueue_front</code>, <code>dequeue_back</code>, and <code>tail</code> functions as described in the definitions above. You will also need to modify the <code>dequeue</code> and <code>head</code> to support the deque. Use the test code provided to verify your implementations. You will need to use the <code>lists:split</code> function provided in Erlang.</li>
 </ol>
 </div>
 </div>
@@ -658,25 +665,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
+"sharing": null,
 "fontsettings": {
 "theme": "white",
 "family": "sans",
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/12-queues.Rmd",
-"text": "Edit"
+"link": null,
+"text": null
 },
 "history": {
 "link": null,

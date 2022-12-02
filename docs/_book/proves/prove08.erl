@@ -152,9 +152,25 @@ test_ps3() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Write test code to compare performance of the binary search tree
     % and the red black tree per the instructions.  You can use the List
-    % variable below when performing the foldl functions.
+    % variable below when performing the foldl functions.  Add your code
+	% in between the start_perf and stop_perf function calls.
     
-    List = lists:seq(1,10000),
+    %List = lists:seq(1,10000),
+    %start_perf(),
+    
+    %stop_perf("add"),
+
+    %start_perf(),
+    
+    %stop_perf("add_rbt"),
+
+    %start_perf(),
+    
+    %stop_perf("contains"),
+
+    %start_perf(),
+    
+    %stop_perf("contains_rbt"),
 
     % Observations (see instructions):  
 

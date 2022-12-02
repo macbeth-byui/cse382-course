@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2022-11-17" />
+<meta name="date" content="2022-12-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -233,7 +233,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>When we look at all of the forms of trees (including heaps) we notice that the placement of values is highly dependent on the result of comparing two values. While comparing two integers can be an easy thing to do, the comparison of two string is more complicated. Comparing strings is a frequent activity performed in our software but consider the fact that string comparisons at worst will require the comparison of multiple characters each time. If our strings were stored in a binary search tree, we would need to compare our target string with several other strings until we found a match. The Trie data structure provides a tree structure which is intended to store strings in such a way that searching is faster and potentially memory storage is optimized.</p>
 <div id="creating-the-trie" class="section level2 hasAnchor" number="11.1">
 <h2><span class="header-section-number">11.1</span> Creating the Trie<a href="tries.html#creating-the-trie" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The diagram below shows an example of a Trie that stores words. Notice that the Trie begins with an empty character string and then branches out to all valid first letters for the values that are stored. Each branch represents a single letter. To find the words that are stored, you start at the root and progress downwards until you get to a letter that has <code>done</code> as a child. In many cases, additional words can be found by following other letters instead of stopping at the <code>done</code>. This Trie includes the words: “day”, “date”, “days”, ““,”cow”, “cold”, “dog”. Notice that since “” is in the Trie, that there is a <code>done</code> child connected to the root.</p>
+<p>The diagram below shows an example of a Trie that stores words. Notice that the Trie begins with an empty character string and then branches out to all valid first letters for the values that are stored. Each branch represents a single letter. To find the words that are stored, you start at the root and progress downwards until you get to a letter that has <code>done</code> as a child. In many cases, additional words can be found by following other letters instead of stopping at the <code>done</code>. This Trie includes the words: “day”, “date”, “days”, “cow”, “cold”, and “dog”. Additionally, this Trie includes the empty string since <code>done</code> is connected to the root node.</p>
 <p><img src="images/trie1.drawio.png" /></p>
 <p>When adding a new word, we start at the root and go one letter at a time. If the letter already exists in the Trie, then we goto the next letter. If the letter does not exist, then we create a child for that letter. The subsequent letters will all be new children.</p>
 <p>Unlike the binary search tree, the Trie can have a variable number of children. We can store those variable number of children in any data structure. For simplicity, we will use a dictionary as follows:</p>
@@ -243,7 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\quad \quad \lbrace atom(done) \looparrowleft atom(nil) \rbrace.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>The diagram below shows the same early Trie but with the perspective of dictionaries. Each set of boxes represents a separate dictionary. The arrows represent the <span class="math inline">\(node\)</span> value associated with each key in the dictionary.</p>
+<p>The diagram below shows the same Trie example but with the perspective of dictionaries. Each set of boxes represents a separate dictionary. The arrows represent the <span class="math inline">\(node\)</span> value associated with each key in the dictionary. Notice that we are not representing the empty string node but rather its implied.</p>
 <p><img src="images/trie2.drawio.png" /></p>
 <p>Here is the specification for our add function:</p>
 <div class="formulabox">
@@ -252,18 +252,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>When adding to the Trie, there are three scenarios that we must cover:</p>
 <ol style="list-style-type: decimal">
-<li>Add a word into an empty Trie - this will require that we create our root node for the empty character. From this new root node, we will begin to add each letter of the word.</li>
+<li>Add a word into an empty Trie (nil) - this will require that we create our root node represented as an empty dictionary (<span class="math inline">\(\lbrace \looparrowleft \rbrace\)</span>). From this new root node, we will begin to add each letter of the word.</li>
 <li>Check each letter (we will represent the word as a list of letters) to see if the letter already exists in the dictionary.
 <ul>
-<li>If the letter does exist, then follow that node (the next dictionary) and check for the next letter recursively.</li>
-<li>If the letter does not exist, then create a new node (with an empty dictionary - <span class="math inline">\(\lbrace \looparrowleft \rbrace\)</span>) for the letter and add it the current node dictionary. Follow that new node for the next letter recursively. Note that once we have this case, all subsequent letters will be new nodes as well.</li>
+<li>If the letter does exist, then follow that node (the next dictionary) and check for the next letter recursively. We expect that as we follow the letter down that we will create new nodes so we will put the result of the recursion into the dictionary.</li>
+<li>If the letter does not exist, then create a new node (empty dictionary) for the letter and add it the current node dictionary. Follow that new node for the next letter recursively. Note that once we have this case, all subsequent letters will be new nodes as well.</li>
 </ul></li>
-<li>If we run out of letters, then that means that the node we are on is a terminating node for a word. The value <code>done</code> should be added to the dictionary of this node. This is the base case.</li>
+<li>If we run out of letters, then that means that the node we are on is a terminating node for a word. The value <code>done</code> should be added to the dictionary of this node (assuming it does not already exist). This is the base case.</li>
 </ol>
-<p>All three scenarios appear in the definition below. Note that we are using three functions that we assume exists for a dictionary:
-* <code>contains</code> - Does the key exist in the dictionary
-* <code>get</code> - Get the value in the dictionary associated with the key
-* <code>put</code> - Put the key and value into the dictionary</p>
+<p>All three scenarios appear in the definition below. Note that we are using three functions that we assume exists for a dictionary:</p>
+<ul>
+<li><code>contains</code> - Does the key exist in the dictionary</li>
+<li><code>get</code> - Get the value in the dictionary associated with the key</li>
+<li><code>put</code> - Put the key and value into the dictionary</li>
+</ul>
 <div class="formulabox">
 <p><span class="math inline">\(de\mathit{f} ~ ~ add :: Word ~ ~ nil \rightarrow (add ~ ~ Word ~ ~ \lbrace \looparrowleft \rbrace);\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ add :: [] ~ ~ Node \rightarrow Node ~ ~ \text{when} ~ ~ (contains ~ ~ done ~ ~ Node) == true;\)</span></p>
@@ -271,7 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(de\mathit{f} ~ ~ add :: [First|Rest] ~ ~ Node \rightarrow(put ~ ~ First ~ ~ (add ~ ~ Rest ~ ~ (get ~ ~First ~ ~ Node) ~ ~ Node) ~ ~\)</span></p>
 <p><span class="math inline">\(\quad \quad \text{when} ~ ~ (contains ~ ~ First ~ ~ Node) == true;\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ add :: [First|Rest] ~ ~ Node \rightarrow\)</span></p>
-<p><span class="math inline">\(\quad \quad (put ~ ~ First ~ ~ (add ~ ~ Rest ~ ~ \lbrace \looparrowleft \rbrace) ~ ~ Node)\)</span></p>
+<p><span class="math inline">\(\quad \quad (put ~ ~ First ~ ~ (add ~ ~ Rest ~ ~ \lbrace \looparrowleft \rbrace) ~ ~ Node).\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The implementation of the <code>add</code> function will be left for an exercise.</p>
@@ -311,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The Erlang code for <code>search</code> function will be left for an exercise.</p>
-<p>To count all the words in a Trie, we need to count all the nodes that have a <code>done</code> key in the dictionary. This will require recursion through all the keys in the dictionary. Prior to recusing through the keys in the dictionary, we will first need to determine if this node has a <code>done</code> key. If it does, then the total count will be 1 plus the whatever is found in the recursive calls to each key in the node dictionary. Remember that the presence of a <code>done</code> key does not mean that there are no other key’s in the dictionary.</p>
+<p>To count all the words in a Trie, we need to count all the nodes that have a <code>done</code> key in the dictionary. This will require recursion through all the keys in the dictionary. Prior to recusing through the keys in the dictionary, we will first need to determine if this node has a <code>done</code> key. If it does, then the total count will be 1 plus whatever is found in the recursive calls to each key in the node dictionary. Remember that the presence of a <code>done</code> key does not mean that there are no other key’s in the dictionary.</p>
 <p>The specification and part of the definition is give below. The remaining definition and implementation will be left for an exercise.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ count :: node \rightarrow integer.\)</span></p>
@@ -417,25 +419,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
+"sharing": null,
 "fontsettings": {
 "theme": "white",
 "family": "sans",
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/11-tries.Rmd",
-"text": "Edit"
+"link": null,
+"text": null
 },
 "history": {
 "link": null,

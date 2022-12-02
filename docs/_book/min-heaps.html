@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2022-11-17" />
+<meta name="date" content="2022-12-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -235,29 +235,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">9.1</span> Min Heap<a href="min-heaps.html#min-heap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The diagram below shows a Min Heap. More specifically its a “Leftist” Min Heap since in all cases we have favored putting items on the left thus keeping the right “spine” of the tree as short as possible (within the algorithm requirements which we will learn about shortly).</p>
 <p><img src="images/heap_example.drawio.png" /></p>
-<p>When we look at this Min Heap, we see three characteristics:
-1. The smallest value is in the root node
-2. The values along each right spine (both from the root and from other nodes) are sorted.<br />
-3. For each node, the length of the right spine from the left and right links are such that the one on the left is greater than or equal to the one of the right. For example, if you look at node 12, the left side (node 19) has a distance of 2 on the right spine (following 19 and 21) and the right side (node 13) has a distance of 1 on the right spine (following only 13). We call this distance, the “rank”.</p>
+<p>When we look at this Min Heap, we see three characteristics:</p>
+<ol style="list-style-type: decimal">
+<li>The smallest value is in the root node</li>
+<li>The values along each right spine (both from the root and from other nodes) are sorted.<br />
+</li>
+<li>For each node, the length of the right spine from the left and right links are such that the one on the left is greater than or equal to the one of the right. For example, if you look at node 12, the left side (node 19) has a distance of 2 on the right spine (following 19 and 21) and the right side (node 13) has a distance of 1 on the right spine (following only 13). We call this distance, the “rank”.</li>
+</ol>
 <p>If we want to add items to this Min Heap, we are going to add them in order along the right spine starting with the root node. When we insert in the node, we will need to work our way back up the tree and check to make sure we have not violated our need to have the left rank be greater than or equal to the right rank. If there is a problem, the solution is to just swap the left with the right.</p>
-<p>Before we look at specifications, definitions, and code, we will first build a Min Heap by adding the following numbers in order (same values you will find in the test code for the problem set): 10, 15, 20, 5, 12, 17, 19, 20, 21, 13, 8, and 1. As you look at this list of numbers, note that we will have some interesting results at various times. For example, when add the 5 and the 1 we will be replacing the root node since the root node must contain the minimum value. Also, when we add 13, we will be replacing along the right spine from the root since the right spine from any node must be in order. In all of these operations, remember that we are persisting previous versions of the min heap.</p>
+<p>Before we look at specifications, definitions, and code, we will first build a Min Heap by adding the following numbers in order (same values you will find in the test code for the problem set): 10, 15, 20, 5, 12, 17, 19, 20, 21, 13, 8, and 1. As you look at this list of numbers, note that we will have some interesting results at various times. For example, when we add the 5 and the 1 we will be replacing the root node since the root node must contain the minimum value. In all of these operations, remember that we are persisting previous versions of the min heap.</p>
 <p>The addition of our first node 10 is trivial since the min heap is empty. In each of these diagrams, we will show the rank on the upper right of the circle.</p>
 <p><img src="images/heap1.drawio.png" /></p>
-<p>The addition of 15 will require us to compare it with 10 (the first only value on the right spine from the root). When we insert, we will always insert to the Right. When we get to the case that we are inserting in the middle of the spine, we will keep the left of our new node empty and the right of the new node will be the remainder of the spine unchanged.</p>
+<p>The addition of 15 will require us to compare it with 10 (the only value on the right spine from the root). When we insert, we will always insert to the Right. When we get to the case that we are inserting in the middle of the spine, we will keep the left of our new node empty and the right of the new node will be the remainder of the spine unchanged.</p>
 <p><img src="images/heap2.drawio.png" /></p>
 <p>When we look at this min heap, notice that the rank on the right side is 1 and the left hand side is empty which implies a rank of 0. This means we need to swap left and right. The diagram below is correct.</p>
 <p><img src="images/heap3.drawio.png" /></p>
 <p>When we add 20, we have a spot and no swapping is needed.</p>
 <p><img src="images/heap4.drawio.png" /></p>
-<p>When we add 5, our first comparison shows that 5 should be before 20 on the right spine. When adding a new node to anywhere but the end of the spine, we will leave the left link empty and the right link will be the remainder of the spine unchanged. After doing this, we work our way back up (not too far in this case) to check ranks. We don’t check the ranks of the spine that we left unchanged. The ranks at node 5 show that we need to swap.</p>
+<p>When we add 5, our first comparison shows that 5 should be before 10 on the right spine. When adding a new node to anywhere but the end of the spine, we will leave the left link empty and the right link will be the remainder of the spine unchanged. After doing this, we work our way back up (not too far in this case) to check ranks. We don’t check the ranks of the spine that we left unchanged. The ranks at node 5 show that we need to swap.</p>
 <p><img src="images/heap5.drawio.png" /></p>
 <p>When we add 12, it can be done with no swapping.</p>
 <p><img src="images/heap6.drawio.png" /></p>
-<p>When we add 17, we start our comparisons with the node that we added (which is no issues because its at the end) and then work our way up the spine comparing ranks. At the 12, we see a need to swap.</p>
+<p>After we add 17 the correct place on the right spine, we start our comparisons with the node that we added and then work our way up the spine comparing ranks. At the 12, we see a need to swap.</p>
 <p><img src="images/heap7.drawio.png" /></p>
 <p>When we add the 19, it can be done with no swapping.</p>
 <p><img src="images/heap8.drawio.png" /></p>
-<p>When we add the 20, it can also be done with no swapping. Notice that there was no problem adding this duplicate. If the duplicate was the root node already, we could choose to replace it with our new value and push the duplicate down (all depends on how we write our boolean comparison).</p>
+<p>When we add the 20, it can also be done with a small swap at the 19. Notice that 20 is already in the heap but this was not a problem. If the duplicate was the root node already, we could choose to replace it with our new value and push the duplicate down (all depends on how we write our boolean comparison).</p>
 <p><img src="images/heap9.drawio.png" /></p>
 <p>When we add the 21, we find that the node 12 has a need to swap.</p>
 <p><img src="images/heap10.drawio.png" /></p>
@@ -302,7 +305,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb61-3"><a href="min-heaps.html#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,{</span><span class="va">Rank</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">,</span> <span class="va">Left</span><span class="fu">,</span> <span class="va">Right</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="fu">...</span></span></code></pre></div>
 <p>A third option combines both of these:</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb62-1"><a href="min-heaps.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="va">Node</span><span class="op">=</span><span class="fu">{</span><span class="va">Rank</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">,</span> <span class="va">Left</span><span class="fu">,</span> <span class="va">Right</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="fu">...</span></span></code></pre></div>
-<p>Using this third option, I can easily reference the whole <code>Node</code> or one its pieces by name. If the latter is done, you can also replace unused parameters with <code>_</code> if desired.</p>
+<p>Using this third option, we can easily reference the whole <code>Node</code> or one its pieces by name. If the latter is done, you can also replace unused parameters with <code>_</code> if desired.</p>
 </div>
 </div>
 <div id="efficient-inserting-and-removal" class="section level2 hasAnchor" number="9.2">
@@ -315,7 +318,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\mathit{def} ~ ~ make :: Value ~ ~ \mathit{Left} ~ ~ Right \rightarrow\)</span></p>
 <p><span class="math inline">\(\quad \quad Rank\_Left = (rank ~ ~ \mathit{Left}),\)</span></p>
 <p><span class="math inline">\(\quad \quad Rank\_Right = (rank ~ ~ Right),\)</span></p>
-<p><span class="math inline">\(\quad \quad \lbrace Rank\_Right + 1, Value, \mathit{Left}, Right \rbrace ~ ~ \text{when} ~ ~ Rank\_L \geq Rank\_R;\)</span></p>
+<p><span class="math inline">\(\quad \quad \lbrace Rank\_Right + 1, Value, \mathit{Left}, Right \rbrace ~ ~ \text{when} ~ ~ Rank\_Left \geq Rank\_Right;\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The implementation of this updated <code>make</code> function will be left for an exercise below.</p>
@@ -363,12 +366,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The implementation of <code>merge</code> and <code>remove_min</code> are left for exercises.</p>
-<p>Since the <code>merge</code> function successfully handled merging a min heap with another min heap of size 1, we could reuse the <code>merge</code> function to simplify our <code>insert</code> function. We are merging our new node (created with <code>make</code>) with our existing min heap (<code>Node</code> - which could be nil).</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb63-1"><a href="min-heaps.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="va">Node</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">merge(make(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="ch">nil</span><span class="fu">,</span> <span class="ch">nil</span><span class="fu">),</span> <span class="va">Node</span><span class="fu">).</span></span></code></pre></div>
+<p>Since the <code>merge</code> function successfully handled merging a min heap with another min heap of size 1, we could reuse the <code>merge</code> function to simplify our <code>insert</code> function. We are merging our new node (created with <code>make</code>) with our existing min heap (<code>Heap</code> - which could be nil).</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb63-1"><a href="min-heaps.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="va">Heap</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">merge(make(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="ch">nil</span><span class="fu">,</span> <span class="ch">nil</span><span class="fu">),</span> <span class="va">Heap</span><span class="fu">).</span></span></code></pre></div>
 <div class="problembox">
 <p><strong>Problem Set 2</strong></p>
 <ol style="list-style-type: decimal">
-<li>Modify the existing <code>make</code> function to properly perform the swaps per the definition above (including the second scenario in the definition which was not provided to you). Use the test code provided to test your function.<br />
+<li>Modify the existing <code>make</code> function to properly perform the swaps per the definition above (including the second scenario in the definition which was not provided to you). You should be able to combine both scenarios into a single clause using a <code>case of</code> block. Use the test code provided to test your function.<br />
 </li>
 <li>Implement the <code>merge</code> function and the <code>remove_min</code> function as described above. Use the test code provided to test your function. Once your code is working, you can modify your <code>insert</code> function to use the code provided above that uses <code>merge</code>.</li>
 </ol>
@@ -390,6 +393,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>If we are going to provide this <span class="math inline">\(\lambda_{compare}\)</span> to our <code>merge</code> function, we are going to need to create a <code>merge/3</code>. Since <code>merge</code> is called by <code>insert</code> and <code>remove_min</code>, we will need to create an <code>insert/3</code> and <code>remove_min/2</code> as well to receive the <span class="math inline">\(\lambda_{compare}\)</span>.</p>
 <div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ merge :: node ~ ~ node ~ ~ \lambda_{compare} \rightarrow node.\)</span></p>
 <p><span class="math inline">\(spec ~ ~ insert :: a ~ ~ node ~ ~ \lambda_{compare} \rightarrow node.\)</span></p>
 <p><span class="math inline">\(spec ~ ~ remove\_min :: node ~ ~ \lambda_{compare} \rightarrow node.\)</span></p>
 </div>
@@ -428,25 +432,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
+"sharing": null,
 "fontsettings": {
 "theme": "white",
 "family": "sans",
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/09-min_heaps.Rmd",
-"text": "Edit"
+"link": null,
+"text": null
 },
 "history": {
 "link": null,

@@ -121,11 +121,11 @@ test_ps3() ->
     % Write Test Code to compare the memory size of the phone numbers stored in a list
     % versus stored in a Trie.  
 
-    PhoneList = read_file("phone.txt"),
-    PhoneTrie = put_your_code_here,
-    SizeList = put_your_code_here,
-    SizeTrie = put_your_code_here,
-    io:format("Size List = ~p  Size Trie = ~p~n",[SizeList, SizeTrie]),
+    % PhoneList = read_file("phone.txt"),
+    % PhoneTrie = put_your_code_here,
+    % SizeList = put_your_code_here,
+    % SizeTrie = put_your_code_here,
+    % io:format("Size List = ~p  Size Trie = ~p~n",[SizeList, SizeTrie]),
 
     % Observations (see instructions): 
 

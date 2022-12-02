@@ -4,7 +4,7 @@ When we look at all of the forms of trees (including heaps) we notice that the p
 
 ## Creating the Trie
 
-The diagram below shows an example of a Trie that stores words.  Notice that the Trie begins with an empty character string and then branches out to all valid first letters for the values that are stored.  Each branch represents a single letter.  To find the words that are stored, you start at the root and progress downwards until you get to a letter that has `done` as a child.  In many cases, additional words can be found by following other letters instead of stopping at the `done`.  This Trie includes the words: "day", "date", "days", "", "cow", "cold", "dog".  Notice that since "" is in the Trie, that there is a `done` child connected to the root. 
+The diagram below shows an example of a Trie that stores words.  Notice that the Trie begins with an empty character string and then branches out to all valid first letters for the values that are stored.  Each branch represents a single letter.  To find the words that are stored, you start at the root and progress downwards until you get to a letter that has `done` as a child.  In many cases, additional words can be found by following other letters instead of stopping at the `done`.  This Trie includes the words: "day", "date", "days", "cow", "cold", and "dog".  Additionally, this Trie includes the empty string since `done` is connected to the root node.
 
 ![](images/trie1.drawio.png)
 
@@ -21,7 +21,7 @@ $\quad \quad \lbrace atom(done) \looparrowleft atom(nil) \rbrace.$
 ::::
 $\nonumber$
 
-The diagram below shows the same early Trie but with the perspective of dictionaries.  Each set of boxes represents a separate dictionary.  The arrows represent the $node$ value associated with each key in the dictionary.
+The diagram below shows the same Trie example but with the perspective of dictionaries.  Each set of boxes represents a separate dictionary.  The arrows represent the $node$ value associated with each key in the dictionary.  Notice that we are not representing the empty string node but rather its implied.
 
 ![](images/trie2.drawio.png)
 
@@ -34,13 +34,14 @@ $\nonumber$
 
 When adding to the Trie, there are three scenarios that we must cover:
 
-1. Add a word into an empty Trie - this will require that we create our root node for the empty character.  From this new root node, we will begin to add each letter of the word.
-2. Check each letter (we will represent the word as a list of letters)  to see if the letter already exists in the dictionary. 
-	* If the letter does exist, then follow that node (the next dictionary) and check for the next letter recursively.
-	* If the letter does not exist, then create a new node (with an empty dictionary - $\lbrace \looparrowleft \rbrace$) for the letter and add it the current node dictionary.  Follow that new node for the next letter recursively.  Note that once we have this case, all subsequent letters will be new nodes as well.
-3. If we run out of letters, then that means that the node we are on is a terminating node for a word.  The value `done` should be added to the dictionary of this node.  This is the base case.
+1. Add a word into an empty Trie (nil) - this will require that we create our root node represented as an empty dictionary ($\lbrace \looparrowleft \rbrace$).  From this new root node, we will begin to add each letter of the word.
+2. Check each letter (we will represent the word as a list of letters) to see if the letter already exists in the dictionary. 
+	* If the letter does exist, then follow that node (the next dictionary) and check for the next letter recursively.  We expect that as we follow the letter down that we will create new nodes so we will put the result of the recursion into the dictionary.
+	* If the letter does not exist, then create a new node (empty dictionary) for the letter and add it the current node dictionary.  Follow that new node for the next letter recursively.  Note that once we have this case, all subsequent letters will be new nodes as well.
+3. If we run out of letters, then that means that the node we are on is a terminating node for a word.  The value `done` should be added to the dictionary of this node (assuming it does not already exist).  This is the base case.
 
 All three scenarios appear in the definition below.  Note that we are using three functions that we assume exists for a dictionary:
+
 * `contains` - Does the key exist in the dictionary
 * `get` - Get the value in the dictionary associated with the key
 * `put` - Put the key and value into the dictionary
@@ -58,7 +59,7 @@ $\quad \quad \text{when} ~ ~ (contains ~ ~ First ~ ~ Node) == true;$
 
 $de\mathit{f} ~ ~ add :: [First|Rest] ~ ~ Node \rightarrow$
 
-$\quad \quad (put ~ ~ First ~ ~ (add ~ ~ Rest ~ ~ \lbrace \looparrowleft \rbrace) ~ ~ Node)$
+$\quad \quad (put ~ ~ First ~ ~ (add ~ ~ Rest ~ ~ \lbrace \looparrowleft \rbrace) ~ ~ Node).$
 ::::
 $\nonumber$
 
@@ -113,7 +114,7 @@ $\nonumber$
 
 The Erlang code for `search` function will be left for an exercise.
 
-To count all the words in a Trie, we need to count all the nodes that have a `done` key in the dictionary.  This will require recursion through all the keys in the dictionary.  Prior to recusing through the keys in the dictionary, we will first need to determine if this node has a `done` key.  If it does, then the total count will be 1 plus the whatever is found in the recursive calls to each key in the node dictionary.  Remember that the presence of a `done` key does not mean that there are no other key's in the dictionary.
+To count all the words in a Trie, we need to count all the nodes that have a `done` key in the dictionary.  This will require recursion through all the keys in the dictionary.  Prior to recusing through the keys in the dictionary, we will first need to determine if this node has a `done` key.  If it does, then the total count will be 1 plus whatever is found in the recursive calls to each key in the node dictionary.  Remember that the presence of a `done` key does not mean that there are no other key's in the dictionary.
 
 The specification and part of the definition is give below.  The remaining definition and implementation will be left for an exercise.
 
