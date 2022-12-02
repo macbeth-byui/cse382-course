@@ -183,14 +183,14 @@ The specification for the `collect` is given below:
 :::: {.formulabox data-latex=""}
 $spec ~ ~ collect :: \lambda_{stream} \rightarrow [a].$
 
-$spec ~ ~ collect :: \lambda_{stream} ~ ~ [a] \rightarrow [a].$
+$spec ~ ~ collect :: \mathit{f}ixed\_iterator ~ ~ [a] \rightarrow [a].$
 ::::
 $\nonumber$
 
 The second specification is intended to help build the list result recursively by calling the `next` function until the iterator is completed.  The definition for the first specification for `collect/1`is given below.  Notice that the function will call `iter` to convert the $\lambda_{stream}$ into a `fixed_iterator` prior to doing the recursion to generate the list of values.
 
 :::: {.formulabox data-latex=""}
-$de\mathit{f} ~ ~ collect :: Stream \rightarrow (collect (iter ~ ~ Stream) ~ ~ []).$
+$de\mathit{f} ~ ~ collect :: Stream \rightarrow (collect ~ ~ (iter ~ ~ Stream) ~ ~ []).$
 ::::
 $\nonumber$
 

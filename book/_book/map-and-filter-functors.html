@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 - Map and Filter Functors | Patterns in Functional Programming</title>
+  <meta name="description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 - Map and Filter Functors | Patterns in Functional Programming" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 - Map and Filter Functors | Patterns in Functional Programming" />
+  
+  <meta name="twitter:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
+  
+
+<meta name="author" content="Chad Macbeth" />
+
+
+<meta name="date" content="2022-12-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="persistence.html"/>
+<link rel="next" href="fold-and-unfold-functors.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Patterns in Functional Programming</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="erlang.html"><a href="erlang.html"><i class="fa fa-check"></i><b>1</b> Erlang</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="erlang.html"><a href="erlang.html#quick-erlang-primer"><i class="fa fa-check"></i><b>1.1</b> Quick Erlang Primer</a></li>
+<li class="chapter" data-level="1.2" data-path="erlang.html"><a href="erlang.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>2</b> Persistence</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>2.1</b> Persistence in Lists</a></li>
+<li class="chapter" data-level="2.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>2.2</b> More List Persistence</a></li>
+<li class="chapter" data-level="2.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>2.3</b> Specifications and Definitions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html"><i class="fa fa-check"></i><b>3</b> Map and Filter Functors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#functors-and-map"><i class="fa fa-check"></i><b>3.1</b> Functors and Map</a></li>
+<li class="chapter" data-level="3.2" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#filter"><i class="fa fa-check"></i><b>3.2</b> Filter</a></li>
+<li class="chapter" data-level="3.3" data-path="map-and-filter-functors.html"><a href="map-and-filter-functors.html#functor-properties"><i class="fa fa-check"></i><b>3.3</b> Functor Properties</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html"><i class="fa fa-check"></i><b>4</b> Fold and Unfold Functors</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#fold"><i class="fa fa-check"></i><b>4.1</b> Fold</a></li>
+<li class="chapter" data-level="4.2" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#fold-right"><i class="fa fa-check"></i><b>4.2</b> Fold Right</a></li>
+<li class="chapter" data-level="4.3" data-path="fold-and-unfold-functors.html"><a href="fold-and-unfold-functors.html#unfold"><i class="fa fa-check"></i><b>4.3</b> Unfold</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html"><i class="fa fa-check"></i><b>5</b> Chaining, Currying, and Partial Applications</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#chaining"><i class="fa fa-check"></i><b>5.1</b> Chaining</a></li>
+<li class="chapter" data-level="5.2" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#currying"><i class="fa fa-check"></i><b>5.2</b> Currying</a></li>
+<li class="chapter" data-level="5.3" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#partial-applications"><i class="fa fa-check"></i><b>5.3</b> Partial Applications</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html"><i class="fa fa-check"></i><b>6</b> Monoids and Monads</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#monoids"><i class="fa fa-check"></i><b>6.1</b> Monoids</a></li>
+<li class="chapter" data-level="6.2" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#monads"><i class="fa fa-check"></i><b>6.2</b> Monads</a></li>
+<li class="chapter" data-level="6.3" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html#list-monad"><i class="fa fa-check"></i><b>6.3</b> List Monad</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html"><i class="fa fa-check"></i><b>7</b> Streams and Lazy Evaluation</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#streams"><i class="fa fa-check"></i><b>7.1</b> Streams</a></li>
+<li class="chapter" data-level="7.2" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#stream-monad-collection"><i class="fa fa-check"></i><b>7.2</b> Stream Monad &amp; Collection</a></li>
+<li class="chapter" data-level="7.3" data-path="streams-and-lazy-evaluation.html"><a href="streams-and-lazy-evaluation.html#erlang-processes-streams"><i class="fa fa-check"></i><b>7.3</b> Erlang Processes &amp; Streams</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>8</b> Trees</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="trees.html"><a href="trees.html#binary-search-tree"><i class="fa fa-check"></i><b>8.1</b> Binary Search Tree</a></li>
+<li class="chapter" data-level="8.2" data-path="trees.html"><a href="trees.html#balanced-red-black-tree"><i class="fa fa-check"></i><b>8.2</b> Balanced Red-Black Tree</a></li>
+<li class="chapter" data-level="8.3" data-path="trees.html"><a href="trees.html#performance"><i class="fa fa-check"></i><b>8.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="min-heaps.html"><a href="min-heaps.html"><i class="fa fa-check"></i><b>9</b> Min Heaps</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="min-heaps.html"><a href="min-heaps.html#min-heap"><i class="fa fa-check"></i><b>9.1</b> Min Heap</a></li>
+<li class="chapter" data-level="9.2" data-path="min-heaps.html"><a href="min-heaps.html#efficient-inserting-and-removal"><i class="fa fa-check"></i><b>9.2</b> Efficient Inserting and Removal</a></li>
+<li class="chapter" data-level="9.3" data-path="min-heaps.html"><a href="min-heaps.html#priority-queue"><i class="fa fa-check"></i><b>9.3</b> Priority Queue</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="random-access-lists.html"><a href="random-access-lists.html"><i class="fa fa-check"></i><b>10</b> Random Access Lists</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="random-access-lists.html"><a href="random-access-lists.html#binary-numbers-and-the-ral"><i class="fa fa-check"></i><b>10.1</b> Binary Numbers and the RAL</a></li>
+<li class="chapter" data-level="10.2" data-path="random-access-lists.html"><a href="random-access-lists.html#lookup-and-update"><i class="fa fa-check"></i><b>10.2</b> Lookup and Update</a></li>
+<li class="chapter" data-level="10.3" data-path="random-access-lists.html"><a href="random-access-lists.html#performance-1"><i class="fa fa-check"></i><b>10.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="tries.html"><a href="tries.html"><i class="fa fa-check"></i><b>11</b> Tries</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="tries.html"><a href="tries.html#creating-the-trie"><i class="fa fa-check"></i><b>11.1</b> Creating the Trie</a></li>
+<li class="chapter" data-level="11.2" data-path="tries.html"><a href="tries.html#searching-and-counting"><i class="fa fa-check"></i><b>11.2</b> Searching and Counting</a></li>
+<li class="chapter" data-level="11.3" data-path="tries.html"><a href="tries.html#performance-2"><i class="fa fa-check"></i><b>11.3</b> Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="queues-and-deques.html"><a href="queues-and-deques.html"><i class="fa fa-check"></i><b>12</b> Queues and Deques</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="queues-and-deques.html"><a href="queues-and-deques.html#queues"><i class="fa fa-check"></i><b>12.1</b> Queues</a></li>
+<li class="chapter" data-level="12.2" data-path="queues-and-deques.html"><a href="queues-and-deques.html#deques"><i class="fa fa-check"></i><b>12.2</b> Deques</a></li>
+<li class="chapter" data-level="12.3" data-path="queues-and-deques.html"><a href="queues-and-deques.html#performance-3"><i class="fa fa-check"></i><b>12.3</b> Performance</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Patterns in Functional Programming</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="map-and-filter-functors" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3 -</span> Map and Filter Functors<a href="map-and-filter-functors.html#map-and-filter-functors" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The <code>map</code> and <code>filter</code> are common functions that are available in programming languages to simplify the process of processing a loop. Frequently also simplified with a list comprehension syntax, these functions provide an introduction to a very common subset of functions called functors.</p>
+<div id="functors-and-map" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Functors and Map<a href="map-and-filter-functors.html#functors-and-map" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A functor is a mathematical term used in the field of category theory. The concept is that a functor is something that can convert from one “category” to another “category”. In computer science, we consider these “categories” to be data types. The most common conversion involves the list. The <code>map</code> and <code>filter</code> that we use this week convert from a list to another list. The <code>fold</code> and <code>unfold</code> that we learn about next week convert from a list to a single result (and vice versa). In all of these cases, we can envision the need for some kind of loop (or are in our recursion) to the task of a functor.</p>
+<p>Let’s consider the <code>map</code> function first. The <code>map</code> converts a list to another list using a lambda function. The lambda function defines how to convert each item in the original list to an item in the resulting list.</p>
+<p><img src="images/map.drawio.png" /></p>
+<p>If I wanted to double all the values in the list, I would use the following lambda function:</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda : : a \rightarrow a.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ \lambda :: Value \rightarrow Value * 2.\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>If I wanted to square of all values in the list, I would use the following lambda function</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda :: a \rightarrow a.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ \lambda :: Value \rightarrow Value * Value.\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>If I wanted to convert a list of strings to a list of string lengths, the lambda function would be (assuming you have a function called <code>length</code>):</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda :: string \rightarrow integer.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ \lambda :: Text ~ ~ \rightarrow (length ~ ~ Text).\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>Notice that the <code>map</code> function is expecting that the lambda always have exactly 1 input parameter.</p>
+<p>Here is the formal definition of the <code>map</code>:</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda :: a_1 \rightarrow a_2.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ map :: \lambda ~ ~ [a_1]\rightarrow [a_2].\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ map :: \lambda ~ ~ [] \rightarrow [];\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ map :: \lambda ~ ~ [First | Rest] \rightarrow [(\lambda ~ ~ First)|(map ~ ~ \lambda ~ ~ Rest)].\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>First thing to notice is that the <code>map</code> function does reply on the definition for <span class="math inline">\(\lambda\)</span>. Also notice the recursive nature of the <code>map</code> as it applies the lambda function to the each element one at a time starting with the first element (<span class="math inline">\(First\)</span>). The result of (<span class="math inline">\(\lambda ~ ~ First\)</span>) will be the new value that is placed in the resulting list.</p>
+<p>Consider the code implementation in Erlang below.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb22-1"><a href="map-and-filter-functors.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map(</span><span class="va">_Lambda</span><span class="fu">,</span> <span class="fu">[])</span> <span class="op">-&gt;</span> <span class="fu">[];</span></span>
+<span id="cb22-2"><a href="map-and-filter-functors.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map(</span><span class="va">Lambda</span><span class="fu">,</span> <span class="fu">[</span><span class="va">First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">])</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">Lambda</span><span class="fu">(</span><span class="va">First</span><span class="fu">)|map(</span><span class="va">Lambda</span><span class="fu">,</span> <span class="va">Rest</span><span class="fu">)].</span></span></code></pre></div>
+<p>Functors in programming will frequently use a lambda function to allow us to write more generalized and abstract functions like <code>map</code>. Notice that the <code>map</code> function doesn’t know what the lambda will do except that it is a lambda that converts one value to another value. Note that Erlang also has a built-in function <code>lists:map</code>.</p>
+<div class="problembox">
+<p><strong>Problem Set 1</strong></p>
+<p>You can find the template for the problem sets in this lesson here: <a href="proves/prove03.erl">prove03.erl</a></p>
+<ol style="list-style-type: decimal">
+<li>Implement the <code>map</code> function described above and write test code to convert a list of measurements in inches to a list of measurements in centimeters. Use the formula <span class="math inline">\(1 in = 2.54 cm\)</span>. You will need to modify the test provided in the starting code.</li>
+<li>Using the <code>map</code> function you wrote, use a simple cipher to encrypt a list of characters. The simple cipher should shift all characters by 1 per the <a href="https://www.asciitable.com/">ASCII table</a> . For example, “PASSWORD” should be “QBTTXPSE”. In Erlang, a string is represented as a list of characters. Therefore, you can list notation with strings. Additionally, each character is treated as a number as shown in the ASCII table which means you can add numbers to letters. You will need to modify the test provided in the starting code.</li>
+<li>Rewrite the <code>map</code> function using a list comprehension and call the new function <code>map_2</code>. Test the new <code>map_2</code> function in the same way as you tested <code>map</code> with the cipher test above.</li>
+</ol>
+</div>
+</div>
+<div id="filter" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Filter<a href="map-and-filter-functors.html#filter" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <code>filter</code> function is a functor that converts from a list to a list just like the <code>map</code> function. However, the lambda function used by <code>filter</code> is intended to return a boolean result that will be used to determine if the value in the original list will be included in the new list.</p>
+<p><img src="images/filter.drawio.png" /></p>
+<p>If I wanted to include only even number values in my list, then the lambda function would be as follows:</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda :: integer \rightarrow boolean\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ \lambda :: Value \rightarrow Value ~ ~ mod ~ ~ 2 == 0.\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>If I wanted to include only three digit numbers, then the lambda function would be:</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda :: integer \rightarrow boolean.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ \lambda :: Value \rightarrow Value \ge 100 ~ ~ and ~ ~ Value \le 999.\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>In both of these examples above, the lambda function is expected to return a boolean condition. If it returns true, then the item will be included in the resulting list.</p>
+<p>The formal definition of the <code>filter</code> is given below. The implementation is left for an exercise.</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda :: a \rightarrow boolean\)</span></p>
+<p><span class="math inline">\(spec ~ ~ \mathit{filter} :: \lambda ~ ~ [a] \rightarrow [a].\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ \mathit{filter} :: \lambda ~ ~ [] \rightarrow [];\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ \mathit{filter} :: \lambda ~ ~ [First | Rest] \rightarrow [First|(\mathit{filter} ~ ~ \lambda ~ ~ Rest)] ~ ~ \text{when} ~ ~ (\lambda ~ ~ First) == true;\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ \mathit{filter} :: \lambda ~ ~ [First | Rest] \rightarrow (\mathit{filter} ~ ~ \lambda ~ ~ Rest).\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>In Erlang, we are limited in what we can put in a <code>when</code> guard including boolean operations and a limited subset of built-in functions. When we need to compare a computed result (in the case of the <code>filter</code> we need to run the lambda function and consider the result), you can use a <code>case</code> statement. With a <code>case</code> statement, you can use <code>_Else</code> to represent the default or otherwise case. These <code>case</code> examples below provide a mechanism for traditional <code>if/else</code> conditional blocks.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb23-1"><a href="map-and-filter-functors.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">did_it_work(</span><span class="va">Number</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
+<span id="cb23-2"><a href="map-and-filter-functors.html#cb23-2" aria-hidden="true" tabindex="-1"></a>   <span class="va">Result</span> <span class="op">=</span> <span class="fu">process_it(</span><span class="va">Number</span><span class="fu">),</span></span>
+<span id="cb23-3"><a href="map-and-filter-functors.html#cb23-3" aria-hidden="true" tabindex="-1"></a>   <span class="co">% Use case to compare the value of a variable</span></span>
+<span id="cb23-4"><a href="map-and-filter-functors.html#cb23-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">case</span> <span class="va">Result</span> <span class="kw">of</span></span>
+<span id="cb23-5"><a href="map-and-filter-functors.html#cb23-5" aria-hidden="true" tabindex="-1"></a>      <span class="dv">42</span> <span class="op">-&gt;</span> <span class="fu">do_something(</span><span class="va">Number</span><span class="fu">);</span></span>
+<span id="cb23-6"><a href="map-and-filter-functors.html#cb23-6" aria-hidden="true" tabindex="-1"></a>      <span class="va">_Else</span> <span class="op">-&gt;</span> <span class="fu">do_something_else(</span><span class="va">Number</span><span class="fu">)</span></span>
+<span id="cb23-7"><a href="map-and-filter-functors.html#cb23-7" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span><span class="fu">.</span></span>
+<span id="cb23-8"><a href="map-and-filter-functors.html#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="map-and-filter-functors.html#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="fu">try_something_else(</span><span class="va">Number</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
+<span id="cb23-10"><a href="map-and-filter-functors.html#cb23-10" aria-hidden="true" tabindex="-1"></a>   <span class="va">Result</span> <span class="op">=</span> <span class="fu">process_it(</span><span class="va">Number</span><span class="fu">),</span></span>
+<span id="cb23-11"><a href="map-and-filter-functors.html#cb23-11" aria-hidden="true" tabindex="-1"></a>   <span class="co">% Use case to determine if a boolean expression is true</span></span>
+<span id="cb23-12"><a href="map-and-filter-functors.html#cb23-12" aria-hidden="true" tabindex="-1"></a>   <span class="kw">case</span> <span class="va">Number</span> <span class="op">&gt;</span> <span class="dv">42</span> <span class="kw">of</span></span>
+<span id="cb23-13"><a href="map-and-filter-functors.html#cb23-13" aria-hidden="true" tabindex="-1"></a>      <span class="ch">true</span> <span class="op">-&gt;</span> <span class="fu">do_something(</span><span class="va">Number</span><span class="fu">);</span></span>
+<span id="cb23-14"><a href="map-and-filter-functors.html#cb23-14" aria-hidden="true" tabindex="-1"></a>      <span class="va">_Else</span> <span class="op">-&gt;</span> <span class="fu">do_something_else(</span><span class="va">Number</span><span class="fu">)</span></span>
+<span id="cb23-15"><a href="map-and-filter-functors.html#cb23-15" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span><span class="fu">.</span></span></code></pre></div>
+<p>Note that Erlang provides this function as a built-in function called <code>lists:filter</code>.</p>
+<div class="problembox">
+<p><strong>Problem Set 2</strong></p>
+<ol style="list-style-type: decimal">
+<li>Implement the <code>filter</code> function in Erlang. Use a <code>case</code> block to determine whether an item in the list should be included. Test the <code>filter</code> to get a list of even numbers from a list using the lambda described in the reading. You will need to modify the test provided in the starting code.</li>
+<li>Rewrite the <code>filter</code> function so that it uses a list comprehension instead of using the <code>case</code>. Test the new function with the same lambda function in the previous problem. Call the new function <code>filter_2</code>.</li>
+<li>Use the <code>filter</code> functions you wrote to filter a list of temperatures (in Celsius) that will support liquid water (as opposed to frozen ice or boiling steam).</li>
+<li>Use the <code>filter</code> function you wrote to filter a list of result strings that started with the prefix “ERROR:”. Consider using the <code>string:prefix</code> function to solve this problem. You can learn more about that library function in the <a href="https://www.erlang.org/doc/man/string.html">Erlang Documentation for the string module</a>.</li>
+</ol>
+</div>
+</div>
+<div id="functor-properties" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Functor Properties<a href="map-and-filter-functors.html#functor-properties" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Our <code>map</code> and <code>filter</code> functions are special in that they satisfy the following properties which apply in mathematics for functors:</p>
+<ol style="list-style-type: decimal">
+<li>Identity - The functor must be able to convert back to itself. In math, 1 is an identity for multiplication and 0 is an identify for addition.<br />
+</li>
+<li>Distributive - The functor must be able to satisfy the distributive property. In math, if I had a functor <span class="math inline">\(f\)</span> and two other functions <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span>, then the following must be true: <span class="math inline">\(f(g(h)) = f(g)(f(h))\)</span>. This is frequently written using composition notation: <span class="math inline">\(f(g \circ h) = f(g) \circ f(h)\)</span>. This means that I can apply my functor <span class="math inline">\(f\)</span> to either <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span> combined or I can apply functor <span class="math inline">\(f\)</span> separately to <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span> and then combine the results.</li>
+</ol>
+<p>In the examples below, we will observe how these mathematical properties are satisfied by <code>map</code> and <code>filter</code>. The identity property requires us to find a <span class="math inline">\(\lambda\)</span> that will result in no changes to our original list.</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda :: a \rightarrow a.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ \lambda :: Value \rightarrow Value.\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>Here is the code that demonstrates that identity principle using the <code>map</code> written earlier:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb24-1"><a href="map-and-filter-functors.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">[</span><span class="dv">1</span><span class="fu">,</span><span class="dv">2</span><span class="fu">,</span><span class="dv">3</span><span class="fu">,</span><span class="dv">4</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">map(</span><span class="kw">fun</span><span class="fu">(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Value</span> <span class="kw">end</span><span class="fu">,</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span><span class="dv">2</span><span class="fu">,</span><span class="dv">3</span><span class="fu">,</span><span class="dv">4</span><span class="fu">]),</span></span></code></pre></div>
+<p>Now lets consider the second rule of functors. Does the distributive property hold? In the formula <span class="math inline">\(f(g \circ h) = f(g) \circ f(h)\)</span>, we will use the <code>map</code> function as our functor <span class="math inline">\(f\)</span>. The <span class="math inline">\(g\)</span> and the <span class="math inline">\(h\)</span> will be separate lambda functions which are randomly selected for demonstration purposes.</p>
+<div class="formulabox">
+<p><span class="math inline">\(spec ~ ~ \lambda_g :: a \rightarrow a.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ \lambda_g :: Value \rightarrow 2 * Value.\)</span></p>
+<p><span class="math inline">\(spec ~ ~ \lambda_h:: a \rightarrow a.\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ \lambda_h :: Value \rightarrow (Value*Value) - 1.\)</span></p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>In the following code, we will implement both sides of the distributive property to see if it holds true using a simple list of numbers.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb25-1"><a href="map-and-filter-functors.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="va">G</span> <span class="op">=</span> <span class="kw">fun</span><span class="fu">(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="dv">2</span> <span class="op">*</span> <span class="va">Value</span> <span class="kw">end</span><span class="fu">,</span></span>
+<span id="cb25-2"><a href="map-and-filter-functors.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="va">H</span> <span class="op">=</span> <span class="kw">fun</span><span class="fu">(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">(</span><span class="va">Value</span> <span class="op">*</span> <span class="va">Value</span><span class="fu">)</span> <span class="op">-</span> <span class="dv">1</span> <span class="kw">end</span><span class="fu">,</span></span>
+<span id="cb25-3"><a href="map-and-filter-functors.html#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="map-and-filter-functors.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">% Left Side of Distributive Property</span></span>
+<span id="cb25-5"><a href="map-and-filter-functors.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="va">G_H</span> <span class="op">=</span> <span class="kw">fun</span><span class="fu">(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">G</span><span class="fu">(</span><span class="va">H</span><span class="fu">(</span><span class="va">Value</span><span class="fu">))</span> <span class="kw">end</span><span class="fu">,</span></span>
+<span id="cb25-6"><a href="map-and-filter-functors.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">[</span><span class="dv">0</span><span class="fu">,</span><span class="dv">6</span><span class="fu">,</span><span class="dv">16</span><span class="fu">,</span><span class="dv">30</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">map(</span><span class="va">G_H</span><span class="fu">,</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span><span class="dv">2</span><span class="fu">,</span><span class="dv">3</span><span class="fu">,</span><span class="dv">4</span><span class="fu">]),</span></span>
+<span id="cb25-7"><a href="map-and-filter-functors.html#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="map-and-filter-functors.html#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co">% Right Side of Distributive Property</span></span>
+<span id="cb25-9"><a href="map-and-filter-functors.html#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">[</span><span class="dv">0</span><span class="fu">,</span><span class="dv">6</span><span class="fu">,</span><span class="dv">16</span><span class="fu">,</span><span class="dv">30</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">map(</span><span class="va">G</span><span class="fu">,</span> <span class="fu">map(</span><span class="va">H</span><span class="fu">,</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span><span class="dv">2</span><span class="fu">,</span><span class="dv">3</span><span class="fu">,</span><span class="dv">4</span><span class="fu">])),</span></span></code></pre></div>
+<p>While understanding the properties of functors is educational, the way the code is written in the two examples above is more instructive. Notice the creation of the <code>G_H</code> function which is the composition of two functions. Also note that the this was needed because the <code>map</code> function requires a lambda with only one parameter. As you study the code above, notice how the <code>map</code> functions were combined together in the “Right Side” case. We call this “chaining” which we will learn about next week.</p>
+<p>Demonstrations of these two properties of functors for the <code>filter</code> function is left as an exercise.</p>
+<div class="problembox">
+<p><strong>Problem Set 3</strong></p>
+<ol style="list-style-type: decimal">
+<li>Write code in Erlang to demonstrate the identity property for the <code>filter</code> functor. Reuse the <code>filter</code> function you wrote earlier.</li>
+<li>Write code in Erlang to demonstrate the distributive property for the <code>filter</code> function. Reuse the <code>filter</code> function you wrote earlier. You will have to come up with your own appropriate <code>G</code> and <code>H</code> lambda functions in your demonstration. Remember that the lambda functions for <code>filter</code> expect to return boolean. In other words, when you demonstrate the distributive property, you will be composing (or chaining) boolean conditions together using the <code>and</code> operator.</li>
+</ol>
+</div>
+<p><span class="math inline">\(\nonumber\)</span>
+<span class="math inline">\(\nonumber\)</span>
+<a href="http://creativecommons.org/licenses/by/4.0/"><img src="images/cc-88x31.png" alt="Creative Commons License - CC - BY" /></a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="persistence.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fold-and-unfold-functors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": {},
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
