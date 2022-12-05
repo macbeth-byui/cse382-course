@@ -28,7 +28,7 @@ Here is the specification and definition for incrementing a binary sequence (goi
 :::: {.formulabox data-latex=""}
 $spec ~ ~ inc :: [integer] \rightarrow [integer].$
 
-$de\mathit{f} ~ ~ inc :: [] \righarrow [1];$
+$de\mathit{f} ~ ~ inc :: [] \rightarrow [1];$
 
 $de\mathit{f} ~ ~ inc :: [0|Rest] \rightarrow [1|Rest];$
 

@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2022-12-02" />
+<meta name="date" content="2022-12-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -294,7 +294,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Here is the specification and definition for incrementing a binary sequence (going left to right in big endian format) where the sequence starts at 1 and the sequence is stored in a list. Note that the definition follows the two rules for incrementing a binary sequence that we identified earlier. An empty list would represent the value of 0.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ inc :: [integer] \rightarrow [integer].\)</span></p>
-<p><span class="math inline">\(de\mathit{f} ~ ~ inc :: [] \righarrow [1];\)</span></p>
+<p><span class="math inline">\(de\mathit{f} ~ ~ inc :: [] \rightarrow [1];\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ inc :: [0|Rest] \rightarrow [1|Rest];\)</span></p>
 <p><span class="math inline">\(de\mathit{f} ~ ~ inc :: [1|Rest] \rightarrow [0|( inc ~ ~ Rest)].\)</span></p>
 </div>
