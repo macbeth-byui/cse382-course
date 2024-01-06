@@ -21,7 +21,7 @@ In previous classes, you may have looked at design patterns and data structures 
 * Week 1: Erlang Basics
 * Week 2: Persistence
 * Weeks 3-7: Design Patterns
-	* Functors - Map, Filter, Fold, Unfold
+	* Higher Order Functions - Map, Filter, Fold, Unfold
 	* Chaining
 	* Currying
 	* Partial Applications
@@ -41,13 +41,13 @@ We will be using Erlang in this class.  If you already know Clojure, you will fi
 
 You will be given starting code for each problem set which you must use.  You should submit all the problem sets weekly on Saturday evening to stay on track.
 
-You can resubmit any of your work for a higher grade as many times as you want during the semester.  Late work will not be penalized so you can take more time if needed to learn the material.  However, submitting late work too frequently may result in getting behind which will have a negative impact on your learning and subsequent grade.  During Week 13 and 14 you will have an opportunity to catch up on any missed work.  
+You can resubmit any of your work for a higher grade as many times as you want during the semester.  Late work will be penalized 10% which means it is okay to submit partially completed work. The late penalty will not be removed if you resubmit for a higher grade.
 
-At the beginning of Week 10, you will be given an open book, open note, take-home final exam which will be due on the last day of the semester.  The final exam will assess your understanding of principles taught during the course.
+At the beginning of Week 12, you will be given an open book, open note, take-home final exam which will be due on the last day of the semester.  The final exam will assess your understanding of principles taught during the course.
 
 Your grade will be composed of 80% for the weekly problem sets and 20% for the final exam.
 
-Attendance to class is highly encouraged.  If you miss no more than 3 days during the semester (excluding during Weeks 1 and 14), you will receive a 5% bonus on your final grade.
+Attendance to class is highly encouraged.  If you miss no more than 3 days during the semester (excluding during Weeks 1, 13, and 14), you will receive a 5% bonus on your final grade.
 
 Office hours and contact information for this semester can be found on the Syllabus page in I-Learn. 
 

@@ -1,10 +1,8 @@
-# Map and Filter Functors
+# Higher Order Functions - Map and Filter
 
-The `map` and `filter` are common functions that are available in programming languages to simplify the process of processing a loop.  Frequently also simplified with a list comprehension syntax, these functions provide an introduction to a very common subset of functions called functors.
+The `map` and `filter` are common functions that are available in programming languages to simplify the process of processing a loop.  Frequently also simplified with a list comprehension syntax, these functions provide an introduction to a very common subset of functions Higher Order Functions.  A Higher Order Function is a function that takes a function as a parmater or returns a function as a result.
 
-## Functors and Map
-
-A functor is a mathematical term used in the field of category theory.  The concept is that a functor is something that can convert from one "category" to another "category".  In computer science, we consider these "categories" to be data types.  The most common conversion involves the list.  The `map` and `filter` that we use this week convert from a list to another list.  The `fold` and `unfold` that we learn about next week convert from a list to a single result (and vice versa).  In all of these cases, we can envision the need for some kind of loop (or are in our recursion) to the task of a functor.
+## Map
 
 Let's consider the `map` function first.  The `map` converts a list to another list using a lambda function.  The lambda function defines how to convert each item in the original list to an item in the resulting list.
 
@@ -52,7 +50,7 @@ $de\mathit{f} ~ ~ map :: \lambda ~ ~ [First | Rest] \rightarrow [(\lambda ~ ~ Fi
 ::::
 $\nonumber$
 
-First thing to notice is that the `map` function does reply on the definition for $\lambda$.  Also notice the recursive nature of the `map` as it applies the lambda function to the each element one at a time starting with the first element ($First$).  The result of ($\lambda ~ ~ First$) will be the new value that is placed in the resulting list.
+First thing to notice is that the `map` function does rely on the definition for $\lambda$.  Also notice the recursive nature of the `map` as it applies the lambda function to each element one at a time starting with the first element ($First$).  The result of ($\lambda ~ ~ First$) will be the new value that is placed in the resulting list.
 
 Consider the code implementation in Erlang below.
 
@@ -60,7 +58,7 @@ Consider the code implementation in Erlang below.
 map(_Lambda, []) -> [];
 map(Lambda, [First|Rest]) -> [Lambda(First)|map(Lambda, Rest)].
 ```
-Functors in programming will frequently use a lambda function to allow us to write more generalized and abstract functions like `map`.  Notice that the `map` function doesn't know what the lambda will do except that it is a lambda that converts one value to another value.  Note that Erlang also has a built-in function `lists:map`.
+Notice that the `map` function doesn't know what the lambda will do except that it is a lambda that converts one value to another value.  Note that Erlang also has a built-in function `lists:map`.
 
 :::: {.problembox data-latex=""}
 **Problem Set 1**
@@ -74,7 +72,7 @@ You can find the template for the problem sets in this lesson here: [prove03.erl
 
 ## Filter
 
-The `filter` function is a functor that converts from a list to a list just like the `map` function.  However, the lambda function used by `filter` is intended to return a boolean result that will be used to determine if the value in the original list will be included in the new list.
+The `filter` function converts a list to another list just like the `map` function.  However, the lambda function used by `filter` is intended to return a boolean result that will be used to determine if the value in the original list will be included in the new list.
 
 ![](images/filter.drawio.png)
 
@@ -113,7 +111,7 @@ $de\mathit{f} ~ ~ \mathit{filter} :: \lambda ~ ~ [First | Rest] \rightarrow (\ma
 ::::
 $\nonumber$
 
-In Erlang, we are limited in what we can put in a `when` guard including boolean operations and a limited subset of built-in functions. When we need to compare a computed result (in the case of the `filter` we need to run the lambda function and consider the result), you can use a `case` statement.  With a `case` statement, you can use `_Else` to represent the default or otherwise case.  These `case` examples below provide a mechanism for traditional `if/else` conditional blocks.
+In Erlang, we are limited to only boolean operations and sum built-in functions with the `when` guard. When we need to compare a computed result (in the case of the `filter` we need to run the lambda function and consider the result), you can use a `case` statement.  With a `case` statement, you can use `_Else` or just `_` to represent the default or otherwise case.  These `case` examples below provide a mechanism for traditional `if/else` conditional blocks.
 
 ```erlang
 did_it_work(Number) ->
@@ -143,29 +141,32 @@ Note that Erlang provides this function as a built-in function called `lists:fil
 4. Use the `filter` function you wrote to filter a list of result strings that started with the prefix "ERROR:".  Consider using the `string:prefix` function to solve this problem.  You can learn more about that library function in the [Erlang Documentation for the string module](https://www.erlang.org/doc/man/string.html).
 ::::
 
-## Functor Properties
+## Functors
 
-Our `map` and `filter` functions are special in that they satisfy the following properties which apply in mathematics for functors:
+Our `map` function also has an additional classification.  A functor is a term from category theory in mathematics which means that it provides a mapping between two different categories of things.  In computer science, if we create a data structure that has the ability to change the contents without changing the structure, then we say that the structure is a functor.  The most common operation that we perform on functors is the `map` operation.  Remember that the `map` function will use a lambda to change all the contents of the list without changing the size of the list (i.e. the structure).  A tree is also a functor.  A binary search tree is a little more difficult.  If you apply a lambda on everything in the binary search tree, the ordering rules may be violated.  This means that the `map` function will have to check to see if re-ordering is needed.  Structures that represent a single item (e.g. variable of a certain type) can also be functors as a `map` function can be written for them to change their value using a lambda.  Even a function is a functor.  If you apply a lambda the function then you have a new function which is a composition of both functions.  
 
-1. Identity - The functor must be able to convert back to itself.  In math, 1 is an identity for multiplication and 0 is an identify for addition.  
-2. Distributive - The functor must be able to satisfy  the distributive property.  In math, if I had a functor $f$ and two other functions $g$ and $h$, then the following must be true: $f(g(h)) = f(g)(f(h))$.  This is frequently written using composition notation: $f(g \circ h) = f(g) \circ f(h)$.    This means that I can apply my functor $f$ to either $g$ and $h$ combined or I can apply functor $f$ separately to $g$ and $h$ and then combine the results.
+Composition is a key characteristic of functors.  If the list is a functor, then I should be able to show that the following are equivalent given two lambdas $\lambda_g$ and $\lambda_h$:  
 
-In the examples below, we will observe how these mathematical properties are satisfied by `map` and `filter`.    The identity property requires us to find a $\lambda$ that will result in no changes to our original list.
+* `map` applied to a list using $\lambda_h(\lambda_g(x))$ which is the composition of both lambda functions
+* `map` applied to a list using $\lambda_g(x)$ and then `map` applied a second time on that result using $\lambda_h$
+
+We can write this as:
 
 :::: {.formulabox data-latex=""}
-$spec ~ ~ \lambda :: a \rightarrow a.$
-
-$de\mathit{f} ~ ~ \lambda :: Value \rightarrow Value.$
+$map(\lambda_h(\lambda_g),list) = map(\lambda_h,(map(\lambda_g,list)))$.  
 ::::
 $\nonumber$
 
-Here is the code that demonstrates that identity principle using the `map` written earlier:
+This is frequently written using composition notation: 
 
-```erlang
-[1,2,3,4] = map(fun(Value) -> Value end, [1,2,3,4]),
-```
+:::: {.formulabox data-latex=""}
+$map(\lambda_g \circ \lambda_h) = map(\lambda_g) \circ map(\lambda_h)$. 
+::::
+$\nonumber$
 
-Now lets consider the second rule of functors.  Does the distributive property hold?  In the formula $f(g \circ h) = f(g) \circ f(h)$, we will use the `map` function as our functor $f$.  The $g$ and the $h$ will be separate lambda functions which are randomly selected for demonstration purposes.
+This means that we can use the `map` on the functor list to either $\lambda_g$ and $\lambda_h$ combined (in order) or I can use the `map` on the functor list with $\lambda_g$ first and the use the `map` again using the $\lambda_h$ second.
+
+Here is an example of demonstrating the composition rule for our list functor.  In the example, we will use $\lambda_g$ to double the value and use $\lambda_h$ to square and subtract 1.
 
 :::: {.formulabox data-latex=""}
 $spec ~ ~ \lambda_g :: a \rightarrow a.$
@@ -178,28 +179,19 @@ $de\mathit{f} ~ ~ \lambda_h ::  Value \rightarrow (Value*Value) - 1.$
 ::::
 $\nonumber$
 
-In the following code, we will implement both sides of the distributive property to see if it holds true using a simple list of numbers.
+In the problem set, you will implement both sides of the composition $map(\lambda_g \circ \lambda_h) = map(\lambda_g) \circ map(\lambda_h)$ to see if it holds true using a simple list of numbers.  The left hand side calls `map` once and the right hand side calls `map` twice.  The left hand side will need to create a new lambda function that composes both lambda functions.  In that new lambda function, you should use $\lambda_g$ and $\lambda_h$.
 
-```erlang
-G = fun(Value) -> 2 * Value end,
-H = fun(Value) -> (Value * Value) - 1 end,
-
-% Left Side of Distributive Property
-G_H = fun(Value) -> G(H(Value)) end,
-[0,6,16,30] = map(G_H, [1,2,3,4]),
-
-% Right Side of Distributive Property
-[0,6,16,30] = map(G, map(H, [1,2,3,4])),
-```
-While understanding the properties of functors is educational, the way the code is written in the two examples above is more instructive.  Notice the creation of the `G_H` function which is the composition of two functions.  Also note that the this was needed because the `map` function requires a lambda with only one parameter.  As you study the code above, notice how the `map` functions were combined together in the "Right Side" case.  We call this "chaining" which we will learn about next week.
-
-Demonstrations of these two properties of functors for the `filter` function is left as an exercise.
+The use of composition here is a preview for the topic of chaining which we see in the near future.
 
 :::: {.problembox data-latex=""}
 **Problem Set 3**
 
-1. Write code in Erlang to demonstrate the identity property for the `filter` functor.  Reuse the `filter` function you wrote earlier.
-2. Write code in Erlang to demonstrate the distributive property for the `filter` function.  Reuse the `filter` function you wrote earlier.  You will have to come up with your own appropriate `G` and `H` lambda functions in your demonstration.  Remember that the lambda functions for `filter` expect to return boolean.  In other words, when you demonstrate the distributive property, you will be composing (or chaining) boolean conditions together using the `and` operator.
+1. Write code in Erlang to demonstrate composition property with the list functor.  You will not write your code in the test function.
+  * Define your $\lambda_g$ as a function that doubles a value
+  * Define your $\lambda_h$ as a function that squares a value and then subtracts 1
+  * Implement $map(\lambda_g \circ \lambda_h)$ using the list of numbers in the test function.
+  * Implement $map(\lambda_g) \circ map(\lambda_h)$ using the same list of numbers in the test function.
+  * Verify that the result is the same.
 ::::
 
 $\nonumber$

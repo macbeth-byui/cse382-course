@@ -5,11 +5,11 @@ persistence
 persistence-in-lists
 more-list-persistence
 specifications-and-definitions
-map-and-filter-functors
-functors-and-map
+higher-order-functions---map-and-filter
+map
 filter
-functor-properties
-fold-and-unfold-functors
+functors
+higher-order-functions---fold-and-unfold
 fold
 fold-right
 unfold
@@ -23,7 +23,7 @@ monads
 list-monad
 streams-and-lazy-evaluation
 streams
-stream-monad-collection
+stream-monad
 erlang-processes-streams
 trees
 binary-search-tree

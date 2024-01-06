@@ -29,17 +29,13 @@ first_word(Text) ->
 
 
 % Problem 2.1
-% The iter, next, value, and lambda functions for the
-% fixed_iterator Monad is written below.
-% Complete the collect function by providing the
-% implementaiton of the arity 2 function.
+% The iter and next functions for the
+% fixed_iterator Monad are written below.
+% Implement the iter_sum function.
 iter(Stream) -> {undefined, Stream}.
 
 next({_,done}) -> {undefined, done};
 next({_,Lambda}) -> Lambda().
-
-collect(Stream) -> collect(iter(Stream), []).
-collect(Stream, Result) -> add_your_code_here.
 
 
 % Problem 3.1
@@ -118,9 +114,20 @@ test_ps2() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % [2,4,6,8,10] = collect(range(2,10,2)),
-    
-    % ["The","cow","jumped","over","the","moon"] = collect(words("The cow jumped over the moon")),
+
+    % io:format("Start Time: ~p~n",[time()]),
+    % Result1 = iter_sum(iter(range(1,500000000,1))),
+    % io:format("iter_sum completed: ~p ~p~n",[time(), Result1]),
+
+    % Result2 = lists:sum(lists:seq(1,500000000,1)),
+    % io:format("lists:sum completed: ~p ~p~n",[time(), Result2]),
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Test Problem 2.2
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Add your observations below as a comment
+
+    % The iter_sum took 21 seconds and the sum took 119 seconds.  Its faster to be lazy.
 
     ok.
 

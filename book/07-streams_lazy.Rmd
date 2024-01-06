@@ -1,6 +1,6 @@
 # Streams and Lazy Evaluation
 
-In this lesson we will learn about the Stream Design Pattern.  Streams are things that provide you values when you need them.  They are an example of the unfold functor pattern.  This "lazy" approach can actually save you a lot of time and memory when you only need something one at a time.
+In this lesson we will learn about the Stream Design Pattern.  Streams are things that provide you values when you need them.  They are very similair to the `unfold` function that we saw earlier.  This "lazy" approach can actually save you a lot of time and memory when you only need something one at a time.
 
 ## Streams
 
@@ -110,7 +110,7 @@ You can find the template for the problem sets in this lesson here: [prove07.erl
 2. Create a new stream called `words` which will split text by spaces into sub-strings.   Each time the stream is called, it should return back the next string.  For example, if the text was "The cow jumped over the moon.", then the stream would first return "The", then "cow", then "jumped", and so forth.  Use the same `fixed_iterator` type described above.  You are provided a function called `first_word` which returns a tuple in the format `{Word, Rest}` where `Word` is the first word and `Rest` is the remaining text (just like working with values in a list).  Test code is provided to test your stream.
 ::::
 
-## Stream Monad & Collection
+## Stream Monad
 
 In the previous section we created a `fixed_iterator` type that the `range` function supported.  This type is actually a Monad.  The $\lambda_{stream}$ provided in the `fixed_iterator` is the meta-data or state that we are maintaining for our stream. To complete the Monad definition, we need a type constructor (or unit function) and a bind function.  Since the type constructor will need to create a stream that hasn't started yet, we will modify our specification for the Monad Type we had earlier (the second condition in the struct is new):
 
@@ -176,35 +176,34 @@ Next6 = next(Next5),
 io:format("~p~n",[value(Next6)]),  % Print undefined
 ```
 
-A common function that is implemented when lazy streams are supported is the `collect`.  The `collect` function will undo the "laziness" of our data structure by iterating through the entire $\lambda_{stream}$ and put all the results in order into a traditional list.  This `collect` function is an example of the unfold functor pattern.
-
-The specification for the `collect` is given below:
-
-:::: {.formulabox data-latex=""}
-$spec ~ ~ collect :: \lambda_{stream} \rightarrow [a].$
-
-$spec ~ ~ collect :: \mathit{f}ixed\_iterator ~ ~ [a] \rightarrow [a].$
-::::
-$\nonumber$
-
-The second specification is intended to help build the list result recursively by calling the `next` function until the iterator is completed.  The definition for the first specification for `collect/1`is given below.  Notice that the function will call `iter` to convert the $\lambda_{stream}$ into a `fixed_iterator` prior to doing the recursion to generate the list of values.
-
-:::: {.formulabox data-latex=""}
-$de\mathit{f} ~ ~ collect :: Stream \rightarrow (collect ~ ~ (iter ~ ~ Stream) ~ ~ []).$
-::::
-$\nonumber$
-
-The erlang code for `collect/1` is given below:
+When we think about the `fixed_iterator` monad, we need to consider what the advantage is for using it.  First, we could use it as means of looping through a list of values one at a time.  This is not much different then creating a list and giving it to a recursive call.  Perhaps we want to sum a lists of numbers.  I could write the following code to sum the numbers 1 to 1000:
 
 ```erlang
-collect(Stream) -> collect(iter(Stream), []).
+500500 = lists:sum(lists:seq(1,1000,1)).
 ```
-The implementation of the `collect/2` function is left for an exercise below.
+
+Assuming that we wrote a function `iter_sum` (specification below) which took in a `fixed_iterator` monad instead of a list, we could then write the following code to sum those same numbers 1 to 1000:
+
+:::: {.formulabox data-latex=""}
+$spec ~ ~ iter\_sum :: \mathit{f}ixed\_iterator \rightarrow integer.$
+::::
+$\nonumber$
+
+```erlang
+500500 = iter_sum(iter(range(1,1000,1))).
+```
+
+If we run both of these, we will see not much difference.  However, what if we summed the numbers from 1 to 500,000,000?  Consider the work that must be done.  If the first example, the `lists:seq` function will create the list first which is an $O(n)$ operation and we take up a lot of memory.  After it creates the list, it then needs loop through the list again recursively to add up the values.  The is another $O(n)$ operation.  
+
+In the second example, the `iter` and `range` functions do not create any list.  This is $O(1)$.  The `iter_sum` will loop recursively on the stream until we get to `{undefined,done}`.  This will be $O(n)$.  Note that there is no data structure involved.  Removing the overhead will drastically reduce the time it takes.  In the problem set, you will observe the actual time difference.
+
+In other languages like Haskell, there is built-in support for lazy functions.  In Erlang we have to create the additional functions like `iter` and `iter_sum`.  It may seem like extra work, but imagine if our lazy function was to read the next line of very large file or dataset, the next value in a list that has no pre-defined end, or the next page of results from an API.  Instead of loading everything up (or generating our list of numbers) first, we can write a stream function to give us the next thing.  The stream is nothing more than a function without parameters that has the current state contained in that function.
 
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
-1. Implement the `collect/2` function and test it with the code provided.  When writing the function, you should reuse the `next` function iterate the stream, reuse the `value` function to get the  value to put in the `Result` list, and reuse the `lambda` function to compare with `done`.  Test code using the `collect` function with `range` and `words` is provided.
+1. Implement the `iter_sum` function to recursively add up all the values in the `fixed_iterator` stream created with `iter(range(1,500000000,1))`.  The test code already calls the `iter_sum` function.  It may take a few minutes to run the code.  The sum should be 125,000,000,250,000,000.  You can reduce the number down to 10 for testing purposes and the change it back to 500,000,000 when your `iter_sum` is working.
+2. The test code will display the current time as `{hour,minutes,seconds}`.  Describe in the comments what you observed when comparing the `lists:sum` and the `iter_sum` functions.
 ::::
 
 ## Erlang Processes & Streams

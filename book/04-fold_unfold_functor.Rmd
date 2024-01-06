@@ -1,6 +1,6 @@
-# Fold and Unfold Functors
+# Higher Order Functions - Fold and Unfold
 
-The `fold` and `unfold` are part of the common functor design patterns.  A `fold` will convert from a list to a single value whereas an `unfold` will convert from a single value to a list. 
+The `fold` and `unfold` are also common higher order functions.  A `fold` will convert from a list to a single value whereas an `unfold` will convert from a single value to a list. 
 
 ## Fold
 

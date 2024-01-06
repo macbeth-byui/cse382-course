@@ -118,15 +118,19 @@ test_ps3() ->
     % Test Problem 3.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write test code to demonstrate the identity for filter
+    % List of values to use in the demonstration
+    Values = [1, 2, 3, 4],
 
+    % Create the lambda functions
+    G = put_your_lambda_function_here,
+    H = put_your_lambda_function_here,
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Test Problem 3.2
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Left Side of Composition Property
 
-    % Write test code to demonstrate the distributive property for filter
+    %[0,6,16,30] = put_your_code_here,
 
+    % Right Side of Composition Property
 
+    %[0,6,16,30] = put_your_code_here,
 
     ok.

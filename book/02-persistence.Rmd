@@ -8,7 +8,7 @@ The lists that we are going to look at early in this course are actually linked 
 
 ![](images/FiveElementList.drawio.png)
 
-Note that we have a variable `L1` that contains a reference to the first node in the list and each node in the list contains a reference to the next node.  If we want to add a new node to the front of this list, we have to do it without violating the immutability rule.  When we add the new node, we are creating a new list.  Notice that `L2` points to the new node we have created.  However, since the remaining list doesn't need to change, we just connect the new node to the original `L1`.  Since we get to reuse the entire list, the performance for prepending to the front is only O(1).
+Note that we have a variable `L1` that contains a reference to the first node in the list and each node in the list contains a reference to the next node.  If we want to add a new node to the front of this list, we have to do it without violating the immutability rule.  When we add the new node, we are creating a new list.  Notice that `L2` points to the new node we have created.  However, since the remaining list doesn't need to change, we just connect the new node to the original `L1`.  Since we get to reuse the entire list, the performance for pre-pending to the front is only O(1).
 
 ![](images/FiveElementListPrepend.drawio.png)
 
@@ -24,16 +24,16 @@ Let's consider the situation where we want to append a new node to the end of th
 
 ![](images/FiveElementListAppend.drawio.png)
 
-Notice in the picture above, the last node in both `L1` and `L2` has to change because it needs to reference the new node instead of referencing nothing.  This is a change which conflicts with immutability rules.  We can't change node `E` to point from nothing to the new node `G`.  Therefore, we need to create a new 'E' node that connects to 'G'.  The new `E` node will require us to create a new `D` node, and so forth.  In the end, we have to make a copy of all nodes to append `G` to produce `L3`.
+Notice in the picture above, the last node `E` in both `L1` and `L2`  has to change because it needs to reference the new node `G` instead of referencing nothing.  This is a change which conflicts with immutability rules.  Therefore, we need to create a new 'E' node that connects to 'G'.  The new `E` node will require us to create a new `D` node, and so forth.  In the end, we have to make a copy of all nodes to append `G` to produce `L3`.
 
-The code for this `append` function requires the use of recursion.  When we arrive at the end of the list by calling `append` recursively, then we will create our new node as a 1 item list. Once we get the new node created, we return from our recursive calls and begin adding new nodes for each of the values that were in our previous list.
+The code for this `append` function requires the use of recursion.  When we arrive at the end of the list by calling `append` recursively, then we will create our new node as a 1 item list. Once we get the new node created, we return from our recursive calls and begin adding new nodes (going backwards as the recursion is backtracked) for each of the values that were in our previous list.
 
 ```erlang
 append([], Value) -> [Value];
 append([First|Rest], Value) -> [First | append(Rest, Value)].
 ```
 
-When we look at the `append` function it may be concerning that there is no reuse.  If all we did was call the `append` function, there would be multiple duplicates of our data all over our memory.  In our programming languages, garbage collection will remove any memory that is no longer referenced by another variable.   However, there is a cost for not having reuse.  We have to recreate the entire list again which is O(n) performance.
+When we look at the `append` function it may be concerning that there is no reuse.  If all we did was call the `append` function, there would be multiple duplicates of our data all over our memory.  In Erlang, garbage collection will remove any memory that is no longer referenced by another variable that has gone out of scope.   However, there is a cost for not having reuse.  We have to recreate the entire list again which is O(n) performance.
 
 In the next topic below, we will consider inserting something in the middle of our list which will cause us to reuse some of the nodes in our list.
 
@@ -63,11 +63,11 @@ remove_first([]) -> [];
 remove_first([_First|Rest]) -> Rest.
 ```
 
-Suppose we start with our original five item list `L1` again and consider inserting a node `F` in the middle after node `C`.  This will be a combination of the ideas that we have seen prepending and appending to our list with respect to reuse.  If we insert after index 2 (where the first element is index 0), then we will need new nodes up to index 2 and we can reuse everything after index 2.
+Suppose we start with our original five item list `L1` again and consider inserting a node `F` in the middle after node `C`.  This will be a combination of the ideas that we have seen pre-pending and appending to our list with respect to reuse.  If we insert after index 2 (where the first element is index 0), then we will need new nodes up to index 2 and we can reuse everything after index 2.
 
 ![](images/FiveElementListInsertAt.drawio.png)
 
-Here is the code for our `insert_at` function.  In this code, we will decrement our `Index` as we recursively search through the list.  Once our `Index` reaches 0 then we know we have reached the desired location.  We will then create our new node and connect it (reuse) to the remaining nodes in our original list.  If our `Index` is 0 in the second clause, then we know we have found the place to insert.  Notice that if our `Index` was negative then the original list is returned.  For an `Index` too big, we could use the `length` function in the first clause.  However, to avoid checking the length in every recursive `insert_at` function call, we have introduced the third clause.  However, if the `Index` is not 0 but the `List` is empty (the third clause), then we know that our index was too big. 
+Here is the code for our `insert_at` function.  In this code, we will decrement our `Index` as we recursively search through the list.  Once our `Index` reaches 0 then we know we have reached the desired location.  We will then create our new node and connect it (reuse) to the remaining nodes in our original list.  If our `Index` is 0 in the second clause, then we know we have found the place to insert.  Notice that if our `Index` was negative then the original list is returned.  For an `Index` too big, we could use the `length` function in the first clause.  However, to avoid checking the length in every recursive `insert_at` function call, we have introduced the third clause.  If the `Index` is not 0 but the `List` is empty (the third clause), then we know that our index was too big. 
 
 ```erlang
 insert_at(List, _Value, Index) when Index < 0 -> List;
@@ -99,7 +99,7 @@ A specification describes the interface of a function in terms of data types.  H
 * $atom(name)$ - An atom is a label with a specified name but no value.  
 * $a$ - Represents any type
 * $[a]$ - List of values of any type
-* $\lbrace a_1,a_2 \rbrace$ - 2 element Tuple of values of different types
+* $\lbrace a_1,a_2 \rbrace$ - 2 element tuple of values of different types
 * $a_1 \looparrowleft a_2$ - Dictionary (or map) defined by keys $a_1$ and values $a_2$.
 * $\lambda$ - Function (frequently called lambda) that is passed to another function
 ::::
@@ -108,7 +108,7 @@ $\nonumber$
 We write a specification using the $spec$, $::$, and $\rightarrow$ notations.  The input types are separated by spaces.  An example with 3 inputs is given below.  Notice that subscripts will be frequently used.
 
 :::: {.formulabox data-latex=""}
-$spec ~ ~ name :: input_1\_type ~ ~ input_2\_type ~ ~ input_3\_type \rightarrow output\_type.$
+$spec ~ ~ name :: input\_type_1 ~ ~ input\_type_2 ~ ~ input\_type_3 \rightarrow output\_type.$
 ::::
 $\nonumber$
 
@@ -116,23 +116,32 @@ $\nonumber$
 We can define custom types for use in our specifications by defining tuples (or records).  To define a custom type, we will use the $struct$ keyword as follows: (this example is for a tuple of size 3): 
 
 :::: {.formulabox data-latex=""}
-$struct ~ ~ name ~ ~ \lbrace type_1:name_1, type_2:name_2, type_3:name_3 \rbrace$.  
+$struct ~ ~ name ~ ~ \lbrace type_1:name_1, type_2:name_2, type_3 \rbrace$.  
 ::::
 $\nonumber$
 
-In this example, there are three fields each with a type and an optional name.   The keyword $or$ will be used if there are different tuple sizes (arity) permitted in our custom type.
+In this example, there are three fields each with a type and an optional name (as in the case of the 3rd field).   The keyword $or$ will be used if there are different tuple sizes (arity) permitted in our custom type.
+
+:::: {.formulabox data-latex=""}
+$struct ~ ~ name$
+
+$\quad \quad \lbrace atom(good), a \rbrace ~ ~ or$
+
+$\quad \quad \lbrace atom(bad), a \rbrace$
+::::
+$\nonumber$
 
 A definition is how the function will use the inputs to produce the output.  Names will be used to give meaning to the inputs.  You should refer back to the specification to understand the types.  When we write definitions, we will use the following notations:
 
 :::: {.formulabox data-latex=""}
 * $=$ : Save an intermediate result into an immutable variable
-* $+$, $-$, $*$, $/$, $and$, $or$, $>$, $<$, $\geq$, $\leq$, $==$, $\not=$ : Commonly used operators.
-* $(\lambda ~ ~ input_1 ~ ~ input_2 ~ ~ input_3)$ : Call a function (in this case called $\lambda$ with the supplied parameters.  Notice that this does feel like a function call in Clojure with the parentheses). 
+* $+$, $-$, $*$, $/$, $and$, $or$, $>$, $<$, $\geq$, $\leq$, $==$, $\not=$ : Commonly used arithmetic and boolean operators.
+* $(\lambda ~ ~ input_1 ~ ~ input_2 ~ ~ input_3)$ : Call a function (in this case called $\lambda$ with the supplied parameters. Notice that the function name are parameters are put inside of the parentheses. 
 * $[]$ : Empty List
 * $\lbrace \looparrowleft \rbrace$ : Empty Dictionary
-* $[First|Rest]$ : This splits the list where First is the first element in the list and Rest is the rest of the list.
+* $[First|Rest]$ : This splits the list where First is the first element in the list and Rest is the rest of the list.  In other reading you may see this written as $[H|T]$.
 * $List1 ++ List2$ : Combines (or concatenates) two lists together.
-* $struct\_name.field\_name$ : Access a field from a custom tuple
+* $struct\_name.field\_name$ : Access a field (if it has a name) from a custom tuple
 * $nil$ - An atom that represents nothing (used sometimes for error conditions).  This atom is special in that it is compatible with any type in the specification.  For example, if a function was supposed to return a $[a]$, for certain conditions (like error conditions), you could return a $nil$ in the definition.
 * $\text{when} ~ ~ condition$ : Provide a guard condition on the function clause.
 * We will introduce many different parameter and variable names in our function definitions.  Here are common ones that we will use in the examples:
@@ -158,7 +167,7 @@ $\nonumber$
 
 If a function name exists with different number of inputs (different arity) then we will write a specification for each one.  The definition for each specification may take multiple clauses.  Each clause will handle a different scenario and will be separated by a semicolon.  Clauses are evaluated in order.  
 
-Let's do some examples with our list functions.  Here is the specification and definition for the `prepend` function.  The prepend function took a list and a value.  Therefore the specification will use inputs of $[a]$ and $a$.  The output is just a longer list so it will be $[a]$.
+Let's do some examples with our list functions.  Here is the specification and definition for the `prepend` function.  The prepend function took a list and a value.  Therefore the specification will use inputs of $[a]$ and $a$. Notice that the data type of the list and the value are the same. The output is just a longer list so it will be $[a]$.
 
 :::: {.formulabox data-latex=""}
 $spec ~ ~ prepend :: [a] ~ ~ a \rightarrow [a].$

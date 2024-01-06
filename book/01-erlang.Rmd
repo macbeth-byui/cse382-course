@@ -9,13 +9,13 @@ This tutorial is not meant to provide complete coverage of the Erlang language. 
 When writing code in Erlang, you will put your code into a `.erl` file.  Each Erlang file will include a `-module` and an `-export` tag.  If I create a file called `learn_erlang.erl`, then I would create the following file:
 
 ```erlang
--module(learn_erlang).
+-module(learn_erlang).  % Module name matches the file name
 -export([]).
 
 % Put my functions here
 ```
 
-The `-export` tag is used to list all functions that can be run externally.  Functions are written in the format of `name(Parameters)  -> expressions.`  Note that parameters and variables always start with an uppercase letter.  Functions and atoms (which are labels without values) are always lowercase.  In the code below, we have two functions including the classic "Hello World" function and a function to calculate an average.  The `-export` tag shows the number of parameters (or the arity) of the function.  Notice that each function ends with a period.  To run the functions, execute the `erl` shell command from a terminal.  
+The `-export` tag is used to list all functions that can be run externally.  Functions are written in the format of `name(Parameters)  -> expressions.`  Note that parameters and variables always start with an uppercase letter.  Functions and atoms (which are labels without values) are always lowercase.  In the code below, we have two functions including the classic "Hello World" function and a function to calculate an average.  The `-export` tag shows the number of parameters (or the arity) of the function.  Notice that each function ends with a period.    
 
 ```erlang
 -module(learn_erlang).
@@ -26,7 +26,7 @@ hello() -> io:format("Hello World!~n").
 average(Number1, Number2) -> (Number1+Number2) / 2.
 ```
 
-The `c` command in the `erl` shell will compile a module.  To run a function, type `module_name:function_name(parameters).`  Notice the need to put the period just like in your code file.
+To run the functions, execute the `erl` shell command from a terminal.  The `c` command in the `erl` shell will compile a module.  To run a function, type `module_name:function_name(parameters).`  Notice the need to add the period just like in your code file.
 
 
 ```shell
@@ -54,9 +54,7 @@ add(N1, N2, N3) -> N1 + N2 + N3.
 add(N1, N2, N3, N4) -> N1 + N2 + N3 + N4.
 ```
 
-In the function `divide`, we have only arity 2 but we have two different scenarios or clauses.  Each clause is separated by semicolons and is evaluated in order until a match is found.  If we divide by 0, then the first clause will run.  If we divide by non-zero, then the second clause will run.  
-
-In the `divide` function, also note that the first clause did not need to use `N1` in the expression.  Unused parameters in Erlang are prefixed with an underscore.
+In the function `divide`, we have only arity 2 but we have two different scenarios or clauses.  Each clause is separated by semicolons and is evaluated in order until a match is found.  If we divide by 0, then the first clause will run.  If we divide by non-zero, then the second clause will run.  In the `divide` function, also note that the first clause did not need to use `N1` in the expression.  Unused parameters in Erlang are prefixed with an underscore.  You can replace the `_N1` with just `_` but we will often include the name for readability.
 
 
 ```erlang
@@ -64,12 +62,13 @@ divide(_N1, 0) -> 0;
 divide(N1, N2) -> N1 / N2.
 ```
 
-The `when` keyword is called a guard and can be used with clauses.  Basic Boolean logic can be done with a guard.  For more complicated logic, a `case` statement can be used which will be seen later.
+The `when` keyword is called a guard and can be used with clauses.  Basic boolean logic can be done with a guard.  For more complicated logic, a `case` statement can be used which will be seen later.
 
 ```erlang
 letter_grade(Grade) when Grade >= 90 -> "A";
 letter_grade(Grade) when Grade >= 80 -> "B";
 letter_grade(Grade) when Grade >= 70 -> "C";
+letter_grade(Grade) when Grade >= 60 -> "D";
 letter_grade(_Grade) -> "F".
 ```
 
@@ -80,7 +79,7 @@ factorial(N) when N =< 1 -> 1;
 factorial(N) -> N * factorial(N-1).
 ```
 
-We can rewrite the same `factorial` function in what is called "tail recursion" format.  In this case, there is no operation outside of the recursive call.  This requires that we have the `Result` parameter to keep track of the ever-growing value.  To support a `Result` parameter, we provide a 1-arity version of the factorial function for the user to call which initializes the product to 1.  When the base case is reached (in this case N is equal to 0), then we can just return the result we have been recursively growing.
+We can rewrite the same `factorial` function in what is called "tail recursion" format.  In this case, there is no operation outside of the recursive call.  This requires that we have the `Result` parameter to keep track of the ever-growing value.  To support a `Result` parameter, we provide a 1-arity version of the `factorial` function for the user to call which initializes the product to 1.  When the base case is reached (in this case N is equal to 0), then we can just return the result we have been recursively growing.
 
 ```erlang
 factorial(N) -> factorial(N, 1).
@@ -88,9 +87,9 @@ factorial(0, Result) -> Result;
 factorial(N, Result) -> factorial(N-1, N*Result).
 ```
 
-In Erlang, both recursion approaches result in the same performance.  The readability of the specific problem you are solving should determine the method you use.  One might argue that in this case, the "body recursion" method was easier to read.
+In Erlang, both recursion approaches result in the same performance.  The readability of the specific problem you are solving should determine the method you use.  One might argue that in this case, that the "body recursion" method was easier to read.
 
-In the `encrypt` code below, the second parameter `Cipher_Function` is a function.  Common in functional programming, functions are passed and used liked they were any parameter like integers and strings.  The `fun (parameters) -> expression end` syntax is used to define an anonymous function (often called a lambda function).  The `encrypt` function expects to receive a function that takes only one parameter.  The `fun math:log10/1` is an example of providing an existing 1-arity function.
+In the `encrypt` code below, the second parameter `Cipher_Function` is a function.  Common in functional programming, functions are passed and used liked they were any parameter like integers and strings.  The `fun (parameters) -> expression end` syntax is used to define an anonymous function (often called a lambda function).  The `encrypt` function expects to receive a function that takes only one parameter.  The `fun math:log10/1` is an example of using an existing 1-arity function from the Erlang libraries.
 
 ```erlang
 encrypt(Value, Cipher_Function) -> Cipher_Function(Value).
@@ -111,7 +110,7 @@ In the `test_encrypt` function, note that `Cipher1` and `Cipher2` variables were
 
 You can find the template for the problem sets in this lesson here: [prove01.erl](proves/prove01.erl)
 
-As you work on these problems (as well as all future problem sets), remember to look at the test code provided in the template.  There is a separate function (e.g. `test_ps1`) for each problem set.  This will help you to understand how these problems work.  You will need to uncomment out code in the test code functions as you work through each of these problems.
+As you work on these problems (as well as all future problem sets), remember to look at the test code provided in the template.  There is a separate function (e.g. `test_ps1`) for each problem set.  This test functions can be useful to understand how the functions should be implemented. You will need to un-comment out code in the test code functions as you work through each of these problems.
 
 1. Implement the `hello` function to display "Hello World!".
 2. Implement the `add` function to add two numbers.
@@ -122,7 +121,7 @@ As you work on these problems (as well as all future problem sets), remember to 
 4. Implement the `water` function that will take a temperature in Fahrenheit and return "Frozen", "Gas", or "Liquid".  Implement this using three clauses that use the `when` guard.
 6. Implement the `fib` function to calculate the n^th^ Fibonacci number.  Assume the 1st and 2nd number is 1.  You will need to use recursion.  Recommend using body recursion.
 7. Implement the `sum` function to add up the numbers from 0 to `N` (assume `N` is a positive integer)  Use recursion instead of using any built-in functions.  Recommend using body recursion.
-8. Create lambda functions to pass to the `plot` function.  The `plot` function will create `{X,Y}` coordinates where `X` goes from -5 to 5 and `Y` is calculated from your lambda function.  Create lambda functions for the following scenarios:
+8. Create lambda functions to pass to the `plot` function.  The `plot` function will create `{X,Y}` coordinates where `X` goes from -5 to 5 and `Y` is calculated from your lambda function. The curly braces represent a tuple in Erlang. Create lambda functions for the following scenarios:
 	* Function that squares the number
 	* Function that subtracts one from the number
 	* Pass the `abs/1` built-in function directly
@@ -234,8 +233,8 @@ playing_with_lists() ->
 1. Write a `stack_push` function that treats the list as a stack (LIFO - Last In First Out).  The `stack_push` function will take two parameters, the `Stack` (ie, a list) and a value `N`.  This function should push the value `N` to the front of the `Stack`.
 2. Write a `stack_pop` function that returns a new stack with the first item removed.  If the stack is empty, then return the empty list `[]`.
 3. Finish the `quicksort` function provided to you in the starting code.  The algorithm for quicksort is to first pick a position in the list (in our case we will pick the first number) and call it our pivot.  We will then recursively call `quicksort` on all of the numbers less than the pivot and then call quicksort on all the numbers greater than or equal to the pivot.  The correct sorted list is then the concatenation (`++`) of the following 3 lists: `[sorted list of numbers less than the pivot] ++ [the one pivot] ++ [sorted list of numbers greater than or equal to the pivot]`.  The code is setup already but you need to write list comprehensions for creating:
-	* A sublist containing all numbers in the list less than the pivot (first number in the list) which will be passed to the `quicksort` function.
-	* A sublist containing all numbers in the list greater than or equal to the pivot (first number in the list) which will be passed to the `quicksort` function.
+	* A sub-list containing all numbers in the list less than the pivot (first number in the list) which will be passed to the `quicksort` function.
+	* A sub-list containing all numbers in the list greater than or equal to the pivot (first number in the list) which will be passed to the `quicksort` function.
 ::::
 
 $\nonumber$
