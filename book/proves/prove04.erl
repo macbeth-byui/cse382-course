@@ -1,11 +1,11 @@
 % CSE 382 Prove 04
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed or uncompleted in a public file sharing site.
+% file completed or uncompleted in a public file sharing site. W4.
 
 % Instructions: Use this template file for this prove assignment.
-% The details of what to do for each problem are found in 
-% the reading. IMPORTANT: Comment out code that is not 
+% The details of what to do for each problem are found in
+% the reading. IMPORTANT: Comment out code that is not
 % running properly.  The `test_ps#` functions should return `ok`.
 % When writing tests use the `expected_result` = `actual result` format.
 
@@ -44,7 +44,7 @@ test_ps1() ->
     % Test Problem 1.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write the lambda function and call the fold to concatenate the strings.  
+    % Write the lambda function and call the fold to concatenate the strings.
     %Concat = put_your_code_here,
     %"ABCD" = fold(Concat, "", ["A","B","C","D"]),
     %"OneTwoThreeFour" = fold(Concat, "", ["One","Two","Three","Four"]),
@@ -79,7 +79,7 @@ test_ps2() ->
     %Concat = put_your_code_from_1.2_here_again,
     %"DCBA" = foldr(Concat, "", ["A","B","C","D"]),
     %"FourThreeTwoOne" = foldr(Concat, "", ["One","Two","Three","Four"]),
-    %"lamb little a had Mary" = foldr(Concat, "", ["Mary"," ","had"," ","a"," ","little"," ","lamb"]),  
+    %"lamb little a had Mary" = foldr(Concat, "", ["Mary"," ","had"," ","a"," ","little"," ","lamb"]),
 
     ok.
 

@@ -1,11 +1,11 @@
 % CSE 382 Prove 09
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed or uncompleted in a public file sharing site.
+% file completed or uncompleted in a public file sharing site. W4.
 
 % Instructions: Use this template file for this prove assignment.
-% The details of what to do for each problem are found in 
-% the reading. IMPORTANT: Comment out code that is not 
+% The details of what to do for each problem are found in
+% the reading. IMPORTANT: Comment out code that is not
 % running properly.  The `test_ps#` functions should return `ok`.
 % When writing tests use the `expected_result` = `actual result` format.
 
@@ -14,7 +14,7 @@
 
 % Problem 1.1
 % Using the rank and make functions below, implement the insert function
-% per the instructions.  
+% per the instructions.
 rank(nil) -> 0;
 rank({Rank, _, _, _}) -> Rank.
 
@@ -22,8 +22,8 @@ rank({Rank, _, _, _}) -> Rank.
 
 % Problem 2.1
 % Modify the make function below to perform the swap per the instructions.
-make(Value, Left, Right) -> 
-    {rank(Right) + 1, Value, Left, Right}.  
+make(Value, Left, Right) ->
+    {rank(Right) + 1, Value, Left, Right}.
 
 % Problem 2.2
 
@@ -70,12 +70,12 @@ test_ps2() ->
     % Test Problem 2.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     %H = lists:foldl(fun insert/2, nil, [10,15,20,5,12,17,19,20,21,13,8,1]),
-    %{1,1,{2,5,{2,10,{1,15,nil,nil},{1,20,nil,nil}},{1,8,{2,12,{2,19,{1,20,nil,nil},{1,21,nil,nil}},{1,13,{1,17,nil,nil},nil}},nil}},nil} = H,   
+    %{1,1,{2,5,{2,10,{1,15,nil,nil},{1,20,nil,nil}},{1,8,{2,12,{2,19,{1,20,nil,nil},{1,21,nil,nil}},{1,13,{1,17,nil,nil},nil}},nil}},nil} = H,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %H1 = lists:foldl(fun insert/2, nil, [10,15,20,5,12,17,19]),    
+    %H1 = lists:foldl(fun insert/2, nil, [10,15,20,5,12,17,19]),
     %{3,5,{2,10,{1,15,nil,nil},{1,20,nil,nil}},{2,12,{1,17,nil,nil},{1,19,nil,nil}}} = H1,
 
     %H2 = remove_min(H1),
@@ -129,7 +129,7 @@ test_ps3() ->
     %PQ6 = remove_min(PQ5, Calls_Compare),
 
     %{"EST",4,"Bob"} = get_min(PQ6),
-    %nil = remove_min(PQ6, Calls_Compare),    
+    %nil = remove_min(PQ6, Calls_Compare),
 
 
     ok.

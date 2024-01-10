@@ -1,7 +1,7 @@
 % CSE 382 Prove 01
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed in a public file sharing site.
+% file completed in a public file sharing site. W4.
 
 % Instructions: Use this template file for this prove assignment.
 % The details of what to do for each problem are found in

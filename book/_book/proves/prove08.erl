@@ -1,11 +1,11 @@
 % CSE 382 Prove 08
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed or uncompleted in a public file sharing site.
+% file completed or uncompleted in a public file sharing site. W4.
 
 % Instructions: Use this template file for this prove assignment.
-% The details of what to do for each problem are found in 
-% the reading. IMPORTANT: Comment out code that is not 
+% The details of what to do for each problem are found in
+% the reading. IMPORTANT: Comment out code that is not
 % running properly.  The `test_ps#` functions should return `ok`.
 % When writing tests use the `expected_result` = `actual result` format.
 
@@ -21,7 +21,7 @@
 % Problem 2.1
 % Finish the add_rbt by implementing add_rbt_ and the remaining scenarios
 % for the balance function (scenario 1 is already implemented) per the instructions.
-add_rbt(New_Value, Tree) -> 
+add_rbt(New_Value, Tree) ->
     {_Color, Value, Left, Right} = add_rbt_(New_Value, Tree),
     {black, Value, Left, Right}.  % Change the root so its always black
 
@@ -110,7 +110,7 @@ test_ps2() ->
 
     %L4 = add_rbt(4, L3),
     %{black,4,{black,3,nil,nil},{black,5,nil,{red,7,nil,nil}}} = L4,
-    
+
     %L5 = add_rbt(2, L4),
     %{black,4,{black,3,{red,2,nil,nil},nil},{black,5,nil,{red,7,nil,nil}}} = L5,
 
@@ -120,13 +120,13 @@ test_ps2() ->
     %L7 = add_rbt(8, L6),
     %{black,4,{black,3,{red,2,nil,nil},nil},{red,6,{black,5,nil,nil},{black,7,nil,{red,8,nil,nil}}}} = L7,
 
-    %L8 = add_rbt(10, L7), 
+    %L8 = add_rbt(10, L7),
     %{black,6,{black,4,{black,3,{red,2,nil,nil},nil},{black,5,nil,nil}},{black,8,{black,7,nil,nil},{black,10,nil,nil}}} = L8,
 
-    %L9 = add_rbt(1, L8), 
+    %L9 = add_rbt(1, L8),
     %{black,6,{black,4,{red,2,{black,1,nil,nil},{black,3,nil,nil}},{black,5,nil,nil}},{black,8,{black,7,nil,nil},{black,10,nil,nil}}} = L9,
 
-    %L10 = add_rbt(0, L9), 
+    %L10 = add_rbt(0, L9),
     %{black,6,{black,4,{red,2,{black,1,{red,0,nil,nil},nil},{black,3,nil,nil}},{black,5,nil,nil}},{black,8,{black,7,nil,nil},{black,10,nil,nil}}} = L10,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -154,24 +154,24 @@ test_ps3() ->
     % and the red black tree per the instructions.  You can use the List
     % variable below when performing the foldl functions.  Add your code
 	% in between the start_perf and stop_perf function calls.
-    
+
     %List = lists:seq(1,10000),
     %start_perf(),
-    
+
     %stop_perf("add"),
 
     %start_perf(),
-    
+
     %stop_perf("add_rbt"),
 
     %start_perf(),
-    
+
     %stop_perf("contains"),
 
     %start_perf(),
-    
+
     %stop_perf("contains_rbt"),
 
-    % Observations (see instructions):  
+    % Observations (see instructions):
 
     ok.

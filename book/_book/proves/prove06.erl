@@ -1,11 +1,11 @@
 % CSE 382 Prove 06
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed or uncompleted in a public file sharing site.
+% file completed or uncompleted in a public file sharing site. W4.
 
 % Instructions: Use this template file for this prove assignment.
-% The details of what to do for each problem are found in 
-% the reading. IMPORTANT: Comment out code that is not 
+% The details of what to do for each problem are found in
+% the reading. IMPORTANT: Comment out code that is not
 % running properly.  The `test_ps#` functions should return `ok`.
 % When writing tests use the `expected_result` = `actual result` format.
 
@@ -23,8 +23,8 @@
 
 % Problem 2.2
 % The following 3 check functions already return the Result Monad type as described in the instructions.
-% Implement the result_unit and result_bind functions.  
-check_mixed_case(Password) -> 
+% Implement the result_unit and result_bind functions.
+check_mixed_case(Password) ->
     UpperExists = lists:foldl(fun (Letter, Result) -> Result or ((Letter >= 65) and (Letter =< 90)) end, false, Password),
     LowerExists = lists:foldl(fun (Letter, Result) -> Result or ((Letter >= 97) and (Letter =< 172)) end, false, Password),
     if
@@ -34,14 +34,14 @@ check_mixed_case(Password) ->
         true -> {error,["Must have at least one upper case and one lower case letter."]}
     end.
 
-check_number_exists(Password) -> 
+check_number_exists(Password) ->
     NumberExists = lists:foldl(fun (Letter, Result) -> Result or ((Letter >= 48) and (Letter =< 57)) end, false, Password),
     if
         NumberExists -> {ok};
         true -> {error,["Must have at least one number."]}
     end.
 
-check_length(Password) -> 
+check_length(Password) ->
     if
         length(Password) < 8 -> {error,["Must be at least 8 characters long."]};
         true -> {ok}
@@ -151,11 +151,11 @@ test_ps2() ->
 
     %Password3 = "GoodPassword42",
     %Result3 = result_bind(result_bind(result_bind(result_unit(), Password3, fun check_mixed_case/1), Password3, fun check_number_exists/1), Password3, fun check_length/1),
-    %io:format("Result3 = ~p~n",[Result3]), % Should show ok 
+    %io:format("Result3 = ~p~n",[Result3]), % Should show ok
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.3
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % Modify the test code below to replace `put_your_fold_here` with a foldl to do the same chaining as the previous problem
     Result1_With_Fold = put_your_fold_here,
@@ -191,11 +191,11 @@ test_ps3() ->
     %L4 = bind(L3, fun push/2, [6]),
     %{6,{4,{2,nil}}} = value(L4),
     %3 = len(L4),
-    
+
     %L5 = bind(L4, fun pop/1, []),
     %{4,{2,nil}} = value(L5),
     %2 = len(L5),
-    
+
     %L6 = bind(L5, fun push/2, [8]),
     %{8,{4,{2,nil}}} = value(L6),
     %3 = len(L6),

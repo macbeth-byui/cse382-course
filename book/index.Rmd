@@ -55,7 +55,9 @@ Useful websites that would be good to bookmark:
 
 * Erlang Book: https://learning.oreilly.com/library/view/programming-erlang-2nd/9781941222454/
 
-* Erlang Reference: https://erlangbyexample.org/
+* Erlang Standard Library Reference: https://www.erlang.org/doc/apps/stdlib/
+
+* Tutorial Page for Erlang & Elixir: https://elixir-lang.org/crash-course.html
 
 $\nonumber$
 [![Creative Commons License - CC - BY](images/cc-88x31.png)](http://creativecommons.org/licenses/by/4.0/)

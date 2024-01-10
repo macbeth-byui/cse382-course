@@ -1,11 +1,11 @@
 % CSE 382 Prove 07
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed or uncompleted in a public file sharing site.
+% file completed or uncompleted in a public file sharing site. W4.
 
 % Instructions: Use this template file for this prove assignment.
-% The details of what to do for each problem are found in 
-% the reading. IMPORTANT: Comment out code that is not 
+% The details of what to do for each problem are found in
+% the reading. IMPORTANT: Comment out code that is not
 % running properly.  The `test_ps#` functions should return `ok`.
 % When writing tests use the `expected_result` = `actual result` format.
 
@@ -20,7 +20,7 @@ range(Start, Stop) ->
 
 % Problem 1.2
 % Implement the words stream function using the first_word function provided below
-first_word(Text) -> 
+first_word(Text) ->
     Result = string:split(Text," "),
     case Result of
         [Word,Rest] -> {Word, Rest};
@@ -82,8 +82,8 @@ test_ps1() ->
     %{10, Stream7} = Stream6(),
     %{6, Stream8} = Stream7(),
     %{2, Stream9} = Stream8(),
-    %{undefined, done} = Stream9(), 
-	
+    %{undefined, done} = Stream9(),
+
 	%Stream10 = range(1,1,0),
     %{undefined, done} = Stream10(),
 

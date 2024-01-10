@@ -1,11 +1,11 @@
 % CSE 382 Prove 10
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed or uncompleted in a public file sharing site.
+% file completed or uncompleted in a public file sharing site. W4.
 
 % Instructions: Use this template file for this prove assignment.
-% The details of what to do for each problem are found in 
-% the reading. IMPORTANT: Comment out code that is not 
+% The details of what to do for each problem are found in
+% the reading. IMPORTANT: Comment out code that is not
 % running properly.  The `test_ps#` functions should return `ok`.
 % When writing tests use the `expected_result` = `actual result` format.
 
@@ -48,7 +48,7 @@ test_ps1() ->
     %[nil,
     % {node,2,{leaf,200},{leaf,100}}
     %] = RAL2,
-    
+
     %RAL3 = prepend(300, RAL2),
     %[{leaf,300},
     % {node,2,{leaf,200},{leaf,100}}
@@ -65,25 +65,25 @@ test_ps1() ->
     % nil,
     % {node,4,{node,2,{leaf,400},{leaf,300}},{node,2,{leaf,200},{leaf,100}}}
     %] = RAL5,
-    
+
     %RAL6 = prepend(600, RAL5),
     %[nil,
     % {node,2,{leaf,600},{leaf,500}},
     % {node,4,{node,2,{leaf,400},{leaf,300}},{node,2,{leaf,200},{leaf,100}}}
     %] = RAL6,
-    
+
     %RAL7 = prepend(700, RAL6),
     %[{leaf,700},
     % {node,2,{leaf,600},{leaf,500}},
     % {node,4,{node,2,{leaf,400},{leaf,300}},{node,2,{leaf,200},{leaf,100}}}
     %] = RAL7,
-    
+
     %RAL8 = prepend(800, RAL7),
     %[nil,
     % nil,
     % nil,
     % {node,8,{node,4,{node,2,{leaf,800},{leaf,700}},{node,2,{leaf,600},{leaf,500}}},{node,4,{node,2,{leaf,400},{leaf,300}},{node,2,{leaf,200},{leaf,100}}}}
-    %] = RAL8, 
+    %] = RAL8,
 
     ok.
 
@@ -134,7 +134,7 @@ test_ps2() ->
     % {node,2,{leaf,600},{leaf,500}},
     % {node,4,{node,2,{leaf,400},{leaf,333}},{node,2,{leaf,200},{leaf,111}}}
     %] = RAL10,
-    
+
     ok.
 
 % Test code for problem set 3
@@ -144,7 +144,7 @@ test_ps3() ->
     % Test Problem 3.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Add test code to compare the performance of RAL with 
+    % Add test code to compare the performance of RAL with
     % Erlang list per the instructions
 
     %List1 = lists:seq(0,999999),
@@ -152,11 +152,11 @@ test_ps3() ->
     %999999 = lists:nth(1000000, List1),
     %stop_perf("list lookup last one"),
 
-    
+
     %start_perf(),
-    
+
     %stop_perf("ral lookup last one"),
-	
-    % Observations (see instructions): 
+
+    % Observations (see instructions):
 
     ok.

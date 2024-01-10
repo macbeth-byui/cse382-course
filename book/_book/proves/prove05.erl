@@ -1,11 +1,11 @@
 % CSE 382 Prove 05
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed or uncompleted in a public file sharing site.
+% file completed or uncompleted in a public file sharing site. W4.
 
 % Instructions: Use this template file for this prove assignment.
-% The details of what to do for each problem are found in 
-% the reading. IMPORTANT: Comment out code that is not 
+% The details of what to do for each problem are found in
+% the reading. IMPORTANT: Comment out code that is not
 % running properly.  The `test_ps#` functions should return `ok`.
 % When writing tests use the `expected_result` = `actual result` format.
 
@@ -17,7 +17,7 @@
 
 % Problem 1.3
 % Provide specification and definition (as comments) along with the code
- 
+
 
 % Problem 2.1
 
@@ -39,13 +39,13 @@ alert(Location, Category, Message) -> io:format("~p for ~p : ~p~n", [Category, L
 range_check(Low, High, Value) -> (Value >= Low) and (Value =< High).
 
 % Calculate the average of list of numbers.
-list_average(List) -> 
+list_average(List) ->
     lists:foldl(fun (Item, Total) -> Item + Total end, 0, List) / length(List).
 
-% Create a one arity function that counts all items in a list that have 
+% Create a one arity function that counts all items in a list that have
 % the specified Term in the string.
 list_text_count(Term) ->
-    fun(List) -> lists:foldl(fun (Item, Total) -> 
+    fun(List) -> lists:foldl(fun (Item, Total) ->
         case string:find(Item,Term) of
             nomatch -> Total;
             _Else -> Total + 1
@@ -54,7 +54,7 @@ list_text_count(Term) ->
 
 % Open the file, skip the header row, and begin reading
 % each row one at a time to produce a list of lists.
-read_csv_file(Filename) -> 
+read_csv_file(Filename) ->
     {ok, FileHandle} = file:open(Filename, read),
     file:read_line(FileHandle), % Skip header row
     read_csv_file(FileHandle, []).
@@ -76,7 +76,7 @@ extract_column_array(text, Array, ColumnId) ->
 
 % Extract the specified column as integers
 extract_column_array(int, Array, ColumnId) ->
-    ExtractColumn = fun(Row) -> 
+    ExtractColumn = fun(Row) ->
         {Result, _} = string:to_integer(lists:nth(ColumnId, Row)),
         Result
      end,
@@ -84,13 +84,13 @@ extract_column_array(int, Array, ColumnId) ->
 
 % Extract the specified column as floats
 extract_column_array(float, Array, ColumnId) ->
-    ExtractColumn = fun(Row) -> 
+    ExtractColumn = fun(Row) ->
         {Result, _} = string:to_float(lists:nth(ColumnId, Row)),
         Result
      end,
     lists:map(ExtractColumn, Array).
 
-% Extract a column (with the specified type of text, int, or float) 
+% Extract a column (with the specified type of text, int, or float)
 % from the file and perfom the specified function on the data.
 process_dataset(Filename, ColumnId, ColumnType, CalcFunction) ->
     Data = read_csv_file(Filename),
@@ -181,9 +181,9 @@ test_ps3() ->
     Sum = fun(X,Y) -> X+Y end,
     Product = fun(X,Y) -> X*Y end,
 
-    % Example not using any partial applications    
+    % Example not using any partial applications
     %35 = (((map_filter_fold2(6))(Square))(Odd))(0, Sum),
-    
+
     % Example creating and using partial application
     %First10Squares = (map_filter_fold2(10))(Square),
     %165 = (First10Squares(Odd))(0, Sum),
@@ -198,27 +198,27 @@ test_ps3() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 3.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
-    % Examples not using any partial applications  
+
+    % Examples not using any partial applications
     % Avg_Temp = process_dataset("weather.csv", 6, int, fun list_average/1),
     % io:format("Avg Temp = ~p~n",[Avg_Temp]), % Answer = 24.8472
     % Count_Snow = process_dataset("weather.csv", 5, text, list_text_count("Snow")),
     % io:format("Count Snow = ~p~n",[Count_Snow]), % Answer = 38
 
-    % Test partial application to read entire dataset only once 
+    % Test partial application to read entire dataset only once
     % Weather = process_dataset2("weather.csv"),
-    % Avg_WindChill = (Weather(8, int))(fun list_average/1), 
+    % Avg_WindChill = (Weather(8, int))(fun list_average/1),
     % io:format("Avg WindChill ~p~n",[Avg_WindChill]), % Answer = 12.0
     % Avg_Pressure = (Weather(9,float))(fun list_average/1),
     % io:format("Avg Pressure ~p~n",[Avg_Pressure]), % Answer = 29.735
 
-    % Test partial application to read the entire dataset and extract the 
-    % Observation column (column 5; text) only once 
+    % Test partial application to read the entire dataset and extract the
+    % Observation column (column 5; text) only once
     % Weather_Obs = Weather(5, text),
     % Count_Windy = Weather_Obs(list_text_count("Windy")), % Answer = 19
     % io:format("Count Windy = ~p~n",[Count_Windy]),
     % Count_Mist = Weather_Obs(list_text_count("Mist")), % Answer = 7
     % io:format("Count Mist = ~p~n",[Count_Mist]),
-    
-    
+
+
     ok.

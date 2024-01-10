@@ -1,11 +1,11 @@
 % CSE 382 Prove 11
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed or uncompleted in a public file sharing site.
+% file completed or uncompleted in a public file sharing site. W4.
 
 % Instructions: Use this template file for this prove assignment.
-% The details of what to do for each problem are found in 
-% the reading. IMPORTANT: Comment out code that is not 
+% The details of what to do for each problem are found in
+% the reading. IMPORTANT: Comment out code that is not
 % running properly.  The `test_ps#` functions should return `ok`.
 % When writing tests use the `expected_result` = `actual result` format.
 
@@ -22,7 +22,7 @@
 % Complete the count function per the instructions.
 
 count(nil) -> 0;
-count(Node = #{done := nil}) -> 
+count(Node = #{done := nil}) ->
     put_your_code_here;
 count(Node) ->
     put_your_code_here.
@@ -31,11 +31,11 @@ count(Node) ->
 
 % Open the file, skip the header row, and begin reading
 % each row one at a time to produce a list of lists.
-read_file(Filename) -> 
+read_file(Filename) ->
     {ok, FileHandle} = file:open(Filename, read),
     read_file(FileHandle, []).
 
-% Read each line of the file and remove the end of line character.  
+% Read each line of the file and remove the end of line character.
 % Each line read will be added to Lines list.
 read_file(FileHandle, Lines) ->
     Result = file:read_line(FileHandle),
@@ -105,10 +105,10 @@ test_ps2() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 2.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
+
     % 7 = count(Trie),
     % 0 = count(nil),
-    
+
     ok.
 
 % Test code for problem set 3
@@ -119,7 +119,7 @@ test_ps3() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % Write Test Code to compare the memory size of the phone numbers stored in a list
-    % versus stored in a Trie.  
+    % versus stored in a Trie.
 
     % PhoneList = read_file("phone.txt"),
     % PhoneTrie = put_your_code_here,
@@ -127,6 +127,6 @@ test_ps3() ->
     % SizeTrie = put_your_code_here,
     % io:format("Size List = ~p  Size Trie = ~p~n",[SizeList, SizeTrie]),
 
-    % Observations (see instructions): 
+    % Observations (see instructions):
 
     ok.

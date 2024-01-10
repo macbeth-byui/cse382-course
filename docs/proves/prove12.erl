@@ -1,11 +1,11 @@
 % CSE 382 Prove 12
 
 % (c) BYU-Idaho - It is an honor code violation to post this
-% file completed or uncompleted in a public file sharing site.
+% file completed or uncompleted in a public file sharing site. W4.
 
 % Instructions: Use this template file for this prove assignment.
-% The details of what to do for each problem are found in 
-% the reading. IMPORTANT: Comment out code that is not 
+% The details of what to do for each problem are found in
+% the reading. IMPORTANT: Comment out code that is not
 % running properly.  The `test_ps#` functions should return `ok`.
 % When writing tests use the `expected_result` = `actual result` format.
 
@@ -19,9 +19,9 @@
 % for the head function so that the check functions
 % below will work.
 
-% For problem 2.1, you will need to update the dequeue 
-% and head functions to support the deque per the 
-% instructions. 
+% For problem 2.1, you will need to update the dequeue
+% and head functions to support the deque per the
+% instructions.
 
 create() -> {[], []}.
 
@@ -33,10 +33,10 @@ head(Parameters) -> todo.
 
 % Problem 2.1
 % You need to write enqueue_front, dequeue_back, and tail
-% per the instructions.  Note that a placeholder has 
+% per the instructions.  Note that a placeholder has
 % been created for the tail function so that the check
-% functions below will work.  You will also need to update 
-% the dequeue and head functions you previously 
+% functions below will work.  You will also need to update
+% the dequeue and head functions you previously
 % implemented to support the deque.
 
 tail(Parameters) -> todo.
@@ -52,7 +52,7 @@ stop_perf(Title) ->
     eprof:stop_profiling(),
     eprof:analyze(total).
 
-% The following code is used in the test cases to 
+% The following code is used in the test cases to
 % display the queue/deque and check if the head, tail
 % and empty are correct.
 
@@ -189,7 +189,7 @@ test_ps2() ->
     % check_deque(Q27,100,100,false),
     % Q28 = dequeue(Q27),
     % check_deque(Q28,nil,nil,true),
-  
+
     ok.
 
 % Test code for problem set 3
@@ -198,42 +198,42 @@ test_ps3() ->
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 3.1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	% Write Test Code to compare the performance of 
+
+	% Write Test Code to compare the performance of
     % enqueue and dequeue on 1 million values
-    % per the instructions. 
+    % per the instructions.
 
     % List = lists:seq(1,1000000),
 
     % start_perf(),
-    
+
     % stop_perf("enqueue"),
 
     % start_perf(),
-    
+
     % stop_perf("dequeue"),
-	
-	% Observations (see instructions): 
+
+	% Observations (see instructions):
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Test Problem 3.2
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Write Test Code to compare the performance of 
+    % Write Test Code to compare the performance of
     % enqueue_front and dequeue_back on 1 million values
-    % per the instructions. 
+    % per the instructions.
 
 
     % start_perf(),
-    
+
     % stop_perf("enqueue_front"),
 
     % start_perf(),
-    
+
     % stop_perf("dequeue_front"),
 
 
-    % Observations (see instructions): 
+    % Observations (see instructions):
 
 
     ok.
