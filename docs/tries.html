@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2024-01-09" />
+<meta name="date" content="2024-01-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -278,19 +278,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The implementation of the <code>add</code> function will be left for an exercise.</p>
 <p>In Erlang, we can use the following code to perform the <code>contains</code>, <code>get</code> and <code>put</code> operations on the dictionary. In Erlang, a dictionary is called a map Note that to create an empty map, we use <code>#{}</code>. If we wanted to prefill the map, we could use <code>#{key1 =&gt; value1, key2 =&gt; value2, key3 =&gt; value3}</code>.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb66-1"><a href="tries.html#cb66-1" tabindex="-1"></a><span class="va">Map</span> <span class="op">=</span> <span class="fu">#{</span><span class="st">&quot;Bob&quot;</span> <span class="op">=&gt;</span> <span class="dv">10</span><span class="fu">,</span> <span class="st">&quot;Sue&quot;</span> <span class="op">=&gt;</span> <span class="dv">20</span><span class="fu">},</span></span>
-<span id="cb66-2"><a href="tries.html#cb66-2" tabindex="-1"></a></span>
-<span id="cb66-3"><a href="tries.html#cb66-3" tabindex="-1"></a><span class="co">% contains</span></span>
-<span id="cb66-4"><a href="tries.html#cb66-4" tabindex="-1"></a><span class="ch">true</span> <span class="op">=</span> <span class="fu">maps:is_key(</span><span class="st">&quot;Bob&quot;</span><span class="fu">,</span> <span class="va">Map</span><span class="fu">),</span></span>
-<span id="cb66-5"><a href="tries.html#cb66-5" tabindex="-1"></a><span class="ch">false</span> <span class="op">=</span> <span class="fu">maps:is_key(</span><span class="st">&quot;Tim&quot;</span><span class="fu">,</span> <span class="va">Map</span><span class="fu">),</span></span>
-<span id="cb66-6"><a href="tries.html#cb66-6" tabindex="-1"></a></span>
-<span id="cb66-7"><a href="tries.html#cb66-7" tabindex="-1"></a><span class="co">% get</span></span>
-<span id="cb66-8"><a href="tries.html#cb66-8" tabindex="-1"></a><span class="dv">10</span> <span class="op">=</span> <span class="fu">maps:get(</span><span class="st">&quot;Bob&quot;</span><span class="fu">,</span> <span class="va">Map</span><span class="fu">),</span></span>
-<span id="cb66-9"><a href="tries.html#cb66-9" tabindex="-1"></a><span class="dv">20</span> <span class="op">=</span> <span class="fu">maps:get(</span><span class="st">&quot;Sue&quot;</span><span class="fu">,</span> <span class="va">Map</span><span class="fu">),</span></span>
-<span id="cb66-10"><a href="tries.html#cb66-10" tabindex="-1"></a></span>
-<span id="cb66-11"><a href="tries.html#cb66-11" tabindex="-1"></a><span class="co">% put</span></span>
-<span id="cb66-12"><a href="tries.html#cb66-12" tabindex="-1"></a><span class="va">New_Map</span> <span class="op">=</span> <span class="fu">maps:put(</span><span class="st">&quot;Tim&quot;</span><span class="fu">,</span> <span class="dv">30</span><span class="fu">,</span> <span class="va">Map</span><span class="fu">),</span></span>
-<span id="cb66-13"><a href="tries.html#cb66-13" tabindex="-1"></a><span class="dv">30</span> <span class="op">=</span> <span class="fu">maps:get(</span><span class="st">&quot;Tim&quot;</span><span class="fu">,</span> <span class="va">New_Map</span><span class="fu">),</span></span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb67-1"><a href="tries.html#cb67-1" tabindex="-1"></a><span class="va">Map</span> <span class="op">=</span> <span class="fu">#{</span><span class="st">&quot;Bob&quot;</span> <span class="op">=&gt;</span> <span class="dv">10</span><span class="fu">,</span> <span class="st">&quot;Sue&quot;</span> <span class="op">=&gt;</span> <span class="dv">20</span><span class="fu">},</span></span>
+<span id="cb67-2"><a href="tries.html#cb67-2" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="tries.html#cb67-3" tabindex="-1"></a><span class="co">% contains</span></span>
+<span id="cb67-4"><a href="tries.html#cb67-4" tabindex="-1"></a><span class="ch">true</span> <span class="op">=</span> <span class="fu">maps:is_key(</span><span class="st">&quot;Bob&quot;</span><span class="fu">,</span> <span class="va">Map</span><span class="fu">),</span></span>
+<span id="cb67-5"><a href="tries.html#cb67-5" tabindex="-1"></a><span class="ch">false</span> <span class="op">=</span> <span class="fu">maps:is_key(</span><span class="st">&quot;Tim&quot;</span><span class="fu">,</span> <span class="va">Map</span><span class="fu">),</span></span>
+<span id="cb67-6"><a href="tries.html#cb67-6" tabindex="-1"></a></span>
+<span id="cb67-7"><a href="tries.html#cb67-7" tabindex="-1"></a><span class="co">% get</span></span>
+<span id="cb67-8"><a href="tries.html#cb67-8" tabindex="-1"></a><span class="dv">10</span> <span class="op">=</span> <span class="fu">maps:get(</span><span class="st">&quot;Bob&quot;</span><span class="fu">,</span> <span class="va">Map</span><span class="fu">),</span></span>
+<span id="cb67-9"><a href="tries.html#cb67-9" tabindex="-1"></a><span class="dv">20</span> <span class="op">=</span> <span class="fu">maps:get(</span><span class="st">&quot;Sue&quot;</span><span class="fu">,</span> <span class="va">Map</span><span class="fu">),</span></span>
+<span id="cb67-10"><a href="tries.html#cb67-10" tabindex="-1"></a></span>
+<span id="cb67-11"><a href="tries.html#cb67-11" tabindex="-1"></a><span class="co">% put</span></span>
+<span id="cb67-12"><a href="tries.html#cb67-12" tabindex="-1"></a><span class="va">New_Map</span> <span class="op">=</span> <span class="fu">maps:put(</span><span class="st">&quot;Tim&quot;</span><span class="fu">,</span> <span class="dv">30</span><span class="fu">,</span> <span class="va">Map</span><span class="fu">),</span></span>
+<span id="cb67-13"><a href="tries.html#cb67-13" tabindex="-1"></a><span class="dv">30</span> <span class="op">=</span> <span class="fu">maps:get(</span><span class="st">&quot;Tim&quot;</span><span class="fu">,</span> <span class="va">New_Map</span><span class="fu">),</span></span></code></pre></div>
 <div class="problembox">
 <p><strong>Problem Set 1</strong></p>
 <p>You can find the template for the problem sets in this lesson here: <a href="proves/prove11.erl">prove11.erl</a></p>
@@ -379,9 +379,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If the number of strings <span class="math inline">\(n\)</span> keeps increasing, the performance of the Trie will improve over the Red Black Tree. However, it won’t improve by much since the Red Black Tree is logarithmic. If the size of the string length <span class="math inline">\(m\)</span> is larger, then we will see more noticeable improvements from the Trie over the Red Black Tree. The Trie is definitely faster than the List or Binary Search Tree.</p>
 <p>The memory requirements of the Trie vary based on the amount of compression we get from having common character prefixes. In the problem set below, you will compare the memory requirements of a collection of phone numbers stored in a List and stored in a Trie. Phone numbers for a specific geographical region will have common area codes and exchanges. Similar situations occur with IP addresses in a network.</p>
 <p>To measure the memory requirement of a variable in Erlang, we use the following code:</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb67-1"><a href="tries.html#cb67-1" tabindex="-1"></a><span class="va">List</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span><span class="dv">2</span><span class="fu">,</span><span class="dv">3</span><span class="fu">,</span><span class="dv">4</span><span class="fu">,</span><span class="dv">5</span><span class="fu">],</span></span>
-<span id="cb67-2"><a href="tries.html#cb67-2" tabindex="-1"></a><span class="va">Size</span> <span class="op">=</span> <span class="fu">erts_debug:flat_size(</span><span class="va">List</span><span class="fu">),</span></span>
-<span id="cb67-3"><a href="tries.html#cb67-3" tabindex="-1"></a><span class="fu">io:format(</span><span class="st">&quot;Size of List = ~p~n&quot;</span><span class="fu">,[</span><span class="va">Size</span><span class="fu">]),</span></span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb68-1"><a href="tries.html#cb68-1" tabindex="-1"></a><span class="va">List</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span><span class="dv">2</span><span class="fu">,</span><span class="dv">3</span><span class="fu">,</span><span class="dv">4</span><span class="fu">,</span><span class="dv">5</span><span class="fu">],</span></span>
+<span id="cb68-2"><a href="tries.html#cb68-2" tabindex="-1"></a><span class="va">Size</span> <span class="op">=</span> <span class="fu">erts_debug:flat_size(</span><span class="va">List</span><span class="fu">),</span></span>
+<span id="cb68-3"><a href="tries.html#cb68-3" tabindex="-1"></a><span class="fu">io:format(</span><span class="st">&quot;Size of List = ~p~n&quot;</span><span class="fu">,[</span><span class="va">Size</span><span class="fu">]),</span></span></code></pre></div>
 <p>In this example, the size of the five element list is 10 heap words. A heap word is 4 bytes or 32 bits. So the total memory is 40 bytes.</p>
 <div class="problembox">
 <p><strong>Problem Set 3</strong></p>

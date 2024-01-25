@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2024-01-09" />
+<meta name="date" content="2024-01-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -332,7 +332,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="functors" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Functors<a href="higher-order-functions---map-and-filter.html#functors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Our <code>map</code> function also has an additional classification. A functor is a term from category theory in mathematics which means that it provides a mapping between two different categories of things. In computer science, if we create a data structure that has the ability to change the contents without changing the structure, then we say that the structure is a functor. The most common operation that we perform on functors is the <code>map</code> operation. Remember that the <code>map</code> function will use a lambda to change all the contents of the list without changing the size of the list (i.e. the structure). A tree is also a functor. A binary search tree is a little more difficult. If you apply a lambda on everything in the binary search tree, the ordering rules may be violated. This means that the <code>map</code> function will have to check to see if re-ordering is needed. Structures that represent a single item (e.g. variable of a certain type) can also be functors as a <code>map</code> function can be written for them to change their value using a lambda. Even a function is a functor. If you apply a lambda the function then you have a new function which is a composition of both functions.</p>
+<p>Our <code>map</code> function also has an additional classification. A functor is a term from category theory in mathematics which means that it provides a mapping between two different categories of things. In computer science, if we create a data structure that has the ability to change the contents without changing the structure, then we say that the structure is a functor. The most common operation that we perform on functors is the <code>map</code> operation. Remember that the <code>map</code> function will use a lambda to change all the contents of the list without changing the size of the list (i.e. the structure). A tree is also a functor. A binary search tree is a little more difficult. If you apply a lambda on everything in the binary search tree, the ordering rules may be violated. This means that the <code>map</code> function will have to check to see if re-ordering is needed. Structures that represent a single item (e.g. variable of a certain type) can also be functors as a <code>map</code> function can be written for them to change their value using a lambda. Even a function is a functor. If you apply a lambda to a function then you have a new function which is a composition of both functions.</p>
 <p>Composition is a key characteristic of functors. If the list is a functor, then I should be able to show that the following are equivalent given two lambdas <span class="math inline">\(\lambda_g\)</span> and <span class="math inline">\(\lambda_h\)</span>:</p>
 <ul>
 <li><code>map</code> applied to a list using <span class="math inline">\(\lambda_h(\lambda_g(x))\)</span> which is the composition of both lambda functions</li>
@@ -345,7 +345,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>This is frequently written using composition notation:</p>
 <div class="formulabox">
-<p><span class="math inline">\(map(\lambda_g \circ \lambda_h) = map(\lambda_g) \circ map(\lambda_h)\)</span>.</p>
+<p><span class="math inline">\(map(\lambda_h \circ \lambda_g) = map(\lambda_h) \circ map(\lambda_g)\)</span>.</p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>This means that we can use the <code>map</code> on the functor list to either <span class="math inline">\(\lambda_g\)</span> and <span class="math inline">\(\lambda_h\)</span> combined (in order) or I can use the <code>map</code> on the functor list with <span class="math inline">\(\lambda_g\)</span> first and the use the <code>map</code> again using the <span class="math inline">\(\lambda_h\)</span> second.</p>
@@ -357,8 +357,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(de\mathit{f} ~ ~ \lambda_h :: Value \rightarrow (Value*Value) - 1.\)</span></p>
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
-<p>In the problem set, you will implement both sides of the composition <span class="math inline">\(map(\lambda_g \circ \lambda_h) = map(\lambda_g) \circ map(\lambda_h)\)</span> to see if it holds true using a simple list of numbers. The left hand side calls <code>map</code> once and the right hand side calls <code>map</code> twice. The left hand side will need to create a new lambda function that composes both lambda functions. In that new lambda function, you should use <span class="math inline">\(\lambda_g\)</span> and <span class="math inline">\(\lambda_h\)</span>.</p>
-<p>The use of composition here is a preview for the topic of chaining which we see in the near future.</p>
+<p>To demonstrate the composition property, you will need to demonstrate that both side of the following is true:</p>
+<div class="formulabox">
+<p><span class="math inline">\(map(\lambda_h \circ \lambda_g) = map(\lambda_h) \circ map(\lambda_g)\)</span>.</p>
+</div>
+<p><span class="math inline">\(\nonumber\)</span></p>
+<p>To solve the right hand side of the property, you will call the <code>map</code> function twice. You will first call it on <span class="math inline">\(\lambda_g\)</span> and then take the result of that first <code>map</code> and use it in the second <code>map</code> with <span class="math inline">\(\lambda_h\)</span>. To solve the left hand size of the property, you will need to create a new function that composes <span class="math inline">\(\lambda_h\)</span> with <span class="math inline">\(\lambda_g\)</span>. Perhaps it can look something like:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb24-1"><a href="higher-order-functions---map-and-filter.html#cb24-1" tabindex="-1"></a><span class="va">H_Compose_G</span> <span class="op">=</span> <span class="kw">fun</span> <span class="fu">(</span><span class="va">X</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">H</span><span class="fu">(</span><span class="va">G</span><span class="fu">(</span><span class="va">X</span><span class="fu">))</span> <span class="kw">end</span><span class="fu">,</span></span></code></pre></div>
+<p>You can now use <code>H_Compose_G</code> in your <code>map</code> call to evaluate the left hand size of the property. If the resulting list on both side is the same, then we have successfully demonstrated the property.</p>
+<p>The use of composition here is a preview for the topic of chaining which we will see in the near future.</p>
 <div class="problembox">
 <p><strong>Problem Set 3</strong></p>
 <ol style="list-style-type: decimal">

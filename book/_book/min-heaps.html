@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2024-01-09" />
+<meta name="date" content="2024-01-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -300,11 +300,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li>Implement the <code>insert</code> function per the specification and definition given above. The <code>rank</code> and <code>make</code> functions are written for you. Use the test code provided to test your function. Note that at this point, the algorithm has not done any swapping. That will be done in the next section below. When implementing this in Erlang, you may want to take advantage of some additional syntax. Up to this point, there are two ways you know to write the <code>insert</code> function with the <code>node</code> tuple:</li>
 </ol>
-<div class="sourceCode" id="cb60"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb60-1"><a href="min-heaps.html#cb60-1" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="va">Node</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">...</span></span>
-<span id="cb60-2"><a href="min-heaps.html#cb60-2" tabindex="-1"></a><span class="co">% or</span></span>
-<span id="cb60-3"><a href="min-heaps.html#cb60-3" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,{</span><span class="va">Rank</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">,</span> <span class="va">Left</span><span class="fu">,</span> <span class="va">Right</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="fu">...</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb61-1"><a href="min-heaps.html#cb61-1" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="va">Node</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">...</span></span>
+<span id="cb61-2"><a href="min-heaps.html#cb61-2" tabindex="-1"></a><span class="co">% or</span></span>
+<span id="cb61-3"><a href="min-heaps.html#cb61-3" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,{</span><span class="va">Rank</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">,</span> <span class="va">Left</span><span class="fu">,</span> <span class="va">Right</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="fu">...</span></span></code></pre></div>
 <p>A third option combines both of these:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb61-1"><a href="min-heaps.html#cb61-1" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="va">Node</span><span class="op">=</span><span class="fu">{</span><span class="va">Rank</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">,</span> <span class="va">Left</span><span class="fu">,</span> <span class="va">Right</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="fu">...</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb62-1"><a href="min-heaps.html#cb62-1" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="va">Node</span><span class="op">=</span><span class="fu">{</span><span class="va">Rank</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">,</span> <span class="va">Left</span><span class="fu">,</span> <span class="va">Right</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="fu">...</span></span></code></pre></div>
 <p>Using this third option, we can easily reference the whole <code>Node</code> or one its pieces by name. If the latter is done, you can also replace unused parameters with <code>_</code> if desired.</p>
 </div>
 </div>
@@ -367,7 +367,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The implementation of <code>merge</code> and <code>remove_min</code> are left for exercises.</p>
 <p>Since the <code>merge</code> function successfully handled merging a min heap with another min heap of size 1, we could reuse the <code>merge</code> function to simplify our <code>insert</code> function. We are merging our new node (created with <code>make</code>) with our existing min heap (<code>Heap</code> - which could be nil).</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb62-1"><a href="min-heaps.html#cb62-1" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="va">Heap</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">merge(make(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="ch">nil</span><span class="fu">,</span> <span class="ch">nil</span><span class="fu">),</span> <span class="va">Heap</span><span class="fu">).</span></span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb63-1"><a href="min-heaps.html#cb63-1" tabindex="-1"></a><span class="fu">insert(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="va">Heap</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">merge(make(</span><span class="va">New_Value</span><span class="fu">,</span> <span class="ch">nil</span><span class="fu">,</span> <span class="ch">nil</span><span class="fu">),</span> <span class="va">Heap</span><span class="fu">).</span></span></code></pre></div>
 <div class="problembox">
 <p><strong>Problem Set 2</strong></p>
 <ol style="list-style-type: decimal">

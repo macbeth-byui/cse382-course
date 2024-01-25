@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2024-01-09" />
+<meta name="date" content="2024-01-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -356,9 +356,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The Erlang code for the definitions provided above is given below. The remaining code is left for an exercise.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb56-1"><a href="trees.html#cb56-1" tabindex="-1"></a><span class="fu">balance({</span><span class="ch">black</span><span class="fu">,</span><span class="va">Z</span><span class="fu">,{</span><span class="ch">red</span><span class="fu">,</span><span class="va">X</span><span class="fu">,</span><span class="va">A</span><span class="fu">,{</span><span class="ch">red</span><span class="fu">,</span><span class="va">Y</span><span class="fu">,</span><span class="va">B</span><span class="fu">,</span><span class="va">C</span><span class="fu">}},</span><span class="va">D</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">red</span><span class="fu">,</span><span class="va">Y</span><span class="fu">,{</span><span class="ch">black</span><span class="fu">,</span><span class="va">X</span><span class="fu">,</span><span class="va">A</span><span class="fu">,</span><span class="va">B</span><span class="fu">},{</span><span class="ch">black</span><span class="fu">,</span><span class="va">Z</span><span class="fu">,</span><span class="va">C</span><span class="fu">,</span><span class="va">D</span><span class="fu">}};</span></span>
-<span id="cb56-2"><a href="trees.html#cb56-2" tabindex="-1"></a><span class="co">% Scenarios 2, 3, and 4 are left for an exercise</span></span>
-<span id="cb56-3"><a href="trees.html#cb56-3" tabindex="-1"></a><span class="fu">balance(</span><span class="va">Node</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Node</span><span class="fu">.</span></span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb57-1"><a href="trees.html#cb57-1" tabindex="-1"></a><span class="fu">balance({</span><span class="ch">black</span><span class="fu">,</span><span class="va">Z</span><span class="fu">,{</span><span class="ch">red</span><span class="fu">,</span><span class="va">X</span><span class="fu">,</span><span class="va">A</span><span class="fu">,{</span><span class="ch">red</span><span class="fu">,</span><span class="va">Y</span><span class="fu">,</span><span class="va">B</span><span class="fu">,</span><span class="va">C</span><span class="fu">}},</span><span class="va">D</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">red</span><span class="fu">,</span><span class="va">Y</span><span class="fu">,{</span><span class="ch">black</span><span class="fu">,</span><span class="va">X</span><span class="fu">,</span><span class="va">A</span><span class="fu">,</span><span class="va">B</span><span class="fu">},{</span><span class="ch">black</span><span class="fu">,</span><span class="va">Z</span><span class="fu">,</span><span class="va">C</span><span class="fu">,</span><span class="va">D</span><span class="fu">}};</span></span>
+<span id="cb57-2"><a href="trees.html#cb57-2" tabindex="-1"></a><span class="co">% Scenarios 2, 3, and 4 are left for an exercise</span></span>
+<span id="cb57-3"><a href="trees.html#cb57-3" tabindex="-1"></a><span class="fu">balance(</span><span class="va">Node</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Node</span><span class="fu">.</span></span></code></pre></div>
 <div class="problembox">
 <p><strong>Problem Set 2</strong></p>
 <ol style="list-style-type: decimal">
@@ -376,32 +376,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The binary search tree from Part 1 has performance of O(log n) if its balanced but as it becomes unbalanced, it becomes O(n). The RBT from Part 2 has performance of O(log n) because it maintains the balanced state. Even though there is more work needed to balance, it is offset by ability to find the spot for new nodes because its balanced.</p>
 <p>To compare the performance of both approaches for a tree with 10,000 nodes in the problem set below, we will use the <code>eprof</code> library in Erlang. This library will report the number of times a function runs and the execution time of those functions. As with tools like these, there is an overhead cost for running <code>eprof</code> but it will not prevent us from making observations.</p>
 <p>The following utility functions can be put around code to display performance results.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb57-1"><a href="trees.html#cb57-1" tabindex="-1"></a><span class="fu">start_perf()</span> <span class="op">-&gt;</span></span>
-<span id="cb57-2"><a href="trees.html#cb57-2" tabindex="-1"></a>    <span class="fu">eprof:start_profiling([self()]).</span></span>
-<span id="cb57-3"><a href="trees.html#cb57-3" tabindex="-1"></a></span>
-<span id="cb57-4"><a href="trees.html#cb57-4" tabindex="-1"></a><span class="fu">stop_perf(</span><span class="va">Title</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
-<span id="cb57-5"><a href="trees.html#cb57-5" tabindex="-1"></a>    <span class="fu">io:format(</span><span class="st">&quot;Perf (~p): ~n&quot;</span><span class="fu">,[</span><span class="va">Title</span><span class="fu">]),</span></span>
-<span id="cb57-6"><a href="trees.html#cb57-6" tabindex="-1"></a>    <span class="fu">eprof:stop_profiling(),</span></span>
-<span id="cb57-7"><a href="trees.html#cb57-7" tabindex="-1"></a>    <span class="fu">eprof:analyze(</span><span class="ch">total</span><span class="fu">).</span></span></code></pre></div>
-<p>If we wanted to compare the cost of adding to the front of a list and the cost of adding to the end of list, we would create a single <code>foldl</code> to perform those operations using a sequence of numbers from 1 to 10,000.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb58-1"><a href="trees.html#cb58-1" tabindex="-1"></a><span class="co">% Code to test</span></span>
-<span id="cb58-2"><a href="trees.html#cb58-2" tabindex="-1"></a><span class="fu">prepend(</span><span class="va">Value</span><span class="fu">,</span> <span class="va">List</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">Value</span><span class="fu">|</span><span class="va">List</span><span class="fu">].</span></span>
+<div class="sourceCode" id="cb58"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb58-1"><a href="trees.html#cb58-1" tabindex="-1"></a><span class="fu">start_perf()</span> <span class="op">-&gt;</span></span>
+<span id="cb58-2"><a href="trees.html#cb58-2" tabindex="-1"></a>    <span class="fu">eprof:start_profiling([self()]).</span></span>
 <span id="cb58-3"><a href="trees.html#cb58-3" tabindex="-1"></a></span>
-<span id="cb58-4"><a href="trees.html#cb58-4" tabindex="-1"></a><span class="fu">append(</span><span class="va">Value</span><span class="fu">,[])</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">Value</span><span class="fu">];</span></span>
-<span id="cb58-5"><a href="trees.html#cb58-5" tabindex="-1"></a><span class="fu">append(</span><span class="va">Value</span><span class="fu">,[</span><span class="va">First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">])</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">First</span><span class="fu">|append(</span><span class="va">Value</span><span class="fu">,</span><span class="va">Rest</span><span class="fu">)].</span></span>
-<span id="cb58-6"><a href="trees.html#cb58-6" tabindex="-1"></a></span>
-<span id="cb58-7"><a href="trees.html#cb58-7" tabindex="-1"></a><span class="fu">timing_test()</span> <span class="op">-&gt;</span></span>
-<span id="cb58-8"><a href="trees.html#cb58-8" tabindex="-1"></a>    <span class="va">List</span> <span class="op">=</span> <span class="fu">lists:seq(</span><span class="dv">1</span><span class="fu">,</span><span class="dv">10000</span><span class="fu">),</span></span>
-<span id="cb58-9"><a href="trees.html#cb58-9" tabindex="-1"></a>    </span>
-<span id="cb58-10"><a href="trees.html#cb58-10" tabindex="-1"></a>    <span class="fu">start_perf(),</span></span>
-<span id="cb58-11"><a href="trees.html#cb58-11" tabindex="-1"></a>    <span class="fu">lists:foldl(</span><span class="kw">fun</span> <span class="ch">prepend</span><span class="op">/</span><span class="dv">2</span><span class="fu">,</span> <span class="fu">[],</span> <span class="va">List</span><span class="fu">),</span></span>
-<span id="cb58-12"><a href="trees.html#cb58-12" tabindex="-1"></a>    <span class="fu">stop_perf(</span><span class="st">&quot;prepend&quot;</span><span class="fu">),</span></span>
-<span id="cb58-13"><a href="trees.html#cb58-13" tabindex="-1"></a></span>
-<span id="cb58-14"><a href="trees.html#cb58-14" tabindex="-1"></a>    <span class="fu">start_perf(),</span></span>
-<span id="cb58-15"><a href="trees.html#cb58-15" tabindex="-1"></a>    <span class="fu">lists:foldl(</span><span class="kw">fun</span> <span class="ch">append</span><span class="op">/</span><span class="dv">2</span><span class="fu">,</span> <span class="fu">[],</span> <span class="va">List</span><span class="fu">),</span></span>
-<span id="cb58-16"><a href="trees.html#cb58-16" tabindex="-1"></a>    <span class="fu">stop_perf(</span><span class="st">&quot;append&quot;</span><span class="fu">),</span></span>
-<span id="cb58-17"><a href="trees.html#cb58-17" tabindex="-1"></a></span>
-<span id="cb58-18"><a href="trees.html#cb58-18" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<span id="cb58-4"><a href="trees.html#cb58-4" tabindex="-1"></a><span class="fu">stop_perf(</span><span class="va">Title</span><span class="fu">)</span> <span class="op">-&gt;</span></span>
+<span id="cb58-5"><a href="trees.html#cb58-5" tabindex="-1"></a>    <span class="fu">io:format(</span><span class="st">&quot;Perf (~p): ~n&quot;</span><span class="fu">,[</span><span class="va">Title</span><span class="fu">]),</span></span>
+<span id="cb58-6"><a href="trees.html#cb58-6" tabindex="-1"></a>    <span class="fu">eprof:stop_profiling(),</span></span>
+<span id="cb58-7"><a href="trees.html#cb58-7" tabindex="-1"></a>    <span class="fu">eprof:analyze(</span><span class="ch">total</span><span class="fu">).</span></span></code></pre></div>
+<p>If we wanted to compare the cost of adding to the front of a list and the cost of adding to the end of list, we would create a single <code>foldl</code> to perform those operations using a sequence of numbers from 1 to 10,000.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb59-1"><a href="trees.html#cb59-1" tabindex="-1"></a><span class="co">% Code to test</span></span>
+<span id="cb59-2"><a href="trees.html#cb59-2" tabindex="-1"></a><span class="fu">prepend(</span><span class="va">Value</span><span class="fu">,</span> <span class="va">List</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">Value</span><span class="fu">|</span><span class="va">List</span><span class="fu">].</span></span>
+<span id="cb59-3"><a href="trees.html#cb59-3" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="trees.html#cb59-4" tabindex="-1"></a><span class="fu">append(</span><span class="va">Value</span><span class="fu">,[])</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">Value</span><span class="fu">];</span></span>
+<span id="cb59-5"><a href="trees.html#cb59-5" tabindex="-1"></a><span class="fu">append(</span><span class="va">Value</span><span class="fu">,[</span><span class="va">First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">])</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">First</span><span class="fu">|append(</span><span class="va">Value</span><span class="fu">,</span><span class="va">Rest</span><span class="fu">)].</span></span>
+<span id="cb59-6"><a href="trees.html#cb59-6" tabindex="-1"></a></span>
+<span id="cb59-7"><a href="trees.html#cb59-7" tabindex="-1"></a><span class="fu">timing_test()</span> <span class="op">-&gt;</span></span>
+<span id="cb59-8"><a href="trees.html#cb59-8" tabindex="-1"></a>    <span class="va">List</span> <span class="op">=</span> <span class="fu">lists:seq(</span><span class="dv">1</span><span class="fu">,</span><span class="dv">10000</span><span class="fu">),</span></span>
+<span id="cb59-9"><a href="trees.html#cb59-9" tabindex="-1"></a>    </span>
+<span id="cb59-10"><a href="trees.html#cb59-10" tabindex="-1"></a>    <span class="fu">start_perf(),</span></span>
+<span id="cb59-11"><a href="trees.html#cb59-11" tabindex="-1"></a>    <span class="fu">lists:foldl(</span><span class="kw">fun</span> <span class="ch">prepend</span><span class="op">/</span><span class="dv">2</span><span class="fu">,</span> <span class="fu">[],</span> <span class="va">List</span><span class="fu">),</span></span>
+<span id="cb59-12"><a href="trees.html#cb59-12" tabindex="-1"></a>    <span class="fu">stop_perf(</span><span class="st">&quot;prepend&quot;</span><span class="fu">),</span></span>
+<span id="cb59-13"><a href="trees.html#cb59-13" tabindex="-1"></a></span>
+<span id="cb59-14"><a href="trees.html#cb59-14" tabindex="-1"></a>    <span class="fu">start_perf(),</span></span>
+<span id="cb59-15"><a href="trees.html#cb59-15" tabindex="-1"></a>    <span class="fu">lists:foldl(</span><span class="kw">fun</span> <span class="ch">append</span><span class="op">/</span><span class="dv">2</span><span class="fu">,</span> <span class="fu">[],</span> <span class="va">List</span><span class="fu">),</span></span>
+<span id="cb59-16"><a href="trees.html#cb59-16" tabindex="-1"></a>    <span class="fu">stop_perf(</span><span class="st">&quot;append&quot;</span><span class="fu">),</span></span>
+<span id="cb59-17"><a href="trees.html#cb59-17" tabindex="-1"></a></span>
+<span id="cb59-18"><a href="trees.html#cb59-18" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
 <p>The code will take several seconds to run. The output of <code>eprof</code> will include your functions and several others. Sample output (results will vary on different computers) of <code>eprof</code> for this code including only the functions we are testing is given below:</p>
 <pre class="shell"><code>Perf (&quot;prepend&quot;):
 FUNCTION                          CALLS        %  TIME  [uS / CALLS]

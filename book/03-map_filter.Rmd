@@ -143,7 +143,7 @@ Note that Erlang provides this function as a built-in function called `lists:fil
 
 ## Functors
 
-Our `map` function also has an additional classification.  A functor is a term from category theory in mathematics which means that it provides a mapping between two different categories of things.  In computer science, if we create a data structure that has the ability to change the contents without changing the structure, then we say that the structure is a functor.  The most common operation that we perform on functors is the `map` operation.  Remember that the `map` function will use a lambda to change all the contents of the list without changing the size of the list (i.e. the structure).  A tree is also a functor.  A binary search tree is a little more difficult.  If you apply a lambda on everything in the binary search tree, the ordering rules may be violated.  This means that the `map` function will have to check to see if re-ordering is needed.  Structures that represent a single item (e.g. variable of a certain type) can also be functors as a `map` function can be written for them to change their value using a lambda.  Even a function is a functor.  If you apply a lambda the function then you have a new function which is a composition of both functions.  
+Our `map` function also has an additional classification.  A functor is a term from category theory in mathematics which means that it provides a mapping between two different categories of things.  In computer science, if we create a data structure that has the ability to change the contents without changing the structure, then we say that the structure is a functor.  The most common operation that we perform on functors is the `map` operation.  Remember that the `map` function will use a lambda to change all the contents of the list without changing the size of the list (i.e. the structure).  A tree is also a functor.  A binary search tree is a little more difficult.  If you apply a lambda on everything in the binary search tree, the ordering rules may be violated.  This means that the `map` function will have to check to see if re-ordering is needed.  Structures that represent a single item (e.g. variable of a certain type) can also be functors as a `map` function can be written for them to change their value using a lambda.  Even a function is a functor.  If you apply a lambda to a function then you have a new function which is a composition of both functions.  
 
 Composition is a key characteristic of functors.  If the list is a functor, then I should be able to show that the following are equivalent given two lambdas $\lambda_g$ and $\lambda_h$:  
 
@@ -160,7 +160,7 @@ $\nonumber$
 This is frequently written using composition notation: 
 
 :::: {.formulabox data-latex=""}
-$map(\lambda_g \circ \lambda_h) = map(\lambda_g) \circ map(\lambda_h)$. 
+$map(\lambda_h \circ \lambda_g) = map(\lambda_h) \circ map(\lambda_g)$. 
 ::::
 $\nonumber$
 
@@ -179,9 +179,22 @@ $de\mathit{f} ~ ~ \lambda_h ::  Value \rightarrow (Value*Value) - 1.$
 ::::
 $\nonumber$
 
-In the problem set, you will implement both sides of the composition $map(\lambda_g \circ \lambda_h) = map(\lambda_g) \circ map(\lambda_h)$ to see if it holds true using a simple list of numbers.  The left hand side calls `map` once and the right hand side calls `map` twice.  The left hand side will need to create a new lambda function that composes both lambda functions.  In that new lambda function, you should use $\lambda_g$ and $\lambda_h$.
+To demonstrate the composition property, you will need to demonstrate that both side of the following is true:
 
-The use of composition here is a preview for the topic of chaining which we see in the near future.
+:::: {.formulabox data-latex=""}
+$map(\lambda_h \circ \lambda_g) = map(\lambda_h) \circ map(\lambda_g)$. 
+::::
+$\nonumber$
+
+To solve the right hand side of the property, you will call the `map` function twice.  You will first call it on $\lambda_g$ and then take the result of that first `map` and use it in the second `map` with $\lambda_h$.  To solve the left hand size of the property, you will need to create a new function that composes $\lambda_h$ with $\lambda_g$.  Perhaps it can look something like:
+
+```erlang
+H_Compose_G = fun (X) -> H(G(X)) end,
+```
+
+You can now use `H_Compose_G` in your `map` call to evaluate the left hand size of the property.  If the resulting list on both side is the same, then we have successfully demonstrated the property.
+
+The use of composition here is a preview for the topic of chaining which we will see in the near future.
 
 :::: {.problembox data-latex=""}
 **Problem Set 3**
