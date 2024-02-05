@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2024-01-25" />
+<meta name="date" content="2024-02-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -430,7 +430,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb34-22"><a href="chaining-currying-and-partial-applications.html#cb34-22" tabindex="-1"></a></span>
 <span id="cb34-23"><a href="chaining-currying-and-partial-applications.html#cb34-23" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
 <div class="problembox">
-<p><strong>Problem Set 1</strong></p>
+<p><strong>Problem Set 3</strong></p>
 <ol style="list-style-type: decimal">
 <li><p>Implement the <code>map_filter_fold2</code> code above. Test the function with the test code provided in the starting code. Write an additional partial application function that obtains the first 20 triples that are even (uses all parts of <code>map_filter_fold2</code> except the application of the fold and save into the variable <code>First20TriplesOnlyEven</code> provided in the test code). Test your partial application function to calculate both the sum of all of the numbers (it should result in 330) and the product of all of the numbers (219419659468800).</p></li>
 <li><p>Review the <code>process_dataset</code> function (there is some test code you can run as well) which has input parameters as follows:</p>
@@ -438,7 +438,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Filename - The dataset csv file. You will use the file called <code>weather.csv</code> You can download that file here: <a href="proves/weather.csv">weather.csv</a></li>
 <li>ColumnId - The column to process (first column is designated as column 1)</li>
 <li>ColumnType - Either the atom <code>text</code> or <code>int</code> or <code>float</code> so the proper formatting is done</li>
-<li>CalcL - One arity function used to aggregate all the values in the column extracted. Two functions have been created for you already for use including <code>list_average</code> and <code>list_text_count</code>.</li>
+<li>CalcFunction - One arity function used to aggregate all the values in the column extracted. Two functions have been created for you already for use including <code>list_average</code> and <code>list_text_count</code>.</li>
 </ul>
 <p>Using this <code>process_dataset</code> function, create a <code>process_dataset2</code> function that will allow partial applications to be created. The new <code>process_dataset2</code> should split up the functions in the following ways:</p>
 <ul>

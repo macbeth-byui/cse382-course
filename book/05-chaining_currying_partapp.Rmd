@@ -279,7 +279,7 @@ map_filter_fold_test() ->
 ```
 
 :::: {.problembox data-latex=""}
-**Problem Set 1**
+**Problem Set 3**
 
 1. Implement the `map_filter_fold2` code above.  Test the function with the test code provided in the starting code.  Write an additional partial application function that obtains the first 20 triples that are even (uses all parts of `map_filter_fold2` except the application of the fold and save into the variable `First20TriplesOnlyEven` provided in the test code).  Test your partial application function to calculate both the sum of all of the numbers (it should result in 330) and the product of all of the numbers (219419659468800).
 
@@ -287,7 +287,7 @@ map_filter_fold_test() ->
    * Filename - The dataset csv file.  You will use the file called `weather.csv`  You can download that file here: [weather.csv](proves/weather.csv)
    * ColumnId - The column to process (first column is designated as column 1)
    * ColumnType - Either the atom `text` or `int` or `float` so the proper formatting is done
-   * CalcL - One arity function used to aggregate all the values in the column extracted.  Two functions have been created for you already for use including `list_average` and `list_text_count`.
+   * CalcFunction - One arity function used to aggregate all the values in the column extracted.  Two functions have been created for you already for use including `list_average` and `list_text_count`.
   
    Using this `process_dataset` function, create a `process_dataset2` function that will allow partial applications to be created.  The new `process_dataset2` should split up the functions in the following ways:
    * Read the entire dataset from a user supplied file using the `read_csv_file` function
