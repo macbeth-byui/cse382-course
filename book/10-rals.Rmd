@@ -11,9 +11,9 @@ To find a solution, we will consider a problem that at first does not seem relat
 * If we encounter a 0, we will replace it with a 1 and make no more changes.
 * If we encounter a 1, we will replace it with a 0 and consider these two steps again for the next number in the sequence.  In this case we are mathematically carrying the 1 to the next item in the sequence.  
 
-If we try to do this in Erlang, we will be frustrated by the fact that we are going from right to left.  Since it is more natural in Erlang to go left (index 0) to right, we will flip our binary numbers around.  When we read right to left, we call this little endian notation whereas when we read left to right, we call this big endian notation.  To work better in Erlang, we will use the big endian notation
+If we try to do this in Erlang, we will be frustrated by the fact that we are going from right to left.  Since it is more natural in Erlang to go left (index 0) to right, we will flip our binary numbers around.  
 
-|Base 10 Value|Little Endian Notation (Right to Left)|Big Endian Notation (Left to Right)|
+|Base 10 Value|Right to Left|Left to Right (Use in Erlang)|
 |-|-|-|
 |1|001|100|
 |2|010|010|

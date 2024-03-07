@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2024-02-05" />
+<meta name="date" content="2024-03-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -239,18 +239,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>If we encounter a 0, we will replace it with a 1 and make no more changes.</li>
 <li>If we encounter a 1, we will replace it with a 0 and consider these two steps again for the next number in the sequence. In this case we are mathematically carrying the 1 to the next item in the sequence.</li>
 </ul>
-<p>If we try to do this in Erlang, we will be frustrated by the fact that we are going from right to left. Since it is more natural in Erlang to go left (index 0) to right, we will flip our binary numbers around. When we read right to left, we call this little endian notation whereas when we read left to right, we call this big endian notation. To work better in Erlang, we will use the big endian notation</p>
+<p>If we try to do this in Erlang, we will be frustrated by the fact that we are going from right to left. Since it is more natural in Erlang to go left (index 0) to right, we will flip our binary numbers around.</p>
 <table>
-<colgroup>
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Base 10 Value</th>
-<th>Little Endian Notation (Right to Left)</th>
-<th>Big Endian Notation (Left to Right)</th>
+<th>Right to Left</th>
+<th>Left to Right (Use in Erlang)</th>
 </tr>
 </thead>
 <tbody>
