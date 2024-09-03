@@ -1,0 +1,15 @@
+{application, prove07_2,
+ [
+  {description, "CSE 382 Prove 7 - Problem Set 2"},
+  {vsn, "1"},
+  {modules, [
+             prove07_2 
+            ]},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {env, []}
+ ]}.
+
