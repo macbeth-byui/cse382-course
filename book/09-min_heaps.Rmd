@@ -112,7 +112,7 @@ $\nonumber$
 :::: {.problembox data-latex=""}
 **Problem Set 1**
 
-You can find the template for the problem sets in this lesson here: [prove09.erl](proves/prove09.erl)
+Starting Code: `prove09_1/src/prove09_1.erl`
 
 1. Implement the `insert` function per the specification and definition given above.  The `rank` and `make` functions are written for you.  Use the test code provided to test your function.  Note that at this point, the algorithm has not done any swapping.  That will be done in the next section below.  When implementing this in Erlang, you may want to take advantage of some additional syntax.  Up to this point, there are two ways you know to write the `insert` function with the `node` tuple:
 
@@ -226,7 +226,7 @@ $spec ~ ~ remove\_min :: node \rightarrow node.$
 ::::
 $\nonumber$
 
-The implementation of `merge` and `remove_min` are left for exercises.
+The implementation of `merge` is left for exercises.
 
 Since the `merge` function successfully handled merging a min heap with another min heap of size 1, we could reuse the `merge` function to simplify our `insert` function.   We are merging our new node (created with `make`) with our existing min heap (`Heap` - which could be nil).
 
@@ -237,50 +237,12 @@ insert(New_Value, Heap) -> merge(make(New_Value, nil, nil), Heap).
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
+Starting Code: `prove09_2/src/prove09_2.erl`
+
 1. Modify the existing `make` function  to properly perform the swaps per the definition above (including the second scenario in the definition which was not provided to you).  You should be able to combine both scenarios into a single clause using a `case of` block.  Use the test code provided to test your function.  
-2. Implement the `merge` function and the `remove_min` function as described above.  Use the test code provided to test your function.  Once your code is working, you can modify your `insert` function to use the code provided above that uses `merge`.
+2. Implement the `merge` function as described above.  Use the test code provided to test your function.  Note that `remove_min` and `insert` are already provided and they use your `merge` function.
 ::::
 
-## Priority Queue
-
-A priority queue is a normal First In First Out (FIFO) queue except that a priority is added to each node placed in the queue.  For our discussion, we will say that priority 1 is the highest priority and therefore should be processed first.  The min heap is useful for a priority queue because the next item to dequeue is always quickly available at the root. 
-
-We want to modify our min heap so that it will work with any data $a$ even if Erlang doesn't know how to compare with a boolean operator.  The comparison (so long as we simplified our `insert` function already in the previous section) is only performed in the `merge` function.  If we provide a function to our `merge` that handles the comparison, then we are unlimited to what we can put in our heap.
-
-For a phone queue, we will define the following structure:
-
-:::: {.formulabox data-latex=""}
-$struct ~ ~ call ~ ~ \lbrace integer:Priority, string:Name \rbrace.$
-::::
-$\nonumber$
-
-In our `merge` function, we have been doing a $\leq$ comparisons with the priority.  Now we want to define a $\leq$ comparison for `call` objects.
-
-:::: {.formulabox data-latex=""}
-$spec ~ ~ \lambda_{compare} :: call ~ ~ call \rightarrow boolean.$
-::::
-$\nonumber$
-
-If we are going to provide this $\lambda_{compare}$ to our `merge` function, we are going to need to create a `merge/3`.  Since `merge` is called by `insert` and `remove_min`, we will need to create an `insert/3` and `remove_min/2` as well to receive the $\lambda_{compare}$.
-
-:::: {.formulabox data-latex=""}
-$spec ~ ~ merge :: node ~ ~ node ~ ~ \lambda_{compare} \rightarrow node.$
-
-$spec ~ ~ insert :: a ~ ~ node ~ ~ \lambda_{compare} \rightarrow node.$
-
-$spec ~ ~ remove\_min :: node ~ ~ \lambda_{compare} \rightarrow node.$
-::::
-$\nonumber$
-
-The implementation of `merge/3`, `insert/3`, and `remove_min/2` along with the creation of a $\lambda_{compare}$ to compare the priorities within two `call` tuples is left as an exercise below.
-
-When we implement and test these functions, you should notice an unusual behavior when you have duplicate priorities.  The order in which items are added to the min heap are not maintained when considering those items that have the same priorities.  The Min Heap is not sort stable.  The Min Heap will not guarantee the original order for duplicate priorities.  Perhaps it could be useful to add a timestamp to our `call` record to keep track of who arrived first and then include that in our $\lambda_{compare}$ function.
-
-:::: {.problembox data-latex=""}
-**Problem Set 3**
-
-1. Implement the `merge/3`, `insert/3`, and `remove_min/2` functions as described above.  Modify the provided test code to set the variable `Calls_Compare` equal to a your $\lambda_{compare}$ which should compare two `call` tuples in the same way as the original `merge/2` compared two nodes with $\leq$.  For example, if `Calls_Compare` was called on `{"MST", 2, "Tim"}` and `{"PST", 1, "George"}`, then the function would compare $2 \leq 1$ which is `false`. Use the test code to test your code.  Note that `get_min` was implemented for you to support the test code.
-::::
 
 $\nonumber$
 $\nonumber$

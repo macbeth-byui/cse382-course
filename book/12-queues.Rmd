@@ -92,7 +92,7 @@ $\nonumber$
 :::: {.problembox data-latex=""}
 **Problem Set 1**
 
-You can find the template for the problem sets in this lesson here: [prove12.erl](proves/prove12.erl)
+Starting Code: `prove12_1/src/prove12_1.erl`
 
 1. Implement the `enqueue`, `dequeue`, and `head` functions as described in the definitions above.  Use the test code provided to verify your implementations.  A `create` and `empty` function are already provided for you.  In the test code, the `check_queue` will verify that the queue was created correctly.
 ::::
@@ -211,57 +211,12 @@ $\nonumber$
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
+Starting Code: `prove12_2/src/prove12_2.erl`
+
 1.  Implement the `enqueue_front`, `dequeue_back`, and `tail` functions as described in the definitions above.  You will also need to modify the `dequeue` and `head` to support the deque.  Use the test code provided to verify your implementations.  You will need to use the `lists:split` function provided in Erlang.
 ::::
 
-## Performance
 
-When we look at the performance of a deque with Python or C++, we see O(1) performance for all 6 functions we described in the previous sections.  Using pointers, the deque is easily modified.  However, in an immutable environment, we have had to be creative using Stacks and functions like `split` and `reverse`.  These utility functions were used to ensure O(1) performance on `head` and `tail`.  What affect has the `split` and `reverse` had on the cost of `dequeue` and `dequeue_back`?
-
-If we do profile analysis on running `dequeue`, we will find first of all that the `split` and `reverse` were not always needed.  This only occurred a relatively small number of times.  When these functions are used, there is an O($n/2$) cost where $n$ is the size of the list being split.  However, each time `split` and `reverse` are called, the value of $n$ is getting smaller (assuming we are done enqueuing values).  In other words, its not really an O($n$) every time `dequeue` is called.  In comparison, its like the dynamic array in Python and C++ which has to double in size and copy values sometimes.  We don't say the cost of adding another item to the end is O(n) but rather O(1) amortized.  The cost of doing the occasional doubling (with the copy) is amortized across multiple adds which didn't require the extra work.
-
-Let's consider what happens if we add 20 numbers to our deque using `enqueue`:
-
-`Front = [1]  Back = [20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2]`
-
-If we start calling `dequeue`, how many times does the `split` and `reverse` happen?
-
-|Front|Back|Number Split/Reverse|
-|-|-|-|
-`[2,3,4,5,6,7,8,9,10,11]`|`[20,19,18,17,16,15,14,13,12]`|10
-`[3,4,5,6,7,8,9,10,11]`|`[20,19,18,17,16,15,14,13,12]`|0
-`[4,5,6,7,8,9,10,11]`|`[20,19,18,17,16,15,14,13,12]`|0
-`[5,6,7,8,9,10,11]`|`[20,19,18,17,16,15,14,13,12]`|0
-`[6,7,8,9,10,11]`|`[20,19,18,17,16,15,14,13,12]`|0
-`[7,8,9,10,11]`|`[20,19,18,17,16,15,14,13,12]`|0
-`[8,9,10,11]`|`[20,19,18,17,16,15,14,13,12]`|0
-`[9,10,11]`|`[20,19,18,17,16,15,14,13,12]`|0
-`[10,11]`|`[20,19,18,17,16,15,14,13,12]`|0
-`[11]`|`[20,19,18,17,16,15,14,13,12]`|0
-`[12,13,14,15,16]`|`[20,19,18,17]`|5
-`[13,14,15,16]`|`[20,19,18,17]`|0
-`[14,15,16]`|`[20,19,18,17]`|0
-`[15,16]`|`[20,19,18,17]`|0
-`[16]`|`[20,19,18,17]`|0
-`[17,18]`|`[20,19]`|2
-`[18]`|`[20,19]`|0
-`[19]`|`[20]`|1
-`[20]`|`[]`|1
-`[]`|`[]`|0
-||**TOTAL**|19
-
-The number of times something had to be split off and reversed was only 19.  If we divide these 19 actions across the 20 `dequeue` calls, we get the amortized O(1) for `dequeue`.  
-
-Contrast this with what you would see if we tried to remove the last element of a single list.  We would need to recurse to the end every time we wanted to `dequeue` for a total of over 200 times.  Remove the last item of the list in this fashion would give us O($n$) without any amortization possible.
-
-In the problem set below, you will observe the actual time and function counts with a deque of size 1 million.  Your observations should convince you of the amortized nature of our deque.
-
-:::: {.problembox data-latex=""}
-**Problem Set 3**
-
-1. Using the `start_perf` and `stop_perf` functions provided, compare the time it takes to `enqueue` the numbers 1 to 1,000,000 versus the time it takes to `dequeue` those same numbers.  Identify how we achieved O(1) for these two functions.  
-2. Perform the same timing test to compare `enqueue_front` and `dequeue_back`.  Identify how we achieved O(1) for these two functions as well.   Record your observations in the comments of the test code.
-::::
  
 $\nonumber$
 $\nonumber$

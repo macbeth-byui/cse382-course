@@ -107,12 +107,12 @@ $\nonumber$
 :::: {.problembox data-latex=""}
 **Problem Set 1**
 
-You can find the template for the problem sets in this lesson here: [prove06.erl](proves/prove06.erl)
+Starting Code: `prove06_1/src/prove06_1.erl`
 
-1. Implement the `combine_acounts` function as described above. Demonstrate that the Associative Property works to combine 3 accounts provided in the test code together.  Note that as you demonstrate the associative property, Tim should be the final account owner.
-2. Use a `foldl` to demonstrate the ability to combine 5 accounts.  Use the test code provided in the starting code.
-3. A monoid can be used to combine anything.  In a functional language, that includes functions.  Write a monoid that combines two functions of arity 1.  Call your combination function `combine_functions`.  Remember that `combine_functions` must satisfy the closure property which means that it must also return a function with arity 1.  It should also satisfy the identify property (combine a function with `nil`).  Test your code to show that it works with the Associative property.  Use the 1 arity Erlang functions `to_upper`, `trim`, and `reverse` for testing your monoid (provided in the test code).  The test code will test an input string such as "   abCDef   " which would result in "FEDCBA" after all 3 functions are applied.
-4. Use `foldl` to combine all three functions together from the previous problem.  Use the test code provided in the starting code.
+1. Implement the `combine_acounts` function as described above. 
+2. Modify `combine_accounts_2_test` to use a `foldl` to demonstrate the ability to combine 5 accounts.  Use the test code provided in the starting code.
+3. A monoid can be used to combine anything.  In a functional language, that includes functions.  Write a monoid that combines two functions of arity 1.  Call your combination function `combine_functions`.  Remember that `combine_functions` must satisfy the closure property which means that it must also return a function with arity 1.  It should also satisfy the identify property (combine a function with `nil`).  
+4. Modify `combine_functions_2_test` to use a `foldl` to combine all three functions together from the previous problem.  Use the test code provided in the starting code.
 ::::
 
 ## Monads
@@ -145,7 +145,7 @@ use_inventory(Inventory) when Inventory == 0 -> {fail};
 use_inventory(Inventory) -> {ok, Inventory - 1}.
 ```
 
-In this example, `use_inventory` returns a `Maybe` instead of a number which means we don't have closure which affects are ability to chain properly.  Monad types include helper functions to adapt the output of a function (i.e. `Maybe`) to the input of a function (i.e. number).  Each Monad must include a type constructor (often called `unit`) and a `bind` function described below.
+In this example, `use_inventory` returns a `Maybe` instead of a number which means we don't have closure which affects our ability to chain properly.  Monad types include helper functions to adapt the output of a function (i.e. `Maybe`) to the input of a function (i.e. number).  Each Monad must include a type constructor (often called `unit`) and a `bind` function described below.
 
 The type constructor will provide a way to create a Monad type using a given value. Here is the type constructor for our `Maybe` type:
 
@@ -192,14 +192,16 @@ test_maybe() ->
    
     ok.
 ```
-For each Monad we create, we may need one or more bind functions to provide the proper support for the unique meta data in our Monad.  In the problem set below, you will write a bind function that will combine meta data from previous bind executions.  Additionally, in the problem set you will simplify the chaining by using a `foldl`.
+For each Monad we create, we may need one or more bind functions to provide the proper support for the unique meta data in our Monad.  In the problem set below, you will write a bind function that will combine meta data from previous bind executions.  Additionally, in the problem set you will simplify the chaining by using a `foldr`.
 
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
-1. Write a function called `cut_half` which will divide a number by 2 and returns a `Maybe` (as defined above) with an integer (not floating point) answer.  If the remainder after division is not 0 (i.e. fractional) or if the number was less than or equal to 1, then the `Maybe` should indicate `fail`. Implement the `maybe_bind` and `maybe_unit` functions above and use the code in the template for testing.
+Starting Code: `prove06_2/src/prove06_2.erl`
+
+1. Write a function called `cut_half` which will divide a number by 2 and returns a `Maybe` (as defined above) with an integer (not floating point) answer.  If the remainder after division is not 0 (i.e. fractional) or if the number was less than or equal to 1, then the `Maybe` should indicate `fail`. Implement the `maybe_bind` and `maybe_unit` functions above.
 2. We will define a Monad called `Result` which is either `{ok}` or `{error, List of Error Messages}`. You will use this `Result` Monad to perform checks on a password. The `check_mixed_case`, `check_number_exists`, and `check_length` functions provided to you already use this `Result` Monad type.  Notice that each function returns a list of size 1 when an `error` is returned.  You need to write  the `result_unit` and `result_bind` functions.  The bind function should save all previous reasons in the Result.  For example, if the password provided to these functions was "simple", and you chained together all 3 checking functions, then the `bind` would result in an `error` result containing a list of all 3 error strings.  Use the code in the template for testing.
-3. Modify the test code provided in the previous problem to chain the bind functions together using a `foldl` instead.
+3. Modify the `result_2_test`to chain the bind functions together using a `lists:foldr` instead.
 ::::
 
 ## List Monad
@@ -355,24 +357,10 @@ L5 = bind(L4, fun pop/1, []),
 :::: {.problembox data-latex=""}
 **Problem Set 3**
 
-1. Implement the `pop` and `bind` function with the list Monad type.  Use the code in the template to test.  Note that the `apply` function is available in Erlang which will call a function and pass a variable list of arguments to the function.  Use the code in the template to test.
+Starting Code: `prove06_3/src/prove06_3.erl`
 
-2. Sometimes a function uses more than one Monad type.  Since its possible for the `pop` to fail in the case of an empty list, it might be a good to use the `Maybe` monad type so we can return `{fail}` in that case.  In the case of the `push`, we don't have any reason to return `{fail}`. However, to support the `bind`, we will be consistent and return the `Maybe` monad type.  The `bind` needs to handle the case where one of our functions returns `{fail}`.    When this happens, an empty list should be created and returned back (which is what `pop` currently does).  We need to write three new functions: `push2`, `pop2`, and `bind2` that support `Maybe`.  The `push2` function is already written for you.  Use the specifications below and the tests provided in the starting code.  The `bind2` function will likely need to use the `case of` block to determine what to do based on the result of running the $\lambda_{bind2}$ function.
+1. Implement the `pop` and `bind` function with the list Monad type.  Use the code in the template to test.  Note that the `apply` function is available in Erlang which will call a function and pass a variable list of arguments to the function. 
 
-:::: {.formulabox data-latex=""}
-$struct ~ ~ maybe\_m\_list$
-
-$\quad \quad \lbrace atom(ok), m\_list:Value \rbrace ~ ~ or$
-
-$\quad \quad \lbrace atom(fail) \rbrace.$
-
-$spec ~ ~ push2 :: a ~ ~ list \rightarrow maybe\_m\_list.$
-
-$spec ~ ~ pop2 :: list \rightarrow maybe\_m\_list.$
-
-$spec ~ ~ \lambda_{bind2} :: list \rightarrow maybe\_m\_list.$
-
-$spec ~ ~ bind2 :: m\_list ~ ~ \lambda_{bind2} ~ ~ [a] \rightarrow m\_list.$
 :::: 
  
 ::::

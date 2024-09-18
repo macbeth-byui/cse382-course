@@ -86,7 +86,7 @@ New_Map = maps:put("Tim", 30, Map),
 :::: {.problembox data-latex=""}
 **Problem Set 1**
 
-You can find the template for the problem sets in this lesson here: [prove11.erl](proves/prove11.erl)
+Starting Code: `prove11_1/src/prove11_1.erl`
 
 1. Implement the `add` function and use the provided test code to verify the implementation.  In the test code note that the pattern matching is done with `:=` instead of `=>` in Erlang.  Also recall that Erlang will represent a string as a list of characters where each character is stored using the [ASCII table](https://www.asciitable.com/)  integer value.
 ::::
@@ -139,45 +139,15 @@ $\nonumber$
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
-1.  Implement the `search` function and use the provided test code to verify the implementation.
+Starting Code: `prove11_2/src/prove11_2.erl`
+
+1.  Implement the `search` function and use the provided test code to verify the implementation.  You will need to copy the `add` function from the previous problem set.
 2.  Implement the remainder of the `count` function and use the provided test code to verify the implementation.  Some additional information:
 	* In the starting code provided, you will note the following pattern matching syntax `count(Node = #{done := nil}) ->` which will match if the Node map provided contains a Key called `done` with a value of `nil`.  This will still match even if there are other key value pairs stored in the map.  Note that each time we match this pattern we should be adding 1 to the accumulated count.
 	* You may find the `maps:fold` function useful.  In the same way that `lists:foldl` will call a lambda function to obtain an accumulated value from a list of values, the `maps:fold` will call a lambda function to obtain an accumulated value from a list of keys in the map.  The lambda function for the `maps:fold` takes 3 parameters including the Key, Value, and previous Accumulator value.  The `maps:fold` function can be used to iterate recursively through all the key value pairs in the Node map.
 ::::
 
-## Performance
 
-A Trie has the potential to both run faster and use less memory.  If we had a collection of strings to store and we wanted to maximize performance, the following table can be consulted.  Note that $n$ represents the number of strings and $m$ represents the maximum size of the string.
-
-|Data Structure|Search Timing|Memory|
-|-|-|-|
-|List|$O(n*m)$ - Have to search each node and compare each letter|$O(n*m)$|
-|Binary Search Tree|$O(n*m)$ if unbalanced; $O(m * log ~ n)$ if balanced|$O(n*m)$|
-|Red Black Tree|$O(m * log ~ n)$|$O(n*m)$|
-|Trie|$O(m)$ - Only have to compare each letter|$O(n*m)$ if no common prefixes; closer to $O(m)$ depending on the amount of prefix commonality|
-
-If the number of strings $n$ keeps increasing, the performance of the Trie will improve over the Red Black Tree.  However, it won't improve by much since the Red Black Tree is logarithmic.  If the size of the string length $m$ is larger, then we will see more noticeable improvements from the Trie over the Red Black Tree.  The Trie is definitely faster than the List or Binary Search Tree.
-
-The memory requirements of the Trie vary based on the amount of compression we get from having common character prefixes.  In the problem set below, you will compare the memory requirements of a collection of phone numbers stored in a List and stored in a Trie.  Phone numbers for a specific geographical region will have common area codes and exchanges.  Similar situations occur with IP addresses in a network.
-
-To measure the memory requirement of a variable in Erlang, we use the following code:
-
-```erlang
-List = [1,2,3,4,5],
-Size = erts_debug:flat_size(List),
-io:format("Size of List = ~p~n",[Size]),
-```
-
-In this example, the size of the five element list is 10 heap words.  A heap word is 4 bytes or 32 bits.  So the total memory is 40 bytes.
-
-:::: {.problembox data-latex=""}
-**Problem Set 3**
-
-1. Download the file [phone.txt](proves/phone.txt) for use in this problem.  This file contains a list of 80,000 phone numbers with the same area code and eight different exchanges (the 3 digits after the area code).  To increase the size of the common prefix, the international code (+1) along with dashes have been included.  Write test code to compare the memory sizes of these phone number strings stored in both a list and in a Trie.  Note that it may take several minutes to create the Trie.  The function `read_file` has been provided for you which will store each line of the file into an erlang list.  Record your observations in the comments of the test code including the following:
-	* Percentage reduction obtained by using a Trie
-	* Reason for the reduction
-::::
- 
 $\nonumber$
 $\nonumber$
 [![Creative Commons License - CC - BY](images/cc-88x31.png)](http://creativecommons.org/licenses/by/4.0/)

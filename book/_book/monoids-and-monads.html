@@ -23,14 +23,14 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2024-03-07" />
+<meta name="date" content="2024-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="chaining-currying-and-partial-applications.html"/>
+<link rel="prev" href="higher-order-functions---fold-and-unfold.html"/>
 <link rel="next" href="streams-and-lazy-evaluation.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -137,34 +137,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="1" data-path="erlang.html"><a href="erlang.html"><i class="fa fa-check"></i><b>1</b> Erlang</a>
+<li class="chapter" data-level="1" data-path="erlang-primer.html"><a href="erlang-primer.html"><i class="fa fa-check"></i><b>1</b> Erlang Primer</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="erlang.html"><a href="erlang.html#quick-erlang-primer"><i class="fa fa-check"></i><b>1.1</b> Quick Erlang Primer</a></li>
-<li class="chapter" data-level="1.2" data-path="erlang.html"><a href="erlang.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
+<li class="chapter" data-level="1.1" data-path="erlang-primer.html"><a href="erlang-primer.html#basic-syntax"><i class="fa fa-check"></i><b>1.1</b> Basic Syntax</a></li>
+<li class="chapter" data-level="1.2" data-path="erlang-primer.html"><a href="erlang-primer.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>2</b> Persistence</a>
+<li class="chapter" data-level="2" data-path="exploring-erlang.html"><a href="exploring-erlang.html"><i class="fa fa-check"></i><b>2</b> Exploring Erlang</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>2.1</b> Persistence in Lists</a></li>
-<li class="chapter" data-level="2.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>2.2</b> More List Persistence</a></li>
-<li class="chapter" data-level="2.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>2.3</b> Specifications and Definitions</a></li>
+<li class="chapter" data-level="2.1" data-path="exploring-erlang.html"><a href="exploring-erlang.html#guess-my-number-game"><i class="fa fa-check"></i><b>2.1</b> Guess My Number Game</a></li>
+<li class="chapter" data-level="2.2" data-path="exploring-erlang.html"><a href="exploring-erlang.html#file-statistics"><i class="fa fa-check"></i><b>2.2</b> File Statistics</a></li>
+<li class="chapter" data-level="2.3" data-path="exploring-erlang.html"><a href="exploring-erlang.html#web-server"><i class="fa fa-check"></i><b>2.3</b> Web Server</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html"><i class="fa fa-check"></i><b>3</b> Higher Order Functions - Map and Filter</a>
+<li class="chapter" data-level="3" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>3</b> Persistence</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#map"><i class="fa fa-check"></i><b>3.1</b> Map</a></li>
-<li class="chapter" data-level="3.2" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#filter"><i class="fa fa-check"></i><b>3.2</b> Filter</a></li>
-<li class="chapter" data-level="3.3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#functors"><i class="fa fa-check"></i><b>3.3</b> Functors</a></li>
+<li class="chapter" data-level="3.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>3.1</b> Persistence in Lists</a></li>
+<li class="chapter" data-level="3.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>3.2</b> More List Persistence</a></li>
+<li class="chapter" data-level="3.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>3.3</b> Specifications and Definitions</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html"><i class="fa fa-check"></i><b>4</b> Higher Order Functions - Fold and Unfold</a>
+<li class="chapter" data-level="4" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html"><i class="fa fa-check"></i><b>4</b> Higher Order Functions - Map and Filter</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold"><i class="fa fa-check"></i><b>4.1</b> Fold</a></li>
-<li class="chapter" data-level="4.2" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold-right"><i class="fa fa-check"></i><b>4.2</b> Fold Right</a></li>
-<li class="chapter" data-level="4.3" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#unfold"><i class="fa fa-check"></i><b>4.3</b> Unfold</a></li>
+<li class="chapter" data-level="4.1" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#map"><i class="fa fa-check"></i><b>4.1</b> Map</a></li>
+<li class="chapter" data-level="4.2" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#filter"><i class="fa fa-check"></i><b>4.2</b> Filter</a></li>
+<li class="chapter" data-level="4.3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#functors"><i class="fa fa-check"></i><b>4.3</b> Functors</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html"><i class="fa fa-check"></i><b>5</b> Chaining, Currying, and Partial Applications</a>
+<li class="chapter" data-level="5" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html"><i class="fa fa-check"></i><b>5</b> Higher Order Functions - Fold and Unfold</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#chaining"><i class="fa fa-check"></i><b>5.1</b> Chaining</a></li>
-<li class="chapter" data-level="5.2" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#currying"><i class="fa fa-check"></i><b>5.2</b> Currying</a></li>
-<li class="chapter" data-level="5.3" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#partial-applications"><i class="fa fa-check"></i><b>5.3</b> Partial Applications</a></li>
+<li class="chapter" data-level="5.1" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold"><i class="fa fa-check"></i><b>5.1</b> Fold</a></li>
+<li class="chapter" data-level="5.2" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold-right"><i class="fa fa-check"></i><b>5.2</b> Fold Right</a></li>
+<li class="chapter" data-level="5.3" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#unfold"><i class="fa fa-check"></i><b>5.3</b> Unfold</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html"><i class="fa fa-check"></i><b>6</b> Monoids and Monads</a>
 <ul>
@@ -182,31 +182,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="8.1" data-path="trees.html"><a href="trees.html#binary-search-tree"><i class="fa fa-check"></i><b>8.1</b> Binary Search Tree</a></li>
 <li class="chapter" data-level="8.2" data-path="trees.html"><a href="trees.html#balanced-red-black-tree"><i class="fa fa-check"></i><b>8.2</b> Balanced Red-Black Tree</a></li>
-<li class="chapter" data-level="8.3" data-path="trees.html"><a href="trees.html#performance"><i class="fa fa-check"></i><b>8.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="min-heaps.html"><a href="min-heaps.html"><i class="fa fa-check"></i><b>9</b> Min Heaps</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="min-heaps.html"><a href="min-heaps.html#min-heap"><i class="fa fa-check"></i><b>9.1</b> Min Heap</a></li>
 <li class="chapter" data-level="9.2" data-path="min-heaps.html"><a href="min-heaps.html#efficient-inserting-and-removal"><i class="fa fa-check"></i><b>9.2</b> Efficient Inserting and Removal</a></li>
-<li class="chapter" data-level="9.3" data-path="min-heaps.html"><a href="min-heaps.html#priority-queue"><i class="fa fa-check"></i><b>9.3</b> Priority Queue</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="random-access-lists.html"><a href="random-access-lists.html"><i class="fa fa-check"></i><b>10</b> Random Access Lists</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="random-access-lists.html"><a href="random-access-lists.html#binary-numbers-and-the-ral"><i class="fa fa-check"></i><b>10.1</b> Binary Numbers and the RAL</a></li>
 <li class="chapter" data-level="10.2" data-path="random-access-lists.html"><a href="random-access-lists.html#lookup-and-update"><i class="fa fa-check"></i><b>10.2</b> Lookup and Update</a></li>
-<li class="chapter" data-level="10.3" data-path="random-access-lists.html"><a href="random-access-lists.html#performance-1"><i class="fa fa-check"></i><b>10.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="tries.html"><a href="tries.html"><i class="fa fa-check"></i><b>11</b> Tries</a>
 <ul>
 <li class="chapter" data-level="11.1" data-path="tries.html"><a href="tries.html#creating-the-trie"><i class="fa fa-check"></i><b>11.1</b> Creating the Trie</a></li>
 <li class="chapter" data-level="11.2" data-path="tries.html"><a href="tries.html#searching-and-counting"><i class="fa fa-check"></i><b>11.2</b> Searching and Counting</a></li>
-<li class="chapter" data-level="11.3" data-path="tries.html"><a href="tries.html#performance-2"><i class="fa fa-check"></i><b>11.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="queues-and-deques.html"><a href="queues-and-deques.html"><i class="fa fa-check"></i><b>12</b> Queues and Deques</a>
 <ul>
 <li class="chapter" data-level="12.1" data-path="queues-and-deques.html"><a href="queues-and-deques.html#queues"><i class="fa fa-check"></i><b>12.1</b> Queues</a></li>
 <li class="chapter" data-level="12.2" data-path="queues-and-deques.html"><a href="queues-and-deques.html#deques"><i class="fa fa-check"></i><b>12.2</b> Deques</a></li>
-<li class="chapter" data-level="12.3" data-path="queues-and-deques.html"><a href="queues-and-deques.html#performance-3"><i class="fa fa-check"></i><b>12.3</b> Performance</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -257,34 +252,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>The first part of the definition provides support for the identity property. Observe that this function can be chained together in different pairs (associative property) and the result is the same.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb35-1"><a href="monoids-and-monads.html#cb35-1" tabindex="-1"></a><span class="fu">combine_list(</span><span class="va">List</span><span class="fu">,</span> <span class="fu">[])</span> <span class="op">-&gt;</span> <span class="va">List</span><span class="fu">;</span></span>
-<span id="cb35-2"><a href="monoids-and-monads.html#cb35-2" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="monoids-and-monads.html#cb35-3" tabindex="-1"></a><span class="fu">combine_list([],</span> <span class="va">List</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">List</span><span class="fu">;</span></span>
-<span id="cb35-4"><a href="monoids-and-monads.html#cb35-4" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="monoids-and-monads.html#cb35-5" tabindex="-1"></a><span class="fu">combine_list([</span><span class="va">First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">],</span><span class="va">List2</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">First</span> <span class="fu">|</span> <span class="fu">combine_list(</span><span class="va">Rest</span><span class="fu">,</span> <span class="va">List2</span><span class="fu">)].</span></span>
-<span id="cb35-6"><a href="monoids-and-monads.html#cb35-6" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="monoids-and-monads.html#cb35-7" tabindex="-1"></a><span class="fu">test_combine_list()</span> <span class="op">-&gt;</span></span>
-<span id="cb35-8"><a href="monoids-and-monads.html#cb35-8" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">combine_list([</span><span class="dv">1</span><span class="fu">,</span><span class="dv">2</span><span class="fu">,</span><span class="dv">3</span><span class="fu">],</span> <span class="fu">[</span><span class="dv">4</span><span class="fu">,</span><span class="dv">5</span><span class="fu">,</span><span class="dv">6</span><span class="fu">]),</span></span>
-<span id="cb35-9"><a href="monoids-and-monads.html#cb35-9" tabindex="-1"></a></span>
-<span id="cb35-10"><a href="monoids-and-monads.html#cb35-10" tabindex="-1"></a>    <span class="co">% Test Associate Property</span></span>
-<span id="cb35-11"><a href="monoids-and-monads.html#cb35-11" tabindex="-1"></a>    <span class="va">L1</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">],</span></span>
-<span id="cb35-12"><a href="monoids-and-monads.html#cb35-12" tabindex="-1"></a>    <span class="va">L2</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">],</span></span>
-<span id="cb35-13"><a href="monoids-and-monads.html#cb35-13" tabindex="-1"></a>    <span class="va">L3</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">],</span></span>
-<span id="cb35-14"><a href="monoids-and-monads.html#cb35-14" tabindex="-1"></a>    </span>
-<span id="cb35-15"><a href="monoids-and-monads.html#cb35-15" tabindex="-1"></a>    <span class="co">% L1 and L2 first, then L3</span></span>
-<span id="cb35-16"><a href="monoids-and-monads.html#cb35-16" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">combine_list(combine_list(</span><span class="va">L1</span><span class="fu">,</span> <span class="va">L2</span><span class="fu">),</span> <span class="va">L3</span><span class="fu">),</span></span>
-<span id="cb35-17"><a href="monoids-and-monads.html#cb35-17" tabindex="-1"></a></span>
-<span id="cb35-18"><a href="monoids-and-monads.html#cb35-18" tabindex="-1"></a>    <span class="co">% L1 with the result of L2 and L3 done first</span></span>
-<span id="cb35-19"><a href="monoids-and-monads.html#cb35-19" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">combine_list(</span><span class="va">L1</span><span class="fu">,</span> <span class="fu">combine_list(</span><span class="va">L2</span><span class="fu">,</span> <span class="va">L3</span><span class="fu">)),</span></span>
-<span id="cb35-20"><a href="monoids-and-monads.html#cb35-20" tabindex="-1"></a></span>
-<span id="cb35-21"><a href="monoids-and-monads.html#cb35-21" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb28-1"><a href="monoids-and-monads.html#cb28-1" tabindex="-1"></a><span class="fu">combine_list(</span><span class="va">List</span><span class="fu">,</span> <span class="fu">[])</span> <span class="op">-&gt;</span> <span class="va">List</span><span class="fu">;</span></span>
+<span id="cb28-2"><a href="monoids-and-monads.html#cb28-2" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="monoids-and-monads.html#cb28-3" tabindex="-1"></a><span class="fu">combine_list([],</span> <span class="va">List</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">List</span><span class="fu">;</span></span>
+<span id="cb28-4"><a href="monoids-and-monads.html#cb28-4" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="monoids-and-monads.html#cb28-5" tabindex="-1"></a><span class="fu">combine_list([</span><span class="va">First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">],</span><span class="va">List2</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">First</span> <span class="fu">|</span> <span class="fu">combine_list(</span><span class="va">Rest</span><span class="fu">,</span> <span class="va">List2</span><span class="fu">)].</span></span>
+<span id="cb28-6"><a href="monoids-and-monads.html#cb28-6" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="monoids-and-monads.html#cb28-7" tabindex="-1"></a><span class="fu">test_combine_list()</span> <span class="op">-&gt;</span></span>
+<span id="cb28-8"><a href="monoids-and-monads.html#cb28-8" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">combine_list([</span><span class="dv">1</span><span class="fu">,</span><span class="dv">2</span><span class="fu">,</span><span class="dv">3</span><span class="fu">],</span> <span class="fu">[</span><span class="dv">4</span><span class="fu">,</span><span class="dv">5</span><span class="fu">,</span><span class="dv">6</span><span class="fu">]),</span></span>
+<span id="cb28-9"><a href="monoids-and-monads.html#cb28-9" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="monoids-and-monads.html#cb28-10" tabindex="-1"></a>    <span class="co">% Test Associate Property</span></span>
+<span id="cb28-11"><a href="monoids-and-monads.html#cb28-11" tabindex="-1"></a>    <span class="va">L1</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">],</span></span>
+<span id="cb28-12"><a href="monoids-and-monads.html#cb28-12" tabindex="-1"></a>    <span class="va">L2</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">],</span></span>
+<span id="cb28-13"><a href="monoids-and-monads.html#cb28-13" tabindex="-1"></a>    <span class="va">L3</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">],</span></span>
+<span id="cb28-14"><a href="monoids-and-monads.html#cb28-14" tabindex="-1"></a>    </span>
+<span id="cb28-15"><a href="monoids-and-monads.html#cb28-15" tabindex="-1"></a>    <span class="co">% L1 and L2 first, then L3</span></span>
+<span id="cb28-16"><a href="monoids-and-monads.html#cb28-16" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">combine_list(combine_list(</span><span class="va">L1</span><span class="fu">,</span> <span class="va">L2</span><span class="fu">),</span> <span class="va">L3</span><span class="fu">),</span></span>
+<span id="cb28-17"><a href="monoids-and-monads.html#cb28-17" tabindex="-1"></a></span>
+<span id="cb28-18"><a href="monoids-and-monads.html#cb28-18" tabindex="-1"></a>    <span class="co">% L1 with the result of L2 and L3 done first</span></span>
+<span id="cb28-19"><a href="monoids-and-monads.html#cb28-19" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">combine_list(</span><span class="va">L1</span><span class="fu">,</span> <span class="fu">combine_list(</span><span class="va">L2</span><span class="fu">,</span> <span class="va">L3</span><span class="fu">)),</span></span>
+<span id="cb28-20"><a href="monoids-and-monads.html#cb28-20" tabindex="-1"></a></span>
+<span id="cb28-21"><a href="monoids-and-monads.html#cb28-21" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
 <p>Since we are combining things, monoids frequently work well with a <code>fold</code>. Notice that the lambda function in the fold below has to account for the different order of parameters between the <code>foldl</code> and the <code>combine_list</code> functions. In the future we will write our data structures functions such that the order is the same.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb36-1"><a href="monoids-and-monads.html#cb36-1" tabindex="-1"></a><span class="fu">test_combine_list()</span> <span class="op">-&gt;</span></span>
-<span id="cb36-2"><a href="monoids-and-monads.html#cb36-2" tabindex="-1"></a>    <span class="va">L1</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">],</span></span>
-<span id="cb36-3"><a href="monoids-and-monads.html#cb36-3" tabindex="-1"></a>    <span class="va">L2</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">],</span></span>
-<span id="cb36-4"><a href="monoids-and-monads.html#cb36-4" tabindex="-1"></a>    <span class="va">L3</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">],</span></span>
-<span id="cb36-5"><a href="monoids-and-monads.html#cb36-5" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">lists:foldl(</span><span class="kw">fun</span> <span class="fu">(</span><span class="va">Value</span><span class="fu">,</span><span class="va">Acc</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">combine_list(</span><span class="va">Acc</span><span class="fu">,</span><span class="va">Value</span><span class="fu">),</span> <span class="fu">[],</span> <span class="fu">[</span><span class="va">L1</span><span class="fu">,</span> <span class="va">L2</span><span class="fu">,</span> <span class="va">L3</span><span class="fu">]),</span></span>
-<span id="cb36-6"><a href="monoids-and-monads.html#cb36-6" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb29-1"><a href="monoids-and-monads.html#cb29-1" tabindex="-1"></a><span class="fu">test_combine_list()</span> <span class="op">-&gt;</span></span>
+<span id="cb29-2"><a href="monoids-and-monads.html#cb29-2" tabindex="-1"></a>    <span class="va">L1</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">],</span></span>
+<span id="cb29-3"><a href="monoids-and-monads.html#cb29-3" tabindex="-1"></a>    <span class="va">L2</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">],</span></span>
+<span id="cb29-4"><a href="monoids-and-monads.html#cb29-4" tabindex="-1"></a>    <span class="va">L3</span> <span class="op">=</span> <span class="fu">[</span><span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">],</span></span>
+<span id="cb29-5"><a href="monoids-and-monads.html#cb29-5" tabindex="-1"></a>    <span class="fu">[</span><span class="dv">1</span><span class="fu">,</span> <span class="dv">2</span><span class="fu">,</span> <span class="dv">3</span><span class="fu">,</span> <span class="dv">4</span><span class="fu">,</span> <span class="dv">5</span><span class="fu">,</span> <span class="dv">6</span><span class="fu">]</span> <span class="op">=</span> <span class="fu">lists:foldl(</span><span class="kw">fun</span> <span class="fu">(</span><span class="va">Value</span><span class="fu">,</span><span class="va">Acc</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">combine_list(</span><span class="va">Acc</span><span class="fu">,</span><span class="va">Value</span><span class="fu">),</span> <span class="fu">[],</span> <span class="fu">[</span><span class="va">L1</span><span class="fu">,</span> <span class="va">L2</span><span class="fu">,</span> <span class="va">L3</span><span class="fu">]),</span></span>
+<span id="cb29-6"><a href="monoids-and-monads.html#cb29-6" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
 <p>Comparing with other languages, monoids should seem familiar to operator overloading or overriding. The ability to define what it means to perform an operator on anything. While Monoids are restricted primarily to combining operators, the principle of closure is still important. For example, consider a function that combines two accounts. Each account is defined by an owner, an identifier, and a balance. We could write a function that does the following:</p>
 <div class="formulabox">
 <p><span class="math inline">\(struct ~ ~ account ~ ~ \lbrace string:Owner, string:Identi\mathit{f}ier, real:Balance \rbrace.\)</span></p>
@@ -307,12 +302,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\nonumber\)</span></p>
 <div class="problembox">
 <p><strong>Problem Set 1</strong></p>
-<p>You can find the template for the problem sets in this lesson here: <a href="proves/prove06.erl">prove06.erl</a></p>
+<p>Starting Code: <code>prove06_1/src/prove06_1.erl</code></p>
 <ol style="list-style-type: decimal">
-<li>Implement the <code>combine_acounts</code> function as described above. Demonstrate that the Associative Property works to combine 3 accounts provided in the test code together. Note that as you demonstrate the associative property, Tim should be the final account owner.</li>
-<li>Use a <code>foldl</code> to demonstrate the ability to combine 5 accounts. Use the test code provided in the starting code.</li>
-<li>A monoid can be used to combine anything. In a functional language, that includes functions. Write a monoid that combines two functions of arity 1. Call your combination function <code>combine_functions</code>. Remember that <code>combine_functions</code> must satisfy the closure property which means that it must also return a function with arity 1. It should also satisfy the identify property (combine a function with <code>nil</code>). Test your code to show that it works with the Associative property. Use the 1 arity Erlang functions <code>to_upper</code>, <code>trim</code>, and <code>reverse</code> for testing your monoid (provided in the test code). The test code will test an input string such as ” abCDef ” which would result in “FEDCBA” after all 3 functions are applied.</li>
-<li>Use <code>foldl</code> to combine all three functions together from the previous problem. Use the test code provided in the starting code.</li>
+<li>Implement the <code>combine_acounts</code> function as described above.</li>
+<li>Modify <code>combine_accounts_2_test</code> to use a <code>foldl</code> to demonstrate the ability to combine 5 accounts. Use the test code provided in the starting code.</li>
+<li>A monoid can be used to combine anything. In a functional language, that includes functions. Write a monoid that combines two functions of arity 1. Call your combination function <code>combine_functions</code>. Remember that <code>combine_functions</code> must satisfy the closure property which means that it must also return a function with arity 1. It should also satisfy the identify property (combine a function with <code>nil</code>).<br />
+</li>
+<li>Modify <code>combine_functions_2_test</code> to use a <code>foldl</code> to combine all three functions together from the previous problem. Use the test code provided in the starting code.</li>
 </ol>
 </div>
 </div>
@@ -331,9 +327,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>Here is the code implementation for our <code>use_inventory</code> function:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb37-1"><a href="monoids-and-monads.html#cb37-1" tabindex="-1"></a><span class="fu">use_inventory(</span><span class="va">Inventory</span><span class="fu">)</span> <span class="ch">when</span> <span class="va">Inventory</span> <span class="op">==</span> <span class="dv">0</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">fail</span><span class="fu">};</span></span>
-<span id="cb37-2"><a href="monoids-and-monads.html#cb37-2" tabindex="-1"></a><span class="fu">use_inventory(</span><span class="va">Inventory</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">ok</span><span class="fu">,</span> <span class="va">Inventory</span> <span class="op">-</span> <span class="dv">1</span><span class="fu">}.</span></span></code></pre></div>
-<p>In this example, <code>use_inventory</code> returns a <code>Maybe</code> instead of a number which means we don’t have closure which affects are ability to chain properly. Monad types include helper functions to adapt the output of a function (i.e. <code>Maybe</code>) to the input of a function (i.e. number). Each Monad must include a type constructor (often called <code>unit</code>) and a <code>bind</code> function described below.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb30-1"><a href="monoids-and-monads.html#cb30-1" tabindex="-1"></a><span class="fu">use_inventory(</span><span class="va">Inventory</span><span class="fu">)</span> <span class="ch">when</span> <span class="va">Inventory</span> <span class="op">==</span> <span class="dv">0</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">fail</span><span class="fu">};</span></span>
+<span id="cb30-2"><a href="monoids-and-monads.html#cb30-2" tabindex="-1"></a><span class="fu">use_inventory(</span><span class="va">Inventory</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">ok</span><span class="fu">,</span> <span class="va">Inventory</span> <span class="op">-</span> <span class="dv">1</span><span class="fu">}.</span></span></code></pre></div>
+<p>In this example, <code>use_inventory</code> returns a <code>Maybe</code> instead of a number which means we don’t have closure which affects our ability to chain properly. Monad types include helper functions to adapt the output of a function (i.e. <code>Maybe</code>) to the input of a function (i.e. number). Each Monad must include a type constructor (often called <code>unit</code>) and a <code>bind</code> function described below.</p>
 <p>The type constructor will provide a way to create a Monad type using a given value. Here is the type constructor for our <code>Maybe</code> type:</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ maybe\_unit :: a \rightarrow maybe.\)</span></p>
@@ -341,7 +337,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>Here is the code for the <code>Maybe</code> type constructor:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb38-1"><a href="monoids-and-monads.html#cb38-1" tabindex="-1"></a><span class="fu">maybe_unit(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">ok</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">}.</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb31-1"><a href="monoids-and-monads.html#cb31-1" tabindex="-1"></a><span class="fu">maybe_unit(</span><span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">ok</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">}.</span></span></code></pre></div>
 <p>The bind will provide way to apply a function to a Monad type. The functions that support our Monad type don’t take a Monad type as the input. For example, our <code>use_inventory</code> takes a simple <code>Inventory</code> value. The output of the <code>use_inventory</code> is the <code>maybe</code> type. The <code>bind</code> will convert the output <code>maybe</code> type into the simple <code>Invetory</code> value that <code>use_inventory</code> is expecting.</p>
 <p>If the <code>Maybe</code> is <code>ok</code>, then the <code>bind</code> will extract the value and apply it to the function. Note that the return of the function will be a <code>Maybe</code> again. If the <code>Maybe</code> is <code>fail</code>, then it will not run the function but instead just return a <code>maybe</code> showing <code>fail</code>. The <code>bind</code> function will manage the meta data of <code>ok</code> and <code>fail</code> in our Monad. The use of the bind function allows us to chain functions that return the <code>Maybe</code> Monad type. Here is the bind definition. Notice that the <span class="math inline">\(\lambda\)</span> is monadic in that it returns (but does not receive) a Monad type.</p>
 <div class="formulabox">
@@ -352,21 +348,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>Here is the code for the <code>Maybe</code> bind:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb39-1"><a href="monoids-and-monads.html#cb39-1" tabindex="-1"></a><span class="fu">maybe_bind({</span><span class="ch">ok</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">},</span> <span class="va">Lambda</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Lambda</span><span class="fu">(</span><span class="va">Value</span><span class="fu">);</span></span>
-<span id="cb39-2"><a href="monoids-and-monads.html#cb39-2" tabindex="-1"></a><span class="fu">maybe_bind({</span><span class="ch">fail</span><span class="fu">},</span> <span class="va">_</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">fail</span><span class="fu">}.</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb32-1"><a href="monoids-and-monads.html#cb32-1" tabindex="-1"></a><span class="fu">maybe_bind({</span><span class="ch">ok</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">},</span> <span class="va">Lambda</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="va">Lambda</span><span class="fu">(</span><span class="va">Value</span><span class="fu">);</span></span>
+<span id="cb32-2"><a href="monoids-and-monads.html#cb32-2" tabindex="-1"></a><span class="fu">maybe_bind({</span><span class="ch">fail</span><span class="fu">},</span> <span class="va">_</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">fail</span><span class="fu">}.</span></span></code></pre></div>
 <p>Using our <code>maybe_unit</code> and <code>maybe_bind</code> we can chain our <code>use_inventory</code> function.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb40-1"><a href="monoids-and-monads.html#cb40-1" tabindex="-1"></a><span class="fu">test_maybe()</span> <span class="op">-&gt;</span></span>
-<span id="cb40-2"><a href="monoids-and-monads.html#cb40-2" tabindex="-1"></a>    <span class="fu">{</span><span class="ch">ok</span><span class="fu">,</span> <span class="dv">8</span><span class="fu">}</span> <span class="op">=</span> <span class="fu">maybe_bind(maybe_bind(maybe_unit(</span><span class="dv">10</span><span class="fu">),</span> <span class="kw">fun</span> <span class="ch">use_inventory</span><span class="op">/</span><span class="dv">1</span><span class="fu">),</span> <span class="kw">fun</span> <span class="ch">use_inventory</span><span class="op">/</span><span class="dv">1</span><span class="fu">),</span></span>
-<span id="cb40-3"><a href="monoids-and-monads.html#cb40-3" tabindex="-1"></a>    <span class="fu">{</span><span class="ch">fail</span><span class="fu">}</span> <span class="op">=</span> <span class="fu">maybe_bind(maybe_bind(maybe_unit(</span><span class="dv">1</span><span class="fu">),</span> <span class="kw">fun</span> <span class="ch">use_inventory</span><span class="op">/</span><span class="dv">1</span><span class="fu">),</span> <span class="kw">fun</span> <span class="ch">use_inventory</span><span class="op">/</span><span class="dv">1</span><span class="fu">),</span></span>
-<span id="cb40-4"><a href="monoids-and-monads.html#cb40-4" tabindex="-1"></a>   </span>
-<span id="cb40-5"><a href="monoids-and-monads.html#cb40-5" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
-<p>For each Monad we create, we may need one or more bind functions to provide the proper support for the unique meta data in our Monad. In the problem set below, you will write a bind function that will combine meta data from previous bind executions. Additionally, in the problem set you will simplify the chaining by using a <code>foldl</code>.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb33-1"><a href="monoids-and-monads.html#cb33-1" tabindex="-1"></a><span class="fu">test_maybe()</span> <span class="op">-&gt;</span></span>
+<span id="cb33-2"><a href="monoids-and-monads.html#cb33-2" tabindex="-1"></a>    <span class="fu">{</span><span class="ch">ok</span><span class="fu">,</span> <span class="dv">8</span><span class="fu">}</span> <span class="op">=</span> <span class="fu">maybe_bind(maybe_bind(maybe_unit(</span><span class="dv">10</span><span class="fu">),</span> <span class="kw">fun</span> <span class="ch">use_inventory</span><span class="op">/</span><span class="dv">1</span><span class="fu">),</span> <span class="kw">fun</span> <span class="ch">use_inventory</span><span class="op">/</span><span class="dv">1</span><span class="fu">),</span></span>
+<span id="cb33-3"><a href="monoids-and-monads.html#cb33-3" tabindex="-1"></a>    <span class="fu">{</span><span class="ch">fail</span><span class="fu">}</span> <span class="op">=</span> <span class="fu">maybe_bind(maybe_bind(maybe_unit(</span><span class="dv">1</span><span class="fu">),</span> <span class="kw">fun</span> <span class="ch">use_inventory</span><span class="op">/</span><span class="dv">1</span><span class="fu">),</span> <span class="kw">fun</span> <span class="ch">use_inventory</span><span class="op">/</span><span class="dv">1</span><span class="fu">),</span></span>
+<span id="cb33-4"><a href="monoids-and-monads.html#cb33-4" tabindex="-1"></a>   </span>
+<span id="cb33-5"><a href="monoids-and-monads.html#cb33-5" tabindex="-1"></a>    <span class="ch">ok</span><span class="fu">.</span></span></code></pre></div>
+<p>For each Monad we create, we may need one or more bind functions to provide the proper support for the unique meta data in our Monad. In the problem set below, you will write a bind function that will combine meta data from previous bind executions. Additionally, in the problem set you will simplify the chaining by using a <code>foldr</code>.</p>
 <div class="problembox">
 <p><strong>Problem Set 2</strong></p>
+<p>Starting Code: <code>prove06_2/src/prove06_2.erl</code></p>
 <ol style="list-style-type: decimal">
-<li>Write a function called <code>cut_half</code> which will divide a number by 2 and returns a <code>Maybe</code> (as defined above) with an integer (not floating point) answer. If the remainder after division is not 0 (i.e. fractional) or if the number was less than or equal to 1, then the <code>Maybe</code> should indicate <code>fail</code>. Implement the <code>maybe_bind</code> and <code>maybe_unit</code> functions above and use the code in the template for testing.</li>
+<li>Write a function called <code>cut_half</code> which will divide a number by 2 and returns a <code>Maybe</code> (as defined above) with an integer (not floating point) answer. If the remainder after division is not 0 (i.e. fractional) or if the number was less than or equal to 1, then the <code>Maybe</code> should indicate <code>fail</code>. Implement the <code>maybe_bind</code> and <code>maybe_unit</code> functions above.</li>
 <li>We will define a Monad called <code>Result</code> which is either <code>{ok}</code> or <code>{error, List of Error Messages}</code>. You will use this <code>Result</code> Monad to perform checks on a password. The <code>check_mixed_case</code>, <code>check_number_exists</code>, and <code>check_length</code> functions provided to you already use this <code>Result</code> Monad type. Notice that each function returns a list of size 1 when an <code>error</code> is returned. You need to write the <code>result_unit</code> and <code>result_bind</code> functions. The bind function should save all previous reasons in the Result. For example, if the password provided to these functions was “simple”, and you chained together all 3 checking functions, then the <code>bind</code> would result in an <code>error</code> result containing a list of all 3 error strings. Use the code in the template for testing.</li>
-<li>Modify the test code provided in the previous problem to chain the bind functions together using a <code>foldl</code> instead.</li>
+<li>Modify the <code>result_2_test</code>to chain the bind functions together using a <code>lists:foldr</code> instead.</li>
 </ol>
 </div>
 </div>
@@ -400,10 +397,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>Implementing this code we have the following:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb41-1"><a href="monoids-and-monads.html#cb41-1" tabindex="-1"></a><span class="fu">push(</span><span class="va">List</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="va">Value</span><span class="fu">,</span> <span class="va">List</span><span class="fu">}.</span></span>
-<span id="cb41-2"><a href="monoids-and-monads.html#cb41-2" tabindex="-1"></a></span>
-<span id="cb41-3"><a href="monoids-and-monads.html#cb41-3" tabindex="-1"></a><span class="fu">pop(</span><span class="ch">nil</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="ch">nil</span><span class="fu">;</span></span>
-<span id="cb41-4"><a href="monoids-and-monads.html#cb41-4" tabindex="-1"></a><span class="fu">pop({</span><span class="va">_First</span><span class="fu">,</span> <span class="va">Rest</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="va">Rest</span><span class="fu">.</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb34-1"><a href="monoids-and-monads.html#cb34-1" tabindex="-1"></a><span class="fu">push(</span><span class="va">List</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="va">Value</span><span class="fu">,</span> <span class="va">List</span><span class="fu">}.</span></span>
+<span id="cb34-2"><a href="monoids-and-monads.html#cb34-2" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="monoids-and-monads.html#cb34-3" tabindex="-1"></a><span class="fu">pop(</span><span class="ch">nil</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="ch">nil</span><span class="fu">;</span></span>
+<span id="cb34-4"><a href="monoids-and-monads.html#cb34-4" tabindex="-1"></a><span class="fu">pop({</span><span class="va">_First</span><span class="fu">,</span> <span class="va">Rest</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="va">Rest</span><span class="fu">.</span></span></code></pre></div>
 <p>If we wanted to calculate the length function, we would need to visit every item in our list to count. To avoid this, we can store the length as meta-data using a Monad. We will define our list Monad type to be: <code>{List, Length}</code>. Using this type, our example lists now look like this:</p>
 <ul>
 <li>Empty List: <code>{nil, 0}</code></li>
@@ -454,39 +451,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><span class="math inline">\(\nonumber\)</span></p>
 <p>When implemented, you will need to use the <code>apply</code> function in Erlang to handle passing the <code>List</code> and <code>Optional_Parameters</code> to the <span class="math inline">\(\lambda_{bind}\)</span> function. If <code>push</code> is used, then the <code>Optional_Parameters</code> will be a one element list containing the value to push. If <code>pop</code> is used, the <code>Optional_Parameters</code> will be an empty list. Some of these functions are implemented below and some are left as an exercise.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb42-1"><a href="monoids-and-monads.html#cb42-1" tabindex="-1"></a><span class="fu">push(</span><span class="va">Value</span><span class="fu">,</span> <span class="va">List</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">{{</span><span class="va">Value</span><span class="fu">,</span> <span class="va">List</span><span class="fu">},</span><span class="dv">1</span><span class="fu">}.</span></span>
-<span id="cb42-2"><a href="monoids-and-monads.html#cb42-2" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="monoids-and-monads.html#cb42-3" tabindex="-1"></a><span class="co">% pop is left as an exercise</span></span>
-<span id="cb42-4"><a href="monoids-and-monads.html#cb42-4" tabindex="-1"></a>   </span>
-<span id="cb42-5"><a href="monoids-and-monads.html#cb42-5" tabindex="-1"></a><span class="fu">create()</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">nil</span><span class="fu">,</span> <span class="dv">0</span><span class="fu">}.</span></span>
-<span id="cb42-6"><a href="monoids-and-monads.html#cb42-6" tabindex="-1"></a></span>
-<span id="cb42-7"><a href="monoids-and-monads.html#cb42-7" tabindex="-1"></a><span class="fu">bind({</span><span class="va">List</span><span class="fu">,</span> <span class="va">Length</span><span class="fu">},</span> <span class="va">Function</span><span class="fu">,</span> <span class="va">Optional_Parameters</span><span class="fu">)</span> <span class="op">-&gt;</span> </span>
-<span id="cb42-8"><a href="monoids-and-monads.html#cb42-8" tabindex="-1"></a>    <span class="va">LEFT</span> <span class="va">FOR</span> <span class="va">AN</span> <span class="va">EXERCISE</span></span>
-<span id="cb42-9"><a href="monoids-and-monads.html#cb42-9" tabindex="-1"></a></span>
-<span id="cb42-10"><a href="monoids-and-monads.html#cb42-10" tabindex="-1"></a><span class="fu">len({</span><span class="va">_List</span><span class="fu">,</span> <span class="va">Length</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="va">Length</span><span class="fu">.</span></span>
-<span id="cb42-11"><a href="monoids-and-monads.html#cb42-11" tabindex="-1"></a><span class="fu">value({</span><span class="va">List</span><span class="fu">,</span> <span class="va">_Length</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="va">List</span><span class="fu">.</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb35-1"><a href="monoids-and-monads.html#cb35-1" tabindex="-1"></a><span class="fu">push(</span><span class="va">Value</span><span class="fu">,</span> <span class="va">List</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">{{</span><span class="va">Value</span><span class="fu">,</span> <span class="va">List</span><span class="fu">},</span><span class="dv">1</span><span class="fu">}.</span></span>
+<span id="cb35-2"><a href="monoids-and-monads.html#cb35-2" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="monoids-and-monads.html#cb35-3" tabindex="-1"></a><span class="co">% pop is left as an exercise</span></span>
+<span id="cb35-4"><a href="monoids-and-monads.html#cb35-4" tabindex="-1"></a>   </span>
+<span id="cb35-5"><a href="monoids-and-monads.html#cb35-5" tabindex="-1"></a><span class="fu">create()</span> <span class="op">-&gt;</span> <span class="fu">{</span><span class="ch">nil</span><span class="fu">,</span> <span class="dv">0</span><span class="fu">}.</span></span>
+<span id="cb35-6"><a href="monoids-and-monads.html#cb35-6" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="monoids-and-monads.html#cb35-7" tabindex="-1"></a><span class="fu">bind({</span><span class="va">List</span><span class="fu">,</span> <span class="va">Length</span><span class="fu">},</span> <span class="va">Function</span><span class="fu">,</span> <span class="va">Optional_Parameters</span><span class="fu">)</span> <span class="op">-&gt;</span> </span>
+<span id="cb35-8"><a href="monoids-and-monads.html#cb35-8" tabindex="-1"></a>    <span class="va">LEFT</span> <span class="va">FOR</span> <span class="va">AN</span> <span class="va">EXERCISE</span></span>
+<span id="cb35-9"><a href="monoids-and-monads.html#cb35-9" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="monoids-and-monads.html#cb35-10" tabindex="-1"></a><span class="fu">len({</span><span class="va">_List</span><span class="fu">,</span> <span class="va">Length</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="va">Length</span><span class="fu">.</span></span>
+<span id="cb35-11"><a href="monoids-and-monads.html#cb35-11" tabindex="-1"></a><span class="fu">value({</span><span class="va">List</span><span class="fu">,</span> <span class="va">_Length</span><span class="fu">})</span> <span class="op">-&gt;</span> <span class="va">List</span><span class="fu">.</span></span></code></pre></div>
 <p>For the length get updated, we have to use the bind function as shown in the test code below.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb43-1"><a href="monoids-and-monads.html#cb43-1" tabindex="-1"></a><span class="va">L1</span> <span class="op">=</span> <span class="fu">create(),</span></span>
-<span id="cb43-2"><a href="monoids-and-monads.html#cb43-2" tabindex="-1"></a><span class="va">L2</span> <span class="op">=</span> <span class="fu">bind(</span><span class="va">L1</span><span class="fu">,</span> <span class="kw">fun</span> <span class="ch">push</span><span class="op">/</span><span class="dv">2</span><span class="fu">,</span> <span class="fu">[</span><span class="dv">2</span><span class="fu">]),</span></span>
-<span id="cb43-3"><a href="monoids-and-monads.html#cb43-3" tabindex="-1"></a><span class="va">L3</span> <span class="op">=</span> <span class="fu">bind(</span><span class="va">L2</span><span class="fu">,</span> <span class="kw">fun</span> <span class="ch">push</span><span class="op">/</span><span class="dv">2</span><span class="fu">,</span> <span class="fu">[</span><span class="dv">4</span><span class="fu">]),</span></span>
-<span id="cb43-4"><a href="monoids-and-monads.html#cb43-4" tabindex="-1"></a><span class="va">L4</span> <span class="op">=</span> <span class="fu">bind(</span><span class="va">L3</span><span class="fu">,</span> <span class="kw">fun</span> <span class="ch">push</span><span class="op">/</span><span class="dv">2</span><span class="fu">,</span> <span class="fu">[</span><span class="dv">6</span><span class="fu">]),</span></span>
-<span id="cb43-5"><a href="monoids-and-monads.html#cb43-5" tabindex="-1"></a><span class="va">L5</span> <span class="op">=</span> <span class="fu">bind(</span><span class="va">L4</span><span class="fu">,</span> <span class="kw">fun</span> <span class="ch">pop</span><span class="op">/</span><span class="dv">1</span><span class="fu">,</span> <span class="fu">[]),</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode erlang"><code class="sourceCode erlang"><span id="cb36-1"><a href="monoids-and-monads.html#cb36-1" tabindex="-1"></a><span class="va">L1</span> <span class="op">=</span> <span class="fu">create(),</span></span>
+<span id="cb36-2"><a href="monoids-and-monads.html#cb36-2" tabindex="-1"></a><span class="va">L2</span> <span class="op">=</span> <span class="fu">bind(</span><span class="va">L1</span><span class="fu">,</span> <span class="kw">fun</span> <span class="ch">push</span><span class="op">/</span><span class="dv">2</span><span class="fu">,</span> <span class="fu">[</span><span class="dv">2</span><span class="fu">]),</span></span>
+<span id="cb36-3"><a href="monoids-and-monads.html#cb36-3" tabindex="-1"></a><span class="va">L3</span> <span class="op">=</span> <span class="fu">bind(</span><span class="va">L2</span><span class="fu">,</span> <span class="kw">fun</span> <span class="ch">push</span><span class="op">/</span><span class="dv">2</span><span class="fu">,</span> <span class="fu">[</span><span class="dv">4</span><span class="fu">]),</span></span>
+<span id="cb36-4"><a href="monoids-and-monads.html#cb36-4" tabindex="-1"></a><span class="va">L4</span> <span class="op">=</span> <span class="fu">bind(</span><span class="va">L3</span><span class="fu">,</span> <span class="kw">fun</span> <span class="ch">push</span><span class="op">/</span><span class="dv">2</span><span class="fu">,</span> <span class="fu">[</span><span class="dv">6</span><span class="fu">]),</span></span>
+<span id="cb36-5"><a href="monoids-and-monads.html#cb36-5" tabindex="-1"></a><span class="va">L5</span> <span class="op">=</span> <span class="fu">bind(</span><span class="va">L4</span><span class="fu">,</span> <span class="kw">fun</span> <span class="ch">pop</span><span class="op">/</span><span class="dv">1</span><span class="fu">,</span> <span class="fu">[]),</span></span></code></pre></div>
 <div class="problembox">
 <p><strong>Problem Set 3</strong></p>
+<p>Starting Code: <code>prove06_3/src/prove06_3.erl</code></p>
 <ol style="list-style-type: decimal">
-<li><p>Implement the <code>pop</code> and <code>bind</code> function with the list Monad type. Use the code in the template to test. Note that the <code>apply</code> function is available in Erlang which will call a function and pass a variable list of arguments to the function. Use the code in the template to test.</p></li>
-<li><p>Sometimes a function uses more than one Monad type. Since its possible for the <code>pop</code> to fail in the case of an empty list, it might be a good to use the <code>Maybe</code> monad type so we can return <code>{fail}</code> in that case. In the case of the <code>push</code>, we don’t have any reason to return <code>{fail}</code>. However, to support the <code>bind</code>, we will be consistent and return the <code>Maybe</code> monad type. The <code>bind</code> needs to handle the case where one of our functions returns <code>{fail}</code>. When this happens, an empty list should be created and returned back (which is what <code>pop</code> currently does). We need to write three new functions: <code>push2</code>, <code>pop2</code>, and <code>bind2</code> that support <code>Maybe</code>. The <code>push2</code> function is already written for you. Use the specifications below and the tests provided in the starting code. The <code>bind2</code> function will likely need to use the <code>case of</code> block to determine what to do based on the result of running the <span class="math inline">\(\lambda_{bind2}\)</span> function.</p></li>
+<li>Implement the <code>pop</code> and <code>bind</code> function with the list Monad type. Use the code in the template to test. Note that the <code>apply</code> function is available in Erlang which will call a function and pass a variable list of arguments to the function.</li>
 </ol>
-<div class="formulabox">
-<p><span class="math inline">\(struct ~ ~ maybe\_m\_list\)</span></p>
-<p><span class="math inline">\(\quad \quad \lbrace atom(ok), m\_list:Value \rbrace ~ ~ or\)</span></p>
-<p><span class="math inline">\(\quad \quad \lbrace atom(fail) \rbrace.\)</span></p>
-<p><span class="math inline">\(spec ~ ~ push2 :: a ~ ~ list \rightarrow maybe\_m\_list.\)</span></p>
-<p><span class="math inline">\(spec ~ ~ pop2 :: list \rightarrow maybe\_m\_list.\)</span></p>
-<p><span class="math inline">\(spec ~ ~ \lambda_{bind2} :: list \rightarrow maybe\_m\_list.\)</span></p>
-<p><span class="math inline">\(spec ~ ~ bind2 :: m\_list ~ ~ \lambda_{bind2} ~ ~ [a] \rightarrow m\_list.\)</span></p>
 </div>
-</div>
+<p>::::</p>
 <p><span class="math inline">\(\nonumber\)</span>
 <span class="math inline">\(\nonumber\)</span>
 <a href="http://creativecommons.org/licenses/by/4.0/"><img src="images/cc-88x31.png" alt="Creative Commons License - CC - BY" /></a></p>
@@ -498,7 +487,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="chaining-currying-and-partial-applications.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="higher-order-functions---fold-and-unfold.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="streams-and-lazy-evaluation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

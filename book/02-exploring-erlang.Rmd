@@ -1,0 +1,31 @@
+# Exploring Erlang
+
+In this section we will build some example programs with the purpose of better understanding Erlang syntax.
+
+## Guess My Number Game
+
+TBD 
+
+:::: {.problembox data-latex=""}
+**Problem Set 1**
+
+Starting Code: `prove02_1/src/prove02_1.erl`
+
+1. TBD
+::::
+
+## File Statistics
+
+TBD
+
+This is no additional problem sets from this section.  This program will be created during class.
+
+## Web Server
+
+TBD
+
+This is no additional problem sets from this section.  This program will be created during class.
+
+$\nonumber$
+$\nonumber$
+[![Creative Commons License - CC - BY](images/cc-88x31.png)](http://creativecommons.org/licenses/by/4.0/)

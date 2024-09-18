@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 - Higher Order Functions - Fold and Unfold | Patterns in Functional Programming</title>
+  <title>Chapter 5 - Higher Order Functions - Fold and Unfold | Patterns in Functional Programming</title>
   <meta name="description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 - Higher Order Functions - Fold and Unfold | Patterns in Functional Programming" />
+  <meta property="og:title" content="Chapter 5 - Higher Order Functions - Fold and Unfold | Patterns in Functional Programming" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 - Higher Order Functions - Fold and Unfold | Patterns in Functional Programming" />
+  <meta name="twitter:title" content="Chapter 5 - Higher Order Functions - Fold and Unfold | Patterns in Functional Programming" />
   
   <meta name="twitter:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2024-03-07" />
+<meta name="date" content="2024-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="higher-order-functions---map-and-filter.html"/>
-<link rel="next" href="chaining-currying-and-partial-applications.html"/>
+<link rel="next" href="monoids-and-monads.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -137,34 +137,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="1" data-path="erlang.html"><a href="erlang.html"><i class="fa fa-check"></i><b>1</b> Erlang</a>
+<li class="chapter" data-level="1" data-path="erlang-primer.html"><a href="erlang-primer.html"><i class="fa fa-check"></i><b>1</b> Erlang Primer</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="erlang.html"><a href="erlang.html#quick-erlang-primer"><i class="fa fa-check"></i><b>1.1</b> Quick Erlang Primer</a></li>
-<li class="chapter" data-level="1.2" data-path="erlang.html"><a href="erlang.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
+<li class="chapter" data-level="1.1" data-path="erlang-primer.html"><a href="erlang-primer.html#basic-syntax"><i class="fa fa-check"></i><b>1.1</b> Basic Syntax</a></li>
+<li class="chapter" data-level="1.2" data-path="erlang-primer.html"><a href="erlang-primer.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>2</b> Persistence</a>
+<li class="chapter" data-level="2" data-path="exploring-erlang.html"><a href="exploring-erlang.html"><i class="fa fa-check"></i><b>2</b> Exploring Erlang</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>2.1</b> Persistence in Lists</a></li>
-<li class="chapter" data-level="2.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>2.2</b> More List Persistence</a></li>
-<li class="chapter" data-level="2.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>2.3</b> Specifications and Definitions</a></li>
+<li class="chapter" data-level="2.1" data-path="exploring-erlang.html"><a href="exploring-erlang.html#guess-my-number-game"><i class="fa fa-check"></i><b>2.1</b> Guess My Number Game</a></li>
+<li class="chapter" data-level="2.2" data-path="exploring-erlang.html"><a href="exploring-erlang.html#file-statistics"><i class="fa fa-check"></i><b>2.2</b> File Statistics</a></li>
+<li class="chapter" data-level="2.3" data-path="exploring-erlang.html"><a href="exploring-erlang.html#web-server"><i class="fa fa-check"></i><b>2.3</b> Web Server</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html"><i class="fa fa-check"></i><b>3</b> Higher Order Functions - Map and Filter</a>
+<li class="chapter" data-level="3" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>3</b> Persistence</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#map"><i class="fa fa-check"></i><b>3.1</b> Map</a></li>
-<li class="chapter" data-level="3.2" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#filter"><i class="fa fa-check"></i><b>3.2</b> Filter</a></li>
-<li class="chapter" data-level="3.3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#functors"><i class="fa fa-check"></i><b>3.3</b> Functors</a></li>
+<li class="chapter" data-level="3.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>3.1</b> Persistence in Lists</a></li>
+<li class="chapter" data-level="3.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>3.2</b> More List Persistence</a></li>
+<li class="chapter" data-level="3.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>3.3</b> Specifications and Definitions</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html"><i class="fa fa-check"></i><b>4</b> Higher Order Functions - Fold and Unfold</a>
+<li class="chapter" data-level="4" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html"><i class="fa fa-check"></i><b>4</b> Higher Order Functions - Map and Filter</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold"><i class="fa fa-check"></i><b>4.1</b> Fold</a></li>
-<li class="chapter" data-level="4.2" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold-right"><i class="fa fa-check"></i><b>4.2</b> Fold Right</a></li>
-<li class="chapter" data-level="4.3" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#unfold"><i class="fa fa-check"></i><b>4.3</b> Unfold</a></li>
+<li class="chapter" data-level="4.1" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#map"><i class="fa fa-check"></i><b>4.1</b> Map</a></li>
+<li class="chapter" data-level="4.2" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#filter"><i class="fa fa-check"></i><b>4.2</b> Filter</a></li>
+<li class="chapter" data-level="4.3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#functors"><i class="fa fa-check"></i><b>4.3</b> Functors</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html"><i class="fa fa-check"></i><b>5</b> Chaining, Currying, and Partial Applications</a>
+<li class="chapter" data-level="5" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html"><i class="fa fa-check"></i><b>5</b> Higher Order Functions - Fold and Unfold</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#chaining"><i class="fa fa-check"></i><b>5.1</b> Chaining</a></li>
-<li class="chapter" data-level="5.2" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#currying"><i class="fa fa-check"></i><b>5.2</b> Currying</a></li>
-<li class="chapter" data-level="5.3" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#partial-applications"><i class="fa fa-check"></i><b>5.3</b> Partial Applications</a></li>
+<li class="chapter" data-level="5.1" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold"><i class="fa fa-check"></i><b>5.1</b> Fold</a></li>
+<li class="chapter" data-level="5.2" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold-right"><i class="fa fa-check"></i><b>5.2</b> Fold Right</a></li>
+<li class="chapter" data-level="5.3" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#unfold"><i class="fa fa-check"></i><b>5.3</b> Unfold</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html"><i class="fa fa-check"></i><b>6</b> Monoids and Monads</a>
 <ul>
@@ -182,31 +182,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="8.1" data-path="trees.html"><a href="trees.html#binary-search-tree"><i class="fa fa-check"></i><b>8.1</b> Binary Search Tree</a></li>
 <li class="chapter" data-level="8.2" data-path="trees.html"><a href="trees.html#balanced-red-black-tree"><i class="fa fa-check"></i><b>8.2</b> Balanced Red-Black Tree</a></li>
-<li class="chapter" data-level="8.3" data-path="trees.html"><a href="trees.html#performance"><i class="fa fa-check"></i><b>8.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="min-heaps.html"><a href="min-heaps.html"><i class="fa fa-check"></i><b>9</b> Min Heaps</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="min-heaps.html"><a href="min-heaps.html#min-heap"><i class="fa fa-check"></i><b>9.1</b> Min Heap</a></li>
 <li class="chapter" data-level="9.2" data-path="min-heaps.html"><a href="min-heaps.html#efficient-inserting-and-removal"><i class="fa fa-check"></i><b>9.2</b> Efficient Inserting and Removal</a></li>
-<li class="chapter" data-level="9.3" data-path="min-heaps.html"><a href="min-heaps.html#priority-queue"><i class="fa fa-check"></i><b>9.3</b> Priority Queue</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="random-access-lists.html"><a href="random-access-lists.html"><i class="fa fa-check"></i><b>10</b> Random Access Lists</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="random-access-lists.html"><a href="random-access-lists.html#binary-numbers-and-the-ral"><i class="fa fa-check"></i><b>10.1</b> Binary Numbers and the RAL</a></li>
 <li class="chapter" data-level="10.2" data-path="random-access-lists.html"><a href="random-access-lists.html#lookup-and-update"><i class="fa fa-check"></i><b>10.2</b> Lookup and Update</a></li>
-<li class="chapter" data-level="10.3" data-path="random-access-lists.html"><a href="random-access-lists.html#performance-1"><i class="fa fa-check"></i><b>10.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="tries.html"><a href="tries.html"><i class="fa fa-check"></i><b>11</b> Tries</a>
 <ul>
 <li class="chapter" data-level="11.1" data-path="tries.html"><a href="tries.html#creating-the-trie"><i class="fa fa-check"></i><b>11.1</b> Creating the Trie</a></li>
 <li class="chapter" data-level="11.2" data-path="tries.html"><a href="tries.html#searching-and-counting"><i class="fa fa-check"></i><b>11.2</b> Searching and Counting</a></li>
-<li class="chapter" data-level="11.3" data-path="tries.html"><a href="tries.html#performance-2"><i class="fa fa-check"></i><b>11.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="queues-and-deques.html"><a href="queues-and-deques.html"><i class="fa fa-check"></i><b>12</b> Queues and Deques</a>
 <ul>
 <li class="chapter" data-level="12.1" data-path="queues-and-deques.html"><a href="queues-and-deques.html#queues"><i class="fa fa-check"></i><b>12.1</b> Queues</a></li>
 <li class="chapter" data-level="12.2" data-path="queues-and-deques.html"><a href="queues-and-deques.html#deques"><i class="fa fa-check"></i><b>12.2</b> Deques</a></li>
-<li class="chapter" data-level="12.3" data-path="queues-and-deques.html"><a href="queues-and-deques.html#performance-3"><i class="fa fa-check"></i><b>12.3</b> Performance</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -228,11 +223,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="higher-order-functions---fold-and-unfold" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">Chapter 4 -</span> Higher Order Functions - Fold and Unfold<a href="higher-order-functions---fold-and-unfold.html#higher-order-functions---fold-and-unfold" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="higher-order-functions---fold-and-unfold" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5 -</span> Higher Order Functions - Fold and Unfold<a href="higher-order-functions---fold-and-unfold.html#higher-order-functions---fold-and-unfold" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The <code>fold</code> and <code>unfold</code> are also common higher order functions. A <code>fold</code> will convert from a list to a single value whereas an <code>unfold</code> will convert from a single value to a list.</p>
-<div id="fold" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> Fold<a href="higher-order-functions---fold-and-unfold.html#fold" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="fold" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Fold<a href="higher-order-functions---fold-and-unfold.html#fold" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Just like the <code>map</code> and <code>filter</code> patterns, we will use a lambda function to define what we want to do with each item of the list. Unlike the <code>map</code> and <code>filter</code>, we will not apply the lambda function to determine what to put in the resulting list. Instead (in the case of <code>fold</code>) we will use the lambda function to determine how each item in our list contributes to the one single value result. The lambda function is used to combine all the values in the list.</p>
 <p>If I have a list of numbers <code>[1 2 3 4 5]</code> that I wanted to add, then a lambda function would take each number (<span class="math inline">\(Value\)</span>) and add it to an accumulator (<span class="math inline">\(Acc\)</span>):</p>
 <div class="formulabox">
@@ -265,17 +260,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Note that Erlang provides this function as a built-in function called <code>lists:foldl</code> (meaning fold left).</p>
 <div class="problembox">
 <p><strong>Problem Set 1</strong></p>
-<p>You can find the template for the problem sets in this lesson here: <a href="proves/prove04.erl">prove04.erl</a></p>
+<p>Starting Code: <code>prove05_1/src/prove05_1.erl</code></p>
 <ol style="list-style-type: decimal">
-<li>Implement the the <code>fold</code> code and use the lambda examples above to sum a list of numbers. Test code is provided for you in the starting code.</li>
-<li>Create a lambda function to use with your <code>fold</code> function to concatenate a list of strings. Note that you can use the <code>++</code> operator to solve this problem. Test code is provided for you in the starting code.</li>
-<li>Create a lambda function to use with your <code>fold</code> function to count the number of items in a list. Test code is provided for you in the starting code.</li>
-<li>Create a lambda function to use with your <code>fold</code> function to reverse a list. Note that the single result that a <code>fold</code> returns can be a list if the lambda function is written properly. Test code is provided for you in the starting code.</li>
+<li>Implement the the <code>fold</code> function.</li>
+<li>Modify <code>fold_2_test</code> by creating a lambda function to use with your <code>fold</code> function to concatenate a list of strings. Note that you can use the <code>++</code> operator to solve this problem. Test code is provided for you in the starting code.</li>
+<li>Modify <code>fold_3_test</code> by creating a lambda function to use with your <code>fold</code> function to count the number of items in a list. Test code is provided for you in the starting code.</li>
+<li>Modify <code>fold_4_test</code> by creating a lambda function to use with your <code>fold</code> function to reverse a list. Note that the single result that a <code>fold</code> returns can be a list if the lambda function is written properly. Test code is provided for you in the starting code.</li>
 </ol>
 </div>
 </div>
-<div id="fold-right" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> Fold Right<a href="higher-order-functions---fold-and-unfold.html#fold-right" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="fold-right" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Fold Right<a href="higher-order-functions---fold-and-unfold.html#fold-right" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When you look at the definition of <code>fold</code> notice that the list is processed from left to right. We can define a function that goes from right to left called <code>foldr</code>. This function will require us to traverse to the end of the list before we can actually call the lambda function. In some cases, folding right instead of folding left will result in different results.</p>
 <div class="formulabox">
 <p><span class="math inline">\(spec ~ ~ \lambda :: a_1 ~ ~ a_2 \rightarrow a_2.\)</span></p>
@@ -287,13 +282,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The code implementation of our function in Erlang is left for an exercise below. Erlang provides a built-in function called <code>lists:foldr</code> to perform this task.</p>
 <div class="problembox">
 <p><strong>Problem Set 2</strong></p>
+<p>Starting Code: <code>prove05_2/src/prove05_2.erl</code></p>
 <ol style="list-style-type: decimal">
-<li>Implement <code>foldr</code> and test it with the concatenation of a list of strings. Observe the different behavior with the right fold versus the left fold done previously.</li>
+<li>Implement <code>foldr</code> and modify <code>foldr_test</code> with the same concatenation lambda you used in the previous problem set (see <code>fold_2_test</code>). Observe the different behavior with the right fold versus the left fold done previously.</li>
 </ol>
 </div>
 </div>
-<div id="unfold" class="section level2 hasAnchor" number="4.3">
-<h2><span class="header-section-number">4.3</span> Unfold<a href="higher-order-functions---fold-and-unfold.html#unfold" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="unfold" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Unfold<a href="higher-order-functions---fold-and-unfold.html#unfold" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>fold</code> design pattern is used when you want to consolidate from one larger thing to a smaller thing such as a list to a single value. If we want to go backwards, this is called an <code>unfold</code>. Note that folding and unfolding are not inversely related. For example, if I had a list of numbers <code>[2 5 3 1]</code> and I folded them up using a simple sum function, I would get <code>11</code>. However, if started with <code>11</code> and worked backwards, I could get a possible solution such as <code>[7 1 3 0]</code> which is different from our original list.</p>
 <p>When we <code>unfold</code>, we are relying on some initial conditions to generate the next value for our list.</p>
 <p>Suppose we wanted to generate a list repeated numbers. The number to repeat we will call <span class="math inline">\(Value\)</span> and the number of repeated values we will call <span class="math inline">\(Count\)</span>. We want to <code>unfold</code> our initial conditions (<span class="math inline">\(Value\)</span> and <span class="math inline">\(Count\)</span>) to obtain the list of numbers. For example, if <span class="math inline">\(Count\)</span> is 4 and <span class="math inline">\(Value\)</span> is 6, then the <code>gensame</code> function should result in <code>[6 6 6 6]</code>. Here is a definition for our <code>gensame</code> function:</p>
@@ -335,10 +331,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb27-2"><a href="higher-order-functions---fold-and-unfold.html#cb27-2" tabindex="-1"></a><span class="fu">unfold(</span><span class="va">Count</span><span class="fu">,</span> <span class="va">Curr</span><span class="fu">,</span> <span class="va">Lambda</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">Curr</span><span class="fu">|unfold(</span><span class="va">Count</span><span class="op">-</span><span class="dv">1</span><span class="fu">,</span> <span class="va">Lambda</span><span class="fu">(</span><span class="va">Curr</span><span class="fu">),</span> <span class="va">Lambda</span><span class="fu">)].</span></span></code></pre></div>
 <div class="problembox">
 <p><strong>Problem Set 3</strong></p>
+<p>Starting Code: <code>prove05_3/src/prove05_3.erl</code></p>
 <ol style="list-style-type: decimal">
-<li>Implement the <code>unfold</code> function as described above and use it to generate an arithmetic sequence of numbers starting at 5 and ending at 30 stepping by 5 (<code>[5, 10, 15, 20, 25, 30]</code>).</li>
-<li>Use the <code>unfold</code> function to generate an geometric sequence of six numbers starting at 1 with a factor of <span class="math inline">\(1/2\)</span> (<code>[1, 0.5, 0.25, 0.125, 0.0625, 0.03125]</code>).</li>
-<li>Write a function called <code>range</code> that takes in <span class="math inline">\(Start\)</span>, <span class="math inline">\(Size\)</span>, and <span class="math inline">\(Step\)</span> parameters (in that order) and returns a list of size <span class="math inline">\(Size\)</span> starting at <span class="math inline">\(Start\)</span>, stepping by <span class="math inline">\(Step\)</span>. Your <code>range</code> function must use the <code>unfold</code> function. For example, <code>range(3,5,4)</code> would return <code>[3, 7, 11, 15, 19]</code>. You should assume that both <span class="math inline">\(Size\)</span> and <span class="math inline">\(Step\)</span> are positive integers greater than 0.</li>
+<li>Implement the <code>unfold</code> function.</li>
+<li>Use the <code>unfold</code> function to modify <code>unfold_2_test</code> to generate a geometric sequence of six numbers starting at 1 with a factor of <span class="math inline">\(1/2\)</span> (<code>[1, 0.5, 0.25, 0.125, 0.0625, 0.03125]</code>).</li>
+<li>Write a function called <code>range</code> that takes in <span class="math inline">\(Start\)</span>, <span class="math inline">\(Size\)</span>, and <span class="math inline">\(Step\)</span> parameters (in that order) and returns a list of length <span class="math inline">\(Size\)</span> starting at <span class="math inline">\(Start\)</span>, stepping by <span class="math inline">\(Step\)</span>. Your <code>range</code> function must use the <code>unfold</code> function. For example, <code>range(3,5,4)</code> would return <code>[3, 7, 11, 15, 19]</code>. You should assume that both <span class="math inline">\(Size\)</span> and <span class="math inline">\(Step\)</span> are positive integers greater than 0.</li>
 </ol>
 </div>
 <p><span class="math inline">\(\nonumber\)</span>
@@ -353,7 +350,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="higher-order-functions---map-and-filter.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="chaining-currying-and-partial-applications.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="monoids-and-monads.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

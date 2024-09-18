@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 - Persistence | Patterns in Functional Programming</title>
+  <title>Chapter 3 - Persistence | Patterns in Functional Programming</title>
   <meta name="description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 - Persistence | Patterns in Functional Programming" />
+  <meta property="og:title" content="Chapter 3 - Persistence | Patterns in Functional Programming" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 - Persistence | Patterns in Functional Programming" />
+  <meta name="twitter:title" content="Chapter 3 - Persistence | Patterns in Functional Programming" />
   
   <meta name="twitter:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
   
@@ -23,14 +23,14 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2024-03-07" />
+<meta name="date" content="2024-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="erlang.html"/>
+<link rel="prev" href="exploring-erlang.html"/>
 <link rel="next" href="higher-order-functions---map-and-filter.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -137,34 +137,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="1" data-path="erlang.html"><a href="erlang.html"><i class="fa fa-check"></i><b>1</b> Erlang</a>
+<li class="chapter" data-level="1" data-path="erlang-primer.html"><a href="erlang-primer.html"><i class="fa fa-check"></i><b>1</b> Erlang Primer</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="erlang.html"><a href="erlang.html#quick-erlang-primer"><i class="fa fa-check"></i><b>1.1</b> Quick Erlang Primer</a></li>
-<li class="chapter" data-level="1.2" data-path="erlang.html"><a href="erlang.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
+<li class="chapter" data-level="1.1" data-path="erlang-primer.html"><a href="erlang-primer.html#basic-syntax"><i class="fa fa-check"></i><b>1.1</b> Basic Syntax</a></li>
+<li class="chapter" data-level="1.2" data-path="erlang-primer.html"><a href="erlang-primer.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>2</b> Persistence</a>
+<li class="chapter" data-level="2" data-path="exploring-erlang.html"><a href="exploring-erlang.html"><i class="fa fa-check"></i><b>2</b> Exploring Erlang</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>2.1</b> Persistence in Lists</a></li>
-<li class="chapter" data-level="2.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>2.2</b> More List Persistence</a></li>
-<li class="chapter" data-level="2.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>2.3</b> Specifications and Definitions</a></li>
+<li class="chapter" data-level="2.1" data-path="exploring-erlang.html"><a href="exploring-erlang.html#guess-my-number-game"><i class="fa fa-check"></i><b>2.1</b> Guess My Number Game</a></li>
+<li class="chapter" data-level="2.2" data-path="exploring-erlang.html"><a href="exploring-erlang.html#file-statistics"><i class="fa fa-check"></i><b>2.2</b> File Statistics</a></li>
+<li class="chapter" data-level="2.3" data-path="exploring-erlang.html"><a href="exploring-erlang.html#web-server"><i class="fa fa-check"></i><b>2.3</b> Web Server</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html"><i class="fa fa-check"></i><b>3</b> Higher Order Functions - Map and Filter</a>
+<li class="chapter" data-level="3" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>3</b> Persistence</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#map"><i class="fa fa-check"></i><b>3.1</b> Map</a></li>
-<li class="chapter" data-level="3.2" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#filter"><i class="fa fa-check"></i><b>3.2</b> Filter</a></li>
-<li class="chapter" data-level="3.3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#functors"><i class="fa fa-check"></i><b>3.3</b> Functors</a></li>
+<li class="chapter" data-level="3.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>3.1</b> Persistence in Lists</a></li>
+<li class="chapter" data-level="3.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>3.2</b> More List Persistence</a></li>
+<li class="chapter" data-level="3.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>3.3</b> Specifications and Definitions</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html"><i class="fa fa-check"></i><b>4</b> Higher Order Functions - Fold and Unfold</a>
+<li class="chapter" data-level="4" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html"><i class="fa fa-check"></i><b>4</b> Higher Order Functions - Map and Filter</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold"><i class="fa fa-check"></i><b>4.1</b> Fold</a></li>
-<li class="chapter" data-level="4.2" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold-right"><i class="fa fa-check"></i><b>4.2</b> Fold Right</a></li>
-<li class="chapter" data-level="4.3" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#unfold"><i class="fa fa-check"></i><b>4.3</b> Unfold</a></li>
+<li class="chapter" data-level="4.1" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#map"><i class="fa fa-check"></i><b>4.1</b> Map</a></li>
+<li class="chapter" data-level="4.2" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#filter"><i class="fa fa-check"></i><b>4.2</b> Filter</a></li>
+<li class="chapter" data-level="4.3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#functors"><i class="fa fa-check"></i><b>4.3</b> Functors</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html"><i class="fa fa-check"></i><b>5</b> Chaining, Currying, and Partial Applications</a>
+<li class="chapter" data-level="5" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html"><i class="fa fa-check"></i><b>5</b> Higher Order Functions - Fold and Unfold</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#chaining"><i class="fa fa-check"></i><b>5.1</b> Chaining</a></li>
-<li class="chapter" data-level="5.2" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#currying"><i class="fa fa-check"></i><b>5.2</b> Currying</a></li>
-<li class="chapter" data-level="5.3" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#partial-applications"><i class="fa fa-check"></i><b>5.3</b> Partial Applications</a></li>
+<li class="chapter" data-level="5.1" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold"><i class="fa fa-check"></i><b>5.1</b> Fold</a></li>
+<li class="chapter" data-level="5.2" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold-right"><i class="fa fa-check"></i><b>5.2</b> Fold Right</a></li>
+<li class="chapter" data-level="5.3" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#unfold"><i class="fa fa-check"></i><b>5.3</b> Unfold</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html"><i class="fa fa-check"></i><b>6</b> Monoids and Monads</a>
 <ul>
@@ -182,31 +182,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="8.1" data-path="trees.html"><a href="trees.html#binary-search-tree"><i class="fa fa-check"></i><b>8.1</b> Binary Search Tree</a></li>
 <li class="chapter" data-level="8.2" data-path="trees.html"><a href="trees.html#balanced-red-black-tree"><i class="fa fa-check"></i><b>8.2</b> Balanced Red-Black Tree</a></li>
-<li class="chapter" data-level="8.3" data-path="trees.html"><a href="trees.html#performance"><i class="fa fa-check"></i><b>8.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="min-heaps.html"><a href="min-heaps.html"><i class="fa fa-check"></i><b>9</b> Min Heaps</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="min-heaps.html"><a href="min-heaps.html#min-heap"><i class="fa fa-check"></i><b>9.1</b> Min Heap</a></li>
 <li class="chapter" data-level="9.2" data-path="min-heaps.html"><a href="min-heaps.html#efficient-inserting-and-removal"><i class="fa fa-check"></i><b>9.2</b> Efficient Inserting and Removal</a></li>
-<li class="chapter" data-level="9.3" data-path="min-heaps.html"><a href="min-heaps.html#priority-queue"><i class="fa fa-check"></i><b>9.3</b> Priority Queue</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="random-access-lists.html"><a href="random-access-lists.html"><i class="fa fa-check"></i><b>10</b> Random Access Lists</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="random-access-lists.html"><a href="random-access-lists.html#binary-numbers-and-the-ral"><i class="fa fa-check"></i><b>10.1</b> Binary Numbers and the RAL</a></li>
 <li class="chapter" data-level="10.2" data-path="random-access-lists.html"><a href="random-access-lists.html#lookup-and-update"><i class="fa fa-check"></i><b>10.2</b> Lookup and Update</a></li>
-<li class="chapter" data-level="10.3" data-path="random-access-lists.html"><a href="random-access-lists.html#performance-1"><i class="fa fa-check"></i><b>10.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="tries.html"><a href="tries.html"><i class="fa fa-check"></i><b>11</b> Tries</a>
 <ul>
 <li class="chapter" data-level="11.1" data-path="tries.html"><a href="tries.html#creating-the-trie"><i class="fa fa-check"></i><b>11.1</b> Creating the Trie</a></li>
 <li class="chapter" data-level="11.2" data-path="tries.html"><a href="tries.html#searching-and-counting"><i class="fa fa-check"></i><b>11.2</b> Searching and Counting</a></li>
-<li class="chapter" data-level="11.3" data-path="tries.html"><a href="tries.html#performance-2"><i class="fa fa-check"></i><b>11.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="queues-and-deques.html"><a href="queues-and-deques.html"><i class="fa fa-check"></i><b>12</b> Queues and Deques</a>
 <ul>
 <li class="chapter" data-level="12.1" data-path="queues-and-deques.html"><a href="queues-and-deques.html#queues"><i class="fa fa-check"></i><b>12.1</b> Queues</a></li>
 <li class="chapter" data-level="12.2" data-path="queues-and-deques.html"><a href="queues-and-deques.html#deques"><i class="fa fa-check"></i><b>12.2</b> Deques</a></li>
-<li class="chapter" data-level="12.3" data-path="queues-and-deques.html"><a href="queues-and-deques.html#performance-3"><i class="fa fa-check"></i><b>12.3</b> Performance</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -228,11 +223,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="persistence" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">Chapter 2 -</span> Persistence<a href="persistence.html#persistence" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="persistence" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3 -</span> Persistence<a href="persistence.html#persistence" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>When we think about data structures, we expect that the data structure will change when things are added, modified, or deleted. However, in our functional world, we are dealing with immutability. This conflict causes us to learn about persistence. This week we will explore persistence with the common list.</p>
-<div id="persistence-in-lists" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Persistence in Lists<a href="persistence.html#persistence-in-lists" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="persistence-in-lists" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Persistence in Lists<a href="persistence.html#persistence-in-lists" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The lists that we are going to look at early in this course are actually linked lists. We will explore an indexed version when we look at Random Access Lists later on. Lets consider the list below that already has five elements within it.</p>
 <p><img src="images/FiveElementList.drawio.png" /></p>
 <p>Note that we have a variable <code>L1</code> that contains a reference to the first node in the list and each node in the list contains a reference to the next node. If we want to add a new node to the front of this list, we have to do it without violating the immutability rule. When we add the new node, we are creating a new list. Notice that <code>L2</code> points to the new node we have created. However, since the remaining list doesn’t need to change, we just connect the new node to the original <code>L1</code>. Since we get to reuse the entire list, the performance for pre-pending to the front is only O(1).</p>
@@ -250,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In the next topic below, we will consider inserting something in the middle of our list which will cause us to reuse some of the nodes in our list.</p>
 <div class="problembox">
 <p><strong>Problem Set 1</strong></p>
-<p>You can find the template for the problem sets in this lesson here: <a href="proves/prove02.erl">prove02.erl</a></p>
+<p>Starting Code: <code>prove03_1/src/prove03_1.erl</code></p>
 <ol style="list-style-type: decimal">
 <li>Implement the <code>prepend</code> function as shown above.</li>
 <li>Implement the <code>append</code> function as shown above.</li>
@@ -259,8 +254,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 </div>
 </div>
-<div id="more-list-persistence" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> More List Persistence<a href="persistence.html#more-list-persistence" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="more-list-persistence" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> More List Persistence<a href="persistence.html#more-list-persistence" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Lets consider two more scenarios with the list and observe how persistence is maintained. First, how do we remove the first value in our list? The only thing that will be affected is our variable referencing the front of the list. In the diagram below, <code>L1</code> is the original list and <code>L2</code> is the new list with the first item removed.</p>
 <p><img src="images/FiveElementListDeleteFirst.drawio.png" /></p>
 <p>Notice that <code>L2</code> is referencing the second item in the list which means all but the first original node is being reused. Both the original list and the new list persist.</p>
@@ -276,6 +271,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-4"><a href="persistence.html#cb21-4" tabindex="-1"></a><span class="fu">insert_at([</span><span class="va">First</span><span class="fu">|</span><span class="va">Rest</span><span class="fu">],</span> <span class="va">Value</span><span class="fu">,</span> <span class="va">Index</span><span class="fu">)</span> <span class="op">-&gt;</span> <span class="fu">[</span><span class="va">First</span> <span class="fu">|</span> <span class="fu">insert_at(</span><span class="va">Rest</span><span class="fu">,</span> <span class="va">Value</span><span class="fu">,</span> <span class="va">Index</span><span class="op">-</span><span class="dv">1</span><span class="fu">)].</span></span></code></pre></div>
 <div class="problembox">
 <p><strong>Problem Set 2</strong></p>
+<p>Starting Code: <code>prove03_2/src/prove03_2.erl</code></p>
 <ol style="list-style-type: decimal">
 <li>Implement the <code>remove_first</code> as shown above.</li>
 <li>Implement <code>insert_at</code> function as shown above.</li>
@@ -284,8 +280,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 </div>
 </div>
-<div id="specifications-and-definitions" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Specifications and Definitions<a href="persistence.html#specifications-and-definitions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="specifications-and-definitions" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Specifications and Definitions<a href="persistence.html#specifications-and-definitions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Throughout the course when we talk about a behavior, instead of immediately writing it using Erlang, we will first describe it with a specification and a definition. You may find that the our definitions and our Erlang code are similar due to the relative simplicity of the Erlang syntax. Using our definitions, you should be able to write code in any functional language.</p>
 <p>A specification describes the interface of a function in terms of data types. Here are a list of the data types we will use in the course:</p>
 <div class="formulabox">
@@ -294,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><span class="math inline">\(real\)</span></li>
 <li><span class="math inline">\(boolean\)</span></li>
 <li><span class="math inline">\(string\)</span>.</li>
-<li><span class="math inline">\(atom(name)\)</span> - An atom is a label with a specified name but no value.<br />
+<li><span class="math inline">\(atom(name)\)</span> - An atom is a label with a specified name but no value. If the specification shows just <span class="math inline">\(atom\)</span>, then this implies the function can take any atom label as an input.<br />
 </li>
 <li><span class="math inline">\(a\)</span> - Represents any type</li>
 <li><span class="math inline">\([a]\)</span> - List of values of any type</li>
@@ -387,8 +383,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\nonumber\)</span></p>
 <div class="problembox">
 <p><strong>Problem Set 3</strong></p>
+<p>Starting Code: <code>prove03_3/src/prove03_3.erl</code></p>
 <ol style="list-style-type: decimal">
-<li>Write the specifications and definitions for the <code>head</code>, <code>tail</code>, <code>removeLast</code>, and <code>removeAt</code> functions. You will write these in your code template as comments.</li>
 <li>Implement a function called <code>backwards</code> (which does the same thing as the <code>reverse</code> function found in Erlang for lists). The specification and definition of this functions is shown below. Notice there are two specifications because there is a one arity function (called by the user in the test code) and a two arity function (called recursively with the result list). You will need to implement both specifications.</li>
 </ol>
 <div class="formulabox">
@@ -410,7 +406,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="erlang.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exploring-erlang.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="higher-order-functions---map-and-filter.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

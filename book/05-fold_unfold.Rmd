@@ -58,12 +58,12 @@ Note that Erlang provides this function as a built-in function called `lists:fol
 :::: {.problembox data-latex=""}
 **Problem Set 1**
 
-You can find the template for the problem sets in this lesson here: [prove04.erl](proves/prove04.erl)
+Starting Code: `prove05_1/src/prove05_1.erl`
 
-1. Implement the the `fold` code and use the lambda examples above to sum a list of numbers.  Test code is provided for you in the starting code.
-2. Create a lambda function to use with your `fold` function to concatenate a list of strings.  Note that you can use the `++` operator to solve this problem.  Test code is provided for you in the starting code.
-3. Create a lambda function to use with your `fold` function to count the number of items in a list.  Test code is provided for you in the starting code.
-4. Create a lambda function to use with your `fold` function to reverse a list.  Note that the single result that a `fold` returns can be a list if the lambda function is written properly.  Test code is provided for you in the starting code.
+1. Implement the the `fold` function.
+2. Modify `fold_2_test` by creating a lambda function to use with your `fold` function to concatenate a list of strings.  Note that you can use the `++` operator to solve this problem.  Test code is provided for you in the starting code.
+3. Modify `fold_3_test` by creating a lambda function to use with your `fold` function to count the number of items in a list.  Test code is provided for you in the starting code.
+4. Modify `fold_4_test` by creating a lambda function to use with your `fold` function to reverse a list.  Note that the single result that a `fold` returns can be a list if the lambda function is written properly.  Test code is provided for you in the starting code.
 ::::
 
 ## Fold Right
@@ -86,7 +86,9 @@ The code implementation of our function in Erlang is left for an exercise below.
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
-1. Implement `foldr` and test it with the concatenation of a list of strings.  Observe the different behavior with the right fold versus the left fold done previously.
+Starting Code: `prove05_2/src/prove05_2.erl`
+
+1. Implement `foldr` and modify `foldr_test` with the same concatenation lambda you used in the previous problem set (see `fold_2_test`).  Observe the different behavior with the right fold versus the left fold done previously.
 ::::
 
 ## Unfold
@@ -162,9 +164,11 @@ unfold(Count, Curr, Lambda) -> [Curr|unfold(Count-1, Lambda(Curr), Lambda)].
 :::: {.problembox data-latex=""}
 **Problem Set 3**
 
-1. Implement the `unfold` function as described above and use it to generate an arithmetic sequence of numbers starting at 5 and ending at 30 stepping by 5 (`[5, 10, 15, 20, 25, 30]`).
-2. Use the `unfold` function to generate an geometric sequence of six numbers starting at 1 with a factor of $1/2$ (`[1, 0.5, 0.25, 0.125, 0.0625, 0.03125]`).
-3. Write a function called `range` that takes in $Start$, $Size$, and $Step$ parameters (in that order) and returns a list of size $Size$ starting at $Start$, stepping by $Step$.  Your `range` function must use the `unfold` function.  For example, `range(3,5,4)` would return `[3, 7, 11, 15, 19]`.  You should assume that both $Size$ and $Step$ are positive integers greater than 0.
+Starting Code: `prove05_3/src/prove05_3.erl`
+
+1. Implement the `unfold` function.
+2. Use the `unfold` function to modify `unfold_2_test` to generate a geometric sequence of six numbers starting at 1 with a factor of $1/2$ (`[1, 0.5, 0.25, 0.125, 0.0625, 0.03125]`).
+3. Write a function called `range` that takes in $Start$, $Size$, and $Step$ parameters (in that order) and returns a list of length $Size$ starting at $Start$, stepping by $Step$.  Your `range` function must use the `unfold` function.  For example, `range(3,5,4)` would return `[3, 7, 11, 15, 19]`.  You should assume that both $Size$ and $Step$ are positive integers greater than 0.
 ::::
 
 $\nonumber$

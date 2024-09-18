@@ -160,7 +160,7 @@ The `count` function will be need to determine the new count of the `Merged_Tree
 :::: {.problembox data-latex=""}
 **Problem Set 1**
   
-You can find the template for the problem sets in this lesson here: [prove10.erl](proves/prove10.erl)
+Starting Code: `prove10_1/src/prove10_1.erl`
 
 1.  Implement the `prepend`,  `merge`, and `count` functions as described above.  The specification and definition for `prepend` and `merge` are provided.  You will need complete the definition for `merge` by determining what `Merged_Tree` should be equal to.  The specification and definition for `count` is not provided but it is described at the end of the reading above.  Use the test code provided to verify your implementation.
 ::::
@@ -245,41 +245,10 @@ Notice that an additional difference is that the `update`  function will return 
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
-1. Implement `lookup` and `lookup_in_tree` based on the descriptions above.  Use the test code provided to verify your implementation.
-2. Implement `update` and `update_in_tree` based on the descriptions above.  Use the test code provided to verify your implementation.
-::::
+Starting Code: `prove10_2/src/prove10_2.erl`
 
-## Performance
-
-The cost of traversing the RAL list will be O(log n) and cost of traversing a $ral\_tree$ will also be O(log n) which means that our `lookup` and `update` functions are O(log n).  If we used a standard Erlang list, we would need to recursively search from left to right to find the desired index which would result in O(n).  To demonstrate this, you can use the `nth` function provided by Erlang which will provide the value at a specified index in a list.  Note that the `nth` function treats the first elements as Index 1 instead of 0 like our RAL.
-
-Using the same `start_perf` and `stop_perf` used in previous lessons, we can measure the time it takes to access the last item in a very large 1,000,000 item Erlang list. 
-
-```erlang
-start_perf() ->
-	eprof:start(),
-	eprof:start_profiling([self()]).
-
-stop_perf(Title) ->
-	io:format("Perf (~p): ~n",[Title]),
-	eprof:stop_profiling(),
-	eprof:analyze(total),
-	eprof:stop().
-
-test() ->
-	List = lists:seq(0,999999),
-	start_perf(),
-	999999 = lists:nth(1000000,List),
-	stop_perf("list lookup last one"),
-	ok.
-```
-
-The comparison of accessing the last item in a RAL with the last item in an Erlang list is left for an exercise.
-
-:::: {.problembox data-latex=""}
-**Problem Set 3**
-
-1. Create a RAL with 1,000,000 items (values 0 to 999,999) by using a `foldl` and the `prepend` function.  Using `start_perf` and `stop_perf` (provided in the test code), compare the time for looking up index 999,999 (the last item) in both the Erlang List and the RAL.  Discuss your observations in comments within your code.  Note both the CALLS and the TIME columns when comparing the performance.
+1. Implement `lookup` and `lookup_in_tree` based on the descriptions above. You will need to copy the `prepend`, `merge`, and `count` functions from the previous problem set.
+2. Implement `update` and `update_in_tree` based on the descriptions above.  
 ::::
 
 $\nonumber$

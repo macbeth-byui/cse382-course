@@ -81,7 +81,7 @@ $\nonumber$
 :::: {.problembox data-latex=""}
 **Problem Set 1**
 
-You can find the template for the problem sets in this lesson here: [prove08.erl](proves/prove08.erl)
+Starting Code: `prove08_1/src/prove08_1.erl`
 
 1. Implement the `add` function per the specification and definition above.  Use the test code provided.
 2. Implement the `contains` function per the specification above.  Use the test code provided.
@@ -204,6 +204,8 @@ balance(Node) -> Node.
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
+Starting Code: `prove08_1/src/prove08_2.erl`
+
 1. Complete the add functionality for the RBT.  The `add_rbt` function is written for you and you need to write the `add_rbt_` as described in the specification and definition above.  Implement the `add_rbt_` function per the specification and definition above.  You will also need to finish implementing the `balance` function for cases 2, 3, and 4 per the diagrams above.  Use the test code provided.
 2. Implement the `contains_rbt` function per the specification below.  Note that while color is used in the RBT, the color is left unused by the `contains_rbt` function.  Use the test code provided.
 
@@ -212,72 +214,6 @@ $spec ~ ~ contains\_rbt :: a ~ ~ node \rightarrow boolean.$
 ::::
 $\nonumber$
 
-::::
-
-## Performance
-
-The binary search tree from Part 1 has performance of O(log n) if its balanced but as it becomes unbalanced, it becomes O(n).  The RBT from Part 2 has performance of O(log n) because it maintains the balanced state.  Even though there is more work needed to balance, it is offset by ability to find the spot for new nodes because its balanced.
-
-To compare the performance of both approaches for a tree with 10,000 nodes in the problem set below, we will use the `eprof` library in Erlang.  This library will report the number of times a function runs and the execution time of those functions.  As with tools like these, there is an overhead cost for running `eprof` but it will not prevent us from making observations.
-
-The following utility functions can be put around code to display performance results.
-
-```erlang
-start_perf() ->
-	eprof:start_profiling([self()]).
-
-stop_perf(Title) ->
-	io:format("Perf (~p): ~n",[Title]),
-	eprof:stop_profiling(),
-	eprof:analyze(total).
-```
-If we wanted to compare the cost of adding to the front of a list and the cost of adding to the end of list, we would create a single `foldl` to perform those operations using a sequence of numbers from 1 to 10,000.
-
-```erlang
-% Code to test
-prepend(Value, List) -> [Value|List].
-
-append(Value,[]) -> [Value];
-append(Value,[First|Rest]) -> [First|append(Value,Rest)].
-
-timing_test() ->
-	List = lists:seq(1,10000),
-	
-	start_perf(),
-	lists:foldl(fun prepend/2, [], List),
-	stop_perf("prepend"),
-
-	start_perf(),
-	lists:foldl(fun append/2, [], List),
-	stop_perf("append"),
-
-	ok.
-```
-
-The code will take several seconds to run.  The output of `eprof` will include your functions and several others.  Sample output (results will vary on different computers) of `eprof` for this code including only the functions we are testing is given below:
-
-```shell
-Perf ("prepend"):
-FUNCTION                          CALLS        %  TIME  [uS / CALLS]
---------                          -----  -------  ----  [----------]
-prove08:prepend/2                 10000    22.91  1126  [      0.11]
---------------------------------  -----  -------  ----  [----------]
-Total:                            32524  100.00%  4914  [      0.15]
-
-Perf ("append"): 
-FUNCTION                             CALLS        %     TIME  [uS / CALLS]
---------                             -----  -------     ----  [----------]
-prove08:append/2                  50005000    99.94  9867673  [      0.20]
---------------------------------  --------  -------  -------  [----------]
-Total:                            50027524  100.00%  9873713  [      0.20]
-```
-
-We can see that the `prepend` was much faster taking about 1 millisecond versus `append` taking almost 10 seconds.  The cost of each call wasn't too much different.    The `append` was plagued by all the recursive calls to add the item to the end of the list.  We can see the O(n^2^) behavior of `append` when add `n` items.
-
-:::: {.problembox data-latex=""}
-**Problem Set 3**
-
-1. Compare the performance of the Binary Search Tree (`add` and `contains`) and the Red Black Tree (`add_rbt` and `contains_rbt`).  Use the `start_perf` and `stop_perf` functions to add up the total time using these functions (remember that `add_rbt` uses `add_rbt_` and `balance` as well).   Add the numbers 1 to 10,000 (the list is already provided to you in the test code) to both data structures in order using a `foldl`. This will result in the worst unbalanced tree using `add`.  Do a search for the value 10,000 to force the largest search for both `contains` and `contains_rbt`).  Compare the performances for our 4 functions and explain what you found.
 ::::
 
 $\nonumber$

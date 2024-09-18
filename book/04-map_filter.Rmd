@@ -63,11 +63,11 @@ Notice that the `map` function doesn't know what the lambda will do except that 
 :::: {.problembox data-latex=""}
 **Problem Set 1**
 
-You can find the template for the problem sets in this lesson here: [prove03.erl](proves/prove03.erl)
+Starting Code: `prove04_1/src/prove04_1.erl`
 
-1. Implement the `map` function described above and write test code to convert a list of measurements in inches to a list of measurements in centimeters.  Use the formula $1 in = 2.54 cm$.  You will need to modify the test provided in the starting code.
-2. Using the `map` function you wrote, use a simple cipher to encrypt a list of characters.  The simple cipher should shift all characters by 1 per the [ASCII table](https://www.asciitable.com/) .  For example, "PASSWORD" should be "QBTTXPSE".  In Erlang, a string is represented as a list of characters.  Therefore, you can list notation with strings.  Additionally, each character is treated as a number as shown in the ASCII table which means you can add numbers to letters.  You will need to modify the test provided in the starting code.
-3. Rewrite the `map` function using a list comprehension and call the new function `map_2`.  Test the new `map_2` function in the same way as you tested `map` with the cipher test above.
+1. Implement the `map` function described above.
+2. Using the `map` function you wrote, update `map_2_test` to use a simple cipher to encrypt a list of characters.  The simple cipher should shift all characters by 1 per the [ASCII table](https://www.asciitable.com/) .  For example, "PASSWORD" should be "QBTTXPSE".  In Erlang, a string is represented as a list of characters.  Therefore, you can list notation with strings.  Additionally, each character is treated as a number as shown in the ASCII table which means you can add numbers to letters.
+3. Rewrite the `map` function using a list comprehension and call the new function `map_listcomp`. 
 ::::
 
 ## Filter
@@ -135,10 +135,12 @@ Note that Erlang provides this function as a built-in function called `lists:fil
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
-1. Implement the `filter` function in Erlang.  Use a `case` block to determine whether an item in the list should be included.  Test the `filter` to get a list of even numbers from a list using the lambda described in the reading.  You will need to modify the test provided in the starting code.
-2. Rewrite the `filter` function so that it uses a list comprehension instead of using the `case`.  Test the new function with the same lambda function in the previous problem.  Call the new function `filter_2`.
-3. Use the `filter` functions you wrote to filter a list of temperatures (in Celsius) that will support liquid water (as opposed to frozen ice or boiling steam).
-4. Use the `filter` function you wrote to filter a list of result strings that started with the prefix "ERROR:".  Consider using the `string:prefix` function to solve this problem.  You can learn more about that library function in the [Erlang Documentation for the string module](https://www.erlang.org/doc/man/string.html).
+Starting Code: `prove04_2/src/prove04_2.erl`
+
+1. Implement the `filter` function in Erlang.  Use a `case` block to determine whether an item in the list should be included.  
+2. Rewrite the `filter` function so that it uses a list comprehension instead of using the `case`.  The new function will be called `filter_listcomp`.
+3. Use the `filter` function you wrote to modify `filter_2_test` to filter a list of temperatures (in Celsius) that will support liquid water (as opposed to frozen ice or boiling steam).
+4. Use the `filter` function you wrote to modify `filter_3_test` to filter a list of result strings that started with the prefix "ERROR:".  Consider using the `string:prefix` function to solve this problem.  You can learn more about that library function in the [Erlang Documentation for the string module](https://www.erlang.org/doc/man/string.html).
 ::::
 
 ## Functors
@@ -199,7 +201,9 @@ The use of composition here is a preview for the topic of chaining which we will
 :::: {.problembox data-latex=""}
 **Problem Set 3**
 
-1. Write code in Erlang to demonstrate composition property with the list functor.  You will not write your code in the test function.
+Starting Code: `prove04_3/src/prove04_3.erl`
+
+1. Write code in the map_composition_test to demonstrate composition property with the list functor.  You will not write any additional functions.  Use the `lists:map` function provided by Erlang.
   * Define your $\lambda_g$ as a function that doubles a value
   * Define your $\lambda_h$ as a function that squares a value and then subtracts 1
   * Implement $map(\lambda_g \circ \lambda_h)$ using the list of numbers in the test function.

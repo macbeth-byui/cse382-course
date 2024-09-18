@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 - Higher Order Functions - Map and Filter | Patterns in Functional Programming</title>
+  <title>Chapter 4 - Higher Order Functions - Map and Filter | Patterns in Functional Programming</title>
   <meta name="description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 - Higher Order Functions - Map and Filter | Patterns in Functional Programming" />
+  <meta property="og:title" content="Chapter 4 - Higher Order Functions - Map and Filter | Patterns in Functional Programming" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 - Higher Order Functions - Map and Filter | Patterns in Functional Programming" />
+  <meta name="twitter:title" content="Chapter 4 - Higher Order Functions - Map and Filter | Patterns in Functional Programming" />
   
   <meta name="twitter:description" content="Design patterns and data structures common in functional programming. The text uses Erlang to demonstrate the material." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Chad Macbeth" />
 
 
-<meta name="date" content="2024-03-07" />
+<meta name="date" content="2024-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -137,34 +137,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="1" data-path="erlang.html"><a href="erlang.html"><i class="fa fa-check"></i><b>1</b> Erlang</a>
+<li class="chapter" data-level="1" data-path="erlang-primer.html"><a href="erlang-primer.html"><i class="fa fa-check"></i><b>1</b> Erlang Primer</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="erlang.html"><a href="erlang.html#quick-erlang-primer"><i class="fa fa-check"></i><b>1.1</b> Quick Erlang Primer</a></li>
-<li class="chapter" data-level="1.2" data-path="erlang.html"><a href="erlang.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
+<li class="chapter" data-level="1.1" data-path="erlang-primer.html"><a href="erlang-primer.html#basic-syntax"><i class="fa fa-check"></i><b>1.1</b> Basic Syntax</a></li>
+<li class="chapter" data-level="1.2" data-path="erlang-primer.html"><a href="erlang-primer.html#lists-in-erlang"><i class="fa fa-check"></i><b>1.2</b> Lists in Erlang</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>2</b> Persistence</a>
+<li class="chapter" data-level="2" data-path="exploring-erlang.html"><a href="exploring-erlang.html"><i class="fa fa-check"></i><b>2</b> Exploring Erlang</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>2.1</b> Persistence in Lists</a></li>
-<li class="chapter" data-level="2.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>2.2</b> More List Persistence</a></li>
-<li class="chapter" data-level="2.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>2.3</b> Specifications and Definitions</a></li>
+<li class="chapter" data-level="2.1" data-path="exploring-erlang.html"><a href="exploring-erlang.html#guess-my-number-game"><i class="fa fa-check"></i><b>2.1</b> Guess My Number Game</a></li>
+<li class="chapter" data-level="2.2" data-path="exploring-erlang.html"><a href="exploring-erlang.html#file-statistics"><i class="fa fa-check"></i><b>2.2</b> File Statistics</a></li>
+<li class="chapter" data-level="2.3" data-path="exploring-erlang.html"><a href="exploring-erlang.html#web-server"><i class="fa fa-check"></i><b>2.3</b> Web Server</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html"><i class="fa fa-check"></i><b>3</b> Higher Order Functions - Map and Filter</a>
+<li class="chapter" data-level="3" data-path="persistence.html"><a href="persistence.html"><i class="fa fa-check"></i><b>3</b> Persistence</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#map"><i class="fa fa-check"></i><b>3.1</b> Map</a></li>
-<li class="chapter" data-level="3.2" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#filter"><i class="fa fa-check"></i><b>3.2</b> Filter</a></li>
-<li class="chapter" data-level="3.3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#functors"><i class="fa fa-check"></i><b>3.3</b> Functors</a></li>
+<li class="chapter" data-level="3.1" data-path="persistence.html"><a href="persistence.html#persistence-in-lists"><i class="fa fa-check"></i><b>3.1</b> Persistence in Lists</a></li>
+<li class="chapter" data-level="3.2" data-path="persistence.html"><a href="persistence.html#more-list-persistence"><i class="fa fa-check"></i><b>3.2</b> More List Persistence</a></li>
+<li class="chapter" data-level="3.3" data-path="persistence.html"><a href="persistence.html#specifications-and-definitions"><i class="fa fa-check"></i><b>3.3</b> Specifications and Definitions</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html"><i class="fa fa-check"></i><b>4</b> Higher Order Functions - Fold and Unfold</a>
+<li class="chapter" data-level="4" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html"><i class="fa fa-check"></i><b>4</b> Higher Order Functions - Map and Filter</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold"><i class="fa fa-check"></i><b>4.1</b> Fold</a></li>
-<li class="chapter" data-level="4.2" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold-right"><i class="fa fa-check"></i><b>4.2</b> Fold Right</a></li>
-<li class="chapter" data-level="4.3" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#unfold"><i class="fa fa-check"></i><b>4.3</b> Unfold</a></li>
+<li class="chapter" data-level="4.1" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#map"><i class="fa fa-check"></i><b>4.1</b> Map</a></li>
+<li class="chapter" data-level="4.2" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#filter"><i class="fa fa-check"></i><b>4.2</b> Filter</a></li>
+<li class="chapter" data-level="4.3" data-path="higher-order-functions---map-and-filter.html"><a href="higher-order-functions---map-and-filter.html#functors"><i class="fa fa-check"></i><b>4.3</b> Functors</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html"><i class="fa fa-check"></i><b>5</b> Chaining, Currying, and Partial Applications</a>
+<li class="chapter" data-level="5" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html"><i class="fa fa-check"></i><b>5</b> Higher Order Functions - Fold and Unfold</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#chaining"><i class="fa fa-check"></i><b>5.1</b> Chaining</a></li>
-<li class="chapter" data-level="5.2" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#currying"><i class="fa fa-check"></i><b>5.2</b> Currying</a></li>
-<li class="chapter" data-level="5.3" data-path="chaining-currying-and-partial-applications.html"><a href="chaining-currying-and-partial-applications.html#partial-applications"><i class="fa fa-check"></i><b>5.3</b> Partial Applications</a></li>
+<li class="chapter" data-level="5.1" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold"><i class="fa fa-check"></i><b>5.1</b> Fold</a></li>
+<li class="chapter" data-level="5.2" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#fold-right"><i class="fa fa-check"></i><b>5.2</b> Fold Right</a></li>
+<li class="chapter" data-level="5.3" data-path="higher-order-functions---fold-and-unfold.html"><a href="higher-order-functions---fold-and-unfold.html#unfold"><i class="fa fa-check"></i><b>5.3</b> Unfold</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="monoids-and-monads.html"><a href="monoids-and-monads.html"><i class="fa fa-check"></i><b>6</b> Monoids and Monads</a>
 <ul>
@@ -182,31 +182,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="8.1" data-path="trees.html"><a href="trees.html#binary-search-tree"><i class="fa fa-check"></i><b>8.1</b> Binary Search Tree</a></li>
 <li class="chapter" data-level="8.2" data-path="trees.html"><a href="trees.html#balanced-red-black-tree"><i class="fa fa-check"></i><b>8.2</b> Balanced Red-Black Tree</a></li>
-<li class="chapter" data-level="8.3" data-path="trees.html"><a href="trees.html#performance"><i class="fa fa-check"></i><b>8.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="min-heaps.html"><a href="min-heaps.html"><i class="fa fa-check"></i><b>9</b> Min Heaps</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="min-heaps.html"><a href="min-heaps.html#min-heap"><i class="fa fa-check"></i><b>9.1</b> Min Heap</a></li>
 <li class="chapter" data-level="9.2" data-path="min-heaps.html"><a href="min-heaps.html#efficient-inserting-and-removal"><i class="fa fa-check"></i><b>9.2</b> Efficient Inserting and Removal</a></li>
-<li class="chapter" data-level="9.3" data-path="min-heaps.html"><a href="min-heaps.html#priority-queue"><i class="fa fa-check"></i><b>9.3</b> Priority Queue</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="random-access-lists.html"><a href="random-access-lists.html"><i class="fa fa-check"></i><b>10</b> Random Access Lists</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="random-access-lists.html"><a href="random-access-lists.html#binary-numbers-and-the-ral"><i class="fa fa-check"></i><b>10.1</b> Binary Numbers and the RAL</a></li>
 <li class="chapter" data-level="10.2" data-path="random-access-lists.html"><a href="random-access-lists.html#lookup-and-update"><i class="fa fa-check"></i><b>10.2</b> Lookup and Update</a></li>
-<li class="chapter" data-level="10.3" data-path="random-access-lists.html"><a href="random-access-lists.html#performance-1"><i class="fa fa-check"></i><b>10.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="tries.html"><a href="tries.html"><i class="fa fa-check"></i><b>11</b> Tries</a>
 <ul>
 <li class="chapter" data-level="11.1" data-path="tries.html"><a href="tries.html#creating-the-trie"><i class="fa fa-check"></i><b>11.1</b> Creating the Trie</a></li>
 <li class="chapter" data-level="11.2" data-path="tries.html"><a href="tries.html#searching-and-counting"><i class="fa fa-check"></i><b>11.2</b> Searching and Counting</a></li>
-<li class="chapter" data-level="11.3" data-path="tries.html"><a href="tries.html#performance-2"><i class="fa fa-check"></i><b>11.3</b> Performance</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="queues-and-deques.html"><a href="queues-and-deques.html"><i class="fa fa-check"></i><b>12</b> Queues and Deques</a>
 <ul>
 <li class="chapter" data-level="12.1" data-path="queues-and-deques.html"><a href="queues-and-deques.html#queues"><i class="fa fa-check"></i><b>12.1</b> Queues</a></li>
 <li class="chapter" data-level="12.2" data-path="queues-and-deques.html"><a href="queues-and-deques.html#deques"><i class="fa fa-check"></i><b>12.2</b> Deques</a></li>
-<li class="chapter" data-level="12.3" data-path="queues-and-deques.html"><a href="queues-and-deques.html#performance-3"><i class="fa fa-check"></i><b>12.3</b> Performance</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -228,11 +223,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="higher-order-functions---map-and-filter" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Chapter 3 -</span> Higher Order Functions - Map and Filter<a href="higher-order-functions---map-and-filter.html#higher-order-functions---map-and-filter" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="higher-order-functions---map-and-filter" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4 -</span> Higher Order Functions - Map and Filter<a href="higher-order-functions---map-and-filter.html#higher-order-functions---map-and-filter" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The <code>map</code> and <code>filter</code> are common functions that are available in programming languages to simplify the process of processing a loop. Frequently also simplified with a list comprehension syntax, these functions provide an introduction to a very common subset of functions Higher Order Functions. A Higher Order Function is a function that takes a function as a parmater or returns a function as a result.</p>
-<div id="map" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Map<a href="higher-order-functions---map-and-filter.html#map" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="map" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Map<a href="higher-order-functions---map-and-filter.html#map" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s consider the <code>map</code> function first. The <code>map</code> converts a list to another list using a lambda function. The lambda function defines how to convert each item in the original list to an item in the resulting list.</p>
 <p><img src="images/map.drawio.png" /></p>
 <p>If I wanted to double all the values in the list, I would use the following lambda function:</p>
@@ -269,16 +264,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Notice that the <code>map</code> function doesn’t know what the lambda will do except that it is a lambda that converts one value to another value. Note that Erlang also has a built-in function <code>lists:map</code>.</p>
 <div class="problembox">
 <p><strong>Problem Set 1</strong></p>
-<p>You can find the template for the problem sets in this lesson here: <a href="proves/prove03.erl">prove03.erl</a></p>
+<p>Starting Code: <code>prove04_1/src/prove04_1.erl</code></p>
 <ol style="list-style-type: decimal">
-<li>Implement the <code>map</code> function described above and write test code to convert a list of measurements in inches to a list of measurements in centimeters. Use the formula <span class="math inline">\(1 in = 2.54 cm\)</span>. You will need to modify the test provided in the starting code.</li>
-<li>Using the <code>map</code> function you wrote, use a simple cipher to encrypt a list of characters. The simple cipher should shift all characters by 1 per the <a href="https://www.asciitable.com/">ASCII table</a> . For example, “PASSWORD” should be “QBTTXPSE”. In Erlang, a string is represented as a list of characters. Therefore, you can list notation with strings. Additionally, each character is treated as a number as shown in the ASCII table which means you can add numbers to letters. You will need to modify the test provided in the starting code.</li>
-<li>Rewrite the <code>map</code> function using a list comprehension and call the new function <code>map_2</code>. Test the new <code>map_2</code> function in the same way as you tested <code>map</code> with the cipher test above.</li>
+<li>Implement the <code>map</code> function described above.</li>
+<li>Using the <code>map</code> function you wrote, update <code>map_2_test</code> to use a simple cipher to encrypt a list of characters. The simple cipher should shift all characters by 1 per the <a href="https://www.asciitable.com/">ASCII table</a> . For example, “PASSWORD” should be “QBTTXPSE”. In Erlang, a string is represented as a list of characters. Therefore, you can list notation with strings. Additionally, each character is treated as a number as shown in the ASCII table which means you can add numbers to letters.</li>
+<li>Rewrite the <code>map</code> function using a list comprehension and call the new function <code>map_listcomp</code>.</li>
 </ol>
 </div>
 </div>
-<div id="filter" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Filter<a href="higher-order-functions---map-and-filter.html#filter" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="filter" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Filter<a href="higher-order-functions---map-and-filter.html#filter" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>filter</code> function converts a list to another list just like the <code>map</code> function. However, the lambda function used by <code>filter</code> is intended to return a boolean result that will be used to determine if the value in the original list will be included in the new list.</p>
 <p><img src="images/filter.drawio.png" /></p>
 <p>If I wanted to include only even number values in my list, then the lambda function would be as follows:</p>
@@ -322,16 +317,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Note that Erlang provides this function as a built-in function called <code>lists:filter</code>.</p>
 <div class="problembox">
 <p><strong>Problem Set 2</strong></p>
+<p>Starting Code: <code>prove04_2/src/prove04_2.erl</code></p>
 <ol style="list-style-type: decimal">
-<li>Implement the <code>filter</code> function in Erlang. Use a <code>case</code> block to determine whether an item in the list should be included. Test the <code>filter</code> to get a list of even numbers from a list using the lambda described in the reading. You will need to modify the test provided in the starting code.</li>
-<li>Rewrite the <code>filter</code> function so that it uses a list comprehension instead of using the <code>case</code>. Test the new function with the same lambda function in the previous problem. Call the new function <code>filter_2</code>.</li>
-<li>Use the <code>filter</code> functions you wrote to filter a list of temperatures (in Celsius) that will support liquid water (as opposed to frozen ice or boiling steam).</li>
-<li>Use the <code>filter</code> function you wrote to filter a list of result strings that started with the prefix “ERROR:”. Consider using the <code>string:prefix</code> function to solve this problem. You can learn more about that library function in the <a href="https://www.erlang.org/doc/man/string.html">Erlang Documentation for the string module</a>.</li>
+<li>Implement the <code>filter</code> function in Erlang. Use a <code>case</code> block to determine whether an item in the list should be included.<br />
+</li>
+<li>Rewrite the <code>filter</code> function so that it uses a list comprehension instead of using the <code>case</code>. The new function will be called <code>filter_listcomp</code>.</li>
+<li>Use the <code>filter</code> function you wrote to modify <code>filter_2_test</code> to filter a list of temperatures (in Celsius) that will support liquid water (as opposed to frozen ice or boiling steam).</li>
+<li>Use the <code>filter</code> function you wrote to modify <code>filter_3_test</code> to filter a list of result strings that started with the prefix “ERROR:”. Consider using the <code>string:prefix</code> function to solve this problem. You can learn more about that library function in the <a href="https://www.erlang.org/doc/man/string.html">Erlang Documentation for the string module</a>.</li>
 </ol>
 </div>
 </div>
-<div id="functors" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Functors<a href="higher-order-functions---map-and-filter.html#functors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="functors" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Functors<a href="higher-order-functions---map-and-filter.html#functors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Our <code>map</code> function also has an additional classification. A functor is a term from category theory in mathematics which means that it provides a mapping between two different categories of things. In computer science, if we create a data structure that has the ability to change the contents without changing the structure, then we say that the structure is a functor. The most common operation that we perform on functors is the <code>map</code> operation. Remember that the <code>map</code> function will use a lambda to change all the contents of the list without changing the size of the list (i.e. the structure). A tree is also a functor. A binary search tree is a little more difficult. If you apply a lambda on everything in the binary search tree, the ordering rules may be violated. This means that the <code>map</code> function will have to check to see if re-ordering is needed. Structures that represent a single item (e.g. variable of a certain type) can also be functors as a <code>map</code> function can be written for them to change their value using a lambda. Even a function is a functor. If you apply a lambda to a function then you have a new function which is a composition of both functions.</p>
 <p>Composition is a key characteristic of functors. If the list is a functor, then I should be able to show that the following are equivalent given two lambdas <span class="math inline">\(\lambda_g\)</span> and <span class="math inline">\(\lambda_h\)</span>:</p>
 <ul>
@@ -368,8 +365,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The use of composition here is a preview for the topic of chaining which we will see in the near future.</p>
 <div class="problembox">
 <p><strong>Problem Set 3</strong></p>
+<p>Starting Code: <code>prove04_3/src/prove04_3.erl</code></p>
 <ol style="list-style-type: decimal">
-<li>Write code in Erlang to demonstrate composition property with the list functor. You will not write your code in the test function.</li>
+<li>Write code in the map_composition_test to demonstrate composition property with the list functor. You will not write any additional functions. Use the <code>lists:map</code> function provided by Erlang.</li>
 </ol>
 <ul>
 <li>Define your <span class="math inline">\(\lambda_g\)</span> as a function that doubles a value</li>

@@ -1,8 +1,8 @@
-# Erlang
+# Erlang Primer
 
-In this course, we will be using the Erlang programming language.  The material that we will cover could be implemented in many different languages.  Erlang will allow us to use less code to explore the design patterns and data structures.  If you haven't learned Erlang before, the two sections below will help you to quickly learn the language.  As the course progresses, you will find that the implementation of future problem sets will improve your Erlang skills.
+In this course, we will be using the Erlang programming language.  The material that we will cover could be implemented in many different languages.  Erlang will allow us to use less code to explore the design patterns and data structures.  If you haven't learned Erlang before, the first two chapters of this book will help you to quickly learn the language.  As the course progresses, you will find that the implementation of future problem sets will improve your Erlang skills.
 
-## Quick Erlang Primer
+## Basic Syntax
 
 This tutorial is not meant to provide complete coverage of the Erlang language.  You are encouraged to use the Erlang references you bookmarked as needed throughout the semester.
 
@@ -108,20 +108,19 @@ In the `test_encrypt` function, note that `Cipher1` and `Cipher2` variables were
 :::: {.problembox data-latex=""}
 **Problem Set 1**
 
-You can find the template for the problem sets in this lesson here: [prove01.erl](proves/prove01.erl)
+Starting Code: `prove01_1/src/prove01_1.erl`
 
-As you work on these problems (as well as all future problem sets), remember to look at the test code provided in the template.  There is a separate function (e.g. `test_ps1`) for each problem set.  This test functions can be useful to understand how the functions should be implemented. You will need to un-comment out code in the test code functions as you work through each of these problems.
+Write code as described in the instructions below and in the comments found in the starting code.  You may need to comment out some test functions or modify the `-export` tag to debug your code.  To run the tests in the code, run the following from the prove01 folder:  `rebar3 eunit`
 
-1. Implement the `hello` function to display "Hello World!".
-2. Implement the `add` function to add two numbers.
-3. Implement the `multiply` function three different ways each with a different number of parameters (i.e. different arity):
+1. Implement the `add` function to add two numbers.
+2. Implement the `multiply` function three different ways each with a different number of parameters (i.e. different arity):
 	* Multiply one number (not very exciting) 
 	* Multiply two numbers 
 	* Multiply three numbers
-4. Implement the `water` function that will take a temperature in Fahrenheit and return "Frozen", "Gas", or "Liquid".  Implement this using three clauses that use the `when` guard.
-6. Implement the `fib` function to calculate the n^th^ Fibonacci number.  Assume the 1st and 2nd number is 1.  You will need to use recursion.  Recommend using body recursion.
-7. Implement the `sum` function to add up the numbers from 0 to `N` (assume `N` is a positive integer)  Use recursion instead of using any built-in functions.  Recommend using body recursion.
-8. Create lambda functions to pass to the `plot` function.  The `plot` function will create `{X,Y}` coordinates where `X` goes from -5 to 5 and `Y` is calculated from your lambda function. The curly braces represent a tuple in Erlang. Create lambda functions for the following scenarios:
+3. Implement the `water` function that will take a temperature in Fahrenheit and return "Frozen", "Gas", or "Liquid".  Implement this using three clauses that use the `when` guard.
+4. Implement the `fib` function to calculate the n^th^ Fibonacci number.  Assume the 1st and 2nd number is 1.  You will need to use recursion.  Recommend using body recursion.
+5. Implement the `sum` function to add up the numbers from 0 to `N` (assume `N` is a positive integer)  Use recursion instead of using any built-in functions.  Recommend using body recursion.
+6. Modify the `plot_test` function to create lambda functions to pass to the `plot` function.  The `plot` function will create `{X,Y}` coordinates where `X` goes from -5 to 5 and `Y` is calculated from your lambda function. The curly braces represent a tuple in Erlang. Create lambda functions for the following scenarios:
 	* Function that squares the number
 	* Function that subtracts one from the number
 	* Pass the `abs/1` built-in function directly
@@ -229,6 +228,8 @@ playing_with_lists() ->
 
 :::: {.problembox data-latex=""}
 **Problem Set 2**
+
+Starting Code: `prove01_2/src/prove01_2.erl`
 
 1. Write a `stack_push` function that treats the list as a stack (LIFO - Last In First Out).  The `stack_push` function will take two parameters, the `Stack` (ie, a list) and a value `N`.  This function should push the value `N` to the front of the `Stack`.
 2. Write a `stack_pop` function that returns a new stack with the first item removed.  If the stack is empty, then return the empty list `[]`.

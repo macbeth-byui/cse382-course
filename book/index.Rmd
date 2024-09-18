@@ -18,13 +18,10 @@ link-citations: yes
 
 In previous classes, you may have looked at design patterns and data structures that are commonly used in programming.  When using functional programming, there are unique design patterns and different approaches to data structures that we need to consider.  Here is the schedule for the course:
 
-* Week 1: Erlang Basics
-* Week 2: Persistence
-* Weeks 3-7: Design Patterns
+* Week 1-2: Erlang Basics
+* Week 3: Persistence
+* Weeks 4-7: Design Patterns
 	* Higher Order Functions - Map, Filter, Fold, Unfold
-	* Chaining
-	* Currying
-	* Partial Applications
 	* Monoids
 	* Monads
 	* Streams (Lazy)
@@ -47,7 +44,7 @@ At the beginning of Week 12, you will be given an open book, open note, take-hom
 
 Your grade will be composed of 80% for the weekly problem sets and 20% for the final exam.
 
-Attendance to class is highly encouraged.  If you miss no more than 3 days during the semester (excluding during Weeks 1, 13, and 14), you will receive a 5% bonus on your final grade.
+Attendance to class is required.
 
 Office hours and contact information for this semester can be found on the Syllabus page in I-Learn. 
 
@@ -58,6 +55,8 @@ Useful websites that would be good to bookmark:
 * Erlang Standard Library Reference: https://www.erlang.org/doc/apps/stdlib/
 
 * Tutorial Page for Erlang & Elixir: https://elixir-lang.org/crash-course.html
+
+The material in this book is based on the work done by Lee Barney at BYU-Idaho (Source: https://github.com/byui-cse/cse382-course)
 
 $\nonumber$
 [![Creative Commons License - CC - BY](images/cc-88x31.png)](http://creativecommons.org/licenses/by/4.0/)

@@ -1,6 +1,6 @@
 # Streams and Lazy Evaluation
 
-In this lesson we will learn about the Stream Design Pattern.  Streams are things that provide you values when you need them.  They are very similair to the `unfold` function that we saw earlier.  This "lazy" approach can actually save you a lot of time and memory when you only need something one at a time.
+In this lesson we will learn about the Stream Design Pattern.  Streams are things that provide you values when you need them.  They are very similair to the `unfold` function that we saw earlier.  This "lazy" approach can actually save you a lot of memory when you only need something one at a time.
 
 ## Streams
 
@@ -104,7 +104,7 @@ test() ->
 :::: {.problembox data-latex=""}
 **Problem Set 1**
 
-You can find the template for the problem sets in this lesson here: [prove07.erl](proves/prove07.erl)
+Starting Code: `prove07_1/src/prove07_1.erl`
 
 1. Modify the `range` function to take a third parameter called `Step`.  You should increase the sequence by the amount of `Step`.  If the `Step` is negative, then create a decreasing sequence.  If the `Step` is 0, then the `done` state should occur immediately.  Test code is provided to test your stream.
 2. Create a new stream called `words` which will split text by spaces into sub-strings.   Each time the stream is called, it should return back the next string.  For example, if the text was "The cow jumped over the moon.", then the stream would first return "The", then "cow", then "jumped", and so forth.  Use the same `fixed_iterator` type described above.  You are provided a function called `first_word` which returns a tuple in the format `{Word, Rest}` where `Word` is the first word and `Rest` is the remaining text (just like working with values in a list).  Test code is provided to test your stream.
@@ -193,17 +193,18 @@ $\nonumber$
 500500 = iter_sum(iter(range(1,1000,1))).
 ```
 
-If we run both of these, we will see not much difference.  However, what if we summed the numbers from 1 to 500,000,000?  Consider the work that must be done.  If the first example, the `lists:seq` function will create the list first which is an $O(n)$ operation and we take up a lot of memory.  After it creates the list, it then needs loop through the list again recursively to add up the values.  The is another $O(n)$ operation.  
+If we run both of these, we will see not much difference.  However, what if we summed the numbers from 1 to 500,000,000?  Consider the work that must be done.  If the first example, the `lists:seq` function will create in memory a list of 500 million items before looping through to sum them up.  
 
-In the second example, the `iter` and `range` functions do not create any list.  This is $O(1)$.  The `iter_sum` will loop recursively on the stream until we get to `{undefined,done}`.  This will be $O(n)$.  Note that there is no data structure involved.  Removing the overhead will drastically reduce the time it takes.  In the problem set, you will observe the actual time difference.
+In the second example, the `iter` and `range` functions do not create any list. There is no memory cost to adding up the numbers.  On the surface it may seem that the first example would also take longer to run.  We might say that the cost is `O(2n)` which accounts for the creation of the list and the summation of the list.  Creating the stream in the second example would be `O(1)` with a cost of `O(n)` to do the summation.  However, this is not accurate.  The stream iterator has an overhead time cost that comes from calling functions to get the next values.  In general, streams save memory but they can increase the time marginally.
 
 In other languages like Haskell, there is built-in support for lazy functions.  In Erlang we have to create the additional functions like `iter` and `iter_sum`.  It may seem like extra work, but imagine if our lazy function was to read the next line of very large file or dataset, the next value in a list that has no pre-defined end, or the next page of results from an API.  Instead of loading everything up (or generating our list of numbers) first, we can write a stream function to give us the next thing.  The stream is nothing more than a function without parameters that has the current state contained in that function.
 
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
-1. Implement the `iter_sum` function to recursively add up all the values in the `fixed_iterator` stream created with `iter(range(1,500000000,1))`.  The test code already calls the `iter_sum` function.  It may take a few minutes to run the code.  The sum should be 125,000,000,250,000,000.  You can reduce the number down to 10 for testing purposes and the change it back to 500,000,000 when your `iter_sum` is working.
-2. The test code will display the current time as `{hour,minutes,seconds}`.  Describe in the comments what you observed when comparing the `lists:sum` and the `iter_sum` functions.
+Starting Code: `prove07_2/src/prove07_2.erl`
+
+1. Implement the `iter_sum` function to recursively add up all the values in the `fixed_iterator` stream created with `iter(range(1,500000000,1))`. You will need to copy the `range` function from the previous problem set.
 ::::
 
 ## Erlang Processes & Streams
@@ -246,7 +247,7 @@ handle_server() ->
 	handle_server().
 
 start_server() ->
-	spawn(prove07, handle_server, []).
+	spawn(prove07_03, handle_server, []).
  
 send_to_server(Server_PID, Command, Params) ->
 	Server_PID ! {self(), Command, Params},
@@ -292,7 +293,7 @@ When the `handle_id_server` is called recursively to handle the request from the
 Reusing the same `send_to_server` function, we can generate new unique ID's as follows starting with 0.
 
 ```shell
-5> ID_Server_PID = prove07:start_id_server(). 
+5> ID_Server_PID = prove07_03:start_id_server(). 
 <0.89.0>
 6> prove07:send_to_server(ID_Server_PID, id, {}).       
 0
@@ -311,6 +312,8 @@ Reusing the same `send_to_server` function, we can generate new unique ID's as f
 
 :::: {.problembox data-latex=""}
 **Problem Set 3**
+
+Starting Code: `prove07_3/src/prove07_3.erl`
 
 1. Modify the `handle_server` function to support an `avg` command that will average a variable collection of numbers.  For example, if the parameters field is `{10,20,30,40}` then 25 will be returned back to the client.  You can use the Erlang `lists:sum` and `length` functions.
 2. Create a server based on the Unique ID server but with functions called `handle_running_avg_server` (remember that this one needs to be exported) and `start_running_avg_server` that maintains a running average of numbers submitted.  There should be three commands:

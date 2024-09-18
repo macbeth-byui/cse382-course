@@ -40,7 +40,7 @@ In the next topic below, we will consider inserting something in the middle of o
 :::: {.problembox data-latex=""}
 **Problem Set 1**
 
-You can find the template for the problem sets in this lesson here: [prove02.erl](proves/prove02.erl)
+Starting Code: `prove03_1/src/prove03_1.erl`
 
 1. Implement the `prepend` function as shown above.
 2. Implement the `append` function as shown above.
@@ -79,6 +79,8 @@ insert_at([First|Rest], Value, Index) -> [First | insert_at(Rest, Value, Index-1
 :::: {.problembox data-latex=""}
 **Problem Set 2**
 
+Starting Code: `prove03_2/src/prove03_2.erl`
+
 1. Implement the `remove_first` as shown above.
 2. Implement `insert_at` function as shown above.
 3. Implement a function called `remove_last` that removes the last item in the list.  If the list is empty, then return an empty list.
@@ -96,7 +98,7 @@ A specification describes the interface of a function in terms of data types.  H
 * $real$
 * $boolean$
 * $string$.
-* $atom(name)$ - An atom is a label with a specified name but no value.  
+* $atom(name)$ - An atom is a label with a specified name but no value. If the specification shows just $atom$, then this implies the function can take any atom label as an input.  
 * $a$ - Represents any type
 * $[a]$ - List of values of any type
 * $\lbrace a_1,a_2 \rbrace$ - 2 element tuple of values of different types
@@ -216,8 +218,9 @@ $\nonumber$
 :::: {.problembox data-latex=""}
 **Problem Set 3**
 
-1. Write the specifications and definitions for the `head`, `tail`, `removeLast`, and `removeAt` functions.  You will write these in your code template as comments.
-2. Implement a function called `backwards` (which does the same thing as the `reverse` function found in Erlang for lists).  The specification and definition of this functions is shown below.  Notice there are two specifications because there is a one arity function (called by the user in the test code) and a two arity function (called recursively with the result list).  You will need to implement both specifications.
+Starting Code: `prove03_3/src/prove03_3.erl`
+
+1. Implement a function called `backwards` (which does the same thing as the `reverse` function found in Erlang for lists).  The specification and definition of this functions is shown below.  Notice there are two specifications because there is a one arity function (called by the user in the test code) and a two arity function (called recursively with the result list).  You will need to implement both specifications.
 
 :::: {.formulabox data-latex=""}
 $spec ~ ~ backwards :: [a] \rightarrow [a].$
