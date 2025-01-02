@@ -4,27 +4,178 @@ In this section we will build some example programs with the purpose of better u
 
 ## Guess My Number Game
 
-TBD 
+Consider the following number guessing game written in Python:
+
+```python
+import random
+
+LOWER = 2
+HIGHER = 1
+MATCH = 0
+
+def select_magic_number(Low, High):
+    return random.randint(Low, High)
+
+def check_guess(Guess, Magic):
+    if Guess > Magic:
+        return LOWER
+    elif Guess < Magic:
+        return HIGHER
+    else:
+        return MATCH
+    
+def process_guess(Magic, History):
+    result = check_guess(History[0], Magic)
+    if result == LOWER:
+        print("Guess Lower")
+    elif result == HIGHER:
+        print("Guess Higher")
+    else:
+        print("You Win!")
+        print(f"Here were your guesses (last to first): {History}")
+
+def play_game(Magic):
+    Guess = None
+    History = []
+    while Magic != Guess:
+        try:
+            Guess = int(input("Guess: "))
+            History.insert(0, Guess)
+            process_guess(Magic, History)
+        except:
+            print("Invalid entry.  Try again.")
+
+def start():
+    print("Welcome to the Number Guessing Game!")            
+    print("You will pick a number between 1 and 100.")
+    Magic = select_magic_number(1, 100)
+    play_game(Magic)
+
+if __name__ == "__main__":
+    start()    
+```
+
+In the code above, we have a combination of random number generation, loops, and decision blocks.  We can do the same thing in Erlang.  Random number generation is provided by the `rand` library.  Loops are performed by doing recursive calls.  Finally, decision blocks can be made using a `case by` block.  
+
+Our code will consist of 5 functions:
+* `select_magic_number` - This function will randomly pick a number within a range.  We will use the `rand:uniform` function to pick a number between 1 and some maximum value.  We will call the random number that must be guessed the "magic" number.
+* `check_guess` - This function will compare the guess with the magic number and return one of three atoms: `lower`, `higher`, or `match`.
+* `process_guess` - This function will display either "Guess Lower", "Guess Higher", or "You Win!" based on the results of the `check_guess` function.  If the guess was not made, then the `play_game` function will be called recursively again.  If the game was won, then the previous guesses (history) will be displayed and the `play_game` function will **not** be recursively called again.
+* `play_game` - This function will read a guess from standard input.  If the guess is not a number, then an error message will be displayed and `play_again` will be recursively called.  If a number was entered, then it will be given to the `process_guess` function.
+* `start` - This function will welcome you to the game, call `select_magic_number` to select a magic number, and then proceed to call `play_game` for the first time.
 
 :::: {.problembox data-latex=""}
 **Problem Set 1**
 
 Starting Code: `prove02_1/src/prove02_1.erl`
 
-1. TBD
+In this problem set, you will convert the number guessing game from Python into Erlang.  The `play_game` and the `start` functions are written for you already.
+
+1. Implement the `select_magic_number` function using `rand:uniform`.  The magic number should be in the range of `Low` to `High` inclusive.  You can assume that both Low and High are positive integers.
+2. Implement the `check_guess` function.  You should implement this with three different function clauses that return either `lower`, `higher`, or `match` atoms.
+3. Write test cases in the `check_guess_test` to verify that `lower`, `higher` and `match` are all possible to be received given the appropriate inputs.
+4. Write the `process_guess` function that receives the magic number and a list of all current guesses.  Note that the first guess in the list is the current guess.  You can use the `[First|Rest]` notation in the `process_guess` declaration.  Call the `check_guess` function and do the following:
+  * If you get `lower` then say "Guess Lower" and recursively call `play_game`
+  * If you get `higher` then say "Guess Higher" and recursively call `play_game`
+  * If you get `match` then say "You Win!" and display the history of guesses.  Do not recursively call `play_game`.
 ::::
 
 ## File Statistics
 
-TBD
+The following sample Erlang code opens a file, reads the file one line at a time, and then calculates statistics including number of lines, number of words, and number of letters.  We use various Erlang string library calls to calculate the statistics.
 
-This is no additional problem sets from this section.  This program will be created during class.
+```erlang
+-module(analyzer).
+-export([analyze_file/1]).
 
-## Web Server
+% Open the file, read it, and display the statistics
+analyze_file(Filename) ->
+    case file:open(Filename, [read]) of
+        {ok, File} ->
+            Stats = read_file(File),
+            file:close(File),
+            io:format("Stats: ~p~n",[Stats]),
+            ok;
+        {error, Error} ->
+            io:format("Error Opening File: ~p~n",[Error]),
+            error
+    end.
 
-TBD
+% Read a file and calculate the statistics:
+% {number of lines, number of words, number of letters}
+% This function will start the recursion by initializing
+% the stats to {0, 0, 0}
+read_file(File) ->
+    read_line(File, {0, 0, 0}).
 
-This is no additional problem sets from this section.  This program will be created during class.
+% Read one line at a time and then recursively call the function
+% again. If we read a line, then calculate and update the statistics.
+% If we are at the end of the file (eof), the return the current
+% statistics.  If we get an error reading the file, then default
+% the stats back to 0 again and stop reading.
+read_line(File, {NumLine, NumWord, NumLetter}) ->
+    case file:read_line(File) of
+        {ok, Text} -> 
+            Words = string:tokens(Text, " \t\n\r"),
+            read_line(File, {NumLine + 1, 
+                NumWord + length(Words), 
+                NumLetter + length(Text)});
+        eof -> 
+            {NumLine, NumWord, NumLetter};
+        {error, Error} -> 
+            io:format("Error Reading File: ~p~n",[Error]),
+            {0, 0, 0}
+    end.
+
+
+```
+
+There are no additional problem sets from this section.  This program will be created during class.
+
+## Message Server
+
+The following sample Erlang code demonstrates the creation of a process (`start_handler` and `handle_msg`).  The process receives one messages at a time from the `send` function.  The `send` function sends a randomly generated message to the process.  The process will display the message and keep track of the number of messages received.  Note how the process function recursively is called to handle the next message.
+
+```erlang
+-module(messages).
+-export([send/2, start_handler/0, handle_msg/1]).
+
+% Send a user specified number of random messages 
+% to an already started message server (PID).  To create the 
+% server, you need to call start_handler which will return the PID
+% value.  This function will return done after sending "count"
+% messages. 
+send(0, _) -> done;
+send(Count, PID) ->
+    case rand:uniform(4) of
+        % Send the message to the server using the ! operator
+        1 -> PID ! "Hello";
+        2 -> PID ! "Bye";
+        3 -> PID ! ":)";
+        4 -> PID ! "LOL"
+    end,
+    send(Count-1, PID).
+
+% Start a process that runs the handle_msg function.  The handle_msg
+% function is arity 1 and takes a single input.  The input represents
+% the number of messages that have been received and sent.  We initialize
+% this number to 0 when starting the process.
+start_handler() ->
+    spawn(messages, handle_msg, [0]).
+
+% Receive a single message, display it, and then recursively call handle_msg
+% so the next message can be received.   The Total_Msgs input is incremented by
+% one each time we recursively restart the function.
+handle_msg(Total_Msgs) ->
+    receive
+        Message ->
+            io:format("~p: ~p~n",[Total_Msgs + 1, Message]),
+            handle_msg(Total_Msgs + 1)
+    end.
+
+```
+
+This are no additional problem sets from this section.  This program will be created during class.
 
 $\nonumber$
 $\nonumber$
